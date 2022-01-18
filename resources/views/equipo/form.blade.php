@@ -41,7 +41,7 @@
               <input class="form-control" type="text" name="estado[]" placeholder="Estado">
             </td>
             <td>
-              <input class="form-control" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
+              <input class="form-control d-none" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
             </td>
           </tr>
         </tbody>
@@ -76,7 +76,7 @@
               <input class="form-control" type="text" name="estado[]" placeholder="Estado">
             </td>
             <td>
-              <input class="form-control" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
+              <input class="form-control d-none" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
             </td>`;
   }
 </script>

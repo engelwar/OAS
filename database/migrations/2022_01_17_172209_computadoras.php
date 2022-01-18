@@ -19,6 +19,7 @@ class Computadoras extends Migration
       $table->string('tipo');
       $table->integer('ip');
       $table->string('estado');
+      $table->integer('id_empleado');
       $table->timestamps();
     });
   }

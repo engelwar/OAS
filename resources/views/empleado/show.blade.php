@@ -84,6 +84,10 @@
           </div>
         </div>
         <div class="card-body">
+          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal2{{ $empleado->id }}">Crear Nuevo</button>
+        </div>
+        @include ('empleado.myModal2')
+        <div class="card-body">
           <h3>Otros</h3>
           @if ($count > 0)
           <div class="table-responsive">
