@@ -141,7 +141,6 @@ class EquipoController extends Controller
     $empleado = Equipo::find($id);
     Equipo::create($request->all());
     Equipo::find($id)->delete();
-    Historia::create($request->all());
     return redirect()->route('empleados.show', $empleado->id_empleado)
       ->with('success', 'Equipo deleted successfully');
   }

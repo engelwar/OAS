@@ -77,14 +77,24 @@
                     <td>hola</td>
                     <td>hola</td>
                     <td>hola</td>
+                    <td>
+                      <form action="" method="POST">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal3"><i class="fas fa-exchange-alt"></i></button>
+                        <a class="btn btn-sm btn-success" href=""><i class="fas fa-edit"></i></a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                      </form>
+                    </td>
                   </tr>
+                  @include ('empleado.myModal3')
                 </tbody>
               </table>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal2{{ $empleado->id }}">Crear Nuevo</button>
+          <a class="btn btn-primary btn-sm" href="{{ route('computadoras.creates', $empleado->id) }}">Crear Ordenador</a>
         </div>
         @include ('empleado.myModal2')
         <div class="card-body">

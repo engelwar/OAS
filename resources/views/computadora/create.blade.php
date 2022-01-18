@@ -1,10 +1,8 @@
 @extends('layouts.app')
-
-@section('template_title')
-    Create Computadora
-@endsection
-
+@section('title', 'Inicio')
+@section('static', 'statick-side')
 @section('content')
+@include('layouts.sidebar', ['hide'=>'1']) 
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
