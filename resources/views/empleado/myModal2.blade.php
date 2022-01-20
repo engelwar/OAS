@@ -21,7 +21,7 @@
               <option value="si">Si</option>
               <option value="no">No</option>
             </select>
-            <input class="" type="text" name="id_empleado" id="id_empleado" value="{{ $empleado->id }}">
+            <input class="" type="number" name="id_empleado" id="id_empleado" value="{{ $empleado->id }}">
           </div>
         </div>
         <div class="modal-footer">

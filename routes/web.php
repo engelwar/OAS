@@ -229,14 +229,14 @@ Route::resource('empleados', 'EmpleadoController');
 
 Route::resource('equipos', 'EquipoController');
 
-Route::resource('computadoras', 'ComputadoraController');
+Route::resource('computadoras', ComputadoraController::class);
+
+Route::post('/empleados', 'ComputadoraController@store')->name('computadoras.storecreate');
 
 Route::resource('componentes', 'ComponenteController');
 
 Route::resource('historias', 'HistoriaController')->middleware('auth');
 
 Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('equipos.creates');
-
-Route::get('/empleados/{id_empleado}', 'ComputadoraController@creates')->name('computadoras.creates');
 
 Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');

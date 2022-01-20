@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="card-body">
-          <a class="btn btn-primary btn-sm" href="{{ route('computadoras.creates', $empleado->id) }}">Crear Ordenador</a>
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal2{{ $empleado->id }}">Crear Ordenador</button>
         </div>
         @include ('empleado.myModal2')
         <div class="card-body">

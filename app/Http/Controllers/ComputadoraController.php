@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Computadora;
 use App\Models\Componente;
 use Illuminate\Http\Request;
+use App\Perfil;
 
 /**
  * Class ComputadoraController
@@ -41,13 +42,6 @@ class ComputadoraController extends Controller
     return view('computadora.create', compact('computadora'));
   }
 
-  public function creates($id_empleado)
-  {
-    echo $id_empleado;
-    $computadora = new Computadora();
-    return view('computadora.create', compact('computadora', 'id_empleado'));
-  }
-
   /**
    * Store a newly created resource in storage.
    *
@@ -71,9 +65,10 @@ class ComputadoraController extends Controller
     //     Componente::create(['marca' => $request['marca2'][$i], 'tipo' => $request['tipo2'][$i], 'modelo' => $request['modelo2'][$i], 'ns' => $request['ns2'][$i], 'caracteristicas' => $request['caracteristicas2'][$i], 'estado' => $request['estado2'][$i], 'id_compu' => $request[$idcpu]]);
     //   }
     // }
-    // $computadora = Computadora::create($request->all());
+    $computadora = new Computadora();
+    Computadora::create($request->all());
 
-    return redirect()->route('empleados')
+    return redirect()->route('empleado.index')
       ->with('success', 'Computadora created successfully.');
   }
 
