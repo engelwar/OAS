@@ -73,20 +73,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>hola</td>
-                    <td>hola</td>
-                    <td>hola</td>
-                    <td>
-                      <form action="" method="POST">
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal3"><i class="fas fa-exchange-alt"></i></button>
-                        <a class="btn btn-sm btn-success" href=""><i class="fas fa-edit"></i></a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
-                      </form>
-                    </td>
-                  </tr>
+                  @if ($cpus != null)
+                  @foreach ($cpus as $cpu)
+                      <tr>
+                        <td>{{ $cpu->tipo }}</td>
+                        <td>{{ $cpu->ip }}</td>
+                        <td>{{ $cpu->estado }}</td>
+                        <td>
+                          <form action="" method="POST">
+                            {{-- <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal4{{ $cpu->id }}"><i class="fa fa-fw fa-eye"></i></button> --}}
+                            <a href="{{ route('componentes.show', $cpu->id) }}" class="btn btn-secondary btn-sm"><i class="fa fa-fw fa-eye"></i></a>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal3"><i class="fas fa-exchange-alt"></i></button>
+                            {{-- <a class="btn btn-sm btn-success" href=""><i class="fas fa-edit"></i></a> --}}
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                          </form>
+                        </td>
+                      </tr>
+                      @include ('empleado.myModal4')
+                  @endforeach 
+                  @endif
                   @include ('empleado.myModal3')
                 </tbody>
               </table>

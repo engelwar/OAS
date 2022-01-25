@@ -6,6 +6,8 @@ use App\Perfil;
 use App\Area;
 use App\Models\Empleado;
 use App\Models\Equipo;
+use App\Models\Computadora;
+use App\Models\Componente;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
@@ -79,8 +81,11 @@ class EmpleadoController extends Controller
       ->paginate(8);
     $count = $equipos->count();
     $todos = Perfil::paginate(50);
+    $cpus = Computadora::orderBy('id', 'DESC')
+      ->where('id_empleado', '=', $id)
+      ->paginate(8);
 
-    return view('empleado.show', compact('empleado', 'equipos', 'count', 'todos'));
+    return view('empleado.show', compact('empleado', 'equipos', 'count', 'todos', 'cpus'));
   }
 
   /**

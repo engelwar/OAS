@@ -51,24 +51,16 @@ class ComputadoraController extends Controller
   public function store(Request $request)
   {
     request()->validate(Computadora::$rules);
-    echo $request;
-
-    // $computadora = Computadora::create([
-    //   'tipo' => $request->tipo,
-    //   'ip' => $request->ip,
-    //   'estado' => $request->funcional,
-    //   'id_empleado' => $request->id_empleado,
-    // ]);
-    // $idcpu = Computadora::latest('id')->first();
-    // if ($request['marca'][0] != null) {
-    //   foreach ($request->marca as $i => $j) {
-    //     Componente::create(['marca' => $request['marca2'][$i], 'tipo' => $request['tipo2'][$i], 'modelo' => $request['modelo2'][$i], 'ns' => $request['ns2'][$i], 'caracteristicas' => $request['caracteristicas2'][$i], 'estado' => $request['estado2'][$i], 'id_compu' => $request[$idcpu]]);
-    //   }
-    // }
-    $computadora = new Computadora();
     Computadora::create($request->all());
+    $idcpu = Computadora::latest('id')->first();
+    
+    if ($request['marca2'][0] != null) {
+      foreach ($request->marca2 as $i => $j) {
+        Componente::create(['tipo' => $request['tipo2'][$i], 'marca' => $request['marca2'][$i], 'modelo' => $request['modelo2'][$i], 'caracteristicas' => $request['caracteristicas2'][$i], 'estado' => $request['estado2'][$i], 'id_compu' => $idcpu['id']]);
+      }
+    }
 
-    return redirect()->route('empleado.index')
+    return redirect()->route('empleados.show', $request['id_empleado'])
       ->with('success', 'Computadora created successfully.');
   }
 
