@@ -239,4 +239,6 @@ Route::resource('historias', 'HistoriaController')->middleware('auth');
 
 Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('equipos.creates');
 
-Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
+// Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
+
+Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');

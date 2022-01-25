@@ -119,4 +119,9 @@ class ComputadoraController extends Controller
     return redirect()->route('computadoras.index')
       ->with('success', 'Computadora deleted successfully');
   }
+
+  public function cambio(Request  $request, $id){
+    echo $request;
+    return dd($request);
+  }
 }

@@ -32,6 +32,7 @@ class Equipo extends Model
 		'ns' => 'required',
 		'caracteristicas' => 'required',
 		'estado' => 'required',
+    'id_empleado' => 'required',
     ];
 
     protected $perPage = 20;

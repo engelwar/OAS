@@ -1,17 +1,22 @@
 <!-- Modal -->
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<div class="modal fade" id="myModal3{{ $cpu->id }}" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="" method="post">
+    <form action="{{ route('computadoras.cambio', $cpu->id) }}" method="post">
 			@csrf
-      <div class="modal-content">
+      <div class="modal-content" style="width: 150%">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Traspaso de Equipo</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Traspaso {{ $cpu->id }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
+          <div class="d-flex flex-row">
             <select class="form-select" multiple aria-label="multiple select example" name="id_empleado" required>
               {{-- <option selected>Seleccionar empleado</option> --}}
+              @foreach ($todos as $todo)
+              @if ($todo->paterno != $empleado->paterno)
+              <option value="{{ $todo->id }}">{{ $todo->paterno }} {{ $todo->materno }}, {{ $todo->nombre }}</option>
+              @endif
+              @endforeach
             </select>
           </div>
         </div>

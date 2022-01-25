@@ -76,16 +76,17 @@ class EmpleadoController extends Controller
   public function show($id)
   {
     $empleado = Perfil::find($id);
-    $equipos = Equipo::orderBy('id', 'DESC')
+    $equipos = Equipo::orderBy('id', 'ASC')
       ->where('id_empleado', '=', $id)
       ->paginate(8);
     $count = $equipos->count();
     $todos = Perfil::paginate(50);
-    $cpus = Computadora::orderBy('id', 'DESC')
+    $cpus = Computadora::orderBy('id', 'ASC')
       ->where('id_empleado', '=', $id)
       ->paginate(8);
+    $qr="Nombre: ". $empleado->nombre."\nTipo: ".$cpus[0]->tipo."\nIP: ".$cpus[0]->ip;
 
-    return view('empleado.show', compact('empleado', 'equipos', 'count', 'todos', 'cpus'));
+    return view('empleado.show', compact('empleado', 'equipos', 'count', 'todos', 'cpus', 'qr'));
   }
 
   /**
