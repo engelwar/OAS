@@ -153,7 +153,7 @@ Route::prefix('dev')->group(function(){
 });
 //eventos
 Route::get('/chat', function(){
-    event(new \App\Events\PublicMessage("holaaaaaaaaaaaaaa"));
+    event(new \App\Events\PublicMessage("hola"));
     dd('Public event executed successfully');
 });
 

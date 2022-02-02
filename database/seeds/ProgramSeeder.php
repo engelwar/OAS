@@ -326,25 +326,5 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-laptop',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
-
-        $smod = Program::create([  
-            'id'=>30,  
-            'nombre'=>'Crear Computadora',      
-            'desc'=>'Crear Computadora',  
-            'modulo_id'=>'1',
-            'route'=>'computadoras.store',
-            'icon'=>'fas fa-laptop',
-        ]); 
-        $smod->permisos()->attach(Permiso::find(1));
-
-        $smod = Program::create([  
-            'id'=>31,  
-            'nombre'=>'Crear Computadora',      
-            'desc'=>'Crear Computadora',  
-            'modulo_id'=>'1',
-            'route'=>'computadoras.store',
-            'icon'=>'fas fa-laptop',
-        ]); 
-        $smod->permisos()->attach(Permiso::find(1));
     }
 }
