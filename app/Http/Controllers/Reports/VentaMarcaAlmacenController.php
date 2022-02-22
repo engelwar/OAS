@@ -13,7 +13,7 @@ use App\Exports\CuentasPorCobrarExport;
 use DataTables; 
 use App\VentaSegmento;
 
-class VentaMarcaUserController extends Controller
+class VentaMarcaAlmacenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class VentaMarcaUserController extends Controller
         $config = $this->getConf($sucur);
         $user = $config['users'];
         $capas = $config['capas'];
-        return view('reports.ventamarcaseg', compact('user', 'capas', 'sucur'));  
+        return view('reports.ventamarcaalmacen', compact('user', 'capas', 'sucur'));  
     }
     public function getConf($sucur){
         if($sucur == 'sucur')

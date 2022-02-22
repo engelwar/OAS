@@ -38,6 +38,7 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
+                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }
         else{
@@ -48,6 +49,7 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
+                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }  
         $grupo = [
@@ -57,7 +59,8 @@ class VentaMarcaUserController extends Controller
             ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
-            ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
+            ['name'=>'INS. CALACOTO', 'abrv'=>'INS. CALACOTO', 'users'=>[57,29]],
+            ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64], 'cochabamba'=>[61]]
         ];
         $user = $this->getUsers($segmento, $grupo, $usuario);
         $capas = 
@@ -79,6 +82,7 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
+                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }
         else{
@@ -89,6 +93,7 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
+                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }  
         $grupo = [
@@ -98,7 +103,8 @@ class VentaMarcaUserController extends Controller
             ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
-            ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
+            ['name'=>'INS. CALACOTO', 'abrv'=>'INS. CALACOTO', 'users'=>[57,29]],
+            ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64], 'cochabamba'=>[61]]
         ];
         $user = $this->getUsers($segmento, $grupo, $usuario);
         $capas = 

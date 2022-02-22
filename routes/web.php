@@ -130,6 +130,12 @@ Route::prefix('reports')->group(function(){
     Route::any('ventamarcauser/table/getConfig','Reports\VentaMarcaUserController@getConfig')->name('ventamarcauser.getConfig'); 
     Route::any('ventamarcauser/table/testeo','Reports\VentaMarcaUserController@testeo')->name('ventamarcauser.testeo');   
     Route::any('ventamarcauser/get/datos','Reports\VentaMarcaUserController@getDatos')->name('ventamarcauser.getdatos');   
+    
+    Route::resource('ventamarcaalmacen', 'Reports\VentaMarcaAlmacenController');
+    Route::any('ventamarcaalmacen/table/general','Reports\VentaMarcaAlmacenController@general')->name('ventamarcaalmacen.general');   
+    Route::any('ventamarcaalmacen/table/getConfig','Reports\VentaMarcaAlmacenController@getConfig')->name('ventamarcaalmacen.getConfig'); 
+    Route::any('ventamarcaalmacen/table/testeo','Reports\VentaMarcaAlmacenController@testeo')->name('ventamarcaalmacen.testeo');   
+    Route::any('ventamarcaalmacen/get/datos','Reports\VentaMarcaAlmacenController@getDatos')->name('ventamarcaalmacen.getdatos');   
 
     Route::resource('pareto', 'Reports\ParetoController');
 
