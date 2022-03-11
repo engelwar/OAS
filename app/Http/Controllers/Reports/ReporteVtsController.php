@@ -51,14 +51,15 @@ class ReporteVtsController extends Controller
             ['id'=> 'G10', 'name'=>'INGAVI PDV', 'usrs'=>[], 'tipo'=>'PDV'],
             ['id'=> 'G11', 'name'=>'INSTITUCIONAL 2', 'usrs'=>[17], 'tipo'=>'INS'],
             ['id'=> 'G12', 'name'=>'INSTITUCIONAL 3', 'usrs'=>[16], 'tipo'=>'INS'],
-            ['id'=> 'G13', 'name'=>'FERIAS PDV', 'usrs'=>[61], 'tipo'=>'PDV'],
-            ['id'=> 'G14', 'name'=>'MAYORISTAS 1', 'usrs'=>[19], 'tipo'=>'MAYO'], 
-            ['id'=> 'G15', 'name'=>'MAYORISTAS 2', 'usrs'=>[18], 'tipo'=>'MAYO'],
-            ['id'=> 'G16', 'name'=>'MAYORISTAS 3', 'usrs'=>[20], 'tipo'=>'MAYO'],
-            ['id'=> 'G17', 'name'=>'DISTRIBUIDOR 1', 'usrs'=>[21], 'tipo'=>'MAYO'],
-            ['id'=> 'G18', 'name'=>'MAYORISTAS 5', 'usrs'=>[55], 'tipo'=>'MAYO'],
-            ['id'=> 'G19', 'name'=>'SANTA CRUZ VTS', 'usrs'=>[39,40], 'tipo'=>'MAYO'], 
-            ['id'=> 'G20', 'name'=>'VENTA MOVIL 1', 'usrs'=>[58], 'tipo'=>'MAYO'],
+            ['id'=> 'G13', 'name'=>'CONTRATOS', 'usrs'=>[62], 'tipo'=>'INS'],
+            ['id'=> 'G14', 'name'=>'FERIAS PDV', 'usrs'=>[61], 'tipo'=>'PDV'],
+            ['id'=> 'G15', 'name'=>'MAYORISTAS 1', 'usrs'=>[19], 'tipo'=>'MAYO'], 
+            ['id'=> 'G16', 'name'=>'MAYORISTAS 2', 'usrs'=>[18], 'tipo'=>'MAYO'],
+            ['id'=> 'G17', 'name'=>'MAYORISTAS 3', 'usrs'=>[20], 'tipo'=>'MAYO'],
+            ['id'=> 'G18', 'name'=>'DISTRIBUIDOR 1', 'usrs'=>[21], 'tipo'=>'MAYO'],
+            ['id'=> 'G19', 'name'=>'MAYORISTAS 5', 'usrs'=>[55], 'tipo'=>'MAYO'],
+            ['id'=> 'G20', 'name'=>'SANTA CRUZ VTS', 'usrs'=>[39,40], 'tipo'=>'MAYO'], 
+            ['id'=> 'G21', 'name'=>'VENTA MOVIL 1', 'usrs'=>[58], 'tipo'=>'MAYO'],
         ];
         $gruFilt = ''; $gruFiltId = '';
         foreach ($grupos as $k => $v) {

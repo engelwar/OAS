@@ -137,6 +137,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
         </div>
     </div> 
 </div>
+
+<div class="w-25 d-flex p-4 text-center m-auto">
+    <div class="border p-3 w-100">
+        <h3>Retail Ballivian</h3>
+        <h4>Bs. 40</h4>
+    </div>
+</div>
 @endsection
 @section('mis_scripts')
 <script>
@@ -196,7 +203,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
                 {data: 'prod', title: 'CODIGO'},  
                 {data: 'descrip', title: 'DESCRIPCION'}, 
                 {data: 'um', title: 'UM'}, 
-                {data: 'BarCod', title: 'COD.BARRA'},       
+                {data: 'BarCod', title: 'COD.BARRA'},
+                {data: 'retail', title: 'P.V.P'}
             ],
             scrollY: "70vh",
             scrollX:true,

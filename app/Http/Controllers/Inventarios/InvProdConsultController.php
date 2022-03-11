@@ -74,11 +74,13 @@ class InvProdConsultController extends Controller
             inproPcod as BarCodPie,
             inumeAbre as um,
             inumeDesc  as um_desc,
-            maconNomb as marca
+            maconNomb as marca,
+            vtLidPrco as retail
             FROM inpro
             LEFT JOIN inume ON inumeCume = inproCumb 
             LEFT JOIN macon ON inproMarc = CAST(MaconCcon as varchar)+ '|' + CAST(MaconItem as varchar)
-            WHERE inproMdel = 0
+            LEFT JOIN vtLid on inproCpro = vtLidCpro
+            WHERE inproMdel = 0 and vtLidClis = 1
         )
         SELECT *  
         FROM produ
@@ -98,6 +100,11 @@ class InvProdConsultController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function retail()
+    {
+        //
+    }
+
     public function show($id)
     {
         //
