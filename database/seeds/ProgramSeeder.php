@@ -326,5 +326,17 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-laptop',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+
+        $smod = Program::create([  
+            'id'=>30,  
+            'nombre'=>'Stock(I-E-T-V)',         
+            'modulo_id'=>6,
+            'sub_modulo_id'=>1,
+            'route'=>'stockventa.index',
+            'icon'=>'fas fa-file-contract',
+        ]); 
+        $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(5));
+        $smod->permisos()->attach(Permiso::find(6));
     }
 }

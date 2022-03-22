@@ -142,35 +142,37 @@ class StockVentaController extends Controller
 
         } 
         if($request->selectAlmacen == 1){
-            $nombAlmacen = 'BallivianS';
+            $nombAlmacen = 'Ballivian';
             $idAlmacen = 7;
             $grup_tit2 = "ISNULL([7],0)+ISNULL([10],0) as [Ballivian]";
             $grup_t2 = "CAST(ISNULL([Ballivian],0) as varchar)";
         }
         elseif($request->selectAlmacen == 2){
-            $nombAlmacen = 'HandalS';
+            $nombAlmacen = 'Handal';
             $idAlmacen = 4;
             $grup_tit2 = "ISNULL([4],0)+ISNULL([13],0) as [Handal]";
             $grup_t2 = "CAST(ISNULL([Handal],0) as varchar)";
         }
         elseif($request->selectAlmacen == 3){
-            $nombAlmacen = 'MariscalS';
+            $nombAlmacen = 'Mariscal';
             $idAlmacen = 6;
             $grup_tit2 = "ISNULL([6],0)+ISNULL([30],0) as [Mariscal]";
             $grup_t2 = "CAST(ISNULL([Mariscal],0) as varchar)";
         }
         elseif($request->selectAlmacen == 4){
-            $nombAlmacen = 'CalacotoS';
+            $nombAlmacen = 'Calacoto';
             $idAlmacen = 5;
             $grup_tit2 = "ISNULL([5],0)+ISNULL([29],0) as [Calacoto]";
             $grup_t2 = "CAST(ISNULL([Calacoto],0) as varchar)";
         }
+
         $titulos[] = ['name'=>$nombAlmacen, 'data'=>$nombAlmacen, 'title'=>$nombAlmacen, 'tip'=>'decimal'];
         $titulos[] = ['name'=>'I-E-T', 'data'=>'I-E-T', 'title'=>'I.E.T.', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
         $grup_tit = [];
         $grup_t = [];
+        $temp2 = [];
         foreach (unserialize($request->grupos) as $key => $value) {
             if($key == 'Sin Grupo'){
                 foreach ($value as $k => $v) {
@@ -186,22 +188,24 @@ class StockVentaController extends Controller
             else{
                 $temp= [];
                 foreach ($value as $k => $v) {
-                    if(array_search($v->inalmCalm,$almacenes) !== false)
-                    {
-                        $temp[] = "ISNULL([".$v->inalmCalm."],0)";
+                    if($key != $nombAlmacen){
+                        if(array_search($v->inalmCalm,$almacenes) !== false)
+                        {
+                            $temp[] = "ISNULL([".$v->inalmCalm."],0)";
+                        }
                     }
                 }   
                 if($temp != null)
                 {
                     $grup_tit[] = implode("+",$temp)." as [".$key."]";
                     $grup_t[] = "CAST(ISNULL([".$key."],0) as varchar) as [".$key."]";
+                    $temp2[] = "stocks.".$key;
 
                     $titulos[] = ['name'=>$key, 'data'=>$key, 'title'=>$key, 'tip'=>'decimal'];
                     $titulos_excel[] = $key;
                 } 
             }
         }
-        
         // return dd($request->all());
         $alma = [];
         $alma_total = [];
@@ -231,19 +235,30 @@ class StockVentaController extends Controller
         )as ".$nombAlmacen.",
 
         (
-            SELECT
-            IsNull(sum(intpdCanB), 0)
+            select (select IsNull(SUM(intrdCanT),0 )
+            from intra
+            JOIN intrd on intrdNtra = intraNtra
+            where intraMdel = 0 
+            AND intrdMdel = 0
+            and intraNtrI = 0
+            and intraCalm = ".$idAlmacen."
+            and intrdCpro = inpro.inproCpro
+            AND intraFtra = '".$ffin2."'
+            )
+            +
+            (SELECT
+            IsNull(SUM(intpdCanB), 0)
             FROM intpd
             LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
             JOIN inalm as almdes ON almdes.inalmCalm = intrpCads
-            JOIN inalm as almorg ON almorg.inalmCalm = intrpCaor
             JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
             LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
             LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
-            WHERE intpdCpro = inpro.inproCpro
-            AND intrpFtrp = '".$ffin2."'
+            WHERE intpdMdel = 0
             AND almdes.inalmCalm = ".$idAlmacen."
-            AND intpdMdel = 0
+            AND intpdCpro = inpro.inproCpro
+            AND intrpFtrp = '".$ffin2."'
+            )
         ) as [I-E-T],
 
         (
@@ -291,12 +306,7 @@ class StockVentaController extends Controller
             inpro.inproCpro, 
             inpro.inproNomb, 
             umpro.inumeAbre, 
-            stocks.AC2,
-            stocks.Planta,
-            stocks.Ballivian,
-            stocks.Handal,
-            stocks.Mariscal,
-            stocks.Calacoto
+            ".implode(",",$temp2)."
         ORDER BY inpro.inproCpro
         ";
         //return dd($query);
