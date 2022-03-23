@@ -119,6 +119,9 @@ $(document).ready(function()
         }
     } );
     $(".page-wrapper").removeClass("toggled"); 
+    $('#example tbody').on( 'click', 'button', function () {
+        alert('HOLAs');
+    } );
 } );
 </script>
 @endsection
