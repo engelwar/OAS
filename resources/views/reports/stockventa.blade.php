@@ -49,7 +49,7 @@
                         </div> --}}
                     </div>
                     <div class="mb-3 row">
-                        @if(Auth::user()->id == 37 || Auth::user()->id == 9) 
+                        @if(Auth::user()->id == 37 || Auth::user()->id == 9 || Auth::user()->id == 45) 
                         <select class="form-select" aria-label="Default select example" name="selectAlmacen">
                             <option value="1">Almacen Ballivian</option>
                             <option value="2">Almacen Handal</option>

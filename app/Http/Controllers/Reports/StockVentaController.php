@@ -311,6 +311,8 @@ class StockVentaController extends Controller
         ";
         //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
+        $titulos[] = ['name'=>'Historial', 'data'=>'Historial', 'title'=>'Historial', 'defaultContent'=>'<button>Click!</button>'];
+        $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'defaultContent'=>'<button>Click!</button>'];
         $titulos_excel[] = 'Total';
         if($request->gen =="export")
         {

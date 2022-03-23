@@ -232,8 +232,8 @@ class VentasInsMayoController extends Controller
         WHERE 
         imlvtNvta IS NOT NULL -- tiene factura
         AND vtvtaMdel = 0 AND imLvtEsfc = 'v'--Valida
-        AND (imLvtFech BETWEEN @fini AND @ffin)
-        AND vtvtaCusr = @usuario -- Usuario
+        AND (imLvtFech BETWEEN '10/03/2022' AND '23/03/2022')
+        AND vtvtaCusr = 28 -- Usuario
         AND cptrdTtra = 11";
 
         $fac_anu = 
@@ -479,7 +479,7 @@ class VentasInsMayoController extends Controller
             {
                 $t1[$tt->Tipo]= $tt->ImptC+$t1[$tt->Tipo];
             }
-        }
+        }       
         $q2 = DB::connection('sqlsrv')->select(DB::raw($vari . $fac_cred));
         foreach ($q2 as $tt) {
             if (!array_key_exists($tt->Tipoc, $t1)) 
@@ -491,6 +491,8 @@ class VentasInsMayoController extends Controller
                 $t1[$tt->Tipoc]= $tt->ImptC+$t1[$tt->Tipoc];
             }
         }
+        dd($tt);
+        echo $q2;
         //return dd($t1);
         $q3 = DB::connection('sqlsrv')->select(DB::raw($vari . $fac_anu));
         $q4 = DB::connection('sqlsrv')->select(DB::raw($vari . $cobro_caja));
@@ -527,7 +529,8 @@ class VentasInsMayoController extends Controller
         ->setOption('margin-right','5')
         ->setOption('margin-top','10')
         ->setOption('margin-bottom','20');
-        return $pdf->inline('Ventas_'.$user_id.'.pdf');
+        // return $pdf->inline('Ventas_'.$user_id.'.pdf');
+        return view('reports.vista.ventasinsmayo');
     }
 
     /**
