@@ -173,6 +173,9 @@ class StockVentaController extends Controller
         $grup_tit = [];
         $grup_t = [];
         $temp2 = [];
+        $VarI;
+        $VarF;
+        $grup_T=[];
         foreach (unserialize($request->grupos) as $key => $value) {
             if($key == 'Sin Grupo'){
                 foreach ($value as $k => $v) {
@@ -286,6 +289,8 @@ class StockVentaController extends Controller
         )as Saldo,
 
         ".implode(",",$grup_t)."
+
+        
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
         LEFT JOIN ( SELECT convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, maconNomb 
