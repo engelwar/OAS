@@ -116,11 +116,13 @@ class StockVentaController extends Controller
             'Descripcion',
             'U.M,',          
         ];
-        $ffin = date("d-m-Y",strtotime(date('d-m-Y')."- 1 days"));
-        $ffin2 = date("d/m/Y");
+        $ffin1 = date("d/m/Y",strtotime(date('d-m-Y')."- 1 days"));
+        $ffin2 = date("d/m/Y",strtotime(date('d-m-Y')."- 2 days"));
+        $ffin3 = date("d/m/Y",strtotime(date('d-m-Y')."- 3 days"));
+        $ffact = date("d/m/Y");
         if ($request->fecha_fin)
         {
-            $ffin2 = date("d/m/Y", strtotime($request->fecha_fin));
+            $ffact = date("d/m/Y", strtotime($request->fecha_fin));
         }
         $categ = "";
         if($request->categoria)
@@ -228,7 +230,7 @@ class StockVentaController extends Controller
                 ".$grup_tit2."
                 FROM ( SELECT intrdCpro, intraCalm, SUM(intrdCanb) as cant 
                     FROM intra JOIN intrd ON intraNtra = intrdNtra 
-                    WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffin."' 
+                    WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffin1."' 
                     GROUP BY intrdCpro, intraCalm ) as sotck pivot ( SUM(cant) for intraCalm IN (".implode(",",$alma).") ) as ptv ) as stocks ON stocks.intrdCpro = inpro2.inproCpro ".$stocki."
             WHERE inproMdel = 0 AND inproStat = 0 
             AND inpro2.inproCpro = inpro.inproCpro
@@ -243,21 +245,20 @@ class StockVentaController extends Controller
             and intraNtrI = 0
             and intraCalm = ".$idAlmacen."
             and intrdCpro = inpro.inproCpro
-            AND intraFtra = '".$ffin2."'
+            AND intraFtra = '".$ffact."'
             )
             +
             (SELECT
             IsNull(SUM(intpdCanB), 0)
             FROM intpd
             LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
-            JOIN inalm as almdes ON almdes.inalmCalm = intrpCads
             JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
             LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
             LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
             WHERE intpdMdel = 0
-            AND almdes.inalmCalm = ".$idAlmacen."
+            AND intrpCads = ".$idAlmacen."
             AND intpdCpro = inpro.inproCpro
-            AND intrpFtrp = '".$ffin2."'
+            AND intrpFtrp = '".$ffact."'
             )
         ) as [I-E-T],
 
@@ -266,7 +267,7 @@ class StockVentaController extends Controller
             IsNull(SUM(vtvtdCant), 0)
             from vtVta as a
             join vtVtd on vtvtaNtra = vtvtdNtra
-            where vtvtaFtra = '".$ffin2."'
+            where vtvtaFtra = '".$ffact."'
             AND vtvtdCpro = inpro.inproCpro
             AND vtvtaCalm = ".$idAlmacen."
             AND vtvtdMdel = 0
@@ -279,13 +280,50 @@ class StockVentaController extends Controller
                 ".$grup_tit2."
                 FROM ( SELECT intrdCpro, intraCalm, SUM(intrdCanb) as cant 
                     FROM intra JOIN intrd ON intraNtra = intrdNtra 
-                    WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffin2."'
+                    WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffact."'
                     GROUP BY intrdCpro, intraCalm ) as sotck pivot ( SUM(cant) for intraCalm IN (".implode(",",$alma).") ) as ptv ) as stocks ON stocks.intrdCpro = inpro2.inproCpro ".$stocki."
             WHERE inproMdel = 0 AND inproStat = 0 
             AND inpro2.inproCpro = inpro.inproCpro
         )as Saldo,
 
-        ".implode(",",$grup_t)."
+        ".implode(",",$grup_t).",
+
+        (SELECT
+        IsNull(SUM(intpdCanB), 0)
+        FROM intpd
+        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
+        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
+        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
+        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
+        WHERE intpdMdel = 0
+        AND intrpCads = ".$idAlmacen."
+        AND intpdCpro = inpro.inproCpro
+        AND intrpFtrp = '".$ffin1."') AS '".$ffin1."',
+
+        (SELECT
+        IsNull(SUM(intpdCanB), 0)
+        FROM intpd
+        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
+        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
+        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
+        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
+        WHERE intpdMdel = 0
+        AND intrpCads = ".$idAlmacen."
+        AND intpdCpro = inpro.inproCpro
+        AND intrpFtrp = '".$ffin2."') AS '".$ffin2."',
+
+        (SELECT
+        IsNull(SUM(intpdCanB), 0)
+        FROM intpd
+        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
+        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
+        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
+        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
+        WHERE intpdMdel = 0
+        AND intrpCads = ".$idAlmacen."
+        AND intpdCpro = inpro.inproCpro
+        AND intrpFtrp = '".$ffin3."') AS '".$ffin3."'
+
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
         LEFT JOIN ( SELECT convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, maconNomb 
@@ -295,7 +333,7 @@ class StockVentaController extends Controller
         ".implode(",",$grup_tit)."
             FROM ( SELECT intrdCpro, intraCalm, SUM(intrdCanb) as cant 
                 FROM intra JOIN intrd ON intraNtra = intrdNtra 
-                WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffin2."' 
+                WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '".$ffact."' 
                 GROUP BY intrdCpro, intraCalm ) as sotck pivot ( SUM(cant) for intraCalm IN ([39],[46],[47],[40],[7],[10],[5],[29],[55],[4],[13],[6],[30],[43],[45],[54]) ) as ptv ) as stocks ON stocks.intrdCpro = inpro.inproCpro ".$stocki."
         WHERE inproMdel = 0 AND inproStat = 0 
         --AND marc.maconNomb LIKE '%%'
@@ -311,14 +349,27 @@ class StockVentaController extends Controller
         ";
         //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
-        $titulos[] = ['name'=>'Historial', 'data'=>'Historial', 'title'=>'Historial', 'defaultContent'=>'<button>Click!</button>'];
-        $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'defaultContent'=>'<button>Click!</button>'];
+        dd($test[1]->codigo);
+        
+        $titulos[] = ['name'=>$ffin3, 'data'=>$ffin3, 'title'=>$ffin3, 'tip'=>'decimal'];
+        $titulos[] = ['name'=>$ffin2, 'data'=>$ffin2, 'title'=>$ffin2, 'tip'=>'decimal'];
+        $titulos[] = ['name'=>$ffin1, 'data'=>$ffin1, 'title'=>$ffin1, 'tip'=>'decimal'];
+        $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'defaultContent'=>'<input id="prodcod" type="number" class="form-control form-control-sm" name="prodcod" min="0">'];
         $titulos_excel[] = 'Total';
+        //if($request->gen =="export")
+        //{
+            //return dd($pvp);
+            //$export = new StockExport($test, $titulos_excel);    
+            //return Excel::download($export, 'Reporte de Stock Actual.xlsx');
+        //}
         if($request->gen =="export")
         {
-            //return dd($pvp);
-            $export = new StockExport($test, $titulos_excel);    
-            return Excel::download($export, 'Reporte de Stock Actual.xlsx');
+            $pdf = \PDF::loadView('reports.pdf.stockventa')
+            ->setOrientation('landscape')
+            ->setPaper('letter')
+            ->setOption('footer-right','Pag [page] de [toPage]')
+            ->setOption('footer-font-size',8);
+            return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
         }
         else
         {
@@ -336,7 +387,12 @@ class StockVentaController extends Controller
      */
     public function show($id)
     {
-        //
+        $pdf = \PDF::loadView('reports.pdf.stockventa')
+            ->setOrientation('landscape')
+            ->setPaper('letter')
+            ->setOption('footer-right','Pag [page] de [toPage]')
+            ->setOption('footer-font-size',8);
+        return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
     }
 
     /**

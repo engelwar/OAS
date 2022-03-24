@@ -69,9 +69,9 @@
                             <button type="submit" class="btn btn-primary" name="gen" value="ver">
                                 {{ __('Ver') }}
                             </button>
-                            <button type="submit" class="btn btn-primary" name="gen" value="export">
+                            {{--<button type="submit" class="btn btn-primary" name="gen" value="export">
                                 {{ __('Exportar') }}
-                            </button>                            
+                            </button>--}}                            
                         </div>
                     </div>
                 </div>

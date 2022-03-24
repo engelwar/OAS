@@ -22,7 +22,36 @@
                 </tfoot>
             </table>         
         </div>
+        <div>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">Solicitar</button>
+        </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form action="{{ route('stockventa.show',2) }}" method="GET" target="_blank">
+        <div class="modal-body">
+            <select class="form-select" aria-label="Default select example" name="idalmacen">
+                <option value="2">Almacen Handal</option>
+                <option value="3">Almacen Mariscal</option>
+                <option value="4">Almacen Calacoto</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" name="gen" value='export'>Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </form>
+  </div>
+</div>
 </div>
 @endsection
 
