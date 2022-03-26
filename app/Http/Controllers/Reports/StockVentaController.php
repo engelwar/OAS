@@ -172,9 +172,13 @@ class StockVentaController extends Controller
         $titulos[] = ['name'=>'I-E-T', 'data'=>'I-E-T', 'title'=>'I.E.T.', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
+
         $grup_tit = [];
         $grup_t = [];
         $temp2 = [];
+        //---Creacion de variables VarI y VarF para el control de pociones del array 
+        $VarI="";
+        $VarF="";
         foreach (unserialize($request->grupos) as $key => $value) {
             if($key == 'Sin Grupo'){
                 foreach ($value as $k => $v) {
@@ -208,6 +212,22 @@ class StockVentaController extends Controller
                 } 
             }
         }
+        
+        //--ciclo repetivo para mover y la columna planta al al incio
+        $x1=1;
+        $x2=12;
+        while($x1<=4){
+        $VarI=$titulos[$x2-1];
+        $VarF=$titulos[$x2];
+        $titulos[$x2-1]=$VarF;
+        $titulos[$x2]=$VarI;
+        $x2=$x2-1;
+        $x1++;
+        };
+     
+
+        //dd(($grup_tit[4]).($grup_t[4]).($temp2[4]));
+
         // return dd($request->all());
         $alma = [];
         $alma_total = [];
@@ -349,7 +369,7 @@ class StockVentaController extends Controller
         ";
         //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
-        dd($test[1]->codigo);
+       // dd($test[1]->codigo);
         
         $titulos[] = ['name'=>$ffin3, 'data'=>$ffin3, 'title'=>$ffin3, 'tip'=>'decimal'];
         $titulos[] = ['name'=>$ffin2, 'data'=>$ffin2, 'title'=>$ffin2, 'tip'=>'decimal'];
