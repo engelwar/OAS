@@ -116,6 +116,8 @@ Route::prefix('reports')->group(function(){
     
     Route::resource('stockventa', 'Reports\StockVentaController');
     Route::any('stockventa/store/almxu', 'Reports\StockVentaController@store_almxu')->name('stockventa.store_almxu');
+    Route::post('reports/stockventa','Reports\StockVentaController@historia')->name('stockventa.historia');
+    Route::post('reports/stockventa/{$fffin}/{nombAlmacen}','Reports\StockVentaController@pdfventa')->name('stockventa.pdfventa');
 
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');

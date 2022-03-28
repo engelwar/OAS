@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use App\User;
+use App\Stockventa;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StockExport;
 use App\TempStockParam;
@@ -169,7 +171,7 @@ class StockVentaController extends Controller
         }
 
         $titulos[] = ['name'=>$nombAlmacen, 'data'=>$nombAlmacen, 'title'=>$nombAlmacen, 'tip'=>'decimal'];
-        $titulos[] = ['name'=>'I-E-T', 'data'=>'I-E-T', 'title'=>'I.E.T.', 'tip'=>'decimal'];
+        $titulos[] = ['name'=>'IET', 'data'=>'IET', 'title'=>'IET', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
         $grup_tit = [];
@@ -260,7 +262,7 @@ class StockVentaController extends Controller
             AND intpdCpro = inpro.inproCpro
             AND intrpFtrp = '".$ffact."'
             )
-        ) as [I-E-T],
+        ) as IET,
 
         (
             select 
@@ -349,13 +351,23 @@ class StockVentaController extends Controller
         ";
         //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
-        dd($test[1]->codigo);
+        
+        $array = [];
+        foreach ($test as $val) {
+            $array[] = ['categoria'=>$val->categoria,'codigo'=>$val->codigo,'descripcion'=>$val->descripcion,'umprod'=>$val->umprod,'Ballivian'=>$val->Ballivian,
+            'IET'=>$val->IET,'Ventas'=>$val->Ventas,'Ventas'=>$val->Ventas,'Saldo'=>$val->Saldo,'AC2'=>$val->AC2,'Calacoto'=>$val->Calacoto,'Handal'=>$val->Handal
+            ,'Mariscal'=>$val->Mariscal,'Planta'=>$val->Planta,$ffin3=>$val->$ffin3,$ffin2=>$val->$ffin2,$ffin1=>$val->$ffin1,
+            'Pedido'=>'<input id="'.$val->codigo.'" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>'];
+        }
+        
         
         $titulos[] = ['name'=>$ffin3, 'data'=>$ffin3, 'title'=>$ffin3, 'tip'=>'decimal'];
         $titulos[] = ['name'=>$ffin2, 'data'=>$ffin2, 'title'=>$ffin2, 'tip'=>'decimal'];
         $titulos[] = ['name'=>$ffin1, 'data'=>$ffin1, 'title'=>$ffin1, 'tip'=>'decimal'];
-        $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'defaultContent'=>'<input id="prodcod" type="number" class="form-control form-control-sm" name="prodcod" min="0">'];
+        $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'tip'=>'decimal'];
         $titulos_excel[] = 'Total';
+
         //if($request->gen =="export")
         //{
             //return dd($pvp);
@@ -374,7 +386,7 @@ class StockVentaController extends Controller
         else
         {
             //return dd($titulos);
-            return view('reports.vista.stockventa', compact('test', 'titulos'));
+            return view('reports.vista.stockventa', compact('test', 'array', 'titulos'));
         }
         //return Excel::download(new ComprasMovExport, 'users.xlsx');
     }
@@ -385,14 +397,33 @@ class StockVentaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    public function historia(Request $request)
     {
-        $pdf = \PDF::loadView('reports.pdf.stockventa')
+        //if ($request['catprod2'][0] != null) {
+        //    foreach ($request->umprod2 as $i => $j) {
+        //       Stockventa::create(['catprod' => $request['catprod2'][$i], 'codprod' => $request['codprod2'][$i], 'desprod' => $request['desprod2'][$i], 'umprod' => $request['umprod2'][$i], 'canprod' => $request['canprod2'][$i], 'idalmacen' => $request['idalmacen'], 'cod_user' => $request['cod_user']]);
+        //    }
+        //}
+        $data = Stockventa::latest('id')->first();
+        $lastRecordDate = Stockventa::all()->sortByDesc('created_at')->take(1)->toArray();
+        $fffin = date('Y-m-d h:i:s', strtotime($lastRecordDate[$data['id']-1]['created_at']));
+        return redirect()->route('stockventa.show', $fffin);
+    }
+    
+    public function show($fffin)
+    {
+        //dd($lastRecordDate);
+        $query = Stockventa::orderBy('codprod', 'ASC')
+            ->where('created_at','=',$fffin)
+            ->where('cod_user','=',Auth::user()->id)
+            ->paginate(8);
+        $pdf = \PDF::loadView('reports.pdf.stockventa', compact('query', 'fffin'))
             ->setOrientation('landscape')
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
             ->setOption('footer-font-size',8);
-        return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
+        return $pdf->inline('Stock I-E-T-V');
     }
 
     /**

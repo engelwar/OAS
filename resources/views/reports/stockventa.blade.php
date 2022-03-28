@@ -48,21 +48,13 @@
                             </div>
                         </div> --}}
                     </div>
-                    <div class="mb-3 row">
-                        @if(Auth::user()->id == 37 || Auth::user()->id == 9 || Auth::user()->id == 45) 
+                    <div class="mb-3 row"> 
                         <select class="form-select" aria-label="Default select example" name="selectAlmacen">
                             <option value="1">Almacen Ballivian</option>
-                            <option value="2">Almacen Handal</option>
+                            {{-- <option value="2">Almacen Handal</option>
                             <option value="3">Almacen Mariscal</option>
-                            <option value="4">Almacen Calacoto</option>
+                            <option value="4">Almacen Calacoto</option> --}}
                         </select>
-                        @elseif(Auth::user()->id == 9)
-                        <label for="colFormLabelSm" class="form-control form-control-sm">Almacen Ballvian</label>
-                        <input type="number" value="1" class="d-none" name="selectAlmacen">
-                        @elseif(Auth::user()->id == 37)
-                        @elseif(Auth::user()->id == 37)
-                        @elseif(Auth::user()->id == 37)
-                        @endif 
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 text-center d-block gap-2">

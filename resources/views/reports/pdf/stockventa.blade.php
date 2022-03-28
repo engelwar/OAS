@@ -22,7 +22,10 @@ body{
                         height: auto;"/>      
                     </td>
                     <td style="width: 60%; text-align: center;">
-                        <h3 class="text-center">TRASPASO</h3>               
+                        <h3 class="text-center">TRASPASO</h3> 
+                        <h4>Almacen origen: </h4>              
+                        <h4>Almacen destino: Almacen Ballivian</h4>              
+                        <h4>Fecha: {{$fffin}}</h4>              
                     </td>
                     <td style="width: 20%; text-align: right;">                
                     </td>
@@ -31,25 +34,23 @@ body{
             <table class="table table-sm table-bordered">
             <thead>
             <tr>
+                <th>Categoria</th>
                 <th>Codigo</th>
-                <th>Cliente</th>
-                <th>Fecha</th>
-                <th>FechaVenc</th>
-                <th>ImporteCXC</th>
-                <th>ACuenta</th>
-                <th>Saldo</th>
-                <th>Glosa</th>
-                <th>Usuario</th>
-                <th>M.</th>
-                <th>NVenta</th>
-                <th>Num. Fac</th>
-                <th>Local</th>
-                <th>estado</th>
+                <th>Descirpcion</th>
+                <th>U.M.</th>
+                <th>Cantidad</th>
                 </tr>
             </thead>
             <tbody>
-            
-            
+            @foreach ($query as $item)
+                <tr>
+                    <td>{{$item->catprod}}</td>
+                    <td>{{$item->codprod}}</td>
+                    <td>{{$item->desprod}}</td>
+                    <td>{{$item->umprod}}</td>
+                    <td>{{$item->canprod}}</td>
+                </tr>
+            @endforeach         
             </tbody>
             </table>        
         </div>

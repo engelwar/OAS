@@ -22,42 +22,50 @@
                 </tfoot>
             </table>         
         </div>
-        <div>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">Solicitar</button>
+        <div class="w-50">
+            <form action="{{ route('stockventa.historia') }}" method="POST" target="_blank">
+                @csrf
+                <table id='example2' class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">U.M.</th>
+                        <th scope="col">Cantidad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <input class="d-none" type="text" value='{{Auth::user()->id}}' name="cod_user">
+                <div class="mb-1">
+                    <select class="form-select" aria-label="Default select example" name="idalmacen">
+                        <option value="Almacen AC2">Almacen AC2</option>
+                        <option value="Almacen Planta">Almacen Planta</option>
+                        <option value="Almacen Calacoto">Almacen Calacoto</option>
+                        <option value="Almacen Handal">Almacen Handal</option>
+                        <option value="Almacen Mariscal">Almacen Mariscal</option>
+                    </select>
+                </div>
+                <div class="">
+                  <button id="" type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <form action="{{ route('stockventa.show',2) }}" method="GET" target="_blank">
-        <div class="modal-body">
-            <select class="form-select" aria-label="Default select example" name="idalmacen">
-                <option value="2">Almacen Handal</option>
-                <option value="3">Almacen Mariscal</option>
-                <option value="4">Almacen Calacoto</option>
-            </select>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" name="gen" value='export'>Guardar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-    </form>
-  </div>
-</div>
 </div>
 @endsection
 
 @section('mis_scripts')
 <script>
-var json_data = {!! json_encode($test) !!};
+var json_data2 = {!! json_encode($array) !!};
+const btn1 = document.getElementById('btn1');
+const table1 = document.getElementById('example');
+const table2 = document.getElementById('example2');
+let id = 0;
+let id2 = 0;
+
 var titulos = {!! json_encode($titulos) !!};
 var money = [], decimal = [];
 titulos.forEach(function(element, key){
@@ -81,8 +89,11 @@ $(document).ready(function()
     } );
     $('#example').DataTable( 
     {
-        data: json_data,
+        data: json_data2,
         columns: titulos,
+        fnCreatedRow: function( rowEl, data) {
+            $(rowEl).attr('id', id++);
+        },
         "pageLength": 25, 
         "columnDefs": [
             { className: "categoria_max", "targets": [0] },
@@ -147,7 +158,37 @@ $(document).ready(function()
             } );
         }
     } );
-    $(".page-wrapper").removeClass("toggled"); 
+    
+    $("#example").on('click', '.btnAdd', function() {
+        var item = $(this).closest("tr")   // Finds the closest row <tr         // Retrieves the text within <td>
+                        .attr('id');
+        console.log(item);
+        if (document.getElementById(json_data2[item].codigo).value != 0){
+            const row = table2.insertRow();
+            row.setAttribute('id', id2++);
+            row.innerHTML = `
+            <td><input class="form-control" type="text" name="catprod2[]" placeholder="Tipo" value="${json_data2[item].categoria}" disabled></td>
+            <td><input class="form-control" type="text" name="codprod2[]" placeholder="Tipo" value="${json_data2[item].codigo}" disabled></td>
+            <td><input class="form-control" type="text" name="desprod2[]" placeholder="Tipo" value="${json_data2[item].descripcion}" disabled></td>
+            <td><input class="form-control" type="text" name="umprod2[]" placeholder="Tipo" value="${json_data2[item].umprod}" disabled></td>
+            <td><input class="form-control" type="text" name="canprod2[]" placeholder="Tipo" value="${document.getElementById(json_data2[item].codigo).value}" disabled></td>
+            <td><td>
+            `;
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('btn', 'btn-danger');
+            removeBtn.innerHTML = '<i class="fa fa-trash"></i>';
+            removeBtn.onclick = function(e){
+            removeTodo(row.getAttribute('id'));
+            }
+            row.children[5].appendChild(removeBtn);    // Outputs the answer
+        };
+        function removeTodo(id){
+            document.getElementById(id).remove();
+        }
+    }); 
+
+    $(".page-wrapper").removeClass("toggled");
 } );
+
 </script>
 @endsection
