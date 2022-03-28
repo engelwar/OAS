@@ -160,6 +160,7 @@ $(document).ready(function()
     } );
     
     $("#example").on('click', '.btnAdd', function() {
+        var prodCat = '';
         var item = $(this).closest("tr")   // Finds the closest row <tr         // Retrieves the text within <td>
                         .attr('id');
         console.log(item);
@@ -167,11 +168,11 @@ $(document).ready(function()
             const row = table2.insertRow();
             row.setAttribute('id', id2++);
             row.innerHTML = `
-            <td><input class="form-control" type="text" name="catprod2[]" placeholder="Tipo" value="${json_data2[item].categoria}" disabled></td>
-            <td><input class="form-control" type="text" name="codprod2[]" placeholder="Tipo" value="${json_data2[item].codigo}" disabled></td>
-            <td><input class="form-control" type="text" name="desprod2[]" placeholder="Tipo" value="${json_data2[item].descripcion}" disabled></td>
-            <td><input class="form-control" type="text" name="umprod2[]" placeholder="Tipo" value="${json_data2[item].umprod}" disabled></td>
-            <td><input class="form-control" type="text" name="canprod2[]" placeholder="Tipo" value="${document.getElementById(json_data2[item].codigo).value}" disabled></td>
+            <td><input class="form-control" type="text" name="catprod2[]" placeholder="Tipo" value="${json_data2[item].categoria}"></td>
+            <td><input class="form-control" type="text" name="codprod2[]" placeholder="Tipo" value="${json_data2[item].codigo}"></td>
+            <td><input class="form-control" type="text" name="desprod2[]" placeholder="Tipo" value="${json_data2[item].descripcion}"></td>
+            <td><input class="form-control" type="text" name="umprod2[]" placeholder="Tipo" value="${json_data2[item].umprod}"></td>
+            <td><input class="form-control" type="text" name="canprod2[]" placeholder="Tipo" value="${document.getElementById(json_data2[item].codigo).value}"></td>
             <td><td>
             `;
             const removeBtn = document.createElement('button');

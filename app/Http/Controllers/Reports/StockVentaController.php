@@ -288,43 +288,7 @@ class StockVentaController extends Controller
             AND inpro2.inproCpro = inpro.inproCpro
         )as Saldo,
 
-        ".implode(",",$grup_t).",
-
-        (SELECT
-        IsNull(SUM(intpdCanB), 0)
-        FROM intpd
-        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
-        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
-        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
-        WHERE intpdMdel = 0
-        AND intrpCads = ".$idAlmacen."
-        AND intpdCpro = inpro.inproCpro
-        AND intrpFtrp = '".$ffin1."') AS '".$ffin1."',
-
-        (SELECT
-        IsNull(SUM(intpdCanB), 0)
-        FROM intpd
-        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
-        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
-        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
-        WHERE intpdMdel = 0
-        AND intrpCads = ".$idAlmacen."
-        AND intpdCpro = inpro.inproCpro
-        AND intrpFtrp = '".$ffin2."') AS '".$ffin2."',
-
-        (SELECT
-        IsNull(SUM(intpdCanB), 0)
-        FROM intpd
-        LEFT JOIN intrp ON intrpNtrp = intpdNtrp AND intpdMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr as resp ON resp.adusrCusr = intrpCres
-        LEFT JOIN malog ON maLogNtra = CAST(intrpNtrp as varchar) AND malogTtra = 1 AND malogCprg IN (256, 793) 
-        LEFT JOIN bd_admOlimpia.dbo.adusr as soli ON soli.adusrCusr = malogCusr
-        WHERE intpdMdel = 0
-        AND intrpCads = ".$idAlmacen."
-        AND intpdCpro = inpro.inproCpro
-        AND intrpFtrp = '".$ffin3."') AS '".$ffin3."'
+        ".implode(",",$grup_t)."
 
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
@@ -356,15 +320,10 @@ class StockVentaController extends Controller
         foreach ($test as $val) {
             $array[] = ['categoria'=>$val->categoria,'codigo'=>$val->codigo,'descripcion'=>$val->descripcion,'umprod'=>$val->umprod,'Ballivian'=>$val->Ballivian,
             'IET'=>$val->IET,'Ventas'=>$val->Ventas,'Ventas'=>$val->Ventas,'Saldo'=>$val->Saldo,'AC2'=>$val->AC2,'Calacoto'=>$val->Calacoto,'Handal'=>$val->Handal
-            ,'Mariscal'=>$val->Mariscal,'Planta'=>$val->Planta,$ffin3=>$val->$ffin3,$ffin2=>$val->$ffin2,$ffin1=>$val->$ffin1,
-            'Pedido'=>'<input id="'.$val->codigo.'" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+            ,'Mariscal'=>$val->Mariscal,'Planta'=>$val->Planta,'Pedido'=>'<input id="'.$val->codigo.'" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
             <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>'];
         }
         
-        
-        $titulos[] = ['name'=>$ffin3, 'data'=>$ffin3, 'title'=>$ffin3, 'tip'=>'decimal'];
-        $titulos[] = ['name'=>$ffin2, 'data'=>$ffin2, 'title'=>$ffin2, 'tip'=>'decimal'];
-        $titulos[] = ['name'=>$ffin1, 'data'=>$ffin1, 'title'=>$ffin1, 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Pedido', 'data'=>'Pedido', 'title'=>'Pedido', 'tip'=>'decimal'];
         $titulos_excel[] = 'Total';
 
@@ -413,12 +372,12 @@ class StockVentaController extends Controller
     
     public function show($fffin)
     {
-        //dd($lastRecordDate);
         $query = Stockventa::orderBy('codprod', 'ASC')
             ->where('created_at','=',$fffin)
             ->where('cod_user','=',Auth::user()->id)
             ->paginate(8);
-        $pdf = \PDF::loadView('reports.pdf.stockventa', compact('query', 'fffin'))
+        $nombAlma = $query[0]['idalmacen'];
+        $pdf = \PDF::loadView('reports.pdf.stockventa', compact('query', 'fffin', 'nombAlma'))
             ->setOrientation('landscape')
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
