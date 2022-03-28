@@ -400,11 +400,11 @@ class StockVentaController extends Controller
 
     public function historia(Request $request)
     {
-        //if ($request['catprod2'][0] != null) {
-        //    foreach ($request->umprod2 as $i => $j) {
-        //       Stockventa::create(['catprod' => $request['catprod2'][$i], 'codprod' => $request['codprod2'][$i], 'desprod' => $request['desprod2'][$i], 'umprod' => $request['umprod2'][$i], 'canprod' => $request['canprod2'][$i], 'idalmacen' => $request['idalmacen'], 'cod_user' => $request['cod_user']]);
-        //    }
-        //}
+        if ($request['catprod2'][0] != null) {
+            foreach ($request->umprod2 as $i => $j) {
+               Stockventa::create(['catprod' => $request['catprod2'][$i], 'codprod' => $request['codprod2'][$i], 'desprod' => $request['desprod2'][$i], 'umprod' => $request['umprod2'][$i], 'canprod' => $request['canprod2'][$i], 'idalmacen' => $request['idalmacen'], 'cod_user' => $request['cod_user']]);
+            }
+        }
         $data = Stockventa::latest('id')->first();
         $lastRecordDate = Stockventa::all()->sortByDesc('created_at')->take(1)->toArray();
         $fffin = date('Y-m-d h:i:s', strtotime($lastRecordDate[$data['id']-1]['created_at']));
