@@ -174,9 +174,13 @@ class StockVentaController extends Controller
         $titulos[] = ['name'=>'IET', 'data'=>'IET', 'title'=>'IET', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
         $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
+
         $grup_tit = [];
         $grup_t = [];
         $temp2 = [];
+        //---Creacion de variables VarI y VarF para el control de pociones del array 
+        $VarI="";
+        $VarF="";
         foreach (unserialize($request->grupos) as $key => $value) {
             if($key == 'Sin Grupo'){
                 foreach ($value as $k => $v) {
@@ -210,6 +214,22 @@ class StockVentaController extends Controller
                 } 
             }
         }
+        
+        //--ciclo repetivo para mover y la columna planta al al incio
+        $x1=1;
+        $x2=12;
+        while($x1<=4){
+        $VarI=$titulos[$x2-1];
+        $VarF=$titulos[$x2];
+        $titulos[$x2-1]=$VarF;
+        $titulos[$x2]=$VarI;
+        $x2=$x2-1;
+        $x1++;
+        };
+     
+
+        //dd(($grup_tit[4]).($grup_t[4]).($temp2[4]));
+
         // return dd($request->all());
         $alma = [];
         $alma_total = [];
