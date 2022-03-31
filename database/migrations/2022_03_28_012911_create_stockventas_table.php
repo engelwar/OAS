@@ -20,7 +20,8 @@ class CreateStockventasTable extends Migration
             $table->string('desprod');
             $table->string('umprod');
             $table->string('canprod');
-            $table->string('idalmacen');
+            $table->string('alm_origen');
+            $table->string('alm_destino');
             $table->string('cod_user');
             $table->timestamps();
         });

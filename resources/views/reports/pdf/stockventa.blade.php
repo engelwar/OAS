@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte Ventas Inst/May</title>
+    <title>Reporte Traspaso</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
 body{
@@ -23,11 +23,11 @@ body{
                         height: auto;"/>      
                     </td>
                     <td style="">
-                        <div style="display: table; margin: 0.5cm; width: 100%">
+                        <div style="display: table; margin: 0.3cm; width: 100%">
                             <div style="display: table-cell;">
                                 <div style="font-size: 1.5em">
                                     <label for="" style="font-weight: bold">Almacen origen: </label>
-                                    <span>{{$nombAlma}}</span>
+                                    <span>{{$alm_origen}}</span>
                                 </div>
                                 <div style="font-size: 1.5em">
                                     <label for="" style="font-weight: bold">Fecha: </label>
@@ -36,7 +36,7 @@ body{
                             </div>
                             <div style="display: table-cell; font-size: 1.5em">
                                 <label for="" style="font-weight: bold">Almacen destino: </label>
-                                <span>Almacen Ballivian</span>
+                                <span>{{$alm_destino}}</span>
                             </div>
                         </div>
                     </td>

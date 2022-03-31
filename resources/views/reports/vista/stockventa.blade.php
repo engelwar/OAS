@@ -7,6 +7,10 @@
         max-width: 120px !important;
         text-overflow: ellipsis;
     }
+    .pedido_max{
+      display: flex;
+      flex-direction: row;
+    }
 </style>
 @endsection
 @section('content')
@@ -39,8 +43,9 @@
                     </tbody>
                 </table>
                 <input class="d-none" type="text" value='{{Auth::user()->id}}' name="cod_user">
+                <input class="d-none" type="text" value='Almacen {{$nombAlmacen}}' name="alm_destino">
                 <div class="mb-1">
-                    <select class="form-select" aria-label="Default select example" name="idalmacen">
+                    <select class="form-select" aria-label="Default select example" name="alm_origen">
                         <option value="Almacen AC2">Almacen AC2</option>
                         <option value="Almacen Planta">Almacen Planta</option>
                         <option value="Almacen Calacoto">Almacen Calacoto</option>
@@ -97,6 +102,8 @@ $(document).ready(function()
         "pageLength": 25, 
         "columnDefs": [
             { className: "categoria_max", "targets": [0] },
+            { className: "categoria_max", "targets": [1] },
+            { className: "pedido_max", "targets":[13] },
             { className: "dt-right", "targets":money },
             { className: "dt-right", "targets":decimal },
         ],

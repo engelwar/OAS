@@ -36,10 +36,10 @@
                     </div>
                     <div class="px-3 mb-2 row">
                         <div class="col-12">
-                            <div class="form-check form-switch">
+                            <!-- <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="stock02" name="stock0" checked> 
                                 <label class="form-check-label" for="stock02">Mostrar productos con stock 0</label>
-                            </div>
+                            </div> -->
                         </div>
                         {{-- <div class="col-12">
                             <div class="form-check form-switch">
@@ -50,10 +50,20 @@
                     </div>
                     <div class="mb-3 row"> 
                         <select class="form-select" aria-label="Default select example" name="selectAlmacen">
-                            <option value="1">Almacen Ballivian</option>
-                            {{-- <option value="2">Almacen Handal</option>
-                            <option value="3">Almacen Mariscal</option>
-                            <option value="4">Almacen Calacoto</option> --}}
+                          @if(Auth::user()->id == 9 || Auth::user()->id == 37)
+                          <option value="1">Almacen Ballivian</option>
+                          <option value="2">Almacen Handal</option>
+                          <option value="3">Almacen Mariscal</option>
+                          <option value="4">Almacen Calacoto</option>
+                          @elseif (Auth::user()->id == 30)
+                          <option value="1">Almacen Ballivian</option>
+                          @elseif (Auth::user()->id == 5)
+                          <option value="2">Almacen Handal</option>
+                          @elseif (Auth::user()->id == 28)
+                          <option value="3">Almacen Mariscal</option>
+                          @elseif (Auth::user()->id == 32)
+                          <option value="4">Almacen Calacoto</option>
+                          @endif
                         </select>
                     </div>
                     <div class="mb-3 row">
@@ -61,9 +71,9 @@
                             <button type="submit" class="btn btn-primary" name="gen" value="ver">
                                 {{ __('Ver') }}
                             </button>
-                            {{--<button type="submit" class="btn btn-primary" name="gen" value="export">
+                            <!----<button type="submit" class="btn btn-primary" name="gen" value="export">
                                 {{ __('Exportar') }}
-                            </button>--}}                            
+                            </button>---->
                         </div>
                     </div>
                 </div>
