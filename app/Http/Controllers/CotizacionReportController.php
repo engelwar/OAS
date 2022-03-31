@@ -31,7 +31,7 @@ class CotizacionReportController extends Controller
     //mostrar pdf
     public function verPDF()
     {
-        return view('reports.pdf.cotizacionReportPdf');
+        return redirect('reports.pdf.cotizacionReportPdf');
     }
 
     /**
@@ -53,7 +53,7 @@ class CotizacionReportController extends Controller
      */
     public function show(Cotizacion_report $cotizacion_report)
     {
-        //
+        return view('reports.pdf.prueba');
     }
 
     /**

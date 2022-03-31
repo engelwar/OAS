@@ -99,7 +99,7 @@
                              </button>
                     </div>
                     <div class="col-auto">
-                    <a class="btn btn-secondary btn-lg" href="{{ route('ReportePDF') }}">Generar PDF</a>
+                    <a class="btn btn-secondary btn-lg" href="{{ route('prueba.show') }}">Generar PDF</a>
                         
                         
                     </div>
