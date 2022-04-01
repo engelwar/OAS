@@ -184,9 +184,9 @@ class NotasRemisionController extends Controller
         $not_anu = 
         "SELECT 
         CONVERT(varchar,vtvtaFent,103) as 'Fecha',
-        -- vtvtaCent as 'NroCli',
+        vtvtaCent as 'NroCli',
         vtvtaNomC as 'Cliente', 
-        vtvtaNtra as 'Nota Remision',
+        vtvtaNtra as 'NroTrans',
         REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Total',
         admonAbrv 'Moneda',
         adusrNomb as 'Usuario',
