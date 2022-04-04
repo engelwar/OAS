@@ -180,6 +180,7 @@ class NotasRemisionController extends Controller
             ".$fecha."
             AND vtvtaCusr = @usuario -- Usuario
         ";
+        dd($not);
 
         $not_anu = 
         "SELECT 

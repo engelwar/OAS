@@ -158,6 +158,13 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'IET', 'data' => 'IET', 'title' => 'IET', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
+    $stock = "";
+    $stocki="";
+    if($request->stock0==null)
+    {
+      $stock = "AND (stocks.Total IS NOT NULL)";
+      $stocki = "AND stocks.Total <> 0";
+    } 
 
     $grup_tit = [];
     $grup_t = [];
@@ -185,7 +192,6 @@ class StockVentaController extends Controller
           }
         }
         if ($temp != null) {
-          echo $key;
           $grup_tit[] = implode("+", $temp) . " as [" . $key . "]";
           $grup_t[] = "CAST(ISNULL([" . $key . "],0) as varchar) as [" . $key . "]";
           $temp2[] = "stocks." . $key;
@@ -197,16 +203,16 @@ class StockVentaController extends Controller
     }
 
     //--ciclo repetivo para mover y la columna planta al al incio
-    // $x1 = 1;
-    // $x2 = 12;
-    // while ($x1 <= 4) {
-    //   $VarI = $titulos[$x2 - 1];
-    //   $VarF = $titulos[$x2];
-    //   $titulos[$x2 - 1] = $VarF;
-    //   $titulos[$x2] = $VarI;
-    //   $x2 = $x2 - 1;
-    //   $x1++;
-    // };
+    $x1 = 1;
+    $x2 = 12;
+    while ($x1 <= 3) {
+      $VarI = $titulos[$x2 - 1];
+      $VarF = $titulos[$x2];
+      $titulos[$x2 - 1] = $VarF;
+      $titulos[$x2] = $VarI;
+      $x2 = $x2 - 1;
+      $x1++;
+    };
 
 
     //dd(($grup_tit[4]).($grup_t[4]).($temp2[4]));
@@ -289,7 +295,8 @@ class StockVentaController extends Controller
             AND inpro2.inproCpro = inpro.inproCpro
         )as Saldo,
 
-        " . implode(",", $grup_t) . "
+        " . implode(",", $grup_t) . ",
+        CAST(ISNULL(Total,0) as varchar) as Total
 
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
@@ -297,24 +304,31 @@ class StockVentaController extends Controller
             FROM macon 
             WHERE maconCcon = 113 ) as marc ON inpro.inproMarc = marc.maconMarc 
         LEFT JOIN ( SELECT intrdCpro, 
-        " . implode(",", $grup_tit) . "
+        " . implode(",", $grup_tit) . ",
+        ".implode("+",$alma_total)." as 'Total'
             FROM ( SELECT intrdCpro, intraCalm, SUM(intrdCanb) as cant 
                 FROM intra JOIN intrd ON intraNtra = intrdNtra 
                 WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '" . $ffact . "' 
-                GROUP BY intrdCpro, intraCalm ) as sotck pivot ( SUM(cant) for intraCalm IN ([39],[46],[47],[40],[7],[10],[5],[29],[55],[4],[13],[6],[30],[43],[45],[54]) ) as ptv ) as stocks ON stocks.intrdCpro = inpro.inproCpro
+                GROUP BY intrdCpro, intraCalm ) as sotck 
+                pivot ( 
+                  SUM(cant) 
+                  for intraCalm IN (".implode(",",$alma).") ) as ptv ) as stocks ON stocks.intrdCpro = inpro.inproCpro ".$stocki."
         WHERE inproMdel = 0 AND inproStat = 0 
         --AND marc.maconNomb LIKE '%%'
         --AND (inpro.inproCpro LIKE '%%' OR inpro.inproNomb LIKE '%%') 
         --AND stocks.Total 
         --AND (inpro.inproCpro LIKE '%PTLXXX003%' OR inpro.inproNomb LIKE '%PTLXXX003%')
+        ".$categ."
+        ".$prod."
+        ".$stock."
         GROUP BY marc.maconNomb, 
             inpro.inproCpro, 
             inpro.inproNomb, 
-            umpro.inumeAbre, 
+            umpro.inumeAbre,
+            stocks.Total,
             " . implode(",", $temp2) . "
         ORDER BY inpro.inproCpro
-        ";
-    //return dd($query);
+        ";   
     $test = DB::connection('sqlsrv')->select(DB::raw($query));
 
     $array = [];
@@ -322,11 +336,12 @@ class StockVentaController extends Controller
       $array[] = [
         'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
         'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<td style="display: flex; flex-direction: row;"><input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
-            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button></td>'
+            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button></td>', 'Total' => $val->Total
       ];
     }
-
+    
     $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
+    $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
     $titulos_excel[] = 'Total';
 
     //if($request->gen =="export")

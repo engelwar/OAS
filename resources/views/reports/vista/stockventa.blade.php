@@ -11,6 +11,10 @@
       display: flex;
       flex-direction: row;
     }
+    
+    .sumtotal{
+      display: none;
+    }
 </style>
 @endsection
 @section('content')
@@ -103,7 +107,9 @@ $(document).ready(function()
         "columnDefs": [
             { className: "categoria_max", "targets": [0] },
             { className: "categoria_max", "targets": [1] },
+            { className: "punto_referencia", "targets": [7] },
             { className: "pedido_max", "targets":[13] },
+            { className: "sumtotal", "targets":[14] },
             { className: "dt-right", "targets":money },
             { className: "dt-right", "targets":decimal },
         ],

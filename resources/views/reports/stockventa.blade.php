@@ -36,17 +36,11 @@
                     </div>
                     <div class="px-3 mb-2 row">
                         <div class="col-12">
-                            <!-- <div class="form-check form-switch">
+                            <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="stock02" name="stock0" checked> 
                                 <label class="form-check-label" for="stock02">Mostrar productos con stock 0</label>
-                            </div> -->
-                        </div>
-                        {{-- <div class="col-12">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="codBarras" name="codBarras"> 
-                                <label class="form-check-label" for="codBarras">Mostrar Codigos de Barra</label>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="mb-3 row"> 
                         <select class="form-select" aria-label="Default select example" name="selectAlmacen">
