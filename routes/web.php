@@ -118,6 +118,8 @@ Route::prefix('reports')->group(function(){
     
     Route::resource('stockventa', 'Reports\StockVentaController');
     Route::any('stockventa/store/almxu', 'Reports\StockVentaController@store_almxu')->name('stockventa.store_almxu');
+    Route::post('reports/stockventa','Reports\StockVentaController@historia')->name('stockventa.historia');
+    Route::get('reports/stockventa/{alm_origen}/{alm_destino}','Reports\StockVentaController@show2')->name('stockventa.show2');
 
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
@@ -253,8 +255,13 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 // Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
 
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
+<<<<<<< HEAD
 //-------------------caminos de reprotte cotizacion------------------------------------------
 Route::resource('/CotizacionReporte', 'CotizacionReportController');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('prueba.show');
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
+=======
+
+Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
+>>>>>>> master
