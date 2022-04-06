@@ -58,7 +58,7 @@
                     </select>
                 </div>
                 <div class="">
-                  <button id="" type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
+                  <button type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
                 </div>
             </form>
         </div>
@@ -174,9 +174,7 @@ $(document).ready(function()
     
     $("#example").on('click', '.btnAdd', function() {
         var prodCat = '';
-        var item = $(this).closest("tr")   // Finds the closest row <tr         // Retrieves the text within <td>
-                        .attr('id');
-        console.log(item);
+        var item = $(this).closest("tr").attr('id');
         if (document.getElementById(json_data2[item].codigo).value != 0){
             const row = table2.insertRow();
             row.setAttribute('id', id2++);

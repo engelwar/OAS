@@ -132,6 +132,12 @@ class StockVentaController extends Controller
             OR inpro.inproNomb LIKE '%" . $request->producto . "%')";
     }
     $stock = "";
+    $stocki="";
+    if($request->stock0==null)
+    {
+      $stock = "AND (stocks.Total IS NOT NULL)";
+      $stocki = "AND stocks.Total <> 0";
+    } 
     if ($request->selectAlmacen == 1) {
       $nombAlmacen = 'Ballivian';
       $idAlmacen = 7;
@@ -158,13 +164,7 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'IET', 'data' => 'IET', 'title' => 'IET', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
-    $stock = "";
-    $stocki="";
-    if($request->stock0==null)
-    {
-      $stock = "AND (stocks.Total IS NOT NULL)";
-      $stocki = "AND stocks.Total <> 0";
-    } 
+    
 
     $grup_tit = [];
     $grup_t = [];
@@ -250,7 +250,6 @@ class StockVentaController extends Controller
             from intra
             JOIN intrd on intrdNtra = intraNtra
             where intraMdel = 0 
-            AND intrdMdel = 0
             and intraNtrI = 0
             and intraCalm = " . $idAlmacen . "
             and intrdCpro = inpro.inproCpro
@@ -268,6 +267,7 @@ class StockVentaController extends Controller
             AND intrpCads = " . $idAlmacen . "
             AND intpdCpro = inpro.inproCpro
             AND intrpFtrp = '" . $ffact . "'
+            AND intrpStat = 2
             )
         ) as IET,
 
@@ -335,8 +335,8 @@ class StockVentaController extends Controller
     foreach ($test as $val) {
       $array[] = [
         'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
-        'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<td style="display: flex; flex-direction: row;"><input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
-            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button></td>', 'Total' => $val->Total
+        'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
       ];
     }
     
@@ -351,12 +351,8 @@ class StockVentaController extends Controller
     //return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     //}
     if ($request->gen == "export") {
-      $pdf = \PDF::loadView('reports.pdf.stockventa')
-        ->setOrientation('landscape')
-        ->setPaper('letter')
-        ->setOption('footer-right', 'Pag [page] de [toPage]')
-        ->setOption('footer-font-size', 8);
-      return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
+      $export = new StockExport($array, $titulos_excel);    
+      return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     } else {
       //return dd($titulos);
       return view('reports.vista.stockventa', compact('test', 'array', 'titulos','nombAlmacen'));

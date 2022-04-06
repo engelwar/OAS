@@ -255,3 +255,14 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
+
+Route::resource('licencia', 'LicenciaController');
+Route::get('licencia/create/{cont}', 'LicenciaController@create')->name('licencia');
+Route::get('licencia/estado/{id}', 'LicenciaController@estado')->name('licencia.estado');
+Route::get('licencia_detalle/{id}', 'LicenciaController@estadoForm')->name('licencia.estadoForm');
+Route::get('licencia_pdf/{id}','LicenciaController@generatePDF')->name('licencia_pdf');
+
+Route::resource('vacacion', 'VacacionController');
+Route::get('vacacion_pdf/{id}','VacacionController@generatePDF')->name('vacacion_pdf');
+Route::get('vacacion/estado/{id}', 'VacacionController@estado')->name('vacacion.estado');
+Route::get('vacacion_detalle/{id}', 'VacacionController@estadoForm')->name('vacacion.estadoForm');

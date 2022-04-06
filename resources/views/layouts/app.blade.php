@@ -357,7 +357,11 @@
   overflow-x: hidden;
 }
 
-
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
 
 
 /*-----------------------------chiller-theme-------------------------------------------------*/
@@ -532,6 +536,77 @@
       $(".reload_page").click(function() {
         location.reload();
       });
+
+      var forms = document.querySelectorAll('.formEstado');
+        var formRegistro = document.querySelectorAll('.formRegistro');
+
+        // Loop over them and prevent submission
+        // Array.prototype.slice.call(forms)
+        //     .forEach(function(form) {
+        //         form.addEventListener('submit', function(event) {
+        //             event.preventDefault()
+        //             event.stopPropagation()
+        //             Swal.fire({
+        //                 title: '¿Desea restablecer los valores?',
+        //                 // text: "¿Desea reestablecer los valores?",
+        //                 icon: 'warning',
+        //                 showCancelButton: true,
+        //                 confirmButtonColor: '#3085d6',
+        //                 cancelButtonColor: '#d33',
+        //                 confirmButtonText: 'Si, restablecer'
+        //             }).then((result) => {
+        //                 if (result.isConfirmed) {
+        //                     this.submit();
+        //                     // Swal.fire(
+        //                     //     'Deleted!',
+        //                     //     'Your file has been deleted.',
+        //                     //     'success'
+        //                     // )
+        //                 }
+        //             })
+        //         }, false)
+        //     });
+
+        Array.prototype.slice.call(formRegistro)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Registrado exitosamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        this.submit();
+                    })
+                }, false)
+            });
+
+        var forms = document.querySelectorAll('.formEliminar')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    Swal.fire({
+                        title: '¿Esta seguro que desea eliminar?',
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#20c997',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Confirmar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                            // Swal.fire('¡Eliminado', 'El registro ha sido eliminado exitosamente.', 'success');
+                        }
+                    })
+                }, false)
+            });
     </script>
     @yield('mis_scripts')
 </body>

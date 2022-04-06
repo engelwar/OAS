@@ -6,10 +6,12 @@
 
 @section('content')
 <div class="container center border" style="padding:50px;">
-    <form method="POST" action="{{ route('vacacion.store') }}" class="formRegistro">
+    <form method="GET" action="{{ route('vacacion.estado',$VacacionForm->id) }}" class="">
         @csrf
         <div class=" row d-flex justify-content-center">
-            <div class="col-3"></div>
+            <div class="col-3">
+                <a href="{{ route('vacacion.index') }}" class="btn btn-danger">Volver</a>
+            </div>
             <div class="col-6 d-flex align-items-center justify-content-center">
                 <h3 class="text-center text-primary">FORMULARIO VACACIONES</h3>
             </div>
@@ -23,7 +25,7 @@
                 {{ __('FUNCIONARIO') }}
             </label>
             <div class="col-md-4">
-                <input id="nombre" type="text" value="{{Auth::user()->nombre}} {{Auth::user()->paterno}} {{Auth::user()->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
+                <input id="nombre" type="text" value="{{$VacacionForm->user->nombre}} {{$VacacionForm->user->paterno}} {{$VacacionForm->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
                 @error('nombre')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -35,7 +37,7 @@
                 {{ __('CI') }}
             </label>
             <div class="col-md-2">
-                <input id="ci" type="ci" value="{{Auth::user()->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                <input id="ci" type="ci" value="{{$VacacionForm->user->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                 @error('ci')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -47,7 +49,7 @@
                 {{ __('CARGO') }}
             </label>
             <div class="col-md-2">
-                <input id="cargo" type="cargo" value="{{Auth::user()->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                <input id="cargo" type="cargo" value="{{$VacacionForm->user->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
                 @error('sucursal')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -62,7 +64,7 @@
             </label>
 
             <div class="col-md-4">
-                <input id="area" type="text" value="{{Auth::user()->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                <input id="area" type="text" value="{{$VacacionForm->user->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
                 @error('area')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -72,52 +74,108 @@
         </div>
 
         <div class="m-auto form-group row col-md-10">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion">{{$VacacionForm->detalle_vacacion}}</textarea>
         </div>
 
-        <div class="form-group row mt-4">
-            <label for="fecha_ini" class="col-md-2 col-form-label text-md-right">
-                {{ __('FECHA DE SALIDA') }}
-            </label>
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="form-group row mt-4 flex-column col-md-6">
+                <div class="text-center mb-3">
+                    <h4>SOLICITADO</h4>
+                </div>
+                <div class="form-group row">
+                    <label for="fecha_ini" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA DE SALIDA') }}
+                    </label>
 
-            <div class="col-md-3">
-                <input id="fecha_ini" type="date" class="form-control form-control @error('fecha_ini') is-invalid @enderror" name="fecha_ini" value="{{ old('fecha_ini') }}" required autocomplete="fecha_ini">
-                @error('fecha_ini')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                    <div class="col-md-6">
+                        <input id="fecha_ini" type="date" class="form-control form-control @error('fecha_ini') is-invalid @enderror" value="{{ $VacacionForm->fecha_ini }}" required autocomplete="fecha_ini">
+                        @error('fecha_ini')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fecha_fin" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA FINALIZACION') }}
+                    </label>
+
+                    <div class="col-md-6">
+                        <input id="fecha_fin" type="date" class="form-control form-control @error('fecha_ifin') is-invalid @enderror" value="{{ $VacacionForm->fecha_fin }}" required autocomplete="fecha_fin">
+                        @error('fecha_fin')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="fecha_ret" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA RETORNO') }}
+                    </label>
+
+                    <div class="col-md-6">
+                        <input id="fecha_ret" type="date" class="form-control @error('fecha_ret') is-invalid @enderror" value="{{ $VacacionForm->fecha_ret }}" required autocomplete="fecha_ret">
+                        @error('fecha_ini')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
             </div>
+            <div class="form-group row mt-4 flex-column col-md-6">
+                <div class="text-center mb-3">
+                    <h4>AUTORIZADO</h4>
+                </div>
+                <div class="form-group row">
+                    <label for="fecha_ini_aut" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA DE SALIDA') }}
+                    </label>
 
-            <label for="fecha_fin" class="col-md-3 ml-auto col-form-label text-md-right">
-                {{ __('FECHA FINALIZACION') }}
-            </label>
+                    <div class="col-md-6">
+                        <input id="fecha_ini_aut" type="date" class="form-control form-control @error('fecha_ini_aut') is-invalid @enderror" name="fecha_ini_aut" value="{{ $VacacionForm->fecha_ini_aut }}" autocomplete="fecha_ini_aut">
+                        @error('fecha_ini_aut')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
 
-            <div class="col-md-3 ">
-                <input id="fecha_fin" type="date" class="form-control form-control @error('fecha_ifin') is-invalid @enderror" name="fecha_fin" value="{{ old('fecha_fin') }}" required autocomplete="fecha_fin">
-                @error('fecha_fin')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="form-group row">
+                    <label for="fecha_fin_aut" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA FINALIZACION') }}
+                    </label>
+
+                    <div class="col-md-6">
+                        <input id="fecha_fin_aut" type="date" class="form-control form-control @error('fecha_fin_aut') is-invalid @enderror" name="fecha_fin_aut" value="{{ $VacacionForm->fecha_fin_aut }}" autocomplete="fecha_fin_aut">
+                        @error('fecha_fin_aut')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="fecha_ret_aut" class="col-md-5 col-form-label text-md-right">
+                        {{ __('FECHA RETORNO') }}
+                    </label>
+
+                    <div class="col-md-6">
+                        <input id="fecha_ret_aut" type="date" class="form-control @error('fecha_ret_aut') is-invalid @enderror" name="fecha_ret_aut" value="{{ $VacacionForm->fecha_ret_aut }}" autocomplete="fecha_ret_aut">
+                        @error('fecha_ret_aut')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
             </div>
-
         </div>
 
-        <div class="form-group row">
-            <label for="fecha_ret" class="col-md-2 col-form-label text-md-right">
-                {{ __('FECHA RETORNO') }}
-            </label>
-
-            <div class="col-md-3">
-                <input id="fecha_ret" type="date" class="form-control @error('fecha_ret') is-invalid @enderror" name="fecha_ret" value="{{ old('fecha_ret') }}" required autocomplete="fecha_ret">
-                @error('fecha_ini')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
 
         <div class="form-group row d-flex">
             <label for="dias_v" class="col-md-2 col-form-label text-md-right ml-auto">
@@ -125,7 +183,7 @@
             </label>
 
             <div class="col-md-1">
-                <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v" value="{{ old('dias_v') }}" required autocomplete="dias_v">
+                <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v" value="{{ $VacacionForm->dias_v }}" required autocomplete="dias_v">
                 @error('dias_v')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -134,7 +192,7 @@
             </div>
 
             <div class="col-md-4">
-                <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v_l" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l">
+                <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v_l" value="{{ $VacacionForm->dias_v_l }}" required autocomplete="dias_v_l">
                 @error('dias_v_l')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -149,7 +207,7 @@
             </label>
 
             <div class="col-md-1">
-                <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror" name="dias" value="{{ old('dias') }}" required autocomplete="dias">
+                <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror" name="dias" value="{{ $VacacionForm->dias }}" required autocomplete="dias">
                 @error('dias')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -157,7 +215,7 @@
                 @enderror
             </div>
             <div class="col-md-4">
-                <input id="dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+                <input id="dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_l" value="{{ $VacacionForm->dias_l }}" required autocomplete="dias">
                 @error('dias')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -174,7 +232,7 @@
             </label>
 
             <div class="col-md-1">
-                <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="saldo_dias">
+                <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ $VacacionForm->saldo_dias }}" required autocomplete="saldo_dias">
                 @error('dias')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -182,7 +240,7 @@
                 @enderror
             </div>
             <div class="col-md-4">
-                <input id="saldo_dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="saldo_dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+                <input id="saldo_dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="saldo_dias_l" value="{{ $VacacionForm->saldo_dias_l }}" required autocomplete="dias">
                 @error('dias')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -196,20 +254,21 @@
                 <div class="form-group row d-flex justify-content-center">
                     <h5>FUNCIONARIO</h5>
                     <label class="text-center w-100">
-                        {{Auth::user()->nombre}} {{Auth::user()->paterno}} {{Auth::user()->materno}}
+                        {{$VacacionForm->user->nombre}} {{$VacacionForm->user->paterno}} {{$VacacionForm->user->materno}}
                     </label>
-                    <label class="text-center">{{Auth::user()->cargo}}</label>
+                    <label class="text-center">{{$VacacionForm->user->cargo}}</label>
                 </div>
             </div>
         </div>
 
-        <div class="form-group row d-flex justify-content-center">
-            <div class="col-md-10 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">
-                    {{ __('Enviar') }}
-                </button>
-            </div>
+        @if (Auth::user()->rol == 'admin')
+        <div class="d-flex justify-content-center" style="gap: 10px;">
+            <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
+            <button name="estado" type="submit" class="button btn btn-primary btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
         </div>
+        @elseif (Auth::user()->rol != 'admin' && $VacacionForm->estado != null)
+        <h4 class="text-bold text-danger text-center">{{$VacacionForm->estado}}</h4>
+        @endif
     </form>
 </div>
 @endsection
