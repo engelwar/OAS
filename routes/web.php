@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteRegistrar;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -254,4 +256,5 @@ Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computador
 //-------------------caminos de reprotte cotizacion------------------------------------------
 Route::resource('/CotizacionReporte', 'CotizacionReportController');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
-Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->name('prueba.show');
+Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('prueba.show');
+//Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
