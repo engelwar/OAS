@@ -23,7 +23,7 @@ body{
                     </td>
                     <td style="width: 60%; text-align: center;">
                         <h3 class="text-center">RESUMEN DE VENTAS</h3>
-                        <h6 class="text-center">DEL AL {{$fecha}}</h6>               
+                        <h6 class="text-center">ENTRE {{$fecha1}} - {{$fecha2}}</h6>               
                     </td>
                     <td style="width: 20%; text-align: right;">                
                     </td>
@@ -34,10 +34,13 @@ body{
             <tr>
                 <th>Codigo</th>
                 <th>Cliente</th>
+                <th>RazonSocial</th>
+                <th>Nit</th>
                 <th>Fecha</th>
                 <th>FechaVenc</th>
                 <th>ImporteCXC</th>
                 <th>ACuenta</th>
+                <th>FechaCobro</th>
                 <th>Saldo</th>
                 <th>Glosa</th>
                 <th>Usuario</th>
@@ -55,10 +58,13 @@ body{
             </tr>
             <th>{{$c->Cod}} </th>
             <th>{{$c->Cliente}}</th>
+            <th>{{$c->Rsocial}}</th>
+            <th>{{$c->Nit}}</th>
             <th>{{$c->Fecha}}</th>
             <th>{{$c->FechaVenc}}</th>
             <th>{{$c->ImporteCXC}}</th>
             <th>{{$c->ACuenta}}</th>
+            <th>{{$c->FechaCobro}}</th>
             <th>{{$c->Saldo}}</th>
             <th>{{$c->Glosa}}</th>
             <th>{{$c->Usuario}}</th>

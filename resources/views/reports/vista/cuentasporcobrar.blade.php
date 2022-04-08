@@ -8,6 +8,10 @@ table.dataTable {
         max-width: 300px !important;
         text-overflow: ellipsis;
     }
+
+.dataTables_scrollBody{
+  max-height: 450px !important;
+}
 </style>
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
@@ -87,10 +91,13 @@ $(document).ready(function()
         columns: [
             { data: 'Cod', title: 'Codigo' },
             { data: 'Cliente', title: 'Cliente' },
+            { data: 'Rsocial', title: 'Rsocial' },
+            { data: 'Nit', title: 'Nit' },
             { data: 'Fecha', title: 'Fecha'},
             { data: 'FechaVenc', title: 'FechaVenc'},
             { data: 'ImporteCXC', title: 'ImporteCXC'},
             { data: 'ACuenta', title: 'ACuenta'},
+            { data: 'FechaCobro', title: 'FechaCobro'},
             { data: 'Saldo', title: 'Saldo'},
             { data: 'Glosa', title: 'Glosa'},
             { data: 'Usuario', title: 'Usuario'},

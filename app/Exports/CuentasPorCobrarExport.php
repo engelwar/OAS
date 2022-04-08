@@ -8,10 +8,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class CuentasPorCobrarExport implements FromArray, WithHeadings,ShouldAutoSize
 {
-    public function __construct(array $resum, $fecha)
+    public function __construct(array $resum, $fecha1, $fecha2)
     {
         $this->resum = $resum;
-        $this->fecha = $fecha;
+        $this->fecha1 = $fecha1;
+        $this->fecha2 = $fecha2;
     }
 
     public function array(): array
@@ -25,15 +26,18 @@ class CuentasPorCobrarExport implements FromArray, WithHeadings,ShouldAutoSize
             'REPORTE DE CUENTAS POR COBRAR',
         ],
         [
-            "AL ".$this->fecha."",
+            "Entre el ".$this->fecha1." - ".$this->fecha2."",
         ],
         [
             'Codigo',
             'Cliente',
+            'RazonSocial',
+            'Nit',
             'Fecha',
             'FechaVenc',
             'ImporteCXC',
             'ACuenta',
+            'FechaCobro',
             'Saldo',
             'Glosa',
             'Usuario',

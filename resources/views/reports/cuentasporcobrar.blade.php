@@ -64,9 +64,12 @@
                 </div>
                 <div class="row d-flex justify-content-center"><div class="col-12">
                     <div class="mb-2 row d-flex justify-content-center">
-                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Al:</label>
-                        <div class="col-sm-6">
-                        <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value ="{{date('Y-m-d')}}">
+                        <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm text-right">Entre:</label>
+                        <div class="col-sm-4">
+                        <input id="ffin" type="date" class="form-control form-control-sm " name="ffin1" value ="{{date('Y-m-d')}}">
+                        </div>
+                        <div class="col-sm-4">
+                        <input id="ffin" type="date" class="form-control form-control-sm " name="ffin2" value ="{{date('Y-m-d')}}">
                         </div>
                     </div>
                     <div class="mb-2 row d-flex justify-content-center">
@@ -101,6 +104,17 @@
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Cliente:</label>
                         <div class="col-sm-6">
                             <input id="cliente" type="text" class="form-control form-control-sm " name="cliente">
+                        </div>
+                    </div>
+                    <div class="mb-2 row d-flex justify-content-center">
+                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Estado:</label>
+                        <div class="col-sm-6">
+                            <select class="form-select" aria-label="Default select example" name="estado2">
+                              <option selected>Todos</option>
+                              <option value="1">Vigente</option>
+                              <option value="2">Vencido</option>
+                              <option value="3">Mora</option>
+                            </select>
                         </div>
                     </div>
                 </div>
