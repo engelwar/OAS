@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('static', 'statick-side')
 @section('content')
-@include('layouts.sidebar', ['hide'=>'1']) 
+@include('layouts.sidebar', ['hide'=>'1'])
+
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 border">

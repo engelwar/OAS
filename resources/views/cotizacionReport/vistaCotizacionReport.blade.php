@@ -1,230 +1,162 @@
 @extends('layouts.app')
+@section('static', 'statick-side')
+@section('estilo')
+ <style>
+ .multi-select
+ {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    height: auto;
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7875rem;
+    line-height: 1.5;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 0.2rem;
+    text-align: left; 
+ }
 
-@section('title', 'Inicio')
-@section('mi_estilo')
-<style>
-.file-upload {
-  background-color: #ffffff;
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+ .multi-select-op
+ {
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #495057;
+    background-color: #fff;
+
+    height: auto;
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7875rem;
+    line-height: 1.5;
+ }
+ .scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: scroll;
 }
-.file-upload-content {
-  display: none;
-  text-align: center;
-}
-
-.file-upload-input {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.image-upload-wrap {
-  margin-top: 20px;
-  border: 4px dashed #355296;
-  position: relative;
-}
-
-.image-dropping,
-.image-upload-wrap:hover {
-  background-color: #355296;
-  border: 4px dashed #ffffff;
-  color: #fff;
-}
-
-.image-title-wrap {
-  padding: 0 15px 15px 15px;
-  color: #222;
-}
-
-.drag-text {
-  text-align: center;
-}
-
-.drag-text h3 {
-  font-weight: 100;
-  text-transform: uppercase;
-  padding: 60px 0;
-}
-
-.file-upload-image {
-  max-height: 200px;
-  max-width: 200px;
-  margin: auto;
-  padding: 20px;
-}
-.bg-adjud
-{
-  background-color: coral;
-}
-.text-adjud
-{
-  color: coral;
-}
-
-
-.intermitente{
-  border: 1px solid red;
-  padding: 20px 20px;
-  box-shadow: 0px 0px 20px;
-  animation: infinite resplandorAnimation 2s;
-  
-}
-@keyframes resplandorAnimation {
-  0%,100%{
-    box-shadow: 0px 0px 20px;
-  }
-  50%{
-  box-shadow: 0px 0px 0px;
-  
-  }
-
-}
-
-
-
-</style>
+ </style>
 @endsection
 @section('content')
+@include('layouts.sidebar', ['hide'=>'1']) 
 
 
-<div class="container border rounded col-12 p-10">
-        <div class="row pt-5 border-primary" style="margin-top:10px; border-top: solid;">
-            <div class="col-12 d-flex justify-content-center"><h3>COTIZACIONES</h3></div>
-        </div>
-          <div class="row ">
-            <div class="col d-flex justify-content-center">
-              <p>
-                DATO 1 <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span> 
-                DATO 2 <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span> 
-                DATO 3 <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
-                DATO 4 <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
-                DATO 5 <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
-              </p>
-            </div>
-          </div>
-         
-          <!---------------------botones ------------------------------------>
-          <div class="container">
-                <div class="row vh-50 justify-content-around align-items-center ">
-                    <div class="col-auto">
-                       <!-- <button type="button" class="btn btn-primary btn-lg">Ver informe</button>-->
-                             <button class="btn btn-primary btn-lg" href="reporteForm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                          Ver informe
-                             </button>
-                    </div>
-                    <div class="col-auto">
-                    <a class="btn btn-secondary btn-lg" href="{{ route('prueba.show') }}" target="_blank">Generar PDF</a>
-                        
-                        
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6 col-sm-12 border">
+            <form method="POST" action="">
+                @csrf
+                <div class=" row d-flex justify-content-center my-3">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <h3 class="text-primary">REPORTE DE COTIZACION</h3>
                     </div>
                 </div>
-            </div> 
+                <div class="row d-flex justify-content-center"><div class="col-12">
+                  <div class="form-group row d-flex justify-content-center">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm text-right">Desde:</label>
+                    <div class="col-sm-4">
+                    <input id="fini" type="date" class="form-control form-control-sm " name="fini" value ="{{date('Y-m-d')}}">
+                    </div>
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm text-right">Hasta:</label>
+                    <div class="col-sm-4">
+                    <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value ="{{date('Y-m-d')}}">
+                    </div>
+                </div>
+                <br>
+                    <div class="mb-2 row d-flex justify-content-center">
+                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Vendedor:</label>
+                        <div class="col-sm-6">
+                            <div class="dropdown">
+                                <button id="menu-despl" class="btn btn-default multi-select text-left" type="button" data-bs-toggle="dropdown" aria-expanded="false"><span>VENDEDOR <span class="select-text">(TODOS)</span></span>
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="menu-despl">
+                                    @if(Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz'])|| Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz']))
+                                    <li><a href="#" class="multi-select-op">
+                                        <label>
+                                            <input type="checkbox" checked class="selectall" />
+                                            TODOS
+                                        </label>
+                                        </a></li>
+                                    @endif
+                                    @foreach($usu as $u)
+                                    <li class="divider"></li>
+                                    <li><a class="option-link multi-select-op" href="#">
+                                        <label>
+                                            <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->codigoX}}'/> 
+                                            {{$u->nombreX}}
+                                            </label>
+                                        </a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- en esta parte es para los filtros para ser portados en pdf y excel-->
+                </div>
+            </div>
             <br>
-           
-
-            
-        
-
+            <div class="mb-3 row">
+                <div class="col-md-12 d-flex justify-content-center">
+                  <button type="submit" class="btn btn-primary mx-2" name="gen" value="ver">
+                    Ver <i class="fas fa-bullseye"></i>
+                  </button>
+                    <button type="submit" class="btn btn-secondary mx-2" name="gen" value="export">
+                        PDF <i class="fas fa-file-pdf"></i>
+                    </button>
+                     <button type="submit" class="btn btn-secondary mx-2" name="gen" value="excel">
+                        Excel <i class="far fa-file-excel"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<br>
-<div class="container border rounded col-12 p-10">
-<section id="reporteForm" name="reporteForm" >
- <br>
-  <div class="table-responsive text-center collapse " id="collapseExample">
-    <table class="table table-bordered table-sm">
-    <thead class="bg-primary text-light">
-    <th style="width: 130px; ">Fecha Cot</th>
-    <th style="width: 100px;">Nro Cot</th>
-    <th style="width: 150px;">Cliente</th> 
-    <th style="width: 300px;">Fecha NR</th> 
-    <th style="width: 3000px;">NR</th>
-    <th style="width: 330px;" >Total ventas</th>                
-    <th style="width: 130px;">Moneda</th>
-    <th style="width: 30px;">Usuario vendedor</th>
-    <th style="width: 30px;">Local</th>
-    <th style="width: 30px;">Fecha fac</th>
-    <th style="width: 30px;">Nro Factura</th>
-    <th style="width: 30px;">Estado</th>
-    <th style="min-width: 120px; max-width: 120px;" colspan="3">Opcervacion</th>
- </thead>
-
- 
-      <tbody>
-          
-              
-          
-         <tr>
-          
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            <td class="align-middle">1</td>
-            
-                          
-            <td class="align-middle">
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-+
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title" id="staticBackdropLabel">Observacion</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<!-- Scrollable modal -->
-<!-- Vertically centered scrollable modal -->
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga cum neque doloremque excepturi enim accusantium aliquid laborum ducimus ullam libero suscipit, fugit harum, quidem atque, doloribus soluta. Nobis, aliquam ex?
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
-</div>
-</div>
-</div>
-</div>
-
-        </tr>
-        
-    </tbody>
-
-      
-      
-
-
-
-<!--OTRO TBODY  PARA MOSTRAR LA COLUMNA RESPLANDECIENTE -->
-
-
-    </table>
-
-</div> 
-</section>
-</div>
 @endsection
+@section('mis_scripts')
+<script>
+$( ".dropdown-menu" ).click(function() {
+    $('.dropdown-menu').parent().is(".open") && e.stopPropagation();
+});
 
+$('.selectall').click(function() {
+    if ($(this).is(':checked')) {
+        $('.option').prop('checked', true);
+        var total = $('input[name="options[]"]:checked').length;
+        $(".dropdown-text").html('(' + total + ') Selected');
+        $(".select-text").html('(TODOS)');
+    } else {
+        $('.option').prop('checked', false);
+        $(".dropdown-text").html('(0) Selected');
+        $(".select-text").html('');
+    }
+});
 
-
-
-
-
+$("input[type='checkbox'].justone").change(function(){
+    var a = $("input[type='checkbox'].justone");
+    if(a.length == a.filter(":checked").length){
+        $('.selectall').prop('checked', true);
+        $(".select-text").html('(TODOS)');
+    }
+    else {
+        $('.selectall').prop('checked', false);
+        $(".select-text").html('');
+    }
+  var total = $('input[name="options[]"]:checked').length;
+  $(".dropdown-text").html('(' + total + ') Selected');
+});
+</script>
+@endsection

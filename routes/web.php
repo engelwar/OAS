@@ -257,4 +257,5 @@ Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computador
 Route::resource('/CotizacionReporte', 'CotizacionReportController');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('prueba.show');
-//Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
+Route::any('/CotizacionReporte/get/vistaTotal','CotizacionReportController@store')->name('vistaF.store');
+

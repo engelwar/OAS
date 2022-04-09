@@ -35,7 +35,7 @@
             <tr>
                 <th>Fecha Cotizacion</th>
                 <th>Nro Cotizacion</th>
-                <th>Cliente</th>
+                <th style="text-align: center">Cliente</th>
                 <th>Fecha NR</th>
                 <th>Nota de remision</th>
                 <th>Total ventas</th>
@@ -67,9 +67,25 @@
                     <td style="text-align:center" class="bold">{{$item->Moneda}}</td>
                     <td style="text-align:center" class="bold">{{$item->Usuario}}</td>
                     <td style="text-align:center" class="bold">{{$item->Local}}</td>
+                    @if (is_null($item->FechaFac))
+                    <td style="text-align:center" class="bold" >-</td>
+                    @else
                     <td style="text-align:center" class="bold">{{$item->FechaFac}}</td>
-                    <td style="text-align:center" class="bold">{{$item->numerofactura}}</td>
-                    <td style="text-align:center" class="bold">{{$item->estado}}</td>
+                    @endif
+                                        
+                    @if (is_null($item->numerofactura))
+                    <td style="text-align:center" class="bold" >-</td>
+                    @else
+                    <td style="text-align:center" class="bold">{{$item->numerofactura}}</td> 
+                    @endif
+                    
+                    
+                    @if (is_null($item->estado))
+                    <td style="text-align:center" class="bold" >-</td>
+                    @else
+                    <td style="text-align:center" class="bold">{{$item->estado}}</td> 
+                    @endif
+                   
                     <td style="text-align:center" class="bold">es una observacion</td>
                 </tr>
             

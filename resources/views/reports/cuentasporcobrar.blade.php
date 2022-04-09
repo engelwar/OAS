@@ -52,6 +52,8 @@
 @endsection
 @section('content')
 @include('layouts.sidebar', ['hide'=>'1']) 
+
+
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 col-lg-6 col-sm-12 border">
