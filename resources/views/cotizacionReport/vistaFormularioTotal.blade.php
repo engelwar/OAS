@@ -51,10 +51,12 @@ var json_data = {!! json_encode($consultas) !!};
    
 $(document).ready(function() 
 {  
-    document.write(json_data);
+   
     var height = screen.height-500+'px';
-    var table = $('#example').DataTable( 
+    var table = $('#example').DataTable(
+         
     {
+    
         data: json_data,
         columns: [
             { data: 'Fecha', title: 'Fecha Cot' },

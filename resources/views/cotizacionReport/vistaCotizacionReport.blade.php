@@ -80,10 +80,10 @@
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Vendedor:</label>
                         <div class="col-sm-6">
                             <div class="dropdown">
-                                <button id="menu-despl" class="btn btn-default multi-select text-left" type="button" data-bs-toggle="dropdown" aria-expanded="false"><span>VENDEDOR <span class="select-text">(TODOS)</span></span>
+                                <button id="menu-despl" class="btn btn-default multi-select text-left" type="button" data-bs-toggle="dropdown" aria-expanded="false"><span>VENDEDOR  <span class="select-text">(TODOS)</span></span>
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="menu-despl">
-                                    @if(Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz'])|| Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz']))
+                                    @if(Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz'])|| Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz']))
                                     <li><a href="#" class="multi-select-op">
                                         <label>
                                             <input type="checkbox" checked class="selectall" />
@@ -95,7 +95,7 @@
                                     <li class="divider"></li>
                                     <li><a class="option-link multi-select-op" href="#">
                                         <label>
-                                            <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->codigoX}}'/> 
+                                            <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->nombreX}}'/> 
                                             {{$u->nombreX}}
                                             </label>
                                         </a></li>
