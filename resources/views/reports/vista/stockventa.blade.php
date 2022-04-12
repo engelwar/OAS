@@ -7,6 +7,10 @@
         max-width: 120px !important;
         text-overflow: ellipsis;
     }
+    .pedido_max{
+      display: flex;
+      flex-direction: row;
+    }
 </style>
 @endsection
 @section('content')
@@ -22,13 +26,51 @@
                 </tfoot>
             </table>         
         </div>
+        <div class="w-50">
+            <form action="{{ route('stockventa.historia') }}" method="POST" target="_blank">
+                @csrf
+                <table id='example2' class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">U.M.</th>
+                        <th scope="col">Cantidad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <input class="d-none" type="text" value='{{Auth::user()->id}}' name="cod_user">
+                <input class="d-none" type="text" value='Almacen {{$nombAlmacen}}' name="alm_destino">
+                <div class="mb-1">
+                    <select class="form-select" aria-label="Default select example" name="alm_origen">
+                        <option value="Almacen AC2">Almacen AC2</option>
+                        <option value="Almacen Planta">Almacen Planta</option>
+                        <option value="Almacen Calacoto">Almacen Calacoto</option>
+                        <option value="Almacen Handal">Almacen Handal</option>
+                        <option value="Almacen Mariscal">Almacen Mariscal</option>
+                    </select>
+                </div>
+                <div class="">
+                  <button id="" type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('mis_scripts')
 <script>
-var json_data = {!! json_encode($test) !!};
+var json_data2 = {!! json_encode($array) !!};
+const btn1 = document.getElementById('btn1');
+const table1 = document.getElementById('example');
+const table2 = document.getElementById('example2');
+let id = 0;
+let id2 = 0;
+
 var titulos = {!! json_encode($titulos) !!};
 var money = [], decimal = [];
 titulos.forEach(function(element, key){
@@ -52,11 +94,16 @@ $(document).ready(function()
     } );
     $('#example').DataTable( 
     {
-        data: json_data,
+        data: json_data2,
         columns: titulos,
+        fnCreatedRow: function( rowEl, data) {
+            $(rowEl).attr('id', id++);
+        },
         "pageLength": 25, 
         "columnDefs": [
             { className: "categoria_max", "targets": [0] },
+            { className: "categoria_max", "targets": [1] },
+            { className: "pedido_max", "targets":[13] },
             { className: "dt-right", "targets":money },
             { className: "dt-right", "targets":decimal },
         ],
@@ -119,12 +166,46 @@ $(document).ready(function()
         }
     } );
     
+<<<<<<< HEAD
 
     $(".page-wrapper").removeClass("toggled"); 
     
     $('#example tbody').on( 'click', 'button', function () {
         alert('HOLAS');
     } );
+=======
+    $("#example").on('click', '.btnAdd', function() {
+        var prodCat = '';
+        var item = $(this).closest("tr")   // Finds the closest row <tr         // Retrieves the text within <td>
+                        .attr('id');
+        console.log(item);
+        if (document.getElementById(json_data2[item].codigo).value != 0){
+            const row = table2.insertRow();
+            row.setAttribute('id', id2++);
+            row.innerHTML = `
+            <td><input class="form-control" type="text" name="catprod2[]" placeholder="Tipo" value="${json_data2[item].categoria}"></td>
+            <td><input class="form-control" type="text" name="codprod2[]" placeholder="Tipo" value="${json_data2[item].codigo}"></td>
+            <td><input class="form-control" type="text" name="desprod2[]" placeholder="Tipo" value="${json_data2[item].descripcion}"></td>
+            <td><input class="form-control" type="text" name="umprod2[]" placeholder="Tipo" value="${json_data2[item].umprod}"></td>
+            <td><input class="form-control" type="text" name="canprod2[]" placeholder="Tipo" value="${document.getElementById(json_data2[item].codigo).value}"></td>
+            <td><td>
+            `;
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('btn', 'btn-danger');
+            removeBtn.innerHTML = '<i class="fa fa-trash"></i>';
+            removeBtn.onclick = function(e){
+            removeTodo(row.getAttribute('id'));
+            }
+            row.children[5].appendChild(removeBtn);    // Outputs the answer
+        };
+        function removeTodo(id){
+            document.getElementById(id).remove();
+        }
+    }); 
+
+    $(".page-wrapper").removeClass("toggled");
+>>>>>>> master
 } );
+
 </script>
 @endsection

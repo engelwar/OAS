@@ -329,7 +329,7 @@ class ProgramSeeder extends Seeder
 
         $smod = Program::create([  
             'id'=>30,  
-            'nombre'=>'Stock(I-E-T-V)',         
+            'nombre'=>'Stock (I-E-T-V)',         
             'modulo_id'=>6,
             'sub_modulo_id'=>1,
             'route'=>'stockventa.index',
