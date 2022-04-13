@@ -96,7 +96,7 @@ class VacacionController extends Controller
 
             'user_id' => Auth::user()->id,
         ]);
-        return redirect()->route('inicio.index')->with('success', 'El formulario se envio correctamente');
+        return redirect()->route('inicio')->with('success', 'El formulario se envio correctamente');
     }
 
     /**

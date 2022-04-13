@@ -23,7 +23,7 @@
                 {{ __('FUNCIONARIO') }}
             </label>
             <div class="col-md-4">
-                <input id="nombre" type="text" value="{{Auth::user()->nombre}} {{Auth::user()->paterno}} {{Auth::user()->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
+                <input id="nombre" type="text" value="{{Auth::user()->perfiles->nombre}} {{Auth::user()->perfiles->paterno}} {{Auth::user()->perfiles->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
                 @error('nombre')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                 {{ __('CI') }}
             </label>
             <div class="col-md-2">
-                <input id="ci" type="ci" value="{{Auth::user()->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                <input id="ci" type="ci" value="{{Auth::user()->perfiles->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                 @error('ci')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
                 {{ __('CARGO') }}
             </label>
             <div class="col-md-2">
-                <input id="cargo" type="cargo" value="{{Auth::user()->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                <input id="cargo" type="cargo" value="{{Auth::user()->perfiles->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
                 @error('sucursal')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
             </label>
 
             <div class="col-md-4">
-                <input id="area" type="text" value="{{Auth::user()->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                <input id="area" type="text" value="{{Auth::user()->perfiles->area_id}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
                 @error('area')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -193,12 +193,12 @@
 
         <div class="row justify-content-center" style="margin-top:50px;">
             <div class="col-3">
-                <div class="form-group row d-flex justify-content-center">
+                <div class="form-group row d-flex justify-content-center text-center gap-2">
                     <h5>FUNCIONARIO</h5>
-                    <label class="text-center w-100">
-                        {{Auth::user()->nombre}} {{Auth::user()->paterno}} {{Auth::user()->materno}}
+                    <label class="w-100">
+                        {{Auth::user()->perfiles->nombre}} {{Auth::user()->perfiles->paterno}} {{Auth::user()->perfiles->materno}}
                     </label>
-                    <label class="text-center">{{Auth::user()->cargo}}</label>
+                    <label class="text-center">{{Auth::user()->perfiles->cargo}}</label>
                 </div>
             </div>
         </div>

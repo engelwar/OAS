@@ -11,7 +11,7 @@
                     <h3>FORMULARIOS DE VACACIONES</h3>
                 </div>
             </div>
-            <div class="row pb-4 justify-content-around">
+            <div class="d-flex pb-4 justify-content-between">
                 <div class="">
                     <form class="form-inline" action="{{action('VacacionController@index')}}" method="GET">
                         <label for="" class="mr-2">Buscar por estado</label>
@@ -24,7 +24,7 @@
                         <button class="form-control btn btn-primary col-4 col-sm-auto ml-auto ml-sm-2 d-none d-sm-block" type="submit">Buscar</button>
                     </form>
                 </div>
-                @if (Auth::user()->rol == 'admin')
+                @if (Auth::user()->id == 37)
                 <div class="">
                     <form class="form-inline" action="{{action('VacacionController@index')}}" method="GET">
                         <select class="form-control mr-sm-2 col-5 col-sm-auto" id="buscar" name="buscar">
@@ -54,11 +54,11 @@
                         @if($forms->count())
                         @foreach($forms as $f)
                         <tr>
-                            <td>{{$f->user->nombre}} {{$f->user->paterno}} {{$f->user->materno}}</td>
-                            <td>{{$f->user->sucursal}}</td>
-                            <td>{{$f->user->ci}}</td>
-                            <td>{{$f->user->area}}</td>
-                            <td>{{$f->user->cargo}}</td>
+                            <td>{{$f->user->perfiles->nombre}} {{$f->user->perfiles->paterno}} {{$f->user->materno}}</td>
+                            <td>{{$f->user->perfiles->sucursal}}</td>
+                            <td>{{$f->user->perfiles->ci}}</td>
+                            <td>{{$f->user->perfiles->area_id}}</td>
+                            <td>{{$f->user->perfiles->cargo}}</td>
                             <td>{{$f->fecha_ini}}</td>
                             <td>{{$f->fecha_fin}}</td>
                             <td class="text-center p-2">

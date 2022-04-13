@@ -108,13 +108,7 @@ class StockVentaController extends Controller
         ['name' => 'descripcion', 'data' => 'descripcion', 'title' => 'Descripcion', 'tip' => 'filtro'],
         ['name' => 'umprod', 'data' => 'umprod', 'title' => 'U.M.', 'tip' => 'filtro_select'],
       ];
-    $titulos_excel =
-      [
-        'Categoria',
-        'Codigo',
-        'Descripcion',
-        'U.M,',
-      ];
+    
     $ffin1 = date("d/m/Y", strtotime(date('d-m-Y') . "- 1 days"));
     $ffin2 = date("d/m/Y", strtotime(date('d-m-Y') . "- 2 days"));
     $ffin3 = date("d/m/Y", strtotime(date('d-m-Y') . "- 3 days"));
@@ -164,6 +158,18 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'IET', 'data' => 'IET', 'title' => 'IET', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
+
+    $titulos_excel =
+      [
+        'Categoria',
+        'Codigo',
+        'Descripcion',
+        'U.M,',
+        $nombAlmacen,
+        'IET',
+        'Ventas',
+        'Saldo',
+      ];
     
 
     $grup_tit = [];
@@ -201,6 +207,8 @@ class StockVentaController extends Controller
         }
       }
     }
+
+    
 
     //--ciclo repetivo para mover y la columna planta al al incio
     $x1 = 1;
@@ -332,8 +340,16 @@ class StockVentaController extends Controller
     $test = DB::connection('sqlsrv')->select(DB::raw($query));
 
     $array = [];
+    $array2 = [];
     foreach ($test as $val) {
       $array[] = [
+        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
+        'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
+      ];
+    }
+    foreach ($test as $val) {
+      $array2[] = [
         'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
         'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
             <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
@@ -342,7 +358,6 @@ class StockVentaController extends Controller
     
     $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
     $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
-    $titulos_excel[] = 'Total';
 
     //if($request->gen =="export")
     //{
@@ -351,7 +366,7 @@ class StockVentaController extends Controller
     //return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     //}
     if ($request->gen == "export") {
-      $export = new StockExport($array, $titulos_excel);    
+      $export = new StockExport($test, $titulos_excel);
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     } else {
       //return dd($titulos);

@@ -454,7 +454,8 @@
           @yield('content') 
         @endauth        
       <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-      <script type="text/javascript" src="{{ asset('js/echarts.min.js') }}"></script> 
+      <script type="text/javascript" src="{{ asset('js/echarts.min.js') }}"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script type="text/javascript">
         $( document ).ready(function () 
         {
