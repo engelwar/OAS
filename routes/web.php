@@ -255,18 +255,17 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 // Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
 
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
-<<<<<<< HEAD
+
 //-------------------caminos de reprotte cotizacion------------------------------------------
-Route::resource('/CotizacionReporte', 'CotizacionReportController');
+Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('prueba.show');
-<<<<<<< HEAD
-Route::any('/CotizacionReporte/get/vistaTotal','CotizacionReportController@store')->name('vistaF.store');
 
-=======
+Route::any('/CotizacionReporte/get/vistaTotal','CotizacionReportController@store')->name('vistaF.store');
+Route::post('/CotizacionReporte/post/tabla','CotizacionReportController@crearTablaObservacion')->name('crearTablaObservacion');
+
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
-=======
+
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
->>>>>>> master
->>>>>>> 82be66ac9c7eb907babbcc454e0d305cc8bc381f
+

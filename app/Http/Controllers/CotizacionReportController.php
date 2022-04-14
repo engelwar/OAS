@@ -11,6 +11,7 @@ use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
 use PhpParser\Node\Expr\Cast;
+use Observaciones;
 
 class CotizacionReportController extends Controller
 {
@@ -86,7 +87,7 @@ class CotizacionReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -95,6 +96,18 @@ class CotizacionReportController extends Controller
     public function verPDF()
     {
         return redirect('reports.pdf.cotizacionReportPdf');
+    }
+
+    public function crearTablaObservacion(Request $request){
+        // $table->string('id_cotizacion');
+        //    $table->string('comentario'); 
+
+        DB::table('observacion_cotizacions')->insert(
+            ['id_cotizacion'  => '12345',
+            'comentario'=>'es un caomentario']
+        );
+      
+        // return redirect()->action('CotizacionReport');
     }
 
     /**

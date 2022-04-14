@@ -57,7 +57,8 @@
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 col-lg-6 col-sm-12 border">
-            <form method="POST" action="">
+        
+                <form method="POST"  action="{{ route('vistaF.store') }}">
                 @csrf
                 <div class=" row d-flex justify-content-center my-3">
                     <div class="d-flex align-items-center justify-content-center">
