@@ -188,12 +188,75 @@ class StockVentaController extends Controller
             $titulos_excel[] = $v->inalmNomb;
           }
         }
+<<<<<<< HEAD
       } else {
         $temp = [];
         foreach ($value as $k => $v) {
           if ($key != $nombAlmacen) {
             if (array_search($v->inalmCalm, $almacenes) !== false) {
               $temp[] = "ISNULL([" . $v->inalmCalm . "],0)";
+=======
+        elseif($request->selectAlmacen == 2){
+            $nombAlmacen = 'Handal';
+            $idAlmacen = 4;
+            $grup_tit2 = "ISNULL([4],0)+ISNULL([13],0) as [Handal]";
+            $grup_t2 = "CAST(ISNULL([Handal],0) as varchar)";
+        }
+        elseif($request->selectAlmacen == 3){
+            $nombAlmacen = 'Mariscal';
+            $idAlmacen = 6;
+            $grup_tit2 = "ISNULL([6],0)+ISNULL([30],0) as [Mariscal]";
+            $grup_t2 = "CAST(ISNULL([Mariscal],0) as varchar)";
+        }
+        elseif($request->selectAlmacen == 4){
+            $nombAlmacen = 'Calacoto';
+            $idAlmacen = 5;
+            $grup_tit2 = "ISNULL([5],0)+ISNULL([29],0) as [Calacoto]";
+            $grup_t2 = "CAST(ISNULL([Calacoto],0) as varchar)";
+        }
+
+        $titulos[] = ['name'=>$nombAlmacen, 'data'=>$nombAlmacen, 'title'=>$nombAlmacen, 'tip'=>'decimal'];
+        $titulos[] = ['name'=>'I-E-T', 'data'=>'I-E-T', 'title'=>'I.E.T.', 'tip'=>'decimal'];
+        $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
+        $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
+        $grup_tit = [];
+        $grup_t = [];
+        $temp2 = [];
+        $VarI;
+        $VarF;
+        $grup_T=[];
+        foreach (unserialize($request->grupos) as $key => $value) {
+            if($key == 'Sin Grupo'){
+                foreach ($value as $k => $v) {
+                    if(array_search($v->inalmCalm,$almacenes))
+                    {
+                        $grup_tit[] = "ISNULL([".$v->inalmCalm."],0) as [".$v->inalmCalm."]";
+                        $grup_t[] = "CAST(ISNULL([".$v->inalmCalm."],0) as varchar) as [".$v->inalmNomb."]";
+                        $titulos[] = ['name'=>$v->inalmNomb, 'data'=>$v->inalmNomb, 'title'=>$v->inalmNomb, 'tip'=>'decimal'];
+                        $titulos_excel[] = $v->inalmNomb;
+                    }                    
+                }              
+            } 
+            else{
+                $temp= [];
+                foreach ($value as $k => $v) {
+                    if($key != $nombAlmacen){
+                        if(array_search($v->inalmCalm,$almacenes) !== false)
+                        {
+                            $temp[] = "ISNULL([".$v->inalmCalm."],0)";
+                        }
+                    }
+                }   
+                if($temp != null)
+                {
+                    $grup_tit[] = implode("+",$temp)." as [".$key."]";
+                    $grup_t[] = "CAST(ISNULL([".$key."],0) as varchar) as [".$key."]";
+                    $temp2[] = "stocks.".$key;
+
+                    $titulos[] = ['name'=>$key, 'data'=>$key, 'title'=>$key, 'tip'=>'decimal'];
+                    $titulos_excel[] = $key;
+                } 
+>>>>>>> pasante
             }
           }
         }
@@ -303,9 +366,15 @@ class StockVentaController extends Controller
             AND inpro2.inproCpro = inpro.inproCpro
         )as Saldo,
 
+<<<<<<< HEAD
         " . implode(",", $grup_t) . ",
         CAST(ISNULL(Total,0) as varchar) as Total
 
+=======
+        ".implode(",",$grup_t)."
+
+        
+>>>>>>> pasante
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
         LEFT JOIN ( SELECT convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, maconNomb 

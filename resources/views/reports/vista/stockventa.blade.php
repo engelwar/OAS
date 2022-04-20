@@ -172,6 +172,7 @@ $(document).ready(function()
         }
     } );
     
+<<<<<<< HEAD
     $("#example").on('click', '.btnAdd', function() {
         var prodCat = '';
         var item = $(this).closest("tr").attr('id');
@@ -200,6 +201,14 @@ $(document).ready(function()
     }); 
 
     $(".page-wrapper").removeClass("toggled");
+=======
+
+    $(".page-wrapper").removeClass("toggled"); 
+    
+    $('#example tbody').on( 'click', 'button', function () {
+        alert('HOLAS');
+    } );
+>>>>>>> pasante
 } );
 
 </script>

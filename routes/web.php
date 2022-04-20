@@ -255,6 +255,7 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 // Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
 
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
+<<<<<<< HEAD
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
 
@@ -268,3 +269,9 @@ Route::resource('vacacion', 'VacacionController');
 Route::get('vacacion_pdf/{id}','VacacionController@generatePDF')->name('vacacion_pdf');
 Route::get('vacacion/estado/{id}', 'VacacionController@estado')->name('vacacion.estado');
 Route::get('vacacion_detalle/{id}', 'VacacionController@estadoForm')->name('vacacion.estadoForm');
+=======
+//-------------------caminos de reprotte cotizacion------------------------------------------
+Route::resource('/CotizacionReporte', 'CotizacionReportController');
+//Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
+Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->name('prueba.show');
+>>>>>>> pasante
