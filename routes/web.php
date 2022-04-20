@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteRegistrar;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -255,7 +257,6 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 // Route::post('/empleados/{id}', 'EquipoController@traspaso')->name('equipos.traspaso');
 
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
-<<<<<<< HEAD
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
 
@@ -269,9 +270,24 @@ Route::resource('vacacion', 'VacacionController');
 Route::get('vacacion_pdf/{id}','VacacionController@generatePDF')->name('vacacion_pdf');
 Route::get('vacacion/estado/{id}', 'VacacionController@estado')->name('vacacion.estado');
 Route::get('vacacion_detalle/{id}', 'VacacionController@estadoForm')->name('vacacion.estadoForm');
-=======
+
 //-------------------caminos de reprotte cotizacion------------------------------------------
 Route::resource('/CotizacionReporte', 'CotizacionReportController');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->name('prueba.show');
->>>>>>> pasante
+
+
+
+//-------------------caminos de reprotte cotizacion------------------------------------------
+Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
+//Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
+Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('CotizacionReporte.show');
+Route::post('/CotizacionReporte/vistaTotal/v','CotizacionReportController@store')->name('vistaF.store');
+Route::any('/CotizacionReporte/vistaTotal/v/s','CotizacionReportController@crearZ')->name('CotizacionReporte.crearZ');
+Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
+//Route::get('/CotizacionRepore/vistaTotal/v/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
+Route::any('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
+//Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
+
+Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
+

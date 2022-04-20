@@ -15,6 +15,8 @@ table.dataTable {
 </style>
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
+
+
 <div class="container-fluid">
     <div class="row justify-content-center mt-4">
         <div class="col-md-12">
@@ -111,6 +113,7 @@ $(document).ready(function()
     var height = screen.height-500+'px';
     var table = $('#example').DataTable( 
     {
+        
         data: json_data,
         columns: [
             { data: 'Cod', title: 'Codigo' },

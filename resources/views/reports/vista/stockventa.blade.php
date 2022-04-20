@@ -173,6 +173,16 @@ $(document).ready(function()
     } );
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+    $(".page-wrapper").removeClass("toggled"); 
+    
+    $('#example tbody').on( 'click', 'button', function () {
+        alert('HOLAS');
+    } );
+=======
+>>>>>>> pasante
     $("#example").on('click', '.btnAdd', function() {
         var prodCat = '';
         var item = $(this).closest("tr").attr('id');
@@ -201,6 +211,7 @@ $(document).ready(function()
     }); 
 
     $(".page-wrapper").removeClass("toggled");
+<<<<<<< HEAD
 =======
 
     $(".page-wrapper").removeClass("toggled"); 
@@ -208,6 +219,9 @@ $(document).ready(function()
     $('#example tbody').on( 'click', 'button', function () {
         alert('HOLAS');
     } );
+>>>>>>> pasante
+=======
+>>>>>>> master
 >>>>>>> pasante
 } );
 

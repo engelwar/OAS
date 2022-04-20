@@ -22,8 +22,13 @@ body{
                         height: auto;"/>      
                     </td>
                     <td style="width: 60%; text-align: center;">
+<<<<<<< HEAD
                         <h3 class="text-center">RESUMEN DE VENTAS</h3>
                         <h6 class="text-center">ENTRE {{$fecha1}} - {{$fecha2}}</h6>               
+=======
+                        <h3 class="text-center">RESUMEN DE VENTAS xxxxxx</h3>
+                        <h6 class="text-center">DEL AL {{$fecha}}</h6>               
+>>>>>>> pasante
                     </td>
                     <td style="width: 20%; text-align: right;">                
                     </td>

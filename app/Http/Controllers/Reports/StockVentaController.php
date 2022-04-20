@@ -108,7 +108,13 @@ class StockVentaController extends Controller
         ['name' => 'descripcion', 'data' => 'descripcion', 'title' => 'Descripcion', 'tip' => 'filtro'],
         ['name' => 'umprod', 'data' => 'umprod', 'title' => 'U.M.', 'tip' => 'filtro_select'],
       ];
-    
+    $titulos_excel =
+      [
+        'Categoria',
+        'Codigo',
+        'Descripcion',
+        'U.M,',
+      ];
     $ffin1 = date("d/m/Y", strtotime(date('d-m-Y') . "- 1 days"));
     $ffin2 = date("d/m/Y", strtotime(date('d-m-Y') . "- 2 days"));
     $ffin3 = date("d/m/Y", strtotime(date('d-m-Y') . "- 3 days"));
@@ -158,18 +164,6 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'IET', 'data' => 'IET', 'title' => 'IET', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
-
-    $titulos_excel =
-      [
-        'Categoria',
-        'Codigo',
-        'Descripcion',
-        'U.M,',
-        $nombAlmacen,
-        'IET',
-        'Ventas',
-        'Saldo',
-      ];
     
 
     $grup_tit = [];
@@ -188,75 +182,12 @@ class StockVentaController extends Controller
             $titulos_excel[] = $v->inalmNomb;
           }
         }
-<<<<<<< HEAD
       } else {
         $temp = [];
         foreach ($value as $k => $v) {
           if ($key != $nombAlmacen) {
             if (array_search($v->inalmCalm, $almacenes) !== false) {
               $temp[] = "ISNULL([" . $v->inalmCalm . "],0)";
-=======
-        elseif($request->selectAlmacen == 2){
-            $nombAlmacen = 'Handal';
-            $idAlmacen = 4;
-            $grup_tit2 = "ISNULL([4],0)+ISNULL([13],0) as [Handal]";
-            $grup_t2 = "CAST(ISNULL([Handal],0) as varchar)";
-        }
-        elseif($request->selectAlmacen == 3){
-            $nombAlmacen = 'Mariscal';
-            $idAlmacen = 6;
-            $grup_tit2 = "ISNULL([6],0)+ISNULL([30],0) as [Mariscal]";
-            $grup_t2 = "CAST(ISNULL([Mariscal],0) as varchar)";
-        }
-        elseif($request->selectAlmacen == 4){
-            $nombAlmacen = 'Calacoto';
-            $idAlmacen = 5;
-            $grup_tit2 = "ISNULL([5],0)+ISNULL([29],0) as [Calacoto]";
-            $grup_t2 = "CAST(ISNULL([Calacoto],0) as varchar)";
-        }
-
-        $titulos[] = ['name'=>$nombAlmacen, 'data'=>$nombAlmacen, 'title'=>$nombAlmacen, 'tip'=>'decimal'];
-        $titulos[] = ['name'=>'I-E-T', 'data'=>'I-E-T', 'title'=>'I.E.T.', 'tip'=>'decimal'];
-        $titulos[] = ['name'=>'Ventas', 'data'=>'Ventas', 'title'=>'Ventas', 'tip'=>'decimal'];
-        $titulos[] = ['name'=>'Saldo', 'data'=>'Saldo', 'title'=>'Saldo', 'tip'=>'decimal'];
-        $grup_tit = [];
-        $grup_t = [];
-        $temp2 = [];
-        $VarI;
-        $VarF;
-        $grup_T=[];
-        foreach (unserialize($request->grupos) as $key => $value) {
-            if($key == 'Sin Grupo'){
-                foreach ($value as $k => $v) {
-                    if(array_search($v->inalmCalm,$almacenes))
-                    {
-                        $grup_tit[] = "ISNULL([".$v->inalmCalm."],0) as [".$v->inalmCalm."]";
-                        $grup_t[] = "CAST(ISNULL([".$v->inalmCalm."],0) as varchar) as [".$v->inalmNomb."]";
-                        $titulos[] = ['name'=>$v->inalmNomb, 'data'=>$v->inalmNomb, 'title'=>$v->inalmNomb, 'tip'=>'decimal'];
-                        $titulos_excel[] = $v->inalmNomb;
-                    }                    
-                }              
-            } 
-            else{
-                $temp= [];
-                foreach ($value as $k => $v) {
-                    if($key != $nombAlmacen){
-                        if(array_search($v->inalmCalm,$almacenes) !== false)
-                        {
-                            $temp[] = "ISNULL([".$v->inalmCalm."],0)";
-                        }
-                    }
-                }   
-                if($temp != null)
-                {
-                    $grup_tit[] = implode("+",$temp)." as [".$key."]";
-                    $grup_t[] = "CAST(ISNULL([".$key."],0) as varchar) as [".$key."]";
-                    $temp2[] = "stocks.".$key;
-
-                    $titulos[] = ['name'=>$key, 'data'=>$key, 'title'=>$key, 'tip'=>'decimal'];
-                    $titulos_excel[] = $key;
-                } 
->>>>>>> pasante
             }
           }
         }
@@ -270,8 +201,6 @@ class StockVentaController extends Controller
         }
       }
     }
-
-    
 
     //--ciclo repetivo para mover y la columna planta al al incio
     $x1 = 1;
@@ -366,15 +295,9 @@ class StockVentaController extends Controller
             AND inpro2.inproCpro = inpro.inproCpro
         )as Saldo,
 
-<<<<<<< HEAD
         " . implode(",", $grup_t) . ",
         CAST(ISNULL(Total,0) as varchar) as Total
 
-=======
-        ".implode(",",$grup_t)."
-
-        
->>>>>>> pasante
         FROM ( SELECT * FROM inpro ) as inpro 
         LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb 
         LEFT JOIN ( SELECT convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, maconNomb 
@@ -409,16 +332,8 @@ class StockVentaController extends Controller
     $test = DB::connection('sqlsrv')->select(DB::raw($query));
 
     $array = [];
-    $array2 = [];
     foreach ($test as $val) {
       $array[] = [
-        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
-        'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
-            <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
-      ];
-    }
-    foreach ($test as $val) {
-      $array2[] = [
         'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
         'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
             <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
@@ -427,6 +342,7 @@ class StockVentaController extends Controller
     
     $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
     $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
+    $titulos_excel[] = 'Total';
 
     //if($request->gen =="export")
     //{
@@ -435,8 +351,12 @@ class StockVentaController extends Controller
     //return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     //}
     if ($request->gen == "export") {
-      $export = new StockExport($test, $titulos_excel);
-      return Excel::download($export, 'Reporte de Stock Actual.xlsx');
+      $pdf = \PDF::loadView('reports.pdf.stockventa')
+        ->setOrientation('landscape')
+        ->setPaper('letter')
+        ->setOption('footer-right', 'Pag [page] de [toPage]')
+        ->setOption('footer-font-size', 8);
+      return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
     } else {
       //return dd($titulos);
       return view('reports.vista.stockventa', compact('test', 'array', 'titulos','nombAlmacen'));
