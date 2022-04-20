@@ -63,8 +63,30 @@
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center"><div class="col-12">
+                    <div class="mb-2 d-flex justify-content-center">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="checkfecha" id="checkfecha" checked value=1>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Buscar al:
+                        </label>
+                      </div>
+                    </div>
                     <div class="mb-2 row d-flex justify-content-center">
-                        <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm text-right">Entre:</label>
+                        <!-- <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Al:</label> -->
+                        <div class="col-sm-6">
+                        <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value ="{{date('Y-m-d')}}">
+                        </div>
+                    </div>
+                    <div class="mb-2 d-flex justify-content-center">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="checkfecha" id="checkfecha" value=2>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Buscar Entre:
+                        </label>
+                      </div>
+                    </div>
+                    <div class="mb-2 row d-flex justify-content-center">
+                        <!-- <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm text-right">Entre:</label> -->
                         <div class="col-sm-4">
                         <input id="ffin" type="date" class="form-control form-control-sm " name="ffin1" value ="{{date('Y-m-d')}}">
                         </div>

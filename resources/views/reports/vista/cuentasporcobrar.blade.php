@@ -62,6 +62,30 @@ table.dataTable {
             </table>        
         </div>
     </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h6 class="modal-title"></h6> -->
+                <span class="close h5" >&times;</span>                    
+            </div>
+            <div class="modal-body">
+                <table id="table_detalle" class="cell-border compact hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <td>Codigo</td>
+                            <td>ImporteCXC</td>
+                            <td>ACuenta</td>
+                            <td>Saldo</td>
+                            <td>Glosa</td>
+                            <td>Fecha</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <button id="actualizar">actualizar  Totales</button>
 @endsection
@@ -98,7 +122,6 @@ $(document).ready(function()
             { data: 'ImporteCXC', title: 'ImporteCXC'},
             { data: 'ACuenta', title: 'ACuenta'},
             { data: 'Saldo', title: 'Saldo'},
-            { data: 'FechaCobro', title: 'FechaCobro'},
             { data: 'Glosa', title: 'Glosa'},
             { data: 'Usuario', title: 'Usuario'},
             { data: 'Moneda', title: 'M.'},
@@ -116,6 +139,14 @@ $(document).ready(function()
         ],
         "pageLength": 100,  
         "columnDefs": [
+          {
+                "targets": 0,
+                "render": function ( data, type, row, meta ) 
+                {
+                    var link = '<a class="enlace_cuenta" id ="'+data+'" style="cursor:pointer;">'+data+'</a>'
+                    return link;
+                }
+            },
             { className: "dt-right", "targets":[6,7,8]},
             { className: "sum_total", "targets":[6]},
             { className: "categoria_max", "targets":[1,7]}
@@ -207,7 +238,60 @@ $(document).ready(function()
     } );
     setTimeout(function(){
     $(".page-wrapper").removeClass("toggled"); 
- }, 500);
+  }, 500);
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+    $('#myModal').fadeOut();
+    }
+  table.on( 'click','a.enlace_cuenta', function () {
+        console.log("TEST");
+        var id = $(this).attr('id');
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('cuentasporcobrardetalle.store')}}",
+            type: 'POST',
+            dataType: 'json',
+            data:{id},
+            paging:false,
+            success: function (data) {
+                // Get the modal}
+                $('#table_detalle').DataTable().clear();
+                $('#table_detalle').DataTable().destroy();
+                $('#table_detalle').DataTable({
+                    data:data.detalle,
+                    columns: [
+                        // { data: 'liqdCNtcc'},
+                        // { data: 'liqdcImpC'},
+                        // { data: 'liqdCAcmt'},
+                        // { data: 'liqXCGlos'},
+                        // { data: 'Fecha'}
+                        { data: 'codigo'},
+                        { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2)},
+                        { data: 'descuento'},
+                        { data: 'saldo',render: $.fn.dataTable.render.number( ',', '.', 2)},
+                        { data: 'glosa'},
+                        { data: 'fecha'}
+                    ],
+                });
+                $('#myModal').fadeIn();
+
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    });
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('myModal')) {
+            $('#myModal').fadeOut();
+        }
+    }
 } );
 </script>
 @endsection

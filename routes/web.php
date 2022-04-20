@@ -121,6 +121,8 @@ Route::prefix('reports')->group(function(){
 
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
+    Route::resource('cuentasporcobrardetalle', 'Reports\CuentasPorCobrarDetalleController');
+    
     Route::resource('resumenventastotal', 'Reports\ResumenVentasTotalController');
     Route::resource('notasremision', 'Reports\NotasRemisionController');
 

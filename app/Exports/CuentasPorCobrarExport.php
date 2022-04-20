@@ -37,7 +37,6 @@ class CuentasPorCobrarExport implements FromArray, WithHeadings,ShouldAutoSize
             'FechaVenc',
             'ImporteCXC',
             'ACuenta',
-            'FechaCobro',
             'Saldo',
             'Glosa',
             'Usuario',

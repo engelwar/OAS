@@ -40,7 +40,6 @@ body{
                 <th>FechaVenc</th>
                 <th>ImporteCXC</th>
                 <th>ACuenta</th>
-                <th>FechaCobro</th>
                 <th>Saldo</th>
                 <th>Glosa</th>
                 <th>Usuario</th>
@@ -64,7 +63,6 @@ body{
             <th>{{$c->FechaVenc}}</th>
             <th>{{$c->ImporteCXC}}</th>
             <th>{{$c->ACuenta}}</th>
-            <th>{{$c->FechaCobro}}</th>
             <th>{{$c->Saldo}}</th>
             <th>{{$c->Glosa}}</th>
             <th>{{$c->Usuario}}</th>
