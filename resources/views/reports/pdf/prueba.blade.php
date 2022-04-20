@@ -21,8 +21,8 @@
             </td>
             <td style="width: 60%; text-align: center;">
                 <h4>REPORTE DE COTIZACION</h4>       
-                <b>Vendedor:</b> {{$nombre }}
-                <p><b>Fecha:</b> fecha</p>                 
+           
+                             
             </td>
             <td style="width: 20%; text-align: right;">                
             </td>

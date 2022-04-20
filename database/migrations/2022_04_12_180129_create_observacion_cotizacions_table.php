@@ -14,8 +14,17 @@ class CreateObservacionCotizacionsTable extends Migration
     public function up()
     {
         Schema::create('observacion_cotizacions', function (Blueprint $table) {
-            $table->id();
+           //$table->id();
+           $table->id();
+            $table->integer('idObs')->nullable();//el id es el numero NR
+            $table->string('textObs'); 
+            $table->integer('user_id');
+            $table->string('modifUno');
+            $table->string('modifiDos');    
+            $table->integer('nroMod');
+            $table->dateTime('fechaC')->nullable();
             $table->timestamps();
+            
         });
     }
 
