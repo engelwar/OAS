@@ -78,6 +78,26 @@ class CuentasPorCobrarController extends Controller
      */
     public function store(Request $request)
     {
+      // $detalle = "
+      //   SELECT
+      //   liqdCNtcc, liqdcImpC, liqdCAcmt, liqXCGlos, CONVERT(date, liqXCFtra) as Fecha
+      //   FROM liqdC
+      //   JOIN liqXC ON liqdCNtra = liqXCNtra
+      //   WHERE liqdCNtcc = 610000031
+      //   AND liqXCMdel = 0
+      //   ORDER BY Fecha
+      //   ";
+      //   $t_det = DB::connection('sqlsrv')->select(DB::raw($detalle));
+      //   $a1 = $t_det[0]->liqdcImpC;
+      //   $detalleList = [];
+      //   foreach($t_det as $i => $val){
+      //     $detalleList[] = ["codigo" => $val->liqdCNtcc, "importe" => $a1, "descuento" => $val->liqdCAcmt, "saldo" => $a1 - $val->liqdCAcmt, "glosa" => $val->liqXCGlos, "fecha" => $val->Fecha];
+      //     $a1 = $detalleList[$i]['saldo'];
+      //   }
+      //   $object = json_encode($t_det);
+      //   dd($t_det, $object);
+      
+
         $user = "AND cxcTrCcbr IS NULL";
         $cliente = "";
         if($request->cliente)
@@ -87,20 +107,40 @@ class CuentasPorCobrarController extends Controller
         if($request->options)
         {
             $user = "AND cxcTrCcbr IN (".implode(",",$request->options).")"; 
-        }         
+        }
+        $estado2 = "";
+        if ($request->estado2 == 1){
+          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') <= 30";
+        } elseif ($request->estado2 == 2){
+          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') > (30)";
+        } elseif ($request->estado2 == 3){
+          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') > (30 + 15)";
+        }
+        $fechaA = date("d/m/Y");
+        $fil = "";
         $fecha = date("d/m/Y", strtotime($request->ffin));
-        $fil = "DECLARE @fecha DATE, @fechaA DATE
-        SELECT @fecha = '".$fecha."',@fechaA = '".date("d/m/Y")."'";
+        $fecha1 = date("d/m/Y", strtotime($request->ffin1));
+        $fecha2 = date("d/m/Y", strtotime($request->ffin2));
+        if($request->checkfecha == 1){
+          $fil = "AND liqXCFtra <= '".$fecha."'";
+        } elseif ($request->checkfecha == 2) {
+          $fil = "AND liqXCFtra BETWEEN '".$fecha1."' AND '".$fecha2."'";
+        }
+        $fil2 = "DECLARE @fechaA DATE
+        SELECT @fechaA = '".date("d/m/Y")."'";
         $query =
         "SELECT
         cxcTrNtra as 'Cod',
         cxcTrNcto as 'Cliente',
+        isnull(imLvtRsoc,'-') as Rsocial,
+        isnull(imLvtNNit,'-') as Nit,
         CONVERT(varchar,cxcTrFtra,103) as 'Fecha',
         CONVERT(varchar,DATEADD(day, 30/*DiasPlazo*/, cxcTrFtra), 103) as 'FechaVenc',
         --CONVERT(varchar,cxcTrFppg,103) as 'FPrimP',
         cast(cxcTrImpt as decimal(10,2))as 'ImporteCXC',
         REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuenta',
         REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'Saldo',
+        --isnull(CONVERT(varchar,cobros.FechaCuenta),'-') AS FechaCobro,
         --REPLACE(cast(cxcTrAcmt as decimal(10,2)),',', '.') as 'ACuenta',
         cxcTrGlos as 'Glosa',
         adusrNomb as 'Usuario',
@@ -166,20 +206,23 @@ class CuentasPorCobrarController extends Controller
         
         LEFT JOIN
         (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF  FROM liqdC
+            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
+            FROM liqdC
             JOIN liqXC ON liqdCNtra = liqXCNtra
-            WHERE liqXCFtra <= @fecha AND liqXCMdel = 0
+            WHERE liqXCMdel = 0 
+            ".$fil."
             GROUP BY liqdCNtcc
         )as cobros
         ON cobros.liqdCNtcc = cxcTrNtra
-        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0 
+        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
         ".$user."
         ".$cliente."
+        ".$estado2."
         ";
-        $cxc = DB::connection('sqlsrv')->select(DB::raw($fil . $query));
+        $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
         $sum = DB::connection('sqlsrv')
         ->select(DB::raw
-        ($fil .
+        ($fil2 .
         "SELECT 
         REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
         REPLACE(sumACuenta,',', '.') as sumACuenta, 
@@ -195,7 +238,7 @@ class CuentasPorCobrarController extends Controller
         )); 
         $sum_estado = DB::connection('sqlsrv')
         ->select(DB::raw
-        ($fil ."SELECT 
+        ($fil2 ."SELECT 
         REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
         REPLACE(SUM(cast(ACuenta as decimal(10,2))),',', '.') as ACuenta, 
         REPLACE(SUM(cast(Saldo as decimal(10,2))),',', '.') as Saldo,
@@ -204,16 +247,16 @@ class CuentasPorCobrarController extends Controller
         GROUP BY estado")); 
         if($request->gen =="export")
         {
-            $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha'))
+            $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2'))
             ->setOrientation('landscape')
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
             ->setOption('footer-font-size',8);
-            return $pdf->inline('Cuentas Por Cobrar Al_'.$fecha.'.pdf');
+            return $pdf->inline('Cuentas Por Cobrar Entre_'.$fecha1.' - '.$fecha2.'.pdf');
         }
         elseif($request->gen =="excel")
         {
-            $export = new CuentasPorCobrarExport($cxc, $fecha);    
+            $export = new CuentasPorCobrarExport($cxc, $fecha1, $fecha2);    
             return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
         }
         else if($request->gen =="ver")

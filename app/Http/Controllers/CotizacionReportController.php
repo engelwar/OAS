@@ -158,66 +158,69 @@ class CotizacionReportController extends Controller
 
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
-        $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
+        $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
         
-        $otroUsuario="";  
-        $otroUsuario2=" OR adusrNomb = ";  
+        $otroUsuario = "AND adusrNomb IS NULL";
+        if($request->options){
+          $otroUsuario = "AND adusrNomb IN ('".implode("','",$request->options)."')";
+        }
+        // $otroUsuario="";  
+        // $otroUsuario2=" OR adusrNomb = ";  
        
-        $cadenaOp="adusrNomb = ";  
-        $varOp=$request->options;
-        $i=0;
-        $varInteger=$request->options;
-        $varInteger=(sizeof($varInteger))-1;
+        // $cadenaOp="adusrNomb = ";  
+        // $varOp=$request->options;
+        // $i=0;
+        // $varInteger=$request->options;
+        // $varInteger=(sizeof($varInteger))-1;
      
-        for($i; $i<=$varInteger;$i++ ){
-         //   dd($varOp[$i]);
-            if ($varInteger>0) {
-               $otroUsuario=($varOp[$i]);
-               if ($i==0) {
-                  $cadenaOp=$cadenaOp."'".$otroUsuario."'";
-                } else {
-                  $cadenaOp=$cadenaOp.$otroUsuario2."'".$otroUsuario."'";
-             }
-            } else {
-                $otroUsuario= implode("",$varOp);
-                $cadenaOp=$cadenaOp."'".$otroUsuario."'";
-            }
-        } 
+        // for($i; $i<=$varInteger;$i++ ){
+        //  //   dd($varOp[$i]);
+        //     if ($varInteger>0) {
+        //        $otroUsuario=($varOp[$i]);
+        //        if ($i==0) {
+        //           $cadenaOp=$cadenaOp."'".$otroUsuario."'";
+        //         } else {
+        //           $cadenaOp=$cadenaOp.$otroUsuario2."'".$otroUsuario."'";
+        //      }
+        //     } else {
+        //         $otroUsuario= implode("",$varOp);
+        //         $cadenaOp=$cadenaOp."'".$otroUsuario."'";
+        //     }
+        // } 
              
         
       
         $esUnaQuery = 
         " 
         select CONVERT(varchar,vtvtaFent,103) as 'Fecha',
-            --vtvtaNcot as 'NroCotizacion',
-            case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
-            --	case  when vtvtaNcot = 0  then CAST(REPLACE('vtvtaNcot','0','-')) else vtvtaNcot end as 'NroCotizacion',
-            --case CAST(vtvtaNcot as varchar(10)) when vtvtaNcot=0 then '' else vtvtaNcot end as 'NroCotizacion',
-                vtvtaNomC as 'Cliente',
-                CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
-                vtvtaNtra as 'NR',
-                REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
-                admonAbrv 'Moneda',
-                 adusrNomb as 'Usuario',
-                 inlocNomb as 'Local',
-                     CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
-                    imlvtNrfc as 'numerofactura',
-                   imLvtEsfc as  'estado' 
-                   
+          --vtvtaNcot as 'NroCotizacion',
+          case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
+          --	case  when vtvtaNcot = 0  then CAST(REPLACE('vtvtaNcot','0','-')) else vtvtaNcot end as 'NroCotizacion',
+          --case CAST(vtvtaNcot as varchar(10)) when vtvtaNcot=0 then '' else vtvtaNcot end as 'NroCotizacion',
+            vtvtaNomC as 'Cliente',
+            CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
+            vtvtaNtra as 'NR',
+            REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
+            admonAbrv 'Moneda',
+            adusrNomb as 'Usuario',
+            inlocNomb as 'Local',
+              CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
+              imlvtNrfc as 'numerofactura',
+              imLvtEsfc as  'estado' 
+              
         from vtVta 
         LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
         LEFT JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
         JOIN inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
         left join imlvt on vtvtaNtra=imlvtNvta
-        
-            where (
-                $fecha
-                $cadenaOp
-            )
-        order by vtvtaFent desc
 
+          where 
+          ".$fecha."
+          ".$otroUsuario."
+            
+        order by vtvtaFent desc
         ";
-        
+        // dd($esUnaQuery);
         //$observacionBD=DB::table('observacion_cotizacion')->get()->pluck('idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC');          
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC']);
         
