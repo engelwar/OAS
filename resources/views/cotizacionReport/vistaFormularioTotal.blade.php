@@ -33,7 +33,6 @@ table.dataTable {
 @include('layouts.sidebar', ['hide'=>'0']) 
 
 
-
 <div class="container-fluid">
   
     <div class="row justify-content-center mt-4">
@@ -42,7 +41,7 @@ table.dataTable {
       <div class="col-md-12">
           <div class="row ">
             <div class="col d-flex justify-content-center">
-              <p>
+               <p>
                 Seguimiento <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span> 
                 - Rechazado <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span> 
                 - Adjudicado <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
@@ -229,8 +228,16 @@ $(document).ready(function()
         "data": null,
         "bSortable": false,
         "mRender": function(data, type, value) {
-          var status = '<div style="text-align: right;width:90px"> <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button>  @foreach ($observacionBD as $i)   @if ($i->idObs=='+value["NR"]+')  <h1> idObs: {{$i->idObs}}</h1> @endif @endforeach <a href="https://www.google.com/" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a></div>';
+          var status = '<div style="text-align: right;width:90px"> <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button>  <a href="https://www.google.com/" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a></div>';
           
+          return status;}, title :'OBS'
+       },
+       {
+        "data": null,
+        "bSortable": false,
+        "mRender": function(data, type, value) {
+          var status = '<h5> '+value["NR"]+'  @foreach ($observacionBD as $item)  @if('+value["NR"]+' == 1010154489) <a href="{{action('CotizacionReportController@edit', $item->id)}}" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a> @else  @endif @endforeach <h5>';
+           
           return status;}, title :'OBS'
        },
        
