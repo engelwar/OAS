@@ -78,26 +78,6 @@ class CuentasPorCobrarController extends Controller
      */
     public function store(Request $request)
     {
-      $detalle = "
-        SELECT
-        liqdCNtcc, liqdcImpC, liqdCAcmt, liqXCGlos, CONVERT(date, liqXCFtra) as Fecha
-        FROM liqdC
-        JOIN liqXC ON liqdCNtra = liqXCNtra
-        WHERE liqdCNtcc = 610000031
-        AND liqXCMdel = 0
-        ORDER BY Fecha
-        ";
-        $t_det = DB::connection('sqlsrv')->select(DB::raw($detalle));
-        $a1 = $t_det[0]->liqdcImpC;
-        $detalleList = [];
-        foreach($t_det as $i => $val){
-          $detalleList[] = ["codigo" => $val->liqdCNtcc, "importe" => $a1, "descuento" => $val->liqdCAcmt, "saldo" => $a1 - $val->liqdCAcmt, "glosa" => $val->liqXCGlos, "fecha" => $val->Fecha];
-          $a1 = $detalleList[$i]['saldo'];
-        }
-        $object = json_encode($t_det);
-        dd($t_det, $object);
-      
-
         $user = "AND cxcTrCcbr IS NULL";
         $cliente = "";
         if($request->cliente)
@@ -256,7 +236,7 @@ class CuentasPorCobrarController extends Controller
         }
         elseif($request->gen =="excel")
         {
-            $export = new CuentasPorCobrarExport($cxc, $fecha1, $fecha2);    
+            $export = new CuentasPorCobrarExport($cxc, $request->checkfecha, $fecha, $fecha1, $fecha2);    
             return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
         }
         else if($request->gen =="ver")

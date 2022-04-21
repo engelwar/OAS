@@ -39,25 +39,25 @@ table.dataTable {
                 <tr class="text-right">
                 <td colspan = 5></td>
                 <td>VIGENTE</td>
-                <td class="sumVigenteCXC bg-success"></td>            
-                <td class="sumVigenteCuenta bg-warning"></td>
-                <td class="sumVigenteSaldo bg-info"></td>
+                <td class="sumVigenteCXC bg-success dt-right"></td>            
+                <td class="sumVigenteCuenta bg-warning dt-right"></td>
+                <td class="sumVigenteSaldo bg-info dt-right"></td>
                 <td colspan = 7></td>
                 </tr>
                 <tr class="text-right">
                 <td colspan = 5></td>
                 <td>VENCIDO</td>
-                <td class="sumVencidoCXC bg-success"></td>            
-                <td class="sumVencidoCuenta bg-warning"></td>
-                <td class="sumVencidoSaldo bg-info"></td>
+                <td class="sumVencidoCXC bg-success dt-right"></td>            
+                <td class="sumVencidoCuenta bg-warning dt-right"></td>
+                <td class="sumVencidoSaldo bg-info dt-right"></td>
                 <td colspan = 8></td>
                 </tr>
                 <tr class="text-right">
                 <td colspan = 5></td>
                 <td>MORA</td>
-                <td class="sumMoraCXC bg-success"></td>            
-                <td class="sumMoraCuenta bg-warning"></td>
-                <td class="sumMoraSaldo bg-info"></td>
+                <td class="sumMoraCXC bg-success dt-right"></td>            
+                <td class="sumMoraCuenta bg-warning dt-right"></td>
+                <td class="sumMoraSaldo bg-info dt-right"></td>
                 <td colspan = 8></td>
             </tr>
             </tfoot>
@@ -269,13 +269,13 @@ $(document).ready(function()
                     data:data.detalle,
                     columns: [
                         // { data: 'liqdCNtcc'},
-                        // { data: 'liqdcImpC'},
-                        // { data: 'liqdCAcmt'},
+                        // { data: 'liqdcImpC',render: $.fn.dataTable.render.number( ',', '.', 2)},
+                        // { data: 'liqdCAcmt',render: $.fn.dataTable.render.number( ',', '.', 2)},
                         // { data: 'liqXCGlos'},
                         // { data: 'Fecha'}
                         { data: 'codigo'},
                         { data: 'importe',render: $.fn.dataTable.render.number( ',', '.', 2)},
-                        { data: 'descuento'},
+                        { data: 'descuento',render: $.fn.dataTable.render.number( ',', '.', 2)},
                         { data: 'saldo',render: $.fn.dataTable.render.number( ',', '.', 2)},
                         { data: 'glosa'},
                         { data: 'fecha'}

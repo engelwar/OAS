@@ -47,17 +47,18 @@ class CuentasPorCobrarDetalleController extends Controller
         WHERE liqdCNtcc = ".$request->id."
         AND liqXCMdel = 0
         ORDER BY Fecha
-        ";
+        ";       
         $t_det = DB::connection('sqlsrv')->select(DB::raw($detalle));
-        
-        $au1 = $t_det[0]->liqdcImpC;
         $detalleList = [];
-        // foreach($t_det as $val){
-        //   $detalleList[] = ["codigo" => $val->liqdCNtcc, "importe" => $au1, "descuento" => $val->liqdCAcmt, "saldo" => $au1 - $val->liqdCAcmt, "glosa" => $val->liqXCGlos, "fecha" => $val->Fecha];
-        //   $au1 = $detalleList[$val]['saldo'];
-        // }
+        if($t_det != []){
+          $a1 = $t_det[0]->liqdcImpC;
+          foreach($t_det as $i => $val){
+            $detalleList[] = ["codigo" => $val->liqdCNtcc, "importe" => $a1, "descuento" => $val->liqdCAcmt, "saldo" => $a1 - $val->liqdCAcmt, "glosa" => $val->liqXCGlos, "fecha" => $val->Fecha];
+            $a1 = $detalleList[$i]['saldo'];
+          }
+        }
 
-        return response()->json(['detalle' => $t_det]);
+        return response()->json(['detalle' => $detalleList]);
     }
 
     /**
