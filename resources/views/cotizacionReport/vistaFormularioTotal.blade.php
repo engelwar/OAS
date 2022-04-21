@@ -35,9 +35,22 @@ table.dataTable {
 
 
 <div class="container-fluid">
+  
     <div class="row justify-content-center mt-4">
-        <div class="col-md-12">
-            
+      <div style="text-align: center"> <h4>REPORTE COTIZACION</h4> </div>
+      
+      <div class="col-md-12">
+          <div class="row ">
+            <div class="col d-flex justify-content-center">
+              <p>
+                Seguimiento <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span> 
+                - Rechazado <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span> 
+                - Adjudicado <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
+                - Parcial <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
+                - Completa <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+              </p>
+            </div>
+          </div>
             <table id="example" class="cell-border compact hover" style="width:100%">
                
             </table>        
@@ -61,7 +74,7 @@ table.dataTable {
                   <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
                   <br>
                   <label for="message-text" class="col-form-label">Escriba la observacion:</label>
-                  <textarea class="form-control" id="message-text" name="comentario"></textarea>
+                  <textarea class="form-control" id="message-text" name="comentario" required ></textarea>
                 </div>
                 <span>Usuario: {{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} {{auth()->user()->perfiles->materno}}</span>
             
@@ -210,11 +223,13 @@ $(document).ready(function()
             { data: 'FechaFac', title: 'Fecha fac'},
             { data: 'numerofactura', title: 'Nro Fac'},
             { data: 'estado', title: 'Estado'},
+            {"defaultContent":"",title: 'S'},
+            {"defaultContent":"",title: 'E'},
             {
         "data": null,
         "bSortable": false,
         "mRender": function(data, type, value) {
-          var status = '<div style="text-align: right;width:90px"> <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button> <a type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo" onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a></div>';
+          var status = '<div style="text-align: right;width:90px"> <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button>  @foreach ($observacionBD as $i)   @if ($i->idObs=='+value["NR"]+')  <h1> idObs: {{$i->idObs}}</h1> @endif @endforeach <a href="https://www.google.com/" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a></div>';
           
           return status;}, title :'OBS'
        },
@@ -264,6 +279,7 @@ $(document).ready(function()
     $(".page-wrapper").removeClass("toggled"); 
  }, 500);
 } );
+//=== obtiene el id y manda a otra ventana
 function obtenerId(id){
   idx="#"+id;
   $(idx).click(function(){
@@ -278,28 +294,28 @@ $(document).on("click",".btnHT", function(){
 
   //alert(id);
 }
-var fila; //capturar la fila para editar
-    
+
+  
+
+
 //botón EDITAR    
 function editar(id){
   idx="#"+id;
-  $(idx).click(function(){
-  $("#exampleModal2").modal("show");
-})
-var fila;
-$(document).on("click",".btnEdit", function(){
-  fila=$(this).closest("tr");
-  
-  ids=parseInt(fila.find('td:eq(4)').text());
-  $("#name1").val(id);
-}); 
+
+  $(document).ready(function(){
+   $("a.btnEdit").click(function() {
+      url = $(this).attr("href");
+      window.open(url, '_blank');
+      return false;
+   });
+});
+
+
 }
 
 
 
-function myFunction() {
-  window.open("CotizacionReporte.update",'','widght=400, height=600');
-}
+
 
 
 

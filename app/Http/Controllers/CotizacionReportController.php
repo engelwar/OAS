@@ -154,8 +154,6 @@ class CotizacionReportController extends Controller
      */
     public function store(Request $request, Cotizacion_report $cotizacion_report ) 
     {   
-        
-
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
         $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
@@ -393,15 +391,15 @@ class CotizacionReportController extends Controller
      */
     public function edit(Cotizacion_report $cotizacion_report)
     {
-       // $observacionBD=Cotizacion_report::all(['idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC']);
-       // echo "desde edit.."
-       $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC']);
-
-       //return  $cotizacion_report;
-     
-       // dd($observacionBD);
+        $commetx=Cotizacion_report::all(['id','idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC']);
+        
+        return view('cotizacionReport.edit')
+        ->with('commetx',$commetx)
+        ->with('cotizacion_report',$cotizacion_report)
+         ;
+        //return $cotizacion_report;
+    
     }
-
     
     /**
      * Update the specified resource in storage.
@@ -442,7 +440,7 @@ class CotizacionReportController extends Controller
         }
         return redirect()->action('CotizacionReportController@store'); 
        */
-        return "datos enviados...";
+        return "desde update";
     }
 
     /**

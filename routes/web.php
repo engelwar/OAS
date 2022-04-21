@@ -264,7 +264,7 @@ Route::post('/CotizacionReporte/vistaTotal/v','CotizacionReportController@store'
 Route::any('/CotizacionReporte/vistaTotal/v/s','CotizacionReportController@crearZ')->name('CotizacionReporte.crearZ');
 Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
 //Route::get('/CotizacionRepore/vistaTotal/v/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
-Route::any('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
+Route::put('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
