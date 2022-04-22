@@ -186,12 +186,12 @@ class CuentasPorCobrarController extends Controller
         
         LEFT JOIN
         (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
+            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF, liqXCFtra
             FROM liqdC
             JOIN liqXC ON liqdCNtra = liqXCNtra
             WHERE liqXCMdel = 0 
             ".$fil."
-            GROUP BY liqdCNtcc
+            GROUP BY liqdCNtcc, liqXCFtra
         )as cobros
         ON cobros.liqdCNtcc = cxcTrNtra
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
@@ -199,6 +199,7 @@ class CuentasPorCobrarController extends Controller
         ".$cliente."
         ".$estado2."
         ";
+        
         $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
         $sum = DB::connection('sqlsrv')
         ->select(DB::raw

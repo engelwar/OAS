@@ -58,7 +58,7 @@
                     </select>
                 </div>
                 <div class="">
-                  <button type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
+                  <button id="" type="submit" class="btn btn-success" name="gen" value='export'>Solicitar</button>
                 </div>
             </form>
         </div>
@@ -106,7 +106,6 @@ $(document).ready(function()
         "pageLength": 25, 
         "columnDefs": [
             { className: "categoria_max", "targets": [0] },
-            { className: "categoria_max", "targets": [1] },
             { className: "punto_referencia", "targets": [7] },
             { className: "pedido_max", "targets":[13] },
             { className: "sumtotal", "targets":[14] },
@@ -172,20 +171,11 @@ $(document).ready(function()
         }
     } );
     
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-    $(".page-wrapper").removeClass("toggled"); 
-    
-    $('#example tbody').on( 'click', 'button', function () {
-        alert('HOLAS');
-    } );
-=======
->>>>>>> pasante
     $("#example").on('click', '.btnAdd', function() {
         var prodCat = '';
-        var item = $(this).closest("tr").attr('id');
+        var item = $(this).closest("tr")   // Finds the closest row <tr         // Retrieves the text within <td>
+                        .attr('id');
+        console.log(item);
         if (document.getElementById(json_data2[item].codigo).value != 0){
             const row = table2.insertRow();
             row.setAttribute('id', id2++);
@@ -211,18 +201,6 @@ $(document).ready(function()
     }); 
 
     $(".page-wrapper").removeClass("toggled");
-<<<<<<< HEAD
-=======
-
-    $(".page-wrapper").removeClass("toggled"); 
-    
-    $('#example tbody').on( 'click', 'button', function () {
-        alert('HOLAS');
-    } );
->>>>>>> pasante
-=======
->>>>>>> master
->>>>>>> pasante
 } );
 
 </script>

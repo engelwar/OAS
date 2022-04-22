@@ -164,7 +164,6 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'IET', 'data' => 'IET', 'title' => 'IET', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
-    
 
     $grup_tit = [];
     $grup_t = [];
@@ -230,6 +229,8 @@ class StockVentaController extends Controller
         inpro.inproCpro as codigo, 
         inpro.inproNomb as descripcion, 
         umpro.inumeAbre as umprod, 
+        inpro.inproSmax as MAXpro,
+		    inpro.inproSmin as MINpro,
 
         (
             SELECT
@@ -326,6 +327,8 @@ class StockVentaController extends Controller
             inpro.inproNomb, 
             umpro.inumeAbre,
             stocks.Total,
+            inpro.inproSmax,
+		        inpro.inproSmin,
             " . implode(",", $temp2) . "
         ORDER BY inpro.inproCpro
         ";   
@@ -334,11 +337,16 @@ class StockVentaController extends Controller
     $array = [];
     foreach ($test as $val) {
       $array[] = [
-        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian,
-        'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
             <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
       ];
     }
+
+    // if ($val->Saldo < $val->MIN){
+    //   'Saldo' => '<span class="bg-danger">'.$val->Saldo.'</span>';
+    // } else {
+    //   'Saldo' => '<span class="bg-success">'.$val->Saldo.'</span>';
+    // }
     
     $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
     $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];

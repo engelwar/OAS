@@ -121,6 +121,9 @@ Route::prefix('reports')->group(function(){
     Route::post('reports/stockventa','Reports\StockVentaController@historia')->name('stockventa.historia');
     Route::get('reports/stockventa/{alm_origen}/{alm_destino}','Reports\StockVentaController@show2')->name('stockventa.show2');
 
+    Route::resource('stockminmax', 'Reports\StockMinMaxController');
+    Route::any('stockminmax/store/almxu', 'Reports\StockMinMaxController@store_almxu')->name('stockminmax.store_almxu');
+
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
     Route::resource('cuentasporcobrardetalle', 'Reports\CuentasPorCobrarDetalleController');
