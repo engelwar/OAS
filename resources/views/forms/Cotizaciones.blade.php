@@ -72,7 +72,7 @@
 @section('content') 
 
     <div class="container border rounded col-12 p-3">
-     
+      
           <div class="row p-1">
             <div class="col-12 d-flex justify-content-center"><h3>REGISTRO DE COTIZACIONES</h3></div>
           </div>
