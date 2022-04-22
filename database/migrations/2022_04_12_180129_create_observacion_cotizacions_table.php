@@ -12,6 +12,7 @@ class CreateObservacionCotizacionsTable extends Migration
      * @return void
      */
     public function up()
+
     {
         Schema::create('observacion_cotizacions', function (Blueprint $table) {
            //$table->id();
@@ -19,8 +20,6 @@ class CreateObservacionCotizacionsTable extends Migration
             $table->integer('idObs')->nullable();//el id es el numero NR
             $table->string('textObs'); 
             $table->integer('user_id');
-            $table->string('modifUno');
-            $table->string('modifiDos');    
             $table->integer('nroMod');
             $table->dateTime('fechaC')->nullable();
             $table->timestamps();

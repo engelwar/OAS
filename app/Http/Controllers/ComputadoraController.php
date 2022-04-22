@@ -7,6 +7,7 @@ use App\Models\Componente;
 use Illuminate\Http\Request;
 use App\Perfil;
 
+
 /**
  * Class ComputadoraController
  * @package App\Http\Controllers

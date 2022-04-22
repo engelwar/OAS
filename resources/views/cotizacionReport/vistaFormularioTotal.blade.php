@@ -34,6 +34,7 @@ table.dataTable {
 
 
 <div class="container-fluid">
+ 
   
     <div class="row justify-content-center mt-4">
       <div style="text-align: center"> <h4>REPORTE COTIZACION</h4> </div>
@@ -209,7 +210,7 @@ $(document).ready(function()
     {
         data: json_data,
         columns: [
-           
+          
             { data: 'Fecha', title: 'Fecha Cot' },
             { data: 'NroCotizacion', title: 'Nro Cot' },
             { data: 'Cliente', title: 'Cliente'},
@@ -236,7 +237,9 @@ $(document).ready(function()
         "data": null,
         "bSortable": false,
         "mRender": function(data, type, value) {
-          var status = '<h5> '+value["NR"]+'  @foreach ($observacionBD as $item)  @if('+value["NR"]+' == 1010154489) <a href="{{action('CotizacionReportController@edit', $item->id)}}" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a> @else  @endif @endforeach <h5>';
+         
+
+          var status =' @foreach ($observacionBD as $item)  @if( 1010117096 == $item->idObs)  <a href="{{action('CotizacionReportController@edit', $item->id)}}" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a> @else  @endif @endforeach ';
            
           return status;}, title :'OBS'
        },
