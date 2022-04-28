@@ -101,32 +101,46 @@ class CotizacionReportController extends Controller
 
     //mostrar pdf
     public function crearZ(Request $request){
-       /*
-        $table->bigInteger('idObs');//el id es el numero NR
-            $table->string('textObs'); 
-            $table->integer('user_id');
-            $table->string('modifUno');
-            $table->string('modifiDos');    
-            $table->integer('nroMod');
-            $table->timestamps();
-       */
+   
       //dd($request->all());
          $data=request(); 
-
+         $cotT=Cotizacion_report::all('id');
+         $c=0;
+         $dato=$data['id_cotizacion'];
+         $dato=strval($dato);
+         $dato='{"id":'.$dato."}";
+      
+      // for ($i=0;$i<5;$i++){
+     //   $c=$c+1;
+     //  }
+ 
+       foreach ($cotT as $value) {
+      
+            if ($value==$dato) {
+                return "existe el reguistro";
+            } 
+               
+        }
+     
         DB::table('observacion_cotizacions')->insert([
             'id'=>$data['id_cotizacion'],
             'idObs'=>$data['id_cotizacion'],
             'user_id'=>$data['iduser'],
             'textObs'=>$data['comentario'],
             'nroMod'=>0,
+            'nro'=>0,
+            'nroA'=>0,
+            'nroP'=>0,
+            'nroT'=>0,
             'fechaC'=>date('Y-m-d H:i:s')
       ]);
      
-            return "dato enviado cone exito....";
+        return "dato enviado cone exito....";
       //echo "desde crearZ";
-      // return redirect()->action('CotizacionReportController@store');
-       // return redirect('cotizacionreporte.vistatotal');
-
+      // return redirect()->action('CotizacionReportController@store'');
+       // return redirect('CotizacionReporte/vistaTotal/v');
+   
+       
     }
     public function verPDF()
     {
@@ -184,7 +198,7 @@ class CotizacionReportController extends Controller
         } 
              
         
-      $estadosQ ="";
+      
 
         $esUnaQuery = 
         " 
@@ -420,15 +434,21 @@ class CotizacionReportController extends Controller
         $data=request(); 
         $c=$data['nroMod'];
         $A1=$c;
+        $contadorS=0;
             $int=(int)$A1;
             $int=$int+1;
         
+            $com=observacion_estados::all('estado');
+            $com1=observacion_estados::all('cotizacion_form_id');
+            $dato=$cotizacion_report->id;
+         $dato=strval($dato);
+         $dato='[{"cotizacion_form_id":'.$dato."}";
         $ss1=$data['seguimiento'];
-
-
+     // return $cotizacion_report->id;
+ 
         
         
-       if ($c==0&&$ss1==$segui) {
+       if ($cotizacion_report->nro==0&&$ss1==$segui) {
         DB::table('observacion_estados')->insert([
             
             'estado'=>$data['seguimiento'],
@@ -436,40 +456,41 @@ class CotizacionReportController extends Controller
             'textObs2'=>"sin accion",
             'cotizacion_form_id'=>$data['nr'],
             'nroMod'=>$A1,
+           
             'created_at'=>date('Y-m-d H:i:s'),  
             'updated_at'=>date('Y-m-d H:i:s'),  
             ]);
+            $cotizacion_report->nro=1;
+            $cotizacion_report->save();
             dd($request->all());
        }
-        if ($c==1&&$ss1==$segui) {
-            DB::table('observacion_estados')->insert([
-            
-                'estado'=>$data['seguimiento'],
-                'textObs1'=>$data['seguiComen'],
-                'textObs2'=>"sin accion",
-                'cotizacion_form_id'=>$data['nr'],
-                'nroMod'=>$int,
-                'created_at'=>date('Y-m-d H:i:s'),  
-                'updated_at'=>date('Y-m-d H:i:s'),  
-                ]);
-                dd($request->all());
-        }
+      
 
-           if ($c==1&&$ss1==$segui) {
-            DB::table('observacion_estados')->insert([
+           if ($cotizacion_report->nro==1&&$ss1==$segui) {
+
+            foreach ($com1 as $i) {
+                if ($i==$dato&&$ss1==$segui) {
+                  $contadorS=$contadorS+1;
+                }
+                  
+              }
+              if ($contadorS<=3) {
+                DB::table('observacion_estados')->insert([
             
-                'estado'=>$data['seguimiento'],
-                'textObs1'=>$data['seguiComen'],
-                'textObs2'=>"sin accion",
-                'cotizacion_form_id'=>$data['nr'],
-                'nroMod'=>$int,
-                'created_at'=>date('Y-m-d H:i:s'),  
-                'updated_at'=>date('Y-m-d H:i:s'),  
-                ]);
-                dd($request->all());
+                    'estado'=>$data['seguimiento'],
+                    'textObs1'=>$data['seguiComen'],
+                    'textObs2'=>"sin accion",
+                    'cotizacion_form_id'=>$data['nr'],
+                    'nroMod'=>$int,
+                    'created_at'=>date('Y-m-d H:i:s'),  
+                    'updated_at'=>date('Y-m-d H:i:s'),  
+                    ]);
+                    dd($request->all());
+              }
+              else return "numero de intentos excedidos";           
         }
         
-         
+             
 
         if ($ss1==$adju) {
             
@@ -483,7 +504,8 @@ class CotizacionReportController extends Controller
                 'created_at'=>date('Y-m-d H:i:s'),  
                 'updated_at'=>date('Y-m-d H:i:s'),  
                 ]);
-               
+            $cotizacion_report->nroA=1;
+            $cotizacion_report->save();
         }
 
         if ($ss1==$parc) {
@@ -498,7 +520,8 @@ class CotizacionReportController extends Controller
                 'created_at'=>date('Y-m-d H:i:s'),  
                 'updated_at'=>date('Y-m-d H:i:s'),  
                 ]);
-               
+                $cotizacion_report->nroP=1;
+                $cotizacion_report->save();
         }
         if ($ss1=="Total") {
             
@@ -512,6 +535,8 @@ class CotizacionReportController extends Controller
                 'created_at'=>date('Y-m-d H:i:s'),  
                 'updated_at'=>date('Y-m-d H:i:s'),  
                 ]);
+                $cotizacion_report->nroT=1;
+                $cotizacion_report->save();
                
         }
 
@@ -527,6 +552,9 @@ class CotizacionReportController extends Controller
                 'created_at'=>date('Y-m-d H:i:s'),  
                 'updated_at'=>date('Y-m-d H:i:s'),  
                 ]);
+                $cotizacion_report->nro=2;
+                
+                $cotizacion_report->save();
                
         }
 

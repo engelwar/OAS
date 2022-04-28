@@ -21,6 +21,10 @@ class CreateObservacionCotizacionsTable extends Migration
             $table->string('textObs'); 
             $table->integer('user_id');
             $table->integer('nroMod')->nullable();
+            $table->integer('nro')->nullable();
+            $table->integer('nroA')->nullable();
+            $table->integer('nroP')->nullable();
+            $table->integer('nroT')->nullable();
             $table->dateTime('fechaC')->nullable();
             $table->timestamps();
             

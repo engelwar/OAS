@@ -103,61 +103,168 @@
 
                     <div class="row d-flex justify-content-center my-4">
                         <div class="col-10 d-flex justify-content-center">
-                            @if (count($commetx)>0)
-                            @foreach ($commetx as $i)
-                              @if ($cotizacion_report->id!=$i->cotizacion_form_id )
-                                 
-                                    @break
-                              @endif
 
-                               @if ($cotizacion_report->id==$i->cotizacion_form_id )
-                                <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
-                                    {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
-                                </button> 
-                                @break 
-                                @endif
-
-                            @endforeach
-                                    
-
-                           @else
+                            @if ($cotizacion_report->nro==0&&$cotizacion_report->nroA==0&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==0)
                             <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento" >
                                 {{ __('SEGUIMIENTO') }} <i class="fas fa-check fa-lg"></i>  
-                            </button>    
-                            @endif
-                     
-
+                            </button>   
                             <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado" >
                                 {{ __('ADJUDICADO') }}
                             </button>
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#Rechazado" >
+                                {{ __('RECHAZADO') }} 
+                            </button>
+                            @endif 
+                            
+                            @if ($cotizacion_report->nro==0&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==0)
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento" >
+                                {{ __('SEGUIMIENTO') }} <i class="fas fa-check fa-lg"></i>  
+                            </button>   
                             <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
                                 {{ __('ADJUDICADO') }}
                             </button>
-
-
+                          
                             <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#parcial" >
                                 {{ __('ENTREGA PARCIAL') }}
                             </button>
-                            <button type="button" class="btn btn-sm btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#parcial2" >
-                                {{ __('ENTREGA PARCIAL') }}
-                            </button>    
-
-
                             <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#Total" >
                                 {{ __('ENTREGA TOTAL') }}
                             </button>
+                            @endif
+                                
+                            @if ($cotizacion_report->nro==0&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==1&&$cotizacion_report->nroT==0)
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento" >
+                                {{ __('SEGUIMIENTO') }} <i class="fas fa-check fa-lg"></i>  
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#parcial2" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>  
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#Total" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>
+                            @endif
+
+                            @if ($cotizacion_report->nro==0&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==1)
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento" >
+                                {{ __('SEGUIMIENTO') }} <i class="fas fa-check fa-lg"></i>  
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#parcial" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success rounded-0" data-bs-toggle="modal" data-bs-target="#Total2" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>
+                            @endif
+
+
+                            @if ($cotizacion_report->nro==0&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==1&&$cotizacion_report->nroT==1)
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento" >
+                                {{ __('SEGUIMIENTO') }} <i class="fas fa-check fa-lg"></i>  
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#parcial2" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>  
                             <button type="button" class="btn btn-sm btn-success rounded-0" data-bs-toggle="modal" data-bs-target="#Total2" >
                                 {{ __('ENTREGA TOTAL') }}
                             </button>   
 
-
+                            @endif
+                           
+                          
+                            @if ($cotizacion_report->nro==1&&$cotizacion_report->nroA==0&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==0)
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
+                                {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
+                            </button>  
+                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
                             <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#Rechazado" >
                                 {{ __('RECHAZADO') }} 
                             </button>
-                            <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#rechazado2" >
-                                {{ __('RECHAZADO') }} 
-                            </button>
+                            @endif 
+                          
                             
+                            @if ($cotizacion_report->nro==1&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==0)
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
+                                {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
+                            </button>  
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#parcial" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#Total" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>
+                            @endif
+                            @if ($cotizacion_report->nro==1&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==1&&$cotizacion_report->nroT==0)
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
+                                {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#parcial2" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>  
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#Total" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>
+                            @endif
+                            @if ($cotizacion_report->nro==1&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==1&&$cotizacion_report->nroT==1)
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
+                                {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#parcial2" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>  
+                            <button type="button" class="btn btn-sm btn-success rounded-0" data-bs-toggle="modal" data-bs-target="#Total2" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>   
+
+                            @endif
+                            @if ($cotizacion_report->nro==1&&$cotizacion_report->nroA==1&&$cotizacion_report->nroP==0&&$cotizacion_report->nroT==1)
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#seguimiento2">
+                                {{ __('SEGUIMIENTOS') }} <i class="fas fa-check fa-lg"></i>   
+                            </button>   
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#adjudicado2" >
+                                {{ __('ADJUDICADO') }}
+                            </button>
+                          
+                            <button type="button" class="btn btn-sm btn-info rounded-0" data-bs-toggle="modal" data-bs-target="#parcial" >
+                                {{ __('ENTREGA PARCIAL') }}
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success rounded-0" data-bs-toggle="modal" data-bs-target="#Total2" >
+                                {{ __('ENTREGA TOTAL') }}
+                            </button>
+                            @endif
+                            
+                           @if ($cotizacion_report->nro==2)
+                           <button type="button" class="btn btn-sm btn-secondary rounded-0" data-bs-toggle="modal" data-bs-target="#rechazado2" >
+                            {{ __('RECHAZADO') }} 
+                            </button>
+                            @endif
+
+                         
                         </div>
 
                     </div>
@@ -204,6 +311,7 @@
               <input type="hidden" id="seguimiento" name="seguimiento" maxlength="8" size="10" value="Seguimiento">
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
+              <input type="hidden"   name="nro" id="nro" style="text-align:right; width : 50px; heigth : 10px" value="1" >
               <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de Seguimiento</textarea>
                                    
             </div>
@@ -301,6 +409,7 @@
               <input type="hidden" id="seguimiento" name="seguimiento" maxlength="8" size="10" value="Adjudicado">
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
+              <input type="hidden"   name="nroAd" id="nroA" style="text-align:right; width : 50px; heigth : 10px" value="1" >
               <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de su adjudicion</textarea>
                                    
             </div>
@@ -332,6 +441,7 @@
                   @if ($cotizacion_report->id==$s->cotizacion_form_id&&$s->estado=="Adjudicado")
                   {{$s->created_at}}
                   <p>Adjudicion: {{$s->textObs1}}</p>
+                  @break
                   @endif
               @endforeach
 
@@ -486,7 +596,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Entrega total</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -503,7 +613,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Entrega total</button>
+                <button type="submit" class="btn btn-primary">Rechazar</button>
               </div>
             </form>
         </div>
@@ -515,7 +625,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Entrega total</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Rechazar</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
