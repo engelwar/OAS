@@ -19,6 +19,7 @@ class CreateObservacionEstadosTable extends Migration
             $table->string('textObs1')->nullable();
             $table->string('textObs2')->nullable();
             $table->integer('cotizacion_form_id')->nullable();
+            $table->integer('nroMod')->nullable();
             $table->timestamps();
         });
     }

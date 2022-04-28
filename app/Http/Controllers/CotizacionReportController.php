@@ -12,6 +12,8 @@ use PDF;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
+use App\observacion_estados;
+use App\ObservacionCotizacion;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Expr\Cast;
 use Observaciones;
@@ -94,7 +96,7 @@ class CotizacionReportController extends Controller
      */
     public function create()
     {
-       
+       return "desde create";
     }
 
     //mostrar pdf
@@ -112,6 +114,7 @@ class CotizacionReportController extends Controller
          $data=request(); 
 
         DB::table('observacion_cotizacions')->insert([
+            'id'=>$data['id_cotizacion'],
             'idObs'=>$data['id_cotizacion'],
             'user_id'=>$data['iduser'],
             'textObs'=>$data['comentario'],
@@ -181,7 +184,8 @@ class CotizacionReportController extends Controller
         } 
              
         
-      
+      $estadosQ ="";
+
         $esUnaQuery = 
         " 
         select CONVERT(varchar,vtvtaFent,103) as 'Fecha',
@@ -216,8 +220,9 @@ class CotizacionReportController extends Controller
         
         //$observacionBD=DB::table('observacion_cotizacion')->get()->pluck('idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC');          
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','fechaC']);
-        
+        $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
+      
 
        //  $nombre = 'Fernando';
         ///////////////////////
@@ -243,7 +248,8 @@ class CotizacionReportController extends Controller
             //->with('user_id',$user_id);
             ->with('cotizacion_report', $cotizacion_report)
             ->with('fecha',$fecha)
-            ->with('observacionBD',$observacionBD);
+            ->with('observacionBD',$observacionBD)
+            ->with('cr',$cr);
         }
         ////////////////////////
        
@@ -389,15 +395,150 @@ class CotizacionReportController extends Controller
      */
     public function edit(Cotizacion_report $cotizacion_report)
     {
-        $commetx=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','fechaC']);
-        
+        $estaSegui = observacion_estados::where('estado','Seguimiento')->first();
+        $commetx=observacion_estados::all('id','estado','textObs1','cotizacion_form_id','created_at','updated_at');
+        $cotT=Cotizacion_report::all('id');
         return view('cotizacionReport.edit')
         ->with('commetx',$commetx)
         ->with('cotizacion_report',$cotizacion_report)
+        ->with('cotT',$cotT)
+        ->with('estaSegui', $estaSegui)
+       
          ;
         //return $cotizacion_report;
     
     }
+
+    public function estado(Request $request, Cotizacion_report $cotizacion_report)
+    { 
+        $segui="Seguimiento";
+        $adju="Adjudicado";
+        $Pend="Pendiente";
+        $parc="Parcial";
+        $recha="Rechazado";
+        $contar=-1;
+        $data=request(); 
+        $c=$data['nroMod'];
+        $A1=$c;
+            $int=(int)$A1;
+            $int=$int+1;
+        
+        $ss1=$data['seguimiento'];
+
+
+        
+        
+       if ($c==0&&$ss1==$segui) {
+        DB::table('observacion_estados')->insert([
+            
+            'estado'=>$data['seguimiento'],
+            'textObs1'=>$data['seguiComen'],
+            'textObs2'=>"sin accion",
+            'cotizacion_form_id'=>$data['nr'],
+            'nroMod'=>$A1,
+            'created_at'=>date('Y-m-d H:i:s'),  
+            'updated_at'=>date('Y-m-d H:i:s'),  
+            ]);
+            dd($request->all());
+       }
+        if ($c==1&&$ss1==$segui) {
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+                dd($request->all());
+        }
+
+           if ($c==1&&$ss1==$segui) {
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+                dd($request->all());
+        }
+        
+         
+
+        if ($ss1==$adju) {
+            
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+               
+        }
+
+        if ($ss1==$parc) {
+            
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+               
+        }
+        if ($ss1=="Total") {
+            
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+               
+        }
+
+        if ($ss1=="Rechazado") {
+            
+            DB::table('observacion_estados')->insert([
+            
+                'estado'=>$data['seguimiento'],
+                'textObs1'=>$data['seguiComen'],
+                'textObs2'=>"sin accion",
+                'cotizacion_form_id'=>$data['nr'],
+                'nroMod'=>$int,
+                'created_at'=>date('Y-m-d H:i:s'),  
+                'updated_at'=>date('Y-m-d H:i:s'),  
+                ]);
+               
+        }
+
+     
+
+    }
+
+ 
+
+
+
+
     
     /**
      * Update the specified resource in storage.
@@ -407,26 +548,43 @@ class CotizacionReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cotizacion_report $cotizacion_report)
-    {   
-         /** 
-        $data=$request;
+        { 
+            $data=$request;
+
+            $A1=$cotizacion_report->nroMod;
+            $int=(int)$A1;
+            $int=$int+1;
+            
+          if ($int<=2) {
+            $cotizacion_report->textObs=$data['comentario'];
+            $cotizacion_report->user_id=$data['iduser'];
+            $cotizacion_report->nroMod=$int;
+            $cotizacion_report->fechaC=date('Y-m-d H:i:s');
+            $cotizacion_report->save();
+          } else {
+              dd("SOLO SE PUEDE MODIFICAR HASTA 2 VECES ");
+          }
+          
+
+            
+         /**         $data=$request;
         $cont =$data['numero'];
-        $cadena=$data['textObs'.'user_id'.'fechaC'];
+       
         if ($cont<=2) {
             $cont=$cont++;
             if ($cont==1) {
-                $cotizacion_report->textObs=$data['comentario'];
+                $cotizacion_report->textObs=$data['descrip"'];
                 $cotizacion_report->user_id=$data['iduser'];
-                $cotizacion_report->modifUno=$cadena;
+                
                 $cotizacion_report->nroMod=$cont;
                 $cotizacion_report->fechaC=date('Y-m-d H:i:s');
                 $cotizacion_report->save();
              
             }
             if ($cont==2) {
-                $cotizacion_report->textObs=$data['comentario'];
+                $cotizacion_report->textObs=$data['descrip"'];
                 $cotizacion_report->user_id=$data['iduser'];
-                $cotizacion_report->modifiDos=$cadena;
+             
                 $cotizacion_report->nroMod=$cont;
                 $cotizacion_report->fechaC=date('Y-m-d H:i:s');
                 $cotizacion_report->save();
@@ -439,6 +597,7 @@ class CotizacionReportController extends Controller
         return redirect()->action('CotizacionReportController@store'); 
        */
         return "desde update";
+    
     }
 
     /**

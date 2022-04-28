@@ -136,7 +136,7 @@
 
 
                             <div class="row d-flex justify-content-center my-4">
-                
+           
                             
                                 <div class="col-10 d-flex justify-content-center">
                                     @if($s=$cot->estados->where('estado', 'Seguimiento')->first()) 

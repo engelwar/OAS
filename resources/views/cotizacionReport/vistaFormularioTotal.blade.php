@@ -33,8 +33,9 @@ table.dataTable {
 @include('layouts.sidebar', ['hide'=>'0']) 
 
 
+
 <div class="container-fluid">
- 
+
   
     <div class="row justify-content-center mt-4">
       <div style="text-align: center"> <h4>REPORTE COTIZACION</h4> </div>
@@ -88,20 +89,7 @@ table.dataTable {
         </div>
       </div>
 
-      <!-- boton modal 2 -->
-
-
-      <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-        </symbol>
-        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-        </symbol>
-        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-        </symbol>
-      </svg>
+    
 
 
 
@@ -204,10 +192,11 @@ let contar=0;
 $(document).ready(function() 
 {      
     var height = screen.height-380+'px';
-    var dd1=1;
+    var dd1=0;
     var table = $('#example').DataTable(
         
     {
+      
         data: json_data,
         columns: [
           
@@ -229,19 +218,20 @@ $(document).ready(function()
         "data": null,
         "bSortable": false,
         "mRender": function(data, type, value) {
-          var status = '<div style="text-align: right;width:90px"> <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button>  <a href="https://www.google.com/" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a></div>';
+          var status = ' <button type="button"  id='+value["NR"]+' onclick="obtenerId(this.id)" class="btn btn-outline-secondary btnHT '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-exclamation-triangle"></i></span></button> ';
           
           return status;}, title :'OBS'
        },
+      
        {
         "data": null,
         "bSortable": false,
+        
         "mRender": function(data, type, value) {
-         
-
-          var status =' @foreach ($observacionBD as $item)  @if( 1010117096 == $item->idObs)  <a href="{{action('CotizacionReportController@edit', $item->id)}}" type="button"  id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"    onclick="editar(this.id)"><span><i class="fa fa-search"></i></span></a> @else  @endif @endforeach ';
-           
-          return status;}, title :'OBS'
+        
+          
+          var status ='<a  href="v/'+value["NR"]+'/edit" class="external" id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"><span><i class="fa fa-search"></i></span></a>';
+            return status;}, title :'Consulta'
        },
        
       ],
@@ -323,7 +313,13 @@ function editar(id){
 
 }
 
-
+$(document).ready(function(){
+   $("a.external").click(function() {
+      url = $(this).attr("href");
+      window.open(url, '_blank');
+      return false;
+   });
+});
 
 
 
