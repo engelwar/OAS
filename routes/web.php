@@ -269,6 +269,9 @@ Route::get('licencia/estado/{id}', 'LicenciaController@estado')->name('licencia.
 Route::get('licencia_detalle/{id}', 'LicenciaController@estadoForm')->name('licencia.estadoForm');
 Route::get('licencia_pdf/{id}','LicenciaController@generatePDF')->name('licencia_pdf');
 
+Route::resource('permisos', 'IndexPermisosController');
+Route::resource('vacaciones', 'IndexVacacionesController');
+
 Route::resource('vacacion', 'VacacionController');
 Route::get('vacacion_pdf/{id}','VacacionController@generatePDF')->name('vacacion_pdf');
 Route::get('vacacion/estado/{id}', 'VacacionController@estado')->name('vacacion.estado');
@@ -282,15 +285,14 @@ Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->n
 
 
 //-------------------caminos de reprotte cotizacion------------------------------------------
-Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
-//Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
-Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('CotizacionReporte.show');
-Route::post('/CotizacionReporte/vistaTotal/v','CotizacionReportController@store')->name('vistaF.store');
-Route::any('/CotizacionReporte/vistaTotal/v/s','CotizacionReportController@crearZ')->name('CotizacionReporte.crearZ');
-Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
-//Route::get('/CotizacionRepore/vistaTotal/v/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
-Route::any('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
+// Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
+// //Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
+// Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('CotizacionReporte.show');
+// Route::post('/CotizacionReporte/vistaTotal/v','CotizacionReportController@store')->name('vistaF.store');
+// Route::any('/CotizacionReporte/vistaTotal/v/s','CotizacionReportController@crearZ')->name('CotizacionReporte.crearZ');
+// Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
+// //Route::get('/CotizacionRepore/vistaTotal/v/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
+// Route::any('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
-

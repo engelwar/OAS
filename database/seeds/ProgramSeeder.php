@@ -202,7 +202,7 @@ class ProgramSeeder extends Seeder
             'nombre'=>'Permisos',  
             'desc'=>'Formulario de Permisos',        
             'modulo_id'=>3,
-            'route'=>'licencia.index',
+            'route'=>'permisos.index',
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
@@ -212,7 +212,7 @@ class ProgramSeeder extends Seeder
             'nombre'=>'Vacaciones',  
             'desc'=>'Formulario de Vacaciones',        
             'modulo_id'=>3,
-            'route'=>'vacacion.index',
+            'route'=>'vacaciones.index',
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));

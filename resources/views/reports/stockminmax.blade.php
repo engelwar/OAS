@@ -41,12 +41,12 @@
                                 <label class="form-check-label" for="stock02">Mostrar productos con stock 0</label>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="codBarras" name="codBarras"> 
                                 <label class="form-check-label" for="codBarras">Mostrar Codigos de Barra</label>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 text-center d-block gap-2">
@@ -69,7 +69,7 @@
             <div class="col-8
             @if(!Auth::user()->tienePermiso(5,9))
                 d-none
-            @endif">
+            @endif d-none">
                 <div class="container-fluid border rounded p-4">
                     <div class="form-check form-switch">
                         <input class="form-check-input" 

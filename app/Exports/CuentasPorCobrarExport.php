@@ -10,11 +10,11 @@ class CuentasPorCobrarExport implements FromArray, WithHeadings,ShouldAutoSize
 {
     public function __construct(array $resum, $checkfecha, $fecha, $fecha1, $fecha2)
     {
-        $this->resum = $resum;
-        $this->checkfecha = $checkfecha;
-        $this->fecha = $fecha;
-        $this->fecha1 = $fecha1;
-        $this->fecha2 = $fecha2;
+      $this->resum = $resum;
+      $this->checkfecha = $checkfecha;
+      $this->fecha = $fecha;
+      $this->fecha1 = $fecha1;
+      $this->fecha2 = $fecha2;
     }
 
     public function array(): array

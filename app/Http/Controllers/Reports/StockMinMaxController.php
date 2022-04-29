@@ -9,7 +9,7 @@ use Auth;
 use App\User;
 use App\Stockventa;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\StockExport;
+use App\Exports\StockMaxMinExport;
 use App\TempStockParam;
 
 class StockMinMaxController extends Controller
@@ -249,8 +249,8 @@ class StockMinMaxController extends Controller
     $titulos_excel[] = 'Total';
     if ($request->gen == "export") {
       //return dd($pvp);
-      $export = new StockExport($test, $titulos_excel);
-      return Excel::download($export, 'Reporte de Stock Actual.xlsx');
+      $export = new StockMaxMinExport($textMax, $textMin, $titulos_excel);
+      return Excel::download($export, 'Reporte de Stock MaxMin.xlsx');
     } else {
       //return dd($titulos);
       return view('reports.vista.stockminmax', compact('textMax', 'textMin', 'titulos'));

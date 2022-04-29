@@ -1,0 +1,181 @@
+@page{
+    margin: 0;
+    font-size: 0.65em;
+    font-family: Arial;
+    color: black;
+    text-transform: uppercase;
+}
+
+body{
+    margin: 1cm;
+}
+
+.container{
+    border: 0.4mm solid black;
+    padding: 0.4cm;
+    display: block;
+}
+
+.container_header{
+    position: relative;
+    border: 0.5mm solid black;
+    display: table;
+    width: 100%;
+}
+
+.container_header .header{
+    position: relative;
+    display: table-cell;
+    text-align: center;
+}
+
+.header1{
+    width: 25%;
+    border-right: 0.5mm solid black;
+}
+
+.header1 img{
+    margin-top: 0.3cm;
+    width: 90%;
+}
+
+.header2{
+    width: 55%;
+    border-right: 0.5mm solid black;
+}
+
+.header3{
+    width: 20%;
+    font-size: 0.8rem;
+}
+
+.formRegistro{
+    width: 100%;
+    position: relative;
+    margin-top: 0.5cm;
+}
+
+.form-group1{
+    position: relative;
+    width: 100%;
+    display: table;
+}
+
+.form-group1 .item{
+    display: table-cell;
+}
+
+.form-group1 .item1{
+    width: 10%;
+    padding-top: 0.1cm;
+}
+
+.form-group1 .item2{
+    width: 20%;
+}
+
+.form-group1 .item3{
+    width: 2%;
+    padding-top: 0.1cm;
+    padding-left: 1cm;
+}
+
+.form-group1 .item4{
+    width: 20%;
+}
+
+.form-group1 .item5{
+    width: 10%;
+    padding-top: 0.1cm;
+    padding-left: 1cm;
+}
+
+.form-group1 .item6{
+    width: 40%;
+    padding-right: 0.2cm;
+}
+
+.form-group1 .item input,.form-group1 .item label{
+    width: 100%;
+}
+
+.form-group2{
+    margin: 0.5cm 0 0.5cm 0;
+    position: relative;
+    display: table;
+    width: 100%;
+}
+
+.form-group2 .item{
+    display: table-cell;
+}
+
+.form-group2 .item1{
+    width: 8%;
+    padding-top: 0.1cm;
+}
+
+.form-group2 .item2{
+    width: 92%;
+}
+
+.form-group3{
+    width: 100%;
+    display: table;
+    text-align: center;
+}
+
+.form-group3 .item{
+    display: table-cell;
+}
+
+.form-group3 .item label{
+    width: 100%;
+}
+
+.form-group3 .item_label{
+    width: 3cm;
+    padding-top: 0.1cm;
+}
+
+.form-group4{
+    width: 100%;
+    display: table;
+    margin-top: 0.3cm;
+}
+
+.form-group4 .item {
+    display: table-cell;
+}
+
+.form-group4 .item_label{
+    width: 20%;
+    padding-top: 0.1cm;
+}
+
+.form-group4 .item_input{
+    width: 80%;
+}
+
+.form-group4 .item input{
+    width: 100%;
+}
+
+.form-group5{
+    width: 100%;
+    display: table;
+    margin-top: 0.5cm;
+}
+
+.form-group5 .item{
+    display: table-cell;
+    text-align: center;
+}
+
+.form-group5 .item div label{
+    font-weight: bold;
+}
+
+.form-group5 .item div .firma{
+    margin-top: 1.2cm;
+}
