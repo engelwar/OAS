@@ -33,7 +33,6 @@ table.dataTable {
 @include('layouts.sidebar', ['hide'=>'0']) 
 
 
-
 <div class="container-fluid">
 
   
@@ -93,66 +92,6 @@ table.dataTable {
 
 
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">OBSERVACION</h5>
-        
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      
-       
-        <form method="POST" action="">
-         
-          @csrf @method('PUT')
-          <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
-          <div class="mb-3">
-            {{$cotizacion_report->id}}
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                <div>
-                      La observacion solo se puede cambiar dos veces
-                </div>
-              </div>
-              <input type="hidden" id="name1" name="nr" required minlength="4" maxlength="8" size="20" value="text">
-                  <input type="hidden" id="name2" name="id_user" maxlength="8" size="10" value="{{Auth::user()->id}}">
-            
-               <!--insertar datos para la consulta -->
-               <div class="input-group">
-                <span class="input-group-text">Observacion anterior</span>
-                <textarea class="form-control" aria-label="With textarea" id="et1" name="et1" disabled ></textarea>
-              </div>
-            </div>
-          <div class="mb-4">
-            <label for="message-text" class="col-form-label" >Observacion a modificar.</label>
-            
-
-            <textarea class="form-control  text-aling-center" id="message-text" name="comentario"></textarea>
-          </div>
-      
-       <span>  Usuario: {{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} {{auth()->user()->perfiles->materno}}</span>
-       <br>
-     <!--añadir numero modificaciones-->
-       <span>Numero de modificaciones hechas en total: <input type="number" id="name1" name="numero" required minlength="1" maxlength="5" size="5" value="0" disabled></span>
-       <div class="modal-footer">
-        <!--controlador de  botones -->  
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-        @if (1===1)
-        <button type="submit" class="btn btn-outline-danger">Modificar</button>
-        @else
-        <button type="button" class="btn btn-outline-danger" disabled>Limite excedido</button> 
-        @endif
-      
-      </div>
-    </div>
-      </form>
-      </div>
-
-     
-  </div>
-</div>
 
 
 <!-- Modal -->
@@ -212,7 +151,32 @@ $(document).ready(function()
             { data: 'FechaFac', title: 'Fecha fac'},
             { data: 'numerofactura', title: 'Nro Fac'},
             { data: 'estado', title: 'Estado'},
-            {"defaultContent":"",title: 'S'},
+         
+            { data: "NR",
+    render: function (data, type, row,$estadoF) {
+    
+   
+        
+       if (data ==="1010117096") {
+            return '<span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i> </span>';
+       // return ' @foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==1010117123)'+data+' @break  @endif @endforeach ';
+      }  
+     
+        
+         
+     },title: 'S'},
+
+     {
+      "data": null,
+        "bSortable": false,
+       
+      "mRender": function(data, type, value) {
+        
+          var status = '@foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==='+data["NR"]+'){{$i->cotizacion_form_id}} @break  @endif @endforeach ';
+          
+          return status;}, title :'S'
+       },
+
             {"defaultContent":"",title: 'E'},
             {
         "data": null,
@@ -230,7 +194,7 @@ $(document).ready(function()
         "mRender": function(data, type, value) {
         
           
-          var status ='<a  href="v/'+value["NR"]+'/edit" class="external" id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"><span><i class="fa fa-search"></i></span></a>';
+          var status ='<a type="button" href="v/'+value["NR"]+'/edit" class="external" id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"><span><i class="fa fa-search"></i></span></a>';
             return status;}, title :'Consulta'
        },
        

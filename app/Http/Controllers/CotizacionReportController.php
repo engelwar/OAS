@@ -117,7 +117,7 @@ class CotizacionReportController extends Controller
        foreach ($cotT as $value) {
       
             if ($value==$dato) {
-                return "existe el reguistro";
+              return  "datos repetidos"; 
             } 
                
         }
@@ -135,7 +135,7 @@ class CotizacionReportController extends Controller
             'fechaC'=>date('Y-m-d H:i:s')
       ]);
      
-        return "dato enviado cone exito....";
+      return "cargado con exito";
       //echo "desde crearZ";
       // return redirect()->action('CotizacionReportController@store'');
        // return redirect('CotizacionReporte/vistaTotal/v');
@@ -169,6 +169,7 @@ class CotizacionReportController extends Controller
      */
     public function store(Request $request, Cotizacion_report $cotizacion_report ) 
     {   
+        $estadoF=observacion_estados::all('cotizacion_form_id','estado');
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
         $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
@@ -247,7 +248,8 @@ class CotizacionReportController extends Controller
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
             ->setOption('footer-font-size',8);
-            return $pdf->inline('Reportecotizacion '.$fecha.'.pdf');
+            //return $pdf->inline('Reportecotizacion'.$fecha.'.pdf');
+            return $pdf->inline('Reportecotizacion'.$fecha.'.pdf');
         }
         elseif($request->gen =="excel")
         {
@@ -263,7 +265,9 @@ class CotizacionReportController extends Controller
             ->with('cotizacion_report', $cotizacion_report)
             ->with('fecha',$fecha)
             ->with('observacionBD',$observacionBD)
-            ->with('cr',$cr);
+            ->with('cr',$cr)
+            ->with('estadoF',$estadoF);
+            ;
         }
         ////////////////////////
        
@@ -462,7 +466,9 @@ class CotizacionReportController extends Controller
             ]);
             $cotizacion_report->nro=1;
             $cotizacion_report->save();
-            dd($request->all());
+            return redirect()->back() 
+
+    ->with('success', 'Entrada actualizada.'); 
        }
       
 
@@ -485,9 +491,13 @@ class CotizacionReportController extends Controller
                     'created_at'=>date('Y-m-d H:i:s'),  
                     'updated_at'=>date('Y-m-d H:i:s'),  
                     ]);
-                    dd($request->all());
+                    return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.'); 
               }
-              else return "numero de intentos excedidos";           
+              return redirect()->back() 
+
+                    ->with('success', 'muchos intentos');         
         }
         
              
@@ -506,6 +516,9 @@ class CotizacionReportController extends Controller
                 ]);
             $cotizacion_report->nroA=1;
             $cotizacion_report->save();
+            return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.');
         }
 
         if ($ss1==$parc) {
@@ -522,6 +535,9 @@ class CotizacionReportController extends Controller
                 ]);
                 $cotizacion_report->nroP=1;
                 $cotizacion_report->save();
+                return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.');
         }
         if ($ss1=="Total") {
             
@@ -537,6 +553,9 @@ class CotizacionReportController extends Controller
                 ]);
                 $cotizacion_report->nroT=1;
                 $cotizacion_report->save();
+                return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.');
                
         }
 
@@ -555,6 +574,9 @@ class CotizacionReportController extends Controller
                 $cotizacion_report->nro=2;
                 
                 $cotizacion_report->save();
+                return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.');
                
         }
 
@@ -589,8 +611,13 @@ class CotizacionReportController extends Controller
             $cotizacion_report->nroMod=$int;
             $cotizacion_report->fechaC=date('Y-m-d H:i:s');
             $cotizacion_report->save();
+            return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.');
           } else {
-              dd("SOLO SE PUEDE MODIFICAR HASTA 2 VECES ");
+            return redirect()->back() 
+
+                    ->with('success', 'SOLO SE PUEDEN EDITAR 2 VECES.');
           }
           
 

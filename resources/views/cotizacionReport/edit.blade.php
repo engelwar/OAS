@@ -30,7 +30,7 @@
                             <div class="col-6 d-flex align-items-center justify-content-center">
                                 <h2 class="text-center text-primary">DETALLE OBSERVACION</h2>
                             </div>
-                            
+                       
                             
                         </div>
 

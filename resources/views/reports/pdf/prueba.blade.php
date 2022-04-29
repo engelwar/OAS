@@ -45,12 +45,12 @@
                 <th>Fecha facturacion</th>
                 <th>Nro facturacion</th>
                 <th>Estado</th>
-                <th>Observacion</th>
+                
             </tr>
         </thead>
         <tbody>
                         
-                @foreach ($consultas as $item)
+                @foreach ($consutas as $item)
                                    
                <tr>
                     <td style="text-align:center" class="bold">{{$item->Fecha}}</td> 
@@ -86,7 +86,7 @@
                     <td style="text-align:center" class="bold">{{$item->estado}}</td> 
                     @endif
                    
-                    <td style="text-align:center" class="bold">es una observacion</td>
+                  
                 </tr>
             
                 @endforeach            

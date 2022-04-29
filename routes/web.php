@@ -262,6 +262,7 @@ Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','C
 Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('CotizacionReporte.show');
 Route::post('/CotizacionReporte/vistaTotal/v','CotizacionReportController@store')->name('vistaF.store');
 Route::any('/CotizacionReporte/vistaTotal/v/s','CotizacionReportController@crearZ')->name('CotizacionReporte.crearZ');
+
 Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
 Route::put('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
 Route::put('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/estado', 'CotizacionReportController@estado')->name('CotizacionReporte.estado');
