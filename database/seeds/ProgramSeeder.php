@@ -338,5 +338,18 @@ class ProgramSeeder extends Seeder
         $smod->permisos()->attach(Permiso::find(1));
         $smod->permisos()->attach(Permiso::find(5));
         $smod->permisos()->attach(Permiso::find(6));
+
+        $smod = Program::create([  
+            'id'=>31,  
+            'nombre'=>'Stock MaxMin',        
+            'modulo_id'=>6,
+            'sub_modulo_id'=>1,
+            'route'=>'stockminmax.index',
+            'icon'=>'fas fa-file-contract',
+        ]); 
+        $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(6));
+        $smod->permisos()->attach(Permiso::find(8));
+        $smod->permisos()->attach(Permiso::find(9));
     }
 }
