@@ -275,3 +275,5 @@ Route::put('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/estado', 'Cotiza
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
 
+Route::resource('permisos', 'PermisoController');
+Route::resource('vacaciones', 'VacacionesController');

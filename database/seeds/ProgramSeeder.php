@@ -202,7 +202,7 @@ class ProgramSeeder extends Seeder
             'nombre'=>'Permisos',  
             'desc'=>'Formulario de Permisos',        
             'modulo_id'=>3,
-            'route'=>'licencia.index',
+            'route'=>'permisos.index',
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));

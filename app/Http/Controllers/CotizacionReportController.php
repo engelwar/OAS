@@ -237,8 +237,8 @@ class CotizacionReportController extends Controller
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','fechaC']);
         $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
+        // dd($consutas);
       
-
        //  $nombre = 'Fernando';
         ///////////////////////
         if($request->gen =="export")

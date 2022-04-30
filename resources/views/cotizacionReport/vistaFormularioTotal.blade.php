@@ -154,16 +154,7 @@ $(document).ready(function()
          
             { data: "NR",
     render: function (data, type, row,$estadoF) {
-    
-   
-        
-       if (data ==="1010117096") {
-            return '<span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i> </span>';
-       // return ' @foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==1010117123)'+data+' @break  @endif @endforeach ';
-      }  
      
-        
-         
      },title: 'S'},
 
      {
