@@ -32,13 +32,12 @@ table.dataTable {
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
 
-
 <div class="container-fluid">
-
+ 
   
     <div class="row justify-content-center mt-4">
       <div style="text-align: center"> <h4>REPORTE COTIZACION</h4> </div>
-      
+   
       <div class="col-md-12">
           <div class="row ">
             <div class="col d-flex justify-content-center">
@@ -66,8 +65,11 @@ table.dataTable {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{'v/s'}}">
-                    @csrf
+                <form method="POST" action="{{route('CotizacionReporte.crearZ')}}">
+                 
+                        @csrf
+
+                 
                
                 <div class="mb-2">
                   <input type="hidden" id="name1" name="id_cotizacion" required minlength="4" maxlength="8" size="20" value="text">
@@ -80,6 +82,9 @@ table.dataTable {
             
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              
+              
+           
               <button type="sumit" class="btn btn-primary btnEditar" >Enviar observacion</button>
             </div>
         </form>
@@ -123,7 +128,7 @@ table.dataTable {
 @section('mis_scripts')
 <script>
 var json_data = {!! json_encode($consultas) !!};
-var json_data2 = {!! json_encode($observacionBD) !!};
+var json_data2 = {!! json_encode($estadoF) !!};
 var ids=[];
 let contar=0;
 
@@ -135,7 +140,7 @@ $(document).ready(function()
     var table = $('#example').DataTable(
         
     {
-      
+        data2: json_data2,
         data: json_data,
         columns: [
           
@@ -151,33 +156,23 @@ $(document).ready(function()
             { data: 'FechaFac', title: 'Fecha fac'},
             { data: 'numerofactura', title: 'Nro Fac'},
             { data: 'estado', title: 'Estado'},
-         
-            { data: "NR",
-    render: function (data, type, row,$estadoF) {
-    
-   
-        
-       if (data ==="1010117096") {
+       /*     
+          { data: null,
+          render: function (data, type, row) {
+          
+            if (data.NR ==="1010159058") {
             return '<span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i> </span>';
-       // return ' @foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==1010117123)'+data+' @break  @endif @endforeach ';
-      }  
-     
-        
-         
+            //return ' @foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==1010117123)'+data+' @break  @endif @endforeach ';
+      }          
      },title: 'S'},
 
-     {
-      "data": null,
-        "bSortable": false,
-       
-      "mRender": function(data, type, value) {
-        
-          var status = '@foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==='+data["NR"]+'){{$i->cotizacion_form_id}} @break  @endif @endforeach ';
-          
-          return status;}, title :'S'
-       },
-
-            {"defaultContent":"",title: 'E'},
+            {"data":null,
+            "bSortable":null,
+            "mRender":function(data,type,value){
+              
+              return '@foreach ( $estadoF as $i)@if ($i->cotizacion_form_id=="1010159058") <p>{{$i->cotizacion_form_id}}</p> @break  @endif @endforeach';
+            },title: 'E'},
+           */
             {
         "data": null,
         "bSortable": false,
@@ -186,8 +181,8 @@ $(document).ready(function()
           
           return status;}, title :'OBS'
        },
-      
-       {
+       
+             {
         "data": null,
         "bSortable": false,
         
@@ -195,9 +190,11 @@ $(document).ready(function()
         
           
           var status ='<a type="button" href="v/'+value["NR"]+'/edit" class="external" id='+value["NR"]+'0001'+'  class="btn btn-outline-secondary btnEdit '+value["active"]+'" axn='+value["active"]+' idc='+value["NR"]+' data-bs-toggle="modal" data-bs-target="#exampleModal12"  data-bs-whatever="@mdo"><span><i class="fa fa-search"></i></span></a>';
-            return status;}, title :'Consulta'
+            return status;}, title :'S/E'
        },
-       
+    
+     
+    
       ],
         "pageLength": 100,  
         "columnDefs": [
@@ -247,6 +244,7 @@ $(document).ready(function()
 function obtenerId(id){
   idx="#"+id;
   $(idx).click(function(){
+    
   $("#exampleModal").modal("show");
 });
 var fila;
@@ -274,8 +272,9 @@ function editar(id){
    });
 });
 
-
 }
+
+
 
 $(document).ready(function(){
    $("a.external").click(function() {
@@ -284,8 +283,6 @@ $(document).ready(function(){
       return false;
    });
 });
-
-
 
 
 
