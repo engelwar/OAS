@@ -12,7 +12,7 @@ class Cotizacion_report extends Model
 
     public function estados()
     {
-       // return $this->hasmany(observacion_estados::class);
+    
        return $this->hasMany(observatorio_estados::class);
     }
     public function user()

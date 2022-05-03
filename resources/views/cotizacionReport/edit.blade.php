@@ -49,6 +49,53 @@
                                         <span> <h5>Numero de modificaciones: {{$cotizacion_report->nroMod}}</h5></span>
                                       
                                     </div>
+                                    <div class="col-md-10">
+                                        <span> <h5>Estado:  
+                                        @foreach ($commetx as $i)
+                                        @if ($i->cotizacion_form_id==$cotizacion_report->id && $i->estado=="Rechazado")
+                                        <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
+                                            @break
+                                        @else
+                                        @if ($i->cotizacion_form_id==$cotizacion_report->id && $i->estado=="Seguimiento")
+                                        <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
+                                            @break
+                                        @endif
+                                            @endif
+                                        
+                                           
+                                           
+
+                                        @endforeach    
+                                        
+                                    </h5></span>
+
+                                    <span> <h5>Proceso:  
+                                        @foreach ($commetx as $i)
+
+                                        @if ($i->cotizacion_form_id==$cotizacion_report->id)
+                                            @switch($i->estado)
+                                                @case("Rechazado")
+                                                <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span> 
+                                                    @break
+                                                @case("Adjudicado")
+                                                <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
+                                                    @break
+                                                    @case("Parcial")
+                                                    <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
+                                                    @break
+                                                    @case("Total")
+                                                    <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+                                                    @break
+                                                @default
+                                                  
+                                            @endswitch
+                                        @endif
+                                           
+                                        @endforeach    
+                                        
+                                    </h5></span>
+                                      
+                                    </div>
                                     <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="{{$cotizacion_report->nroMod}}"  >
                                 </div>
                                
@@ -354,8 +401,7 @@
                                     
                                     </tr>
                                   
-                                @else
-                                NO HAY REGISTRO!!
+                                
                                 @endif
                                 @endforeach
                                     

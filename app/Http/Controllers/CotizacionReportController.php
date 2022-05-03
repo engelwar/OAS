@@ -117,7 +117,12 @@ class CotizacionReportController extends Controller
        foreach ($cotT as $value) {
       
             if ($value==$dato) {
-              return  "datos repetidos"; 
+               
+             dd("
+             
+             
+             
+             -----------DATOS REPETIDOS---------");
             } 
                
         }
@@ -136,10 +141,7 @@ class CotizacionReportController extends Controller
       ]);
      
       return "cargado con exito";
-      //echo "desde crearZ";
-      // return redirect()->action('CotizacionReportController@store'');
-       // return redirect('CotizacionReporte/vistaTotal/v');
-   
+    // return redirect()->action('CotizacionReporte.show'); 
        
     }
     public function verPDF()
@@ -170,54 +172,74 @@ class CotizacionReportController extends Controller
     public function store(Request $request, Cotizacion_report $cotizacion_report ) 
     {   
         $estadoF=observacion_estados::all('cotizacion_form_id','estado');
+
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
-        $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
-        
-        $otroUsuario="";  
-        $otroUsuario2=" OR adusrNomb = ";  
+       // $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
+       $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
+       //$fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
        
-        $cadenaOp="adusrNomb = ";  
-        $varOp=$request->options;
-        $i=0;
-        $varInteger=$request->options;
-        $varInteger=(sizeof($varInteger))-1;
+      // imLvtFech BETWEEN
+      //vtvtaFent 
+       // $otroUsuario="";  
+      //  $otroUsuario2=" OR adusrNomb = ";  
+      $otroUsuario = "AND adusrNomb IS NULL";
+      if($request->options){
+        $otroUsuario = "AND adusrNomb IN ('".implode("','",$request->options)."')";
+      }
+       
+      //$cadenaOp="adusrNomb = ";  
+       // $varOp=$request->options;
+       // $i=0;
+      //  $varInteger=$request->options;
+      //  $varInteger=(sizeof($varInteger))-1;
      
-        for($i; $i<=$varInteger;$i++ ){
+        //for($i; $i<=$varInteger;$i++ ){
          //   dd($varOp[$i]);
-            if ($varInteger>0) {
-               $otroUsuario=($varOp[$i]);
-               if ($i==0) {
-                  $cadenaOp=$cadenaOp."'".$otroUsuario."'";
-                } else {
-                  $cadenaOp=$cadenaOp.$otroUsuario2."'".$otroUsuario."'";
-             }
-            } else {
-                $otroUsuario= implode("",$varOp);
-                $cadenaOp=$cadenaOp."'".$otroUsuario."'";
-            }
-        } 
-             
-        
-      
-
-        $esUnaQuery = 
+         //   if ($varInteger>0) {
+         //      $otroUsuario=($varOp[$i]);
+         //      if ($i==0) {
+         //         $cadenaOp=$cadenaOp."'".$otroUsuario."'";
+         //       } else {
+         //         $cadenaOp=$cadenaOp.$otroUsuario2."'".$otroUsuario."'";
+         //    }
+         //   } else {
+         //       $otroUsuario= implode("",$varOp);
+         //       $cadenaOp=$cadenaOp."'".$otroUsuario."'";
+         //   }
+     //   } 
+       $esUnaQuery = 
         " 
         select CONVERT(varchar,vtvtaFent,103) as 'Fecha',
             --vtvtaNcot as 'NroCotizacion',
-            case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
+            --case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
             --	case  when vtvtaNcot = 0  then CAST(REPLACE('vtvtaNcot','0','-')) else vtvtaNcot end as 'NroCotizacion',
             --case CAST(vtvtaNcot as varchar(10)) when vtvtaNcot=0 then '' else vtvtaNcot end as 'NroCotizacion',
-                vtvtaNomC as 'Cliente',
-                CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
-                vtvtaNtra as 'NR',
-                REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
-                admonAbrv 'Moneda',
-                 adusrNomb as 'Usuario',
-                 inlocNomb as 'Local',
-                     CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
-                    imlvtNrfc as 'numerofactura',
-                   imLvtEsfc as  'estado' 
+              --  vtvtaNomC as 'Cliente',
+               -- CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
+               -- vtvtaNtra as 'NR',
+              --  REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
+                --admonAbrv 'Moneda',
+                -- adusrNomb as 'Usuario',
+               --  inlocNomb as 'Local',
+                    -- CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
+                  --  imlvtNrfc as 'numerofactura',
+                  -- imLvtEsfc as  'estado' 
+
+         --vtvtaNcot as 'NroCotizacion',
+          case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
+          --	case  when vtvtaNcot = 0  then CAST(REPLACE('vtvtaNcot','0','-')) else vtvtaNcot end as 'NroCotizacion',
+          --case CAST(vtvtaNcot as varchar(10)) when vtvtaNcot=0 then '' else vtvtaNcot end as 'NroCotizacion',
+            vtvtaNomC as 'Cliente',
+            CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
+            vtvtaNtra as 'NR',
+            REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
+            admonAbrv 'Moneda',
+            adusrNomb as 'Usuario',
+            inlocNomb as 'Local',
+              CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
+              imlvtNrfc as 'numerofactura',
+              imLvtEsfc as  'estado' 
                    
         from vtVta 
         LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
@@ -225,11 +247,11 @@ class CotizacionReportController extends Controller
         JOIN inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
         left join imlvt on vtvtaNtra=imlvtNvta
         
-            where (
-                $fecha
-                $cadenaOp
-            )
-        order by vtvtaFent desc
+        where 
+        ".$fecha."
+        ".$otroUsuario."
+          
+      order by vtvtaFent desc
 
         ";
         
@@ -237,10 +259,17 @@ class CotizacionReportController extends Controller
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','fechaC']);
         $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
+<<<<<<< HEAD
         // dd($consutas);
       
        //  $nombre = 'Fernando';
         ///////////////////////
+=======
+        
+      
+
+   
+>>>>>>> eb117a0bd5592af9a05c44ae98d56d9cafad4883
         if($request->gen =="export")
         {
             $pdf = \PDF::loadView('reports.pdf.prueba')->with('consultas',$consutas) ->with('fecha',$fecha)
@@ -248,8 +277,8 @@ class CotizacionReportController extends Controller
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
             ->setOption('footer-font-size',8);
-            //return $pdf->inline('Reportecotizacion'.$fecha.'.pdf');
-            return $pdf->inline('Reportecotizacion'.$fecha.'.pdf');
+      
+            return $pdf->inline('Reportecotizacion_'.$fecha.'.pdf');
         }
         elseif($request->gen =="excel")
         {
@@ -259,9 +288,9 @@ class CotizacionReportController extends Controller
         else if($request->gen =="ver")
         {
             return view('cotizacionReport.vistaFormularioTotal')
-          //  ->with('nombre', $nombre)
+         
             ->with('consultas',$consutas)
-            //->with('user_id',$user_id);
+       
             ->with('cotizacion_report', $cotizacion_report)
             ->with('fecha',$fecha)
             ->with('observacionBD',$observacionBD)
@@ -282,7 +311,6 @@ class CotizacionReportController extends Controller
     public function listaUsuario(){
              
         return "no tiene edicion ";
-
     }
 
     /**
@@ -387,21 +415,7 @@ class CotizacionReportController extends Controller
          $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
 
          $nombre = 'Fernando';
-        
-       
-        
-
-/** *        return view('reports.pdf.prueba')
-        
-                ->with('nombre', $nombre)
-                ->with('consultas',$consutas)
-                ->with('fecha',$fecha)
-             
-                ;
-     */
-          
-                
-            //    ;
+  
         
     }
 
@@ -654,7 +668,10 @@ class CotizacionReportController extends Controller
         return "desde update";
     
     }
-
+    public function vista(Request $request)
+    {
+        return "desde vista";
+    }
     /**
      * Remove the specified resource from storage.
      *
