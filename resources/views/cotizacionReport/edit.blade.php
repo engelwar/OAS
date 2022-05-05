@@ -18,6 +18,17 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="container">
+                        <div class="row row-cols-6">
+                          <div class="col"></div>
+                          <div class="col"></div>
+                          <div class="col"></div>
+                          <div class="col"></div>
+                          <div class="col"></div>
+                          <div class="col">  <button type="button" class="btn btn-outline-danger" onclick = "window.close ()"><span>CERRAR VENTANA</span></button></div>
+                        </div>
+                      </div>
+                  
                     <form method="POST" action="{{route('CotizacionReporte.update',['cotizacion_report'=>$cotizacion_report->id])}}">
                         @method('PUT')
                         @csrf
@@ -30,7 +41,8 @@
                             <div class="col-6 d-flex align-items-center justify-content-center">
                                 <h2 class="text-center text-primary">DETALLE OBSERVACION</h2>
                             </div>
-                       
+                            
+                          
                             
                         </div>
 

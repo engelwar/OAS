@@ -139,8 +139,10 @@ class CotizacionReportController extends Controller
             'nroT'=>0,
             'fechaC'=>date('Y-m-d H:i:s')
       ]);
-     
-      return "cargado con exito";
+      return redirect()->back() 
+
+                    ->with('success', 'Entrada actualizada.'); 
+     // return "cargado con exito";
     // return redirect()->action('CotizacionReporte.show'); 
        
     }
@@ -171,12 +173,12 @@ class CotizacionReportController extends Controller
      */
     public function store(Request $request, Cotizacion_report $cotizacion_report ) 
     {   
-        $estadoF=observacion_estados::all('cotizacion_form_id','estado');
+       
 
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
        // $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
-       $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
+       $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR imLvtFech BETWEEN '".$fini."' AND '".$ffin."')";
        //$fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
        
       // imLvtFech BETWEEN
@@ -254,14 +256,20 @@ class CotizacionReportController extends Controller
       order by vtvtaFent desc
 
         ";
-        
+      
         //$observacionBD=DB::table('observacion_cotizacion')->get()->pluck('idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC');          
-        $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','fechaC']);
+        $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','nro','nroA','nroP','nroT','fechaC']);
         $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
         
-      
+        
 
+ 
+
+        $estadoF=observacion_estados::all('cotizacion_form_id','estado');
+      
+      //  $var1=Cotizacion_report::all()-> estadosS;
+     
    
         if($request->gen =="export")
         {
@@ -280,16 +288,18 @@ class CotizacionReportController extends Controller
         }
         else if($request->gen =="ver")
         {
-            return view('cotizacionReport.vistaFormularioTotal')
-         
-            ->with('consultas',$consutas)
-       
+            return view('cotizacionReport.vistaForm' ,compact('consutas','observacionBD','estadoF'));
+            
+           /* 
+           // return view('cotizacionReport.vistaFormularioTotal')
+            ->compact('consultas',$consutas)
             ->with('cotizacion_report', $cotizacion_report)
             ->with('fecha',$fecha)
             ->with('observacionBD',$observacionBD)
             ->with('cr',$cr)
             ->with('estadoF',$estadoF);
-            ;
+            ;*/
+            
         }
         ////////////////////////
        
@@ -675,4 +685,64 @@ class CotizacionReportController extends Controller
     {
         //
     }
+
+    public function buscar(Request $request, Cotizacion_report $cotizacion_report ) 
+    {  
+        $data=$request;
+        $bus=$data['buscar'];
+         $bus="AND  vtvtaNomC LIKE '%$bus%'";
+       
+        $fini = date("d/m/Y", strtotime($request->fini));
+        $ffin = date("d/m/Y", strtotime($request->ffin));
+  
+       $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
+    
+      $otroUsuario = "AND adusrNomb IS NULL";
+      if($request->options){
+        $otroUsuario = "AND adusrNomb IN ('".implode("','",$request->options)."')";
+      }
+       
+     
+       $esUnaQuery = 
+        " 
+        select CONVERT(varchar,vtvtaFent,103) as 'Fecha',
+        
+
+         --vtvtaNcot as 'NroCotizacion',
+          case when vtvtaNcot >0 then convert(varchar,vtvtaNcot) else '-' end as 'NroCotizacion',
+          --	case  when vtvtaNcot = 0  then CAST(REPLACE('vtvtaNcot','0','-')) else vtvtaNcot end as 'NroCotizacion',
+          --case CAST(vtvtaNcot as varchar(10)) when vtvtaNcot=0 then '' else vtvtaNcot end as 'NroCotizacion',
+            vtvtaNomC as 'Cliente',
+            CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
+            vtvtaNtra as 'NR',
+            REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
+            admonAbrv 'Moneda',
+            adusrNomb as 'Usuario',
+            inlocNomb as 'Local',
+              CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
+              imlvtNrfc as 'numerofactura',
+              imLvtEsfc as  'estado' 
+                   
+        from vtVta 
+        LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
+        LEFT JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
+        JOIN inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
+        left join imlvt on vtvtaNtra=imlvtNvta
+        
+        where 
+        ".$fecha."
+        ".$otroUsuario."
+        ".$bus."
+          
+      order by vtvtaFent desc
+
+        ";
+        
+        $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));  
+
+     
+        return view('cotizacionReport.vistaForm' ,compact('consutas'));
+     
+    }
+          
 }
