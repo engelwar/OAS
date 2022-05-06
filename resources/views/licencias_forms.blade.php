@@ -11,7 +11,7 @@
           <h3>FORMULARIOS DE PERMISOS</h3>
         </div>
       </div>
-      <div class="row pb-4 justify-content-around">
+      <div class="d-flex pb-4 justify-content-between">
         <div class="">
           <form class="form-inline" action="{{action('LicenciaController@index')}}" method="GET">
             <div class="row g-3 align-items-center">
@@ -32,10 +32,9 @@
             </div>
           </form>
         </div>
-        @if (Auth::user()->rol == 'admin')
+        @if (Auth::user()->tienePermiso(18,4))
         <div class="">
           <form class="form-inline" action="{{action('LicenciaController@index')}}" method="GET">
-
             <div class="row g-3 align-items-center">
               <div class="col-auto">
                 <select class="form-control mr-sm-2 col-5 col-sm-auto" id="buscar" name="buscar">
@@ -86,8 +85,8 @@
           $fin_hora = $date_fin->format('H:i:s');
           @endphp
           <tr>
-            <td>{{$f->user->nombre}} {{$f->user->paterno}} {{$f->user->materno}}</td>
-            <td>{{$f->user->ci}}</td>
+            <td>{{$f->user->perfiles->nombre}} {{$f->user->perfiles->paterno}} {{$f->user->perfiles->materno}}</td>
+            <td>{{$f->user->perfiles->ci}}</td>
             <td>{{$ini_fecha}}</td>
             <td>{{$ini_hora}}</td>
             <td>{{$fin_fecha}}</td>
@@ -113,7 +112,7 @@
             <td>
               <div class="d-flex flex-row" style="gap: 4px;">
                 <a class="btn btn-info btn-xs" href="{{ route('licencia_pdf',$f->id,$f->user->id)}}" target="_blank"><span class="glyphicon glyphicon-pencil"><i class="fas fa-file-pdf"></i></span></a>
-                @if (Auth::user()->rol != 'admin' && $f->estado == null)
+                @if (Auth::user()->tienePermiso(18,3) && $f->estado == null)
                 <form action="{{ route ('licencia.destroy', $f->id) }}" method="POST" class="formEliminar">
                   @csrf
                   @method('DELETE')

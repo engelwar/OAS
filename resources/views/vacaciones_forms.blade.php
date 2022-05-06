@@ -72,7 +72,7 @@
             @foreach($forms as $f)
             <tr>
               <td>{{$f->user->perfiles->nombre}} {{$f->user->perfiles->paterno}} {{$f->user->materno}}</td>
-              <td>{{$f->user->perfiles->sucursal}}</td>
+              <td>{{$f->user->perfiles->unidad->nombre}}</td>
               <td>{{$f->user->perfiles->ci}}</td>
               <td>{{$f->user->perfiles->area_id}}</td>
               <td>{{$f->user->perfiles->cargo}}</td>

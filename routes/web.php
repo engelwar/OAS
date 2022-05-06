@@ -161,6 +161,9 @@ Route::prefix('reports')->group(function(){
     Route::resource('difereciacosto', 'Reports\DiferenciaCostoController');
     Route::any('ventamarcauser/table/products','Reports\DiferenciaCostoController@products')->name('difereciacosto.products');  
 
+    Route::resource('kardexreport', 'Reports\KardexReportController');
+    Route::any('ventamarcauser/table/products2','Reports\kardexreportController@products')->name('kardexreport.products');  
+
     Route::resource('kardex', 'Reports\KardexController');
 });
 

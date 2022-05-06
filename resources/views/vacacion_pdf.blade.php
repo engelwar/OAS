@@ -32,7 +32,7 @@
                     </label>
                 </div>
                 <div class="item item2">
-                    <input id="ci" type="text" value="{{$VacacionForm->user->nombre}} {{$VacacionForm->user->paterno}} {{$VacacionForm->materno}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                     @error('ci')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                     </label>
                 </div>
                 <div class="item item4">
-                    <input id="ci" type="text" value="{{$VacacionForm->user->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                     @error('sucursal')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                     </label>
                 </div>
                 <div class="item item6">
-                    <input id="cargo" type="text" value="{{$VacacionForm->user->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                    <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
                     @error('sucursal')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
                     </label>
                 </div>
                 <div class="item item2">
-                    <input id="area" type="text" value="{{$VacacionForm->user->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                    <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
                     @error('area')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

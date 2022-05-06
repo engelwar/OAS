@@ -26,24 +26,18 @@ class LicenciaController extends Controller
     $estado = $request->get('estado');
     $buscar = $request->get('buscar');
     $dato = $request->get('dato');
-    if (Auth::user()->rol == 'admin') {
+    if (Auth::user()->tienePermiso(18,4)) {
       $forms = LicenciaForm::orderBy('id', 'DESC')
         ->estado($estado)
         ->user($buscar, $dato)
         ->paginate(8);
       return view('licencias_forms', compact('forms'));
-    } elseif(Auth::user()->rol != 'admin'){
+    } else {
         $forms = LicenciaForm::orderBy('id', 'DESC')
         ->where('user_id','=',Auth::user()->id)
         ->estado($estado)
         ->paginate(8);
         return view('licencias_forms', compact('forms'));
-    } else {
-      $forms = LicenciaForm::where('user_id', $user->id)->orderBy('id', 'DESC')
-        ->estado($estado)
-        ->user($buscar, $dato)
-        ->paginate(8);
-      return view('licencias_forms', compact('forms'));
     }
   }
 
@@ -90,7 +84,7 @@ class LicenciaController extends Controller
 
       'user_id' => Auth::user()->id,
     ]);
-    return redirect()->route('inicio.index')->with('success', 'El formulario se envio correctamente');
+    return redirect()->route('permisos.index')->with('success', 'El formulario se envio correctamente');
   }
 
   /**

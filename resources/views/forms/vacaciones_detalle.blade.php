@@ -64,7 +64,7 @@
             </label>
 
             <div class="col-md-4">
-                <input id="area" type="text" value="{{$VacacionForm->user->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
                 @error('area')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
                     </label>
 
                     <div class="col-md-6">
-                        <input id="fecha_ini_aut" type="date" class="form-control form-control @error('fecha_ini_aut') is-invalid @enderror" name="fecha_ini_aut" value="{{ $VacacionForm->fecha_ini_aut }}" autocomplete="fecha_ini_aut">
+                        <input id="fecha_ini_aut" type="date" class="form-control form-control @error('fecha_ini_aut') is-invalid @enderror" name="fecha_ini_aut" value="{{ $VacacionForm->fecha_ini_aut }}" autocomplete="fecha_ini_aut" required>
                         @error('fecha_ini_aut')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -151,7 +151,7 @@
                     </label>
 
                     <div class="col-md-6">
-                        <input id="fecha_fin_aut" type="date" class="form-control form-control @error('fecha_fin_aut') is-invalid @enderror" name="fecha_fin_aut" value="{{ $VacacionForm->fecha_fin_aut }}" autocomplete="fecha_fin_aut">
+                        <input id="fecha_fin_aut" type="date" class="form-control form-control @error('fecha_fin_aut') is-invalid @enderror" name="fecha_fin_aut" value="{{ $VacacionForm->fecha_fin_aut }}" autocomplete="fecha_fin_aut" required>
                         @error('fecha_fin_aut')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -165,7 +165,7 @@
                     </label>
 
                     <div class="col-md-6">
-                        <input id="fecha_ret_aut" type="date" class="form-control @error('fecha_ret_aut') is-invalid @enderror" name="fecha_ret_aut" value="{{ $VacacionForm->fecha_ret_aut }}" autocomplete="fecha_ret_aut">
+                        <input id="fecha_ret_aut" type="date" class="form-control @error('fecha_ret_aut') is-invalid @enderror" name="fecha_ret_aut" value="{{ $VacacionForm->fecha_ret_aut }}" autocomplete="fecha_ret_aut" required>
                         @error('fecha_ret_aut')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

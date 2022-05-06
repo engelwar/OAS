@@ -31,7 +31,7 @@
                     </label>
                 </div>
                 <div class="item item2">
-                    <input id="ci" type="text" value="{{$LicenciaForm->user->nombre}} {{$LicenciaForm->user->paterno}} {{$LicenciaForm->materno}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                    <input id="ci" type="text" value="{{$LicenciaForm->user->perfiles->nombre}} {{$LicenciaForm->user->perfiles->paterno}} {{$LicenciaForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                     @error('ci')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -44,7 +44,7 @@
                     </label>
                 </div>
                 <div class="item item4">
-                    <input id="ci" type="text" value="{{$LicenciaForm->user->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                    <input id="ci" type="text" value="{{$LicenciaForm->user->perfiles->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                     @error('sucursal')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
                     </label>
                 </div>
                 <div class="item item6">
-                    <input id="cargo" type="text" value="{{$LicenciaForm->user->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                    <input id="cargo" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
                     @error('sucursal')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

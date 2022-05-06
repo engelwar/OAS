@@ -31,14 +31,14 @@ class VacacionForm extends Model
   public function scopeUser($query, $buscar, $dato)
   {
     if ($buscar == 1 && $dato != '') {
-      $resultado = VacacionForm::join('users','users.id','=','vacacion_forms.user_id')
+      $resultado = VacacionForm::join('perfils','perfils.user_id','=','vacacion_forms.user_id')
       ->select('vacacion_forms.*')
-      ->where('users.nombre', 'LIKE', "%$dato%");
+      ->where('perfils.nombre', 'LIKE', "%$dato%");
       return $resultado;
     } elseif ($buscar == 2 && $dato != '') {
-      $resultado = VacacionForm::join('users','users.id','=','vacacion_forms.user_id')
+      $resultado = VacacionForm::join('perfils','perfils.user_id','=','vacacion_forms.user_id')
       ->select('vacacion_forms.*')
-      ->where('users.ci', '=', "$dato");
+      ->where('perfils.ci', '=', "$dato");
       return $resultado;
     }
   }

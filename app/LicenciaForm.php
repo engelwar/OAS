@@ -32,14 +32,14 @@ class LicenciaForm extends Model
   public function scopeUser($query, $buscar, $dato)
   {
     if ($buscar == 1 && $dato != '') {
-      $resultado = LicenciaForm::join('users', 'users.id', '=', 'licencia_forms.user_id')
+      $resultado = LicenciaForm::join('perfils', 'perfils.user_id', '=', 'licencia_forms.user_id')
         ->select('licencia_forms.*')
-        ->where('users.nombre', 'LIKE', "%$dato%");
+        ->where('perfils.nombre', 'LIKE', "%$dato%");
       return $resultado;
     } elseif ($buscar == 2 && $dato != '') {
-      $resultado = LicenciaForm::join('users', 'users.id', '=', 'licencia_forms.user_id')
+      $resultado = LicenciaForm::join('perfils', 'perfils.user_id', '=', 'licencia_forms.user_id')
         ->select('licencia_forms.*')
-        ->where('users.ci', '=', "$dato");
+        ->where('perfils.ci', '=', "$dato");
       return $resultado;
     }
   }

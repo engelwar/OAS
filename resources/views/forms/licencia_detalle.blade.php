@@ -25,7 +25,7 @@
                 {{ __('FUNCIONARIO') }}
             </label>
             <div class="col-md-4">
-                <input id="nombre" type="text" value="{{$LicenciaForm->user->nombre}} {{$LicenciaForm->user->paterno}} {{$LicenciaForm->user->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
+                <input id="nombre" type="text" value="{{$LicenciaForm->user->perfiles->nombre}} {{$LicenciaForm->user->perfiles->paterno}} {{$LicenciaForm->user->perfiles->materno}}" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
                 @error('nombre')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -37,7 +37,7 @@
                 {{ __('CI') }}
             </label>
             <div class="col-md-2">
-                <input id="ci" type="ci" value="{{$LicenciaForm->user->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                <input id="ci" type="ci" value="{{$LicenciaForm->user->perfiles->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
                 @error('ci')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
                 {{ __('CARGO') }}
             </label>
             <div class="col-md-2">
-                <input id="cargo" type="cargo" value="{{$LicenciaForm->user->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                <input id="cargo" type="cargo" value="{{$LicenciaForm->user->perfiles->cargo}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
                 @error('sucursal')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -64,7 +64,7 @@
             </label>
 
             <div class="col-md-4">
-                <input id="area" type="text" value="{{$LicenciaForm->user->area}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                <input id="area" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
                 @error('area')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -207,7 +207,7 @@
             </div>
         </div>
 
-        @if (Auth::user()->rol == 'admin')
+        @if (Auth::user()->tienePermiso(18,2))
         <div class="d-flex justify-content-center" style="gap: 10px;">
             <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
             <button name="estado" type="submit" class="button btn btn-primary btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
