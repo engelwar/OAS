@@ -78,14 +78,13 @@
                                 <button id="menu-despl" class="btn btn-default multi-select text-left" type="button" data-bs-toggle="dropdown" aria-expanded="false"><span>VENDEDOR <span class="select-text">(TODOS)</span></span>
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="menu-despl">
-                                    @if(Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz'])|| Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz']))
-                                    <li><a href="#" class="multi-select-op">
+                                   <li><a href="#" class="multi-select-op">
                                         <label>
                                             <input type="checkbox" checked class="selectall" />
                                             TODOS
                                         </label>
                                         </a></li>
-                                    @endif
+                                   
                                     @foreach($user as $u)
                                     <li class="divider"></li>
                                     <li><a class="option-link multi-select-op" href="#">

@@ -58,9 +58,9 @@
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 col-lg-6 col-sm-12 border">
         
-                <form method="POST"  action="{{ route('vistaF.store') }}">
+                <form method="GET"  action="{{ route('Cotizacion.store') }}">
                 
-                    @csrf
+                
                 <div class=" row d-flex justify-content-center my-3">
                     <div class="d-flex align-items-center justify-content-center">
                         <h3 class="text-primary">REPORTE DE COTIZACION</h3>
@@ -85,14 +85,14 @@
                                 <button id="menu-despl" class="btn btn-default multi-select text-left" type="button" data-bs-toggle="dropdown" aria-expanded="false"><span>VENDEDOR  <span class="select-text">(TODOS)</span></span>
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu w-100 scrollable-menu" aria-labelledby="menu-despl">
-                                    @if(Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz'])|| Auth::user()->authorizePermisos(['Reporte cotizacion', 'Ver usuarios DualBiz']))
+                                    <!--permisos--->
                                     <li><a href="#" class="multi-select-op">
                                         <label>
                                             <input type="checkbox" checked class="selectall" />
                                             TODOS
                                         </label>
                                         </a></li>
-                                    @endif
+                                <!------------------->
                                     @foreach($usu as $u)
                                     <li class="divider"></li>
                                     <li><a class="option-link multi-select-op" href="#">
@@ -115,10 +115,10 @@
                   <button type="submit" class="btn btn-primary mx-2" name="gen" value="ver">
                     Ver <i class="fas fa-bullseye"></i>
                   </button>
-                    <button type="submit" class="btn btn-secondary mx-2" name="gen" value="export">
+                    <button type="submit" class="btn btn-primary mx-2" name="gen" value="export">
                         PDF <i class="fas fa-file-pdf"></i>
                     </button>
-                     <button type="submit" class="btn btn-secondary mx-2" name="gen" value="excel">
+                     <button type="submit" class="btn btn-primary mx-2" name="gen" value="excel">
                         Excel <i class="far fa-file-excel"></i>
                     </button>
                 </div>
@@ -160,5 +160,8 @@ $("input[type='checkbox'].justone").change(function(){
   var total = $('input[name="options[]"]:checked').length;
   $(".dropdown-text").html('(' + total + ') Selected');
 });
+
+
+
 </script>
 @endsection
