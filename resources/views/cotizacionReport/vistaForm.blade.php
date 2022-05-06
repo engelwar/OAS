@@ -1,5 +1,6 @@
+
 @extends('layouts.app')
-@section('title', 'Inicio')
+
 @section('mi_estilo')
 <style>
     .div1 {
@@ -112,9 +113,10 @@
 
 </style>
 @endsection
-@section('content') 
+@include('layouts.sidebar', ['hide'=>'0']) 
+@section('content')
 
-
+<meta http-equiv="refresh" content="130" >
     <div class="container border rounded">
        <!--<meta http-equiv="refresh" content="10" />---> 
 
@@ -141,27 +143,27 @@
                 <div class="col">
                    
                         <form class="form-inline" action="" method="GET">
-                          <input id="busqueda" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot" value ="" aria-label="Search">
-                          <input onclick="jsBuscar();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                          <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
+                          <input onclick="jsBuscar1();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto" /><br><br>
                         </form>
                        
                    
                 </div>
                 <div class="col">
                     <form class="form-inline" action="" method="GET">
-                        <input id="busqueda" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
-                        <input onclick="jsBuscar();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                        <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
+                        <input onclick="jsBuscar2();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
                       </form>
                 </div>
                 <div class="col">
                     <form class="form-inline" action="" method="GET">
-                        <input id="busqueda" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR" value ="" aria-label="Search">
-                        <input onclick="jsBuscar();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                        <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+                        <input onclick="jsBuscar3();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
                       </form>
                 </div>
                 <div class="col">
                     <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
-                    <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
+            
                 </div>
                 
             </div>
@@ -169,7 +171,7 @@
        
        
           
-      <div class="table-responsive text-center">
+      <div class="table-responsive text-center cont">
           <h4 id="h"></h4>
       </div>
             <div class="div1"> 
@@ -364,8 +366,8 @@
                   <input type="hidden" id="name1" name="id_cotizacion" required minlength="4" maxlength="8" size="20" value="132132132">
                   <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
                   <br>
-                  <label for="message-text" class="col-form-label">Escriba la observacion:</label>
-                  <textarea class="form-control" id="message-text" name="comentario" required ></textarea>
+                  <label for="message-text" class="col-form-label" >Escriba la observacion:</label>
+                  <textarea class="form-control" id="message-text" placeholder="Escriba su descripcion" name="comentario" required ></textarea>
                 </div>
                 <span>Usuario: {{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} {{auth()->user()->perfiles->materno}}</span>
             
@@ -374,7 +376,7 @@
               
               
            
-              <button type="sumit" class="btn btn-primary btnEditar" >Enviar observacion</button>
+              <button type="sumit" class="btn btn-primary btnEditar" href="v/{{$co->NR}}/edit" >Enviar observacion</button>
             </div>
         </form>
         </div>
@@ -423,8 +425,9 @@ $(document).on("click",".btnHT", function(){
   //alert(id);
 }
 
+
 //función que realiza la busqueda
-function jsBuscar(){
+function jsBuscar1(){
  
  //obtenemos el valor insertado a buscar
  buscar=$("#busqueda1").prop("value")
@@ -485,14 +488,182 @@ function jsBuscar(){
  })
 
  //si no se encontro resultado mostramos que no existe.
- if(!encontradoResultado)
- $("#h").html("No existe el código: "+busqueda)
+ if(!encontradoResultado){
+  $("#h").html("No existe el código: "+busqueda1);
+  $(document).ready(function() {
+    setTimeout(function() {
+        $(".cont").fadeOut(200);
+    },3000);
+
+});
+ }
+
+}
+
+
+
+
+     
+     //función que realiza la busqueda
+function jsBuscar2(){
+ 
+ //obtenemos el valor insertado a buscar
+ buscar=$("#busqueda2").prop("value")
+
+ //utilizamos esta variable solo de ayuda y mostrar que se encontro
+ encontradoResultado=false;
+
+ //realizamos el recorrido solo por las celdas que contienen el código, que es la primera
+ $("#miTabla tr").find('td:eq(2)').each(function () {
+
+      //obtenemos el codigo de la celda
+       codigo = $(this).html();
+
+        //comparamos para ver si el código es igual a la busqueda
+        if(codigo==buscar){
+
+             //aqui ya que tenemos el td que contiene el codigo utilizaremos parent para obtener el tr.
+             trDelResultado=$(this).parent();
+
+             //ya que tenemos el tr seleccionado ahora podemos navegar a las otras celdas con find
+             a0=trDelResultado.find("td:eq(0)").html();
+             a1=trDelResultado.find("td:eq(1)").html();
+             a2=trDelResultado.find("td:eq(2)").html();
+             a3=trDelResultado.find("td:eq(3)").html();
+             a4=trDelResultado.find("td:eq(4)").html();
+             a5=trDelResultado.find("td:eq(5)").html();
+             a6=trDelResultado.find("td:eq(6)").html();
+             a7=trDelResultado.find("td:eq(7)").html();
+             a8=trDelResultado.find("td:eq(8)").html();
+             a9=trDelResultado.find("td:eq(9)").html();
+             a10=trDelResultado.find("td:eq(10)").html();
+             a11=trDelResultado.find("td:eq(11)").html();
+             a12=trDelResultado.find("td:eq(12)").html();
+             a13=trDelResultado.find("td:eq(13)").html();
+             a14=trDelResultado.find("td:eq(14)").html();
+                 
+             //mostramos el resultado en el div
+             $("#div0").html(a0)
+             $("#div1").html(a1)
+             $("#div2").html(a2)
+             $("#div3").html(a3)
+             $("#div4").html(a4)
+             $("#div5").html(a5)
+             $("#div6").html(a6)
+             $("#div7").html(a7)
+             $("#div8").html(a8)
+             $("#div9").html(a9)
+             $("#div10").html(a10)
+             $("#div11").html(a11)
+             $("#div12").html(a12)
+             $("#div13").html(a13)
+             $("#div14").html(a14)
+           
+             encontradoResultado=true;
+
+        }
+
+ })
+
+ //si no se encontro resultado mostramos que no existe.
+ if(!encontradoResultado){
+  $("#h").html("No existe el cliente: "+buscar)
+ $(document).ready(function() {
+    setTimeout(function() {
+        $(".cont").fadeOut(200);
+    },3000);
+
+});
+
+ }
+ 
 }
 $(document).ready(function() {
   $('#busqueda').click(function() {
     $('input[type="text"]').val('');
   });
 });
+
+
+     //función que realiza la busqueda
+function jsBuscar3(){
+ 
+ //obtenemos el valor insertado a buscar
+ buscar=$("#busqueda3").prop("value")
+
+ //utilizamos esta variable solo de ayuda y mostrar que se encontro
+ encontradoResultado=false;
+
+ //realizamos el recorrido solo por las celdas que contienen el código, que es la primera
+ $("#miTabla tr").find('td:eq(4)').each(function () {
+
+      //obtenemos el codigo de la celda
+       codigo = $(this).html();
+
+        //comparamos para ver si el código es igual a la busqueda
+        if(codigo==buscar){
+
+             //aqui ya que tenemos el td que contiene el codigo utilizaremos parent para obtener el tr.
+             trDelResultado=$(this).parent();
+
+             //ya que tenemos el tr seleccionado ahora podemos navegar a las otras celdas con find
+             a0=trDelResultado.find("td:eq(0)").html();
+             a1=trDelResultado.find("td:eq(1)").html();
+             a2=trDelResultado.find("td:eq(2)").html();
+             a3=trDelResultado.find("td:eq(3)").html();
+             a4=trDelResultado.find("td:eq(4)").html();
+             a5=trDelResultado.find("td:eq(5)").html();
+             a6=trDelResultado.find("td:eq(6)").html();
+             a7=trDelResultado.find("td:eq(7)").html();
+             a8=trDelResultado.find("td:eq(8)").html();
+             a9=trDelResultado.find("td:eq(9)").html();
+             a10=trDelResultado.find("td:eq(10)").html();
+             a11=trDelResultado.find("td:eq(11)").html();
+             a12=trDelResultado.find("td:eq(12)").html();
+             a13=trDelResultado.find("td:eq(13)").html();
+             a14=trDelResultado.find("td:eq(14)").html();
+                 
+             //mostramos el resultado en el div
+             $("#div0").html(a0)
+             $("#div1").html(a1)
+             $("#div2").html(a2)
+             $("#div3").html(a3)
+             $("#div4").html(a4)
+             $("#div5").html(a5)
+             $("#div6").html(a6)
+             $("#div7").html(a7)
+             $("#div8").html(a8)
+             $("#div9").html(a9)
+             $("#div10").html(a10)
+             $("#div11").html(a11)
+             $("#div12").html(a12)
+             $("#div13").html(a13)
+             $("#div14").html(a14)
+           
+             encontradoResultado=true;
+
+        }
+
+ })
+
+ //si no se encontro resultado mostramos que no existe.
+ if(!encontradoResultado){
+  $("#h").html("No existe la nota de remision: "+buscar)
+ $(document).ready(function() {
+    setTimeout(function() {
+        $(".cont").fadeOut(200);
+    },3000);
+
+});
+
+ }
+}
+$(document).ready(function() {
+  $('#busqueda').click(function() {
+    $('input[type="text"]').val('');
+  });
+});
+
 
 
 $(function(){  
@@ -538,6 +709,14 @@ $(function(){
          }  
         }  
      }      
+    
+     function validaNumericos(event) {
+    if(event.charCode >= 48 && event.charCode <= 57){
+      return true;
+     }
+     return false;        
+}
+
 
 </script>
 @endsection

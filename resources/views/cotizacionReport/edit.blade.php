@@ -371,7 +371,7 @@
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
               <input type="hidden"   name="nro" id="nro" style="text-align:right; width : 50px; heigth : 10px" value="1" >
-              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de Seguimiento</textarea>
+              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " placeholder="Descripcion  de Seguimiento" required ></textarea>
                                    
             </div>
             <div class="modal-footer">
@@ -427,7 +427,7 @@
                       <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
                       <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="1" >
                       
-                      <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de Seguimiento</textarea>
+                      <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " placeholder="Descripcion  de Seguimiento (Solo puede hacer tres como maximo)" required ></textarea>
                                            
                     </div>
                     <div class="modal-footer">
@@ -468,7 +468,7 @@
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
               <input type="hidden"   name="nroAd" id="nroA" style="text-align:right; width : 50px; heigth : 10px" value="1" >
-              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de su adjudicion</textarea>
+              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " placeholder="Descripcion  de su adjudicion" required></textarea>
                                    
             </div>
             <div class="modal-footer">
@@ -534,7 +534,7 @@
               <input type="hidden" id="seguimiento" name="seguimiento" maxlength="8" size="10" value="Parcial">
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
-              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required >Descripcion  de su adjudicion</textarea>
+              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; "  placeholder="Descripcion  de su adjudicion" required ></textarea>
                                    
             </div>
             <div class="modal-footer">
@@ -600,7 +600,7 @@
               <input type="hidden" id="seguimiento" name="seguimiento" maxlength="8" size="10" value="Total">
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
-              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required ></textarea>
+              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " placeholder="Escriba su entrega total" required ></textarea>
                                    
             </div>
             <div class="modal-footer">
@@ -666,7 +666,7 @@
               <input type="hidden" id="seguimiento" name="seguimiento" maxlength="8" size="10" value="Rechazado">
               <input type="hidden" id="nr" name="nr" maxlength="8" size="10" value="{{$cotizacion_report->id}}">
               <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="0" >
-              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " required ></textarea>
+              <textarea class="form-control" id="message-text" name="seguiComen" style="white-space: nowrap; " placeholder="Describa por que se rechazo" required ></textarea>
                                    
             </div>
             <div class="modal-footer">

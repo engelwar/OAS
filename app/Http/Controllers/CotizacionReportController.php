@@ -12,6 +12,8 @@ use PDF;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
+use App\Exports\ReporteCotizacion;
+use App\Exports\ReporteCotizacionExport;
 use App\observacion_estados;
 use App\ObservacionCotizacion;
 use Illuminate\Support\Facades\Redirect;
@@ -119,9 +121,6 @@ class CotizacionReportController extends Controller
             if ($value==$dato) {
                
              dd("
-             
-             
-             
              -----------DATOS REPETIDOS---------");
             } 
                
@@ -139,6 +138,7 @@ class CotizacionReportController extends Controller
             'nroT'=>0,
             'fechaC'=>date('Y-m-d H:i:s')
       ]);
+      
       return redirect()->back() 
 
                     ->with('success', 'Entrada actualizada.'); 
@@ -177,6 +177,7 @@ class CotizacionReportController extends Controller
 
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
+        $fecha2="$fini al $ffin";
        // $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
        $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR imLvtFech BETWEEN '".$fini."' AND '".$ffin."')";
        //$fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
@@ -273,17 +274,17 @@ class CotizacionReportController extends Controller
    
         if($request->gen =="export")
         {
-            $pdf = \PDF::loadView('reports.pdf.prueba')->with('consultas',$consutas) ->with('fecha',$fecha)
+            $pdf = \PDF::loadView('reports.pdf.prueba', compact('consutas','fecha2'))
             ->setOrientation('landscape')
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
             ->setOption('footer-font-size',8);
       
-            return $pdf->inline('Reportecotizacion_'.$fecha.'.pdf');
+            return $pdf->inline('Reportecotizacion_'.$fecha2.'.pdf');
         }
         elseif($request->gen =="excel")
         {
-            $export = new CuentasPorCobrarExport($consutas, $fecha);    
+            $export = new ReporteCotizacionExport($consutas, $fecha2);    
             return Excel::download($export, 'Reporte Cotizacion.xlsx');
         }
         else if($request->gen =="ver")
@@ -356,7 +357,7 @@ class CotizacionReportController extends Controller
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
         $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
-        
+        $fecha2="$fini al $ffin";
         $otroUsuario="";  
         $otroUsuario2=" OR adusrNomb = ";  
        
@@ -695,7 +696,8 @@ class CotizacionReportController extends Controller
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
   
-       $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
+      // $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
+      $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
     
       $otroUsuario = "AND adusrNomb IS NULL";
       if($request->options){

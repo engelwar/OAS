@@ -20,8 +20,8 @@
                 height: auto;"/>      
             </td>
             <td style="width: 60%; text-align: center;">
-                <h4>REPORTE DE COTIZACION</h4>       
-           
+                <h4>REPORTE DE COTIZACION </h4>       
+                <h5>FECHA: {{$fecha2}}</h5>
                              
             </td>
             <td style="width: 20%; text-align: right;">                
@@ -49,7 +49,7 @@
             </tr>
         </thead>
         <tbody>
-                        
+            
                 @foreach ($consutas as $item)
                                    
                <tr>
