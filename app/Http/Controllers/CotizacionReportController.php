@@ -262,14 +262,7 @@ class CotizacionReportController extends Controller
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','nro','nroA','nroP','nroT','fechaC']);
         $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
-<<<<<<< HEAD
-        // dd($consutas);
       
-       //  $nombre = 'Fernando';
-        ///////////////////////
-=======
-        
-        
 
  
 
@@ -278,7 +271,6 @@ class CotizacionReportController extends Controller
       //  $var1=Cotizacion_report::all()-> estadosS;
      
    
->>>>>>> eb117a0bd5592af9a05c44ae98d56d9cafad4883
         if($request->gen =="export")
         {
             $pdf = \PDF::loadView('reports.pdf.prueba', compact('consutas','fecha2'))
