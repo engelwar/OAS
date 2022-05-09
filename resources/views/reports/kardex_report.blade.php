@@ -49,16 +49,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-2">
             <table class="cell-border compact hover" id="tableex" style="width:100%;font-size:0.9rem">
             </table>
         </div>
-        <div class="col-8">
+        <div class="col-10">
             <div class="text-center w-100 border-bottom mt-3"><h5 id="title_prod">Producto</h5></div>
             <table class="cell-border compact" id="detalle_costo" style="width:100%; font-size:0.8rem;">
             </table>
         </div>
     </div>
+    <form action="{{route('kardexreport.show', 4)}}">
+      <button type="submit">hola</button>
+    </form>
 </div>
 @endsection
 @section('mis_scripts')
@@ -93,8 +96,8 @@
                     {data:'Prod', title:'Producto'},
                     // {data:'costo', title:'Costo', className: 'dt-body-right'},
                     // {data:'difmax', title:'Dif', className: 'dt-body-right'},
-                    {data:'ingresos', title:'Ing', className: 'dt-body-right text-success'},
-                    {data:'salidas', title:'Sal', className: 'dt-body-right text-danger'},
+                    {data:'ingresos', title:'Ing', className: 'dt-body-right text-success d-none'},
+                    {data:'salidas', title:'Sal', className: 'dt-body-right text-danger d-none'},
                 ], 
                 columnDefs: [
                     {
@@ -162,6 +165,9 @@
                     {data:'_CanB', title:'Cant', className: 'dt-body-right'},
                     {data:'_CosN', title:'P.U.', className: 'dt-body-right'},
                     {data:'_TotN', title:'P.T.', className: 'dt-body-right'},
+                    {data:'_SalCan', title:'Cant', className: 'dt-body-right', render: $.fn.dataTable.render.number( ',', '.', 2)},
+                    {data:'_SalCos', title:'P.U.', className: 'dt-body-right', render: $.fn.dataTable.render.number( ',', '.', 2)},
+                    {data:'_SalTot', title:'P.T.', className: 'dt-body-right', render: $.fn.dataTable.render.number( ',', '.', 2)},
                     {data:'_CantAcum', title:'Cant Acum', className: 'dt-body-right'},
                     {data:'_CostAvg', title:'Cost Prom', className: 'dt-body-right'},   
                     {data:'_CTmi', title:'Costo Val', className: 'dt-body-right'},                    
@@ -169,7 +175,7 @@
                     {data:'_Diferencia', title:'Dif', className: 'dt-body-right'},                    
                     {data:'_Ntri', title:'Trans Ini', className: 'dt-body-right'},
                     {data:'_TmovN', title:'Tipo de Mov', className: 'dt-body-center'},                  
-                ], 
+                ],
                 scrollY: "65vh",
                 scrollX:true,
                 scrollCollapse: true,
@@ -183,11 +189,11 @@
                    
                     //console.log(row.getElementsByTagName('td')[7]);
                     if (data._Diferencia == 0 ) {
-                        let td = $(this).DataTable().cell(dataIndex,8).node();
+                        let td = $(this).DataTable().cell(dataIndex,15).node();
                         $(td).addClass('text-success');
                     }
                     else{
-                        let td = $(this).DataTable().cell(dataIndex,8).node();
+                        let td = $(this).DataTable().cell(dataIndex,15).node();
                         $(td).addClass('text-danger');
                     }
                 },
