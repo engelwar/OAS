@@ -102,8 +102,7 @@ class KardexReportController extends Controller
         $alm = $request->alm;
         $query = 
         "DECLARE @Cpro nvarchar(9),@Calm int
-        SELECT @Cpro = 'PBOBRE020', @Calm = 4
-        --SELECT @Cpro = '".$prod."', @Calm = '".$alm."'
+        SELECT @Cpro = '".$prod."', @Calm = '".$alm."'
         SELECT intrdNtra, intrdClot, intrdCpro, intrdItem, 
         case when intrdCanT > 0 then intrdCanT else 0 end as positivo,
         case when intrdCanT > 0 then Case 
@@ -257,6 +256,58 @@ class KardexReportController extends Controller
           }
         }
 
+        $sum = DB::connection('sqlsrv')
+        ->select(DB::raw
+        ("SELECT 
+        REPLACE(sum_CanA,',', '.') as sumIC, 
+        REPLACE(sum_TotP,',', '.') as sumIT, 
+        REPLACE(sum_CanB,',', '.') as sumEC, 
+        REPLACE(sum_TotN,',', '.') as sumET
+        FROM (
+        SELECT 
+        SUM(cast(_CanA as decimal(10,2))) over() as sum_CanA, 
+        SUM(cast(_TotP as decimal(10,2))) over() as sum_TotP, 
+        SUM(cast(_CanB as decimal(10,2))) over() as sum_CanB,
+        SUM(cast(_TotN as decimal(10,2))) over() as sum_TotN
+        FROM (SELECT 
+        intrdCpro as _Cpro,
+        inproNomb as ProdDesc,
+        intrdNtra as _Ntra,
+        CONVERT(varchar,_Ftra,103) as _Ftra,
+        positivo as _CanA,
+        CONVERT(varchar, CAST(costpos as decimal(10,4)),1) as _CosP,
+        CONVERT(varchar, CAST(totpos as decimal(10,4)),1) as _TotP,
+        negativo as _CanB,
+        CONVERT(varchar, CAST(costneg as decimal(10,4)),1) as _CosN,
+        CONVERT(varchar, CAST(totneg as decimal(10,4)),1) as _TotN,
+        CONVERT(varchar, CAST(intrdCTmi as decimal(10,4)),1) as _CTmi,
+        CONVERT(varchar, CAST(_CostAcum as decimal(10,4)),1) as _CostAcum,
+        --CONVERT(varchar, CAST(intrdCTmt as money),1) as _CTmt,        
+        --intrdCant as _Cant,
+        --intrdClot as _Clot,        
+        --intrdItem as _Item,
+        --intrdMdel as _Mdel,
+        --intrdMinv as _Minv,
+        _admonAbrv,
+        --intrdMtra as _Mtra,       
+        --intrdTipo as _Tipo,
+        --intrdUmbs as _Umbs,
+        --intrdUmtr as _Umtr,
+        _Calm,
+        _CantAcum,
+        CONVERT(varchar, CAST(_CostAvg as decimal(10,4)),1) as _CostAvg,        
+        _Cumb,
+        CONVERT(varchar, CAST(_Diferencia as decimal(10,4)),1) as _Diferencia,
+        _Ntri,
+        maTmoNomb as _TmovN,
+        _Ttra as Ttra
+        FROM #Mov_Prod
+        JOIN maTmo ON _Tmov = maTmoItem
+        LEFT JOIN inpro ON inproCpro = intrdCpro) as cxc
+        ) 
+        as sum GROUP BY sum_CanA,sum_TotP,sum_CanB,sum_TotN"
+        )); 
+
         $produ = 
         "SELECT inproCpro as Produ, inproNomb as ProdNomb 
         FROM inpro WHERE inproMDel = 0 AND inproCpro = '".$prod."'";
@@ -264,8 +315,12 @@ class KardexReportController extends Controller
         return Datatables::of($array)
         ->with([
             "producto"=>$produ[0],
+            "sum"=>$sum[0],
+            "array"=>$array[count($array) - 1],
         ])
         ->make(); 
+
+        // return view('reports.kardexreport', compact('array','sum','produ'));
     }
 
     /**
@@ -314,6 +369,7 @@ class KardexReportController extends Controller
         JOIN bd_admOlimpia.dbo.admon  ON (intrdMinv = admonCmon)  
         WHERE intraMdel = 0 And intrdCanb <> 0 And inproCpro = @Cpro 
         AND inalmCalm = @Calm  
+        --AND intrdNtra IN(210000012,210000283, 210000428, 210002618)
         ORDER BY  intraFtra,intraNtra   
                         
         DECLARE @CantidadUpdate as float, @CantidadUpdAnt as float,
@@ -429,7 +485,60 @@ class KardexReportController extends Controller
             $array[] = ['_Cpro' => $val->_Cpro, 'ProdDesc' => $val->ProdDesc, '_Ntra' => $val->_Ntra, '_Ftra' => $val->_Ftra, '_CanA' => $val->_CanA, '_CosP' => $val->_CosP, '_TotP' => $val->_TotP, '_CanB' => $val->_CanB, '_CosN' => $val->_CosN, '_TotN' => $val->_TotN,'_SalCan' => ($val->_CanA + $val->_CanB + $array[$i-1]['_SalCan']), '_SalCos' => ($val->_CosP + $val->_CosN + $array[$i-1]['_SalCos']), '_SalTot' => ($val->_TotP + $val->_TotN + $array[$i-1]['_SalTot']), '_CTmi' => $val->_CTmi, '_CostAcum' => $val->_CostAcum, '_admonAbrv' => $val->_admonAbrv, '_Calm' => $val->_Calm, '_CantAcum' => $val->_CantAcum, '_CostAvg' => $val->_CostAvg, '_Cumb' => $val->_Cumb, '_Diferencia' => $val->_Diferencia, '_Ntri' => $val->_Ntri, '_TmovN' => $val->_TmovN, 'Ttra' => $val->Ttra];
           }
         }
-        dd($movimientos);
+
+        $sum = DB::connection('sqlsrv')
+        ->select(DB::raw
+        ("SELECT 
+        REPLACE(sum_CanA,',', '.') as sumIC, 
+        REPLACE(sum_TotP,',', '.') as sumIT, 
+        REPLACE(sum_CanB,',', '.') as sumEC, 
+        REPLACE(sum_TotN,',', '.') as sumET
+        FROM (
+        SELECT 
+        SUM(cast(_CanA as decimal(10,2))) over() as sum_CanA, 
+        SUM(cast(_TotP as decimal(10,2))) over() as sum_TotP, 
+        SUM(cast(_CanB as decimal(10,2))) over() as sum_CanB,
+        SUM(cast(_TotN as decimal(10,2))) over() as sum_TotN
+        FROM (SELECT 
+        intrdCpro as _Cpro,
+        inproNomb as ProdDesc,
+        intrdNtra as _Ntra,
+        CONVERT(varchar,_Ftra,103) as _Ftra,
+        positivo as _CanA,
+        CONVERT(varchar, CAST(costpos as decimal(10,4)),1) as _CosP,
+        CONVERT(varchar, CAST(totpos as decimal(10,4)),1) as _TotP,
+        negativo as _CanB,
+        CONVERT(varchar, CAST(costneg as decimal(10,4)),1) as _CosN,
+        CONVERT(varchar, CAST(totneg as decimal(10,4)),1) as _TotN,
+        CONVERT(varchar, CAST(intrdCTmi as decimal(10,4)),1) as _CTmi,
+        CONVERT(varchar, CAST(_CostAcum as decimal(10,4)),1) as _CostAcum,
+        --CONVERT(varchar, CAST(intrdCTmt as money),1) as _CTmt,        
+        --intrdCant as _Cant,
+        --intrdClot as _Clot,        
+        --intrdItem as _Item,
+        --intrdMdel as _Mdel,
+        --intrdMinv as _Minv,
+        _admonAbrv,
+        --intrdMtra as _Mtra,       
+        --intrdTipo as _Tipo,
+        --intrdUmbs as _Umbs,
+        --intrdUmtr as _Umtr,
+        _Calm,
+        _CantAcum,
+        CONVERT(varchar, CAST(_CostAvg as decimal(10,4)),1) as _CostAvg,        
+        _Cumb,
+        CONVERT(varchar, CAST(_Diferencia as decimal(10,4)),1) as _Diferencia,
+        _Ntri,
+        maTmoNomb as _TmovN,
+        _Ttra as Ttra
+        FROM #Mov_Prod
+        JOIN maTmo ON _Tmov = maTmoItem
+        LEFT JOIN inpro ON inproCpro = intrdCpro) as cxc
+        ) 
+        as sum GROUP BY sum_CanA,sum_TotP,sum_CanB,sum_TotN"
+        )); 
+
+        dd(count($array));
     }
 
     /**
