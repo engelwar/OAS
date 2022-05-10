@@ -28,7 +28,9 @@
                           <div class="col">  <button type="button" class="btn btn-outline-danger" onclick = "window.close ()"><span>CERRAR VENTANA</span></button></div>
                         </div>
                       </div>
-                  
+
+                      
+
                     <form method="POST" action="{{route('CotizacionReporte.update',['cotizacion_report'=>$cotizacion_report->id])}}">
                         @method('PUT')
                         @csrf
@@ -45,9 +47,10 @@
                           
                             
                         </div>
+                      
 
-                        
                         <div class="row d-flex justify-content-center mt-4">
+
                             <div class="col-6">
                                 
                                 <div class="form-group row d-flex justify-content-center">
@@ -73,9 +76,7 @@
                                             @break
                                         @endif
                                             @endif
-                                        
-                                           
-                                           
+                                         
 
                                         @endforeach    
                                         
@@ -111,54 +112,10 @@
                                     <input type="hidden"   name="nroMod" id="nroMod" style="text-align:right; width : 50px; heigth : 10px" value="{{$cotizacion_report->nroMod}}"  >
                                 </div>
                                
+                         <!-- poner botones -->
+
+
                          
-                        </div>
-
-                        
-
-                        <div class="form-group row d-flex justify-content-center mt-5">
-                                    <div class="col-5 ">
-                                    <H4>OBSERVACION</H4>
-                                    <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
-                                    <textarea class="form-control" id="message-text" name="comentario" style="white-space: nowrap; " required >{{$cotizacion_report->textObs}}</textarea>
-                                    @error('obs')
-                                        <div class="invalid-feedback" role="alert">
-                                            <strong>La observacion es necesaria para rechazar el formulario</strong>
-                                        </div>
-                                    @enderror
-                                    </div>
-                        </div>
-                         <div class="form-group row d-flex justify-content-center mt-5">
-                            @if ($cotizacion_report->nroMod == 2)
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div>
-
-                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                                        <div>
-                                            limite excedido de ediciones
-                                        </div>
-                                      </div>
-                                </div>
-                            </div>
-                        @else
-                        @if(Auth::user()->id==$cotizacion_report->user_id)
-                        <div class="col-md-2 d-flex justify-content-center">
-                            <div>
-
-                            <button type="submit" class="btn btn-primary">Actualizar</button><!--se  necesita trabajo  para el metodo put-->
- 
-                            </div>
-                        </div>
-                        @endif
-                        @endif
-                                    
-                        </div>
-                       
-                    </form>
-                  
-                    
-
 
                     <div class="row d-flex justify-content-center my-4">
                         <div class="col-10 d-flex justify-content-center">
@@ -327,6 +284,53 @@
                         </div>
 
                     </div>
+                        </div>
+
+                        
+
+                        <div class="form-group row d-flex justify-content-center mt-5">
+                                    <div class="col-5 ">
+                                    <H4>OBSERVACION</H4>
+                                    <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
+                                    <textarea class="form-control" id="message-text" name="comentario" style="white-space: nowrap; " required >{{$cotizacion_report->textObs}}</textarea>
+                                    @error('obs')
+                                        <div class="invalid-feedback" role="alert">
+                                            <strong>La observacion es necesaria para rechazar el formulario</strong>
+                                        </div>
+                                    @enderror
+                                    </div>
+                        </div>
+                         <div class="form-group row d-flex justify-content-center mt-5">
+                            @if ($cotizacion_report->nroMod == 2)
+                            <div class="col-md-2 d-flex justify-content-center">
+                                <div>
+
+                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                                        <div>
+                                            limite excedido de ediciones
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        @else
+                        @if(Auth::user()->id==$cotizacion_report->user_id)
+                        <div class="col-md-2 d-flex justify-content-center">
+                            <div>
+
+                            <button type="submit" class="btn btn-primary">Modificar observacion </button><!--se  necesita trabajo  para el metodo put-->
+ 
+                            </div>
+                        </div>
+                        @endif
+                        @endif
+                                    
+                        </div>
+                       
+                    </form>
+                  
+                    
+
                         
                  </div>
                 <!--------------------->

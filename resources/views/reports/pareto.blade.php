@@ -17,6 +17,7 @@
     <div class="row d-flex mt-2">
         <div class="offset-md-1 col-3">
             <p id="title"></p>
+           
         </div>
         <div class="col-5 text-end">
             <div class="mb-2 row d-flex justify-content-center">

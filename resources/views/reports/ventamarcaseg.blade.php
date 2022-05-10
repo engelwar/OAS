@@ -63,11 +63,13 @@
         </div>
     </div>
     <div class="row mt-2">
+        
         <div class="col-8 tabla_cont">
             <div class="row mb-2">
                 <div class="col-12 d-flex">
                     <form action="{{route('ventamarcauser.index')}}" method="GET">
                         @csrf
+                   {{$sucur}}
                         @if(!isset($sucur))
                             <input type="hidden" name = "sucur" value="sucur">
                         @endif
@@ -78,9 +80,10 @@
                             @else
                                 <button class="btn btn-sm btn-outline-primary no-hover">Sucursal</button>
                             @endif
-                            <!--button type="button" class="btn btn-sm btn-outline-primary no-hover" id="test" value="xGrupo">
-                                xGrupo
-                            </button-->
+                            <!-----------------------------------boton de almacenes ----------------------------------------------------------------->
+                            <button type="button" class="btn btn-sm btn-outline-primary no-hover" id="test" value="xGrupo">
+                                Almacenes
+                            </button>
                             <select class="btn btn-sm btn-outline-primary no-hover ms-2" id="test">
                                 <option value="xSegmento" class="text-start">Segmento</option>
                                 <option value="xGrupo" class="text-start">Grupo</option>
@@ -178,6 +181,7 @@
                                 </li>  
                             @endforeach
                         </ul>
+                        
                         <div class="tab-content" id="myTabContent">
                             @foreach ($capas as $c => $cap)
                                 <div class="tab-pane fade @if($c == 'Segmento') show active @endif" id="{{$c}}" role="tabpanel" aria-labelledby="{{$c}}-tab">
