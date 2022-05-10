@@ -3,6 +3,9 @@
 
 @section('mi_estilo')
 <style>
+  .scrollable-element {
+  scrollbar-width: thin;
+}
   .transformacion {
      text-transform: lowercase;
   }
@@ -260,7 +263,12 @@ th:first-child div{
                 </div>
             </div>
             
-            <div class="container">
+           
+         
+           
+    </div>  
+    <BR>
+       <div class="container">
               <div class="row">
                 <div class="col-sm-11">  
                   
@@ -271,13 +279,13 @@ th:first-child div{
                   <option value="10" id="a1">10</option>
                   <option value="20" id="a2">20</option>
                   <option value="50" id="a3">50</option>
+                  <option value="100" id="a3">100</option>
+                  <option value="200" id="a3">200</option>
              
                 </select>
               </div>
               </div>
             </div>
-         
-            
             <div class="table-responsive text-center" >
 
               <div class="headercontainer">
@@ -483,12 +491,13 @@ th:first-child div{
                  
                 
               </table>
+              <div class="page" id="page">
+          
+      </div>
              
             </div>
           </div>    
-        </div>   
-    </div>  
-    
+        </div>  
 
 
 
@@ -807,38 +816,47 @@ $(document).ready(function() {
     $('input[type="text"]').val('');
   });
 });
-
+/** 
+ *  $('#op').change(function( ) {
+         var val = $("#op option:selected").text();
+         var currentPage = 0;// El valor predeterminado de la página actual es 0  
+          if (val==10) {
+           // Número que se muestra en cada página  
+           return val;
+          }     
+        
+          if (val==20) {
+  
+            return val;
+          }   
+          if (val==50) {
+            // Número que se muestra en cada página  
+            return val;
+          }  
+          
+        });
+ * 
+*/
 
 
 $(function(){  
          var $table = $("#miTabla"); 
-        
-         a1=$("#a1").prop("value");
-         a2=$("#a2").prop("value");
-         a3=$("#a3").prop("value");
-       
+        var pageSize=10;
+
+      
 
          $('#op').change(function() {
          var val = $("#op option:selected").text();
-         var currentPage = 0;// El valor predeterminado de la página actual es 0  
-          if (val==10) {
-            var pageSize = a1;// Número que se muestra en cada página  
-          }     
-        
-          if (val==20) {
-            var pageSize = a2;// Número que se muestra en cada página  
-          }   
-        });
-         
-         
+           var pageSize = val; 
+         var currentPage = 0;// El valor predeterminado de la página actual es
        //  var pageSize = a1;// Número que se muestra en cada página  
          $table.bind('paging',function(){  
              $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
          });       
          var sumRows = $table.find('tbody tr').length;  
          var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
-           
-         var $pager = $('<div class="page"></div>');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+        
+         var $pager = $("#h");  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
          for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
              $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
                  currentPage = event.data["newPage"];  
@@ -853,7 +871,11 @@ $(function(){
              // El efecto predeterminado de una etiqueta en la primera página  
              var $pagess = $('#pageStyle');  
              //$pagess[0].style.backgroundColor="#006B00";  
-             //$pagess[0].style.color="#ffffff";  
+             //$pagess[0].style.color="#ffffff"
+        
+        });
+       
+      ;  
     });  
       
     // haga clic en un enlace para cambiar el color, luego haga clic en otro para restaurar el color original  
