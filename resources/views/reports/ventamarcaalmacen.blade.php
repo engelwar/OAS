@@ -50,6 +50,7 @@
             <p id="title"></p>
         </div>
         <div class="col-5 text-end">
+        
             <div class="mb-2 row d-flex justify-content-center">
                 <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm text-right">Desde:</label>
                 <div class="col-sm-4">

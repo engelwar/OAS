@@ -3,6 +3,9 @@
 
 @section('mi_estilo')
 <style>
+  .transformacion {
+     text-transform: lowercase;
+  }
     .div1 {
   background-color: #fafafa;
   margin: 1rem;
@@ -111,12 +114,74 @@
   color: coral;
 }
 
+/* this is for the main container of the table, also sets the height of the fixed header row */
+.headercontainer {
+  position: relative;
+
+  padding-top: 10px;
+ 
+}
+/* this is for the data area that is scrollable */
+.tablecontainer {
+  overflow-y: auto;
+  height: 500px;
+ 
+}
+
+/* remove default cell borders and ensures table width 100% of its container*/
+.tablecontainer table {
+  border-spacing: 0;
+  width:100%;
+}
+
+/* add a thin border to the left of cells, but not the first */
+.tablecontainer td + td {
+  border-left:1px solid #eee; 
+}
+
+/* cell padding and bottom border */
+.tablecontainer td, th {
+
+  padding: 10px;
+}
+
+/* make the default header height 0 and make text invisible */
+.tablecontainer th {
+    
+    
+    white-space: nowrap;
+}
+
+/* reposition the divs in the header cells and place in the blank area of the headercontainer */
+.tablecontainer th div{
+  visibility: visible;
+  position: absolute;
+  background: rgb(132, 125, 125);
+
+  padding: 9px 10px;
+  top: 0;
+  margin-left: -10px;
+  line-height: normal;
+   border-left: 1px solid #222;
+}
+/* prevent the left border from above appearing in first div header */
+th:first-child div{
+  border: none;
+}
+
+/* alternate colors for rows */
+.tablecontainer tbody  tr:nth-child(even){
+     background-color: #ddd;
+}
+
+
 </style>
 @endsection
 @include('layouts.sidebar', ['hide'=>'0']) 
 @section('content')
 
-<meta http-equiv="refresh" content="130" >
+<meta http-equiv="refresh" content="180">
+<meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="container border rounded">
        <!--<meta http-equiv="refresh" content="10" />---> 
 
@@ -152,7 +217,7 @@
                 <div class="col">
                     <form class="form-inline" action="" method="GET">
                         <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
-                        <input onclick="jsBuscar2();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                        <input onclick="jsBuscar2();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto "  /><br><br>
                       </form>
                 </div>
                 <div class="col">
@@ -194,8 +259,30 @@
                     
                 </div>
             </div>
+            
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-11">  
+                  
+              </div>
+                <div class="col-sm-1"> 
+                  <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
+                  <span>paginas a visualizar</span>
+                  <option value="10" id="a1">10</option>
+                  <option value="20" id="a2">20</option>
+                  <option value="50" id="a3">50</option>
+             
+                </select>
+              </div>
+              </div>
+            </div>
+         
+            
             <div class="table-responsive text-center" >
-              
+
+              <div class="headercontainer">
+                <div class="tablecontainer">
+
                 <table class="table table-bordered table-sm" id="miTabla">
                     
                 
@@ -220,130 +307,186 @@
    
                  </thead>
 
-
-
-                  @foreach($consutas as $co)
-                    @foreach ($observacionBD as $item)
-                        @if ($co->NR==$item->id)
-                        <tbody>
-                            <tr>
-                                <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
-                                @if(strval($co->NroCotizacion)==="0")
-                                <td style="text-align:center" class="bold">-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
-                                @endif                   
-                                
-                                <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
-                                <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-                                <td style="text-align:center" class="bold">{{$co->NR}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Local}}</td>
-                                @if (is_null($co->FechaFac))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
-                                @endif
-                                                    
-                                @if (is_null($co->numerofactura))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
-                                @endif
-                                
-                                
-                                @if (is_null($co->estado))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->estado}}</td> 
-                                @endif
-                              
-                                
-                                <td style="text-align:center" class="bold">
-                                  @if ($item->nro==1)
-                                  <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
-                                  @endif   
-                                  @if ($item->nro==2)
-                                  <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
-                                  @endif     
-                                  </td>  
-
-                                <td style="text-align:center" class="bold"> 
-                               @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==0)
-                               <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
-                               @endif
-                               @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==0)
-                               <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
-                               @endif
-                               @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==1)
-                               <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
-                               @endif
-                               @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==1)
-                               <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
-                               @endif
-                                </td>
-                                <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
-                            </td>
+                 @if ($observacionBD->isEmpty())
+                   
+                     @foreach($consutas as $co)
+                     <tbody>
+                      <tr>
+                          <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+                          @if(strval($co->NroCotizacion)==="0")
+                          <td style="text-align:center" class="bold">-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+                          @endif                   
+                          
+                          <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+                          <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+                          <td style="text-align:center" class="bold">{{$co->NR}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Local}}</td>
+                          @if (is_null($co->FechaFac))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+                          @endif
+                                              
+                          @if (is_null($co->numerofactura))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+                          @endif
+                          
+                          
+                          @if (is_null($co->estado))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+                          @endif
+                          <td style="text-align:center" class="bold"></td> 
+                          <td style="text-align:center" class="bold"></td> 
+                          <td style="text-align:center" class="bold"> 
                              
-                            </tr>
-                          </tbody>
-                          @break 
-                          @endif
-                    @endforeach
-                    @if ($co->NR!=$item->id)
-                              
-                        <tbody>
-                            <tr>
-                                <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
-                                @if(strval($co->NroCotizacion)==="0")
-                                <td style="text-align:center" class="bold">-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
-                                @endif                   
-                                
-                                <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
-                                <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-                                <td style="text-align:center" class="bold">{{$co->NR}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
-                                <td style="text-align:center" class="bold">{{$co->Local}}</td>
-                                @if (is_null($co->FechaFac))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
-                                @endif
-                                                    
-                                @if (is_null($co->numerofactura))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
-                                @endif
-                                
-                                
-                                @if (is_null($co->estado))
-                                <td style="text-align:center" class="bold" >-</td>
-                                @else
-                                <td style="text-align:center" class="bold">{{$co->estado}}</td> 
-                                @endif
-                                <td style="text-align:center" class="bold"></td> 
-                                <td style="text-align:center" class="bold"></td> 
-                                <td style="text-align:center" class="bold"> 
-                                   
-                                <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
-                                
-                              
-                            </tr>
-                          </tbody>
-                          @endif
-                   @endforeach
+                          <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+                          
+                        
+                      </tr>
+                    </tbody>
+                           @endforeach
+                 @else
+                   
+ @foreach($consutas as $co)
+ @foreach ($observacionBD as $item)
+     @if ($co->NR==$item->id)
+     <tbody>
+         <tr>
+             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+             @if(strval($co->NroCotizacion)==="0")
+             <td style="text-align:center" class="bold">-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+             @endif                   
+             
+             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+             <td style="text-align:center" class="bold">{{$co->NR}}</td>
+             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+             <td style="text-align:center" class="bold">{{$co->Local}}</td>
+             @if (is_null($co->FechaFac))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+             @endif
+                                 
+             @if (is_null($co->numerofactura))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+             @endif
+             
+             
+             @if (is_null($co->estado))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+             @endif
+           
+             
+             <td style="text-align:center" class="bold">
+               @if ($item->nro==1)
+               <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
+               @endif   
+               @if ($item->nro==2)
+               <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
+               @endif     
+               </td>  
+
+             <td style="text-align:center" class="bold"> 
+            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==0)
+            <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==0)
+            <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==1)
+            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==1)
+            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+            @endif
+             </td>
+             <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
+         </td>
+          
+         </tr>
+       </tbody>
+       @break 
+       @endif
+ @endforeach
+ @if ($co->NR!=$item->id)
+           
+     <tbody>
+         <tr>
+             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+             @if(strval($co->NroCotizacion)==="0")
+             <td style="text-align:center" class="bold">-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+             @endif                   
+             
+             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+             <td style="text-align:center" class="bold">{{$co->NR}}</td>
+             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+             <td style="text-align:center" class="bold">{{$co->Local}}</td>
+             @if (is_null($co->FechaFac))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+             @endif
+                                 
+             @if (is_null($co->numerofactura))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+             @endif
+             
+             
+             @if (is_null($co->estado))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+             @endif
+             <td style="text-align:center" class="bold"></td> 
+             <td style="text-align:center" class="bold"></td> 
+             <td style="text-align:center" class="bold"> 
+                
+             <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+             
+           
+         </tr>
+       </tbody>
+       @endif
+@endforeach
+                 
+                 
+                 
+                 @endif
+
+              
+
+                 
                 
               </table>
              
             </div>
-           
+          </div>    
+        </div>   
     </div>  
     
 
@@ -367,16 +510,16 @@
                   <input type="hidden" id="name2" name="iduser" maxlength="8" size="10" value="{{Auth::user()->id}}">
                   <br>
                   <label for="message-text" class="col-form-label" >Escriba la observacion:</label>
-                  <textarea class="form-control" id="message-text" placeholder="Escriba su descripcion" name="comentario" required ></textarea>
+                  <textarea class="form-control" id="message-text" placeholder="Escriba su observacion" name="comentario" required ></textarea>
                 </div>
                 <span>Usuario: {{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} {{auth()->user()->perfiles->materno}}</span>
             
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              
+              <!---------boton ----->
               
            
-              <button type="sumit" class="btn btn-primary btnEditar" href="v/{{$co->NR}}/edit" >Enviar observacion</button>
+              <button type="sumit" class="btn btn-primary btnEditar" >Enviar observacion</button>
             </div>
         </form>
         </div>
@@ -430,7 +573,7 @@ $(document).on("click",".btnHT", function(){
 function jsBuscar1(){
  
  //obtenemos el valor insertado a buscar
- buscar=$("#busqueda1").prop("value")
+ buscar=$("#busqueda1").prop("value");
 
  //utilizamos esta variable solo de ayuda y mostrar que se encontro
  encontradoResultado=false;
@@ -508,17 +651,18 @@ function jsBuscar1(){
 function jsBuscar2(){
  
  //obtenemos el valor insertado a buscar
- buscar=$("#busqueda2").prop("value")
-
+ buscar=$("#busqueda2").prop("value");
+buscar=buscar.toUpperCase();
  //utilizamos esta variable solo de ayuda y mostrar que se encontro
  encontradoResultado=false;
 
  //realizamos el recorrido solo por las celdas que contienen el código, que es la primera
  $("#miTabla tr").find('td:eq(2)').each(function () {
-
+  
+     //let posicion = cadena.indexOf(termino);
       //obtenemos el codigo de la celda
        codigo = $(this).html();
-
+    
         //comparamos para ver si el código es igual a la busqueda
         if(codigo==buscar){
 
@@ -589,7 +733,7 @@ $(document).ready(function() {
 function jsBuscar3(){
  
  //obtenemos el valor insertado a buscar
- buscar=$("#busqueda3").prop("value")
+ buscar=$("#busqueda3").prop("value");
 
  //utilizamos esta variable solo de ayuda y mostrar que se encontro
  encontradoResultado=false;
@@ -598,7 +742,7 @@ function jsBuscar3(){
  $("#miTabla tr").find('td:eq(4)').each(function () {
 
       //obtenemos el codigo de la celda
-       codigo = $(this).html();
+      codigo = $(this).html();
 
         //comparamos para ver si el código es igual a la busqueda
         if(codigo==buscar){
@@ -667,9 +811,27 @@ $(document).ready(function() {
 
 
 $(function(){  
-         var $table = $("#miTabla");  
+         var $table = $("#miTabla"); 
+        
+         a1=$("#a1").prop("value");
+         a2=$("#a2").prop("value");
+         a3=$("#a3").prop("value");
+       
+
+         $('#op').change(function() {
+         var val = $("#op option:selected").text();
          var currentPage = 0;// El valor predeterminado de la página actual es 0  
-         var pageSize = 10;// Número que se muestra en cada página  
+          if (val==10) {
+            var pageSize = a1;// Número que se muestra en cada página  
+          }     
+        
+          if (val==20) {
+            var pageSize = a2;// Número que se muestra en cada página  
+          }   
+        });
+         
+         
+       //  var pageSize = a1;// Número que se muestra en cada página  
          $table.bind('paging',function(){  
              $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
          });       

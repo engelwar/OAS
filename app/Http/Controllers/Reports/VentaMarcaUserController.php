@@ -26,7 +26,12 @@ class VentaMarcaUserController extends Controller
         $config = $this->getConf($sucur);
         $user = $config['users'];
         $capas = $config['capas'];
-        return view('reports.ventamarcaseg', compact('user', 'capas', 'sucur'));  
+        //datos añadidos para el alamacen
+        $alma = $request->alma;
+        $config2=$this->getConf($alma);
+        $user2 = $config['users'];
+        $capas2 = $config['capas'];
+        return view('reports.ventamarcaseg', compact('user', 'capas', 'sucur','alma'));  
     }
     public function getConf($sucur){
         if($sucur == 'sucur')
@@ -39,6 +44,12 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
                 ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
+                //datos 
+                ['name'=>'SUCRE', 'abrv'=>'SUCRE', 'users'=>[57]],
+                ['name'=>'POTOSI', 'abrv'=>'POTOSI', 'users'=>[58]],
+                ['name'=>'TARIJA', 'abrv'=>'TARIJA', 'users'=>[59]],
+                ['name'=>'ORURO', 'abrv'=>'ORURO', 'users'=>[60]],
+               
             ];
         }
         else{
@@ -62,6 +73,9 @@ class VentaMarcaUserController extends Controller
             ['name'=>'INS. CALACOTO', 'abrv'=>'INS. CALACOTO', 'users'=>[57,29]],
             ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64], 'cochabamba'=>[61]]
         ];
+        $almaceneX=[
+            ['name']
+        ];
         $user = $this->getUsers($segmento, $grupo, $usuario);
         $capas = 
         [
@@ -71,6 +85,9 @@ class VentaMarcaUserController extends Controller
         ];
         return (['users'=>$user,'capas' => $capas]);
     }
+    //--------------------------------- funcion de almacenes 
+
+
 
     public function getConfig(Request $request){
         if($sucur == 'sucur')
@@ -83,6 +100,8 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
                 ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]], 'alm'=>[61],
+                
+                
             ];
         }
         else{
@@ -151,7 +170,7 @@ class VentaMarcaUserController extends Controller
                     GROUP BY vtvtaCusr))
         )
         SELECT * FROM users ORDER BY segmento, grupo DESC";
-        //return dd($user);
+      // return dd($user);
         $user = DB::connection('sqlsrv')->select(DB::raw($user));
         
         return $user;
@@ -356,6 +375,7 @@ class VentaMarcaUserController extends Controller
             FROM fin 
         )
         ";
+     
         $ventas = DB::connection('sqlsrv')->select(DB::raw($vari . $marcxusr.
         "SELECT *, 
         CONVERT(varchar,CAST(partic as decimal(20,2))) as part, 
@@ -381,7 +401,8 @@ class VentaMarcaUserController extends Controller
         }
         else{
             $pareto = null;
-        } 
+        }
+          
         return Datatables::of($ventas)->with(['pareto'=>$pareto])->make(); 
         
     }
