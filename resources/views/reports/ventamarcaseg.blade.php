@@ -69,7 +69,6 @@
                 <div class="col-12 d-flex">
                     <form action="{{route('ventamarcauser.index')}}" method="GET">
                         @csrf
-                   {{$sucur}}
                         @if(!isset($sucur))
                             <input type="hidden" name = "sucur" value="sucur">
                         @endif

@@ -271,6 +271,17 @@ Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','Cotizacio
 
 Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar')->name('Cotizacion.buscar');
 
+//--------------------reporte  mixto de ventas -----------------------------------------------------------
+//Route::resource('ventamarcauserAlmacenes', 'Reports\VentaMarcaUserController');
+  //  Route::any('ventamarcauser/table/general','Reports\VentaMarcaUserController@general')->name('ventamarcauser.general');   
+   // Route::any('ventamarcauser/table/getConfig','Reports\VentaMarcaUserController@getConfig')->name('ventamarcauser.getConfig'); 
+  //  Route::any('ventamarcauser/table/testeo','Reports\VentaMarcaUserController@testeo')->name('ventamarcauser.testeo');   
+   // Route::any('ventamarcauser/get/datos','Reports\VentaMarcaUserController@getDatos')->name('ventamarcauser.getdatos'); 
+
+
+
+
+
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');

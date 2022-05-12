@@ -209,7 +209,7 @@ th:first-child div{
                    
                         <form class="form-inline" action="" method="GET">
                           <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
-                          <input onclick="jsBuscar1();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto" /><br><br>
+                          <input id="b1" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto" /><br><br>
                         </form>
                        
                    
@@ -217,13 +217,15 @@ th:first-child div{
                 <div class="col">
                     <form class="form-inline" action="" method="GET">
                         <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
-                        <input onclick="jsBuscar2();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto "  /><br><br>
+                        <input id="b2" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto "  />
+                        
+                        <br><br>
                       </form>
                 </div>
                 <div class="col">
                     <form class="form-inline" action="" method="GET">
                         <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
-                        <input onclick="jsBuscar3();" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                        <input id="b3" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
                       </form>
                 </div>
                 <div class="col">
@@ -234,264 +236,243 @@ th:first-child div{
             </div>
             
        
-       
-          
-      <div class="table-responsive text-center cont">
-          <h4 id="h"></h4>
-      </div>
-            <div class="div1"> 
-                <div class="row">
-                    <div id="div0" class="col div2"></div>
-                    <div id="div1" class="col div2"></div>
-                    <div id="div2" class="col div2" style="width: 400px;"></div>
-                    <div id="div3" class="col div2"></div>
-                    <div id="div4" class="col div2"></div>
-                    <div id="div5" class="col div2"></div>
-                    <div id="div6" class="col div2"></div>
-                    <div id="div7" class="col div2"></div>
-                    <div id="div8" class="col div2"></div>
-                    <div id="div9" class="col div2"></div>
-                    <div id="div10" class="col div2"></div>
-                    <div id="div11" class="col div2"></div>
-                    <div id="div12" class="col div2"></div>
-                    <div id="div13" class="col div2"></div>
-                    <div id="div14" class="col div2" style="width: 130px;"></div>
-                    
-                </div>
-            </div>
-            
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-11">  
-                  
-              </div>
-                <div class="col-sm-1"> 
-                  <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
-                  <span>paginas a visualizar</span>
-                  <option value="10" id="a1">10</option>
-                  <option value="20" id="a2">20</option>
-                  <option value="50" id="a3">50</option>
-             
-                </select>
-              </div>
-              </div>
-            </div>
-         
-            
-            <div class="table-responsive text-center" >
-
-              <div class="headercontainer">
-                <div class="tablecontainer">
-
-                <table class="table table-bordered table-sm" id="miTabla">
-                    
-                
-                 <thead class="bg-primary text-light">
-                    <th style="width: 130px; ">Fecha Cot</th>
-                    <th style="width: 100px;">Nro Cot</th>
-                    <th style="width: 600px;">Cliente</th> 
-                    <th style="width: 300px;">Fecha NR</th> 
-                    <th style="width: 160px;">NR</th>
-                    <th style="width: 190px;" >Total Ventas</th>
-                    
-                    <th style="width: 10px;">Moneda</th>
-                    <th style="width: 130px;">Usuario vendedor</th>
-                    <th style="width: 130px;">Local</th>
-                    <th style="width: 130px;">Fecha fac</th>
-                    <th style="width: 130px;">Nro Fac</th>
-                    <th style="width: 70px;">Estado</th>
-                    <th style="width: 30px;">S</th>
-                    <th style="width: 30px;">E</th>
-                    <th style="width: 130px;">OBS</th>
-                   
-   
-                 </thead>
-
-                 @if ($observacionBD->isEmpty())
-                   
-                     @foreach($consutas as $co)
-                     <tbody>
-                      <tr>
-                          <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
-                          @if(strval($co->NroCotizacion)==="0")
-                          <td style="text-align:center" class="bold">-</td>
-                          @else
-                          <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
-                          @endif                   
-                          
-                          <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
-                          <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-                          <td style="text-align:center" class="bold">{{$co->NR}}</td>
-                          <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
-                          <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-                          <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
-                          <td style="text-align:center" class="bold">{{$co->Local}}</td>
-                          @if (is_null($co->FechaFac))
-                          <td style="text-align:center" class="bold" >-</td>
-                          @else
-                          <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
-                          @endif
-                                              
-                          @if (is_null($co->numerofactura))
-                          <td style="text-align:center" class="bold" >-</td>
-                          @else
-                          <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
-                          @endif
-                          
-                          
-                          @if (is_null($co->estado))
-                          <td style="text-align:center" class="bold" >-</td>
-                          @else
-                          <td style="text-align:center" class="bold">{{$co->estado}}</td> 
-                          @endif
-                          <td style="text-align:center" class="bold"></td> 
-                          <td style="text-align:center" class="bold"></td> 
-                          <td style="text-align:center" class="bold"> 
-                             
-                          <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
-                          
-                        
-                      </tr>
-                    </tbody>
-                           @endforeach
-                 @else
-                   
- @foreach($consutas as $co)
- @foreach ($observacionBD as $item)
-     @if ($co->NR==$item->id)
-     <tbody>
-         <tr>
-             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
-             @if(strval($co->NroCotizacion)==="0")
-             <td style="text-align:center" class="bold">-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
-             @endif                   
-             
-             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
-             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-             <td style="text-align:center" class="bold">{{$co->NR}}</td>
-             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
-             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
-             <td style="text-align:center" class="bold">{{$co->Local}}</td>
-             @if (is_null($co->FechaFac))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
-             @endif
-                                 
-             @if (is_null($co->numerofactura))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
-             @endif
-             
-             
-             @if (is_null($co->estado))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
-             @endif
-           
-             
-             <td style="text-align:center" class="bold">
-               @if ($item->nro==1)
-               <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
-               @endif   
-               @if ($item->nro==2)
-               <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
-               @endif     
-               </td>  
-
-             <td style="text-align:center" class="bold"> 
-            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==0)
-            <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
-            @endif
-            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==0)
-            <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
-            @endif
-            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==1)
-            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
-            @endif
-            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==1)
-            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
-            @endif
-             </td>
-             <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
-         </td>
-          
-         </tr>
-       </tbody>
-       @break 
-       @endif
- @endforeach
- @if ($co->NR!=$item->id)
-           
-     <tbody>
-         <tr>
-             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
-             @if(strval($co->NroCotizacion)==="0")
-             <td style="text-align:center" class="bold">-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
-             @endif                   
-             
-             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
-             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-             <td style="text-align:center" class="bold">{{$co->NR}}</td>
-             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
-             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
-             <td style="text-align:center" class="bold">{{$co->Local}}</td>
-             @if (is_null($co->FechaFac))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
-             @endif
-                                 
-             @if (is_null($co->numerofactura))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
-             @endif
-             
-             
-             @if (is_null($co->estado))
-             <td style="text-align:center" class="bold" >-</td>
-             @else
-             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
-             @endif
-             <td style="text-align:center" class="bold"></td> 
-             <td style="text-align:center" class="bold"></td> 
-             <td style="text-align:center" class="bold"> 
-                
-             <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
-             
-           
-         </tr>
-       </tbody>
-       @endif
-@endforeach
-                 
-                 
-                 
-                 @endif
-
-              
-
-                 
-                
-              </table>
-             
-            </div>
-          </div>    
-        </div>   
     </div>  
     
 
+       
+          
+     <br>
+            
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-11">  
+          
+      </div>
+        <div class="col-sm-1"> 
+          <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
+          <span>paginas a visualizar</span>
+          <option value="10" id="a1">10</option>
+          <option value="20" id="a2">20</option>
+          <option value="50" id="a3">50</option>
+          <option value="100" id="a4">100</option>
+     
+        </select>
+      </div>
+      </div>
+    </div>
+ 
+    
+    <div class="table-responsive text-center" >
 
+      <div class="headercontainer">
+        <div class="tablecontainer">
 
+        <table class="table table-bordered table-sm" id="miTabla">
+            
+        
+         <thead class="bg-primary text-light">
+            <th style="width: 130px; ">Fecha Cot</th>
+            <th style="width: 100px;">Nro Cot</th>
+            <th style="width: 600px;">Cliente</th> 
+            <th style="width: 300px;">Fecha NR</th> 
+            <th style="width: 160px;">NR</th>
+            <th style="width: 190px;" >Total Ventas</th>
+            
+            <th style="width: 10px;">Moneda</th>
+            <th style="width: 130px;">Usuario vendedor</th>
+            <th style="width: 130px;">Local</th>
+            <th style="width: 130px;">Fecha fac</th>
+            <th style="width: 130px;">Nro Fac</th>
+            <th style="width: 70px;">Estado</th>
+            <th style="width: 30px;">S</th>
+            <th style="width: 30px;">E</th>
+            <th style="width: 130px;">OBS</th>
+           
+
+         </thead>
+
+         @if ($observacionBD->isEmpty())
+           
+             @foreach($consutas as $co)
+             <tbody>
+              <tr>
+                  <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+                  @if(strval($co->NroCotizacion)==="0")
+                  <td style="text-align:center" class="bold">-</td>
+                  @else
+                  <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+                  @endif                   
+                  
+                  <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+                  <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+                  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+                  <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+                  <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+                  <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+                  <td style="text-align:center" class="bold">{{$co->Local}}</td>
+                  @if (is_null($co->FechaFac))
+                  <td style="text-align:center" class="bold" >-</td>
+                  @else
+                  <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+                  @endif
+                                      
+                  @if (is_null($co->numerofactura))
+                  <td style="text-align:center" class="bold" >-</td>
+                  @else
+                  <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+                  @endif
+                  
+                  
+                  @if (is_null($co->estado))
+                  <td style="text-align:center" class="bold" >-</td>
+                  @else
+                  <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+                  @endif
+                  <td style="text-align:center" class="bold"></td> 
+                  <td style="text-align:center" class="bold"></td> 
+                  <td style="text-align:center" class="bold"> 
+                     
+                  <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+                  
+                
+              </tr>
+            </tbody>
+                   @endforeach
+         @else
+           
+@foreach($consutas as $co)
+@foreach ($observacionBD as $item)
+@if ($co->NR==$item->id)
+<tbody>
+ <tr>
+     <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+     @if(strval($co->NroCotizacion)==="0")
+     <td style="text-align:center" class="bold">-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+     @endif                   
+     
+     <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+     <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+     <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+     <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+     <td style="text-align:center" class="bold">{{$co->Local}}</td>
+     @if (is_null($co->FechaFac))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+     @endif
+                         
+     @if (is_null($co->numerofactura))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+     @endif
+     
+     
+     @if (is_null($co->estado))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+     @endif
+   
+     
+     <td style="text-align:center" class="bold">
+       @if ($item->nro==1)
+       <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
+       @endif   
+       @if ($item->nro==2)
+       <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
+       @endif     
+       </td>  
+
+     <td style="text-align:center" class="bold"> 
+    @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==0)
+    <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
+    @endif
+    @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==0)
+    <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
+    @endif
+    @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==1)
+    <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+    @endif
+    @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==1)
+    <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+    @endif
+     </td>
+     <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
+ </td>
+  
+ </tr>
+</tbody>
+@break 
+@endif
+@endforeach
+@if ($co->NR!=$item->id)
+   
+<tbody>
+ <tr>
+     <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+     @if(strval($co->NroCotizacion)==="0")
+     <td style="text-align:center" class="bold">-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+     @endif                   
+     
+     <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+     <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+     <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+     <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+     <td style="text-align:center" class="bold">{{$co->Local}}</td>
+     @if (is_null($co->FechaFac))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+     @endif
+                         
+     @if (is_null($co->numerofactura))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+     @endif
+     
+     
+     @if (is_null($co->estado))
+     <td style="text-align:center" class="bold" >-</td>
+     @else
+     <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+     @endif
+     <td style="text-align:center" class="bold"></td> 
+     <td style="text-align:center" class="bold"></td> 
+     <td style="text-align:center" class="bold"> 
+        
+     <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+     
+   
+ </tr>
+</tbody>
+@endif
+@endforeach
+         
+         
+         
+         @endif
+
+      
+
+         
+        
+      </table>
+     
+    </div>
+  </div>    
+</div>   
+
+<div class="page" id="page"></div>
 
 
 
@@ -820,25 +801,47 @@ $(function(){
 
          $('#op').change(function() {
          var val = $("#op option:selected").text();
-         var currentPage = 0;// El valor predeterminado de la página actual es 0  
+         
           if (val==10) {
-            var pageSize = a1;// Número que se muestra en cada página  
-          }     
-        
-          if (val==20) {
-            var pageSize = a2;// Número que se muestra en cada página  
-          }   
-        });
-         
-         
-       //  var pageSize = a1;// Número que se muestra en cada página  
+            $('#page').text("");
+            var pageSize = 10;// Número que se muestra en cada página  
+       var currentPage = 0;// El valor predeterminado de la página actual es 0 
          $table.bind('paging',function(){  
              $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
          });       
          var sumRows = $table.find('tbody tr').length;  
          var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
            
-         var $pager = $('<div class="page"></div>');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+         var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+         for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
+             $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
+                 currentPage = event.data["newPage"];  
+                 $table.trigger("paging");  
+                   // Activar la función de paginación  
+                 }).appendTo($pager);  
+                 $pager.append(" ");  
+             }     
+             $pager.insertAfter($table);  
+             $table.trigger("paging");  
+               
+             // El efecto predeterminado de una etiqueta en la primera página  
+             var $pagess = $('#pageStyle');  
+             //$pagess[0].style.backgroundColor="#006B00";  
+             //$pagess[0].style.color="#ffffff"
+          
+          }     
+        
+          if (val==20) {
+         $('#page').text("");
+            var pageSize = 20;// Número que se muestra en cada página  
+       var currentPage = 0;// El valor predeterminado de la página actual es 0 
+         $table.bind('paging',function(){  
+             $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
+         });       
+         var sumRows = $table.find('tbody tr').length;  
+         var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
+           
+         var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
          for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
              $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
                  currentPage = event.data["newPage"];  
@@ -854,6 +857,92 @@ $(function(){
              var $pagess = $('#pageStyle');  
              //$pagess[0].style.backgroundColor="#006B00";  
              //$pagess[0].style.color="#ffffff";  
+          }   
+          if (val==50) {
+         $('#page').text("");
+            var pageSize = 50;// Número que se muestra en cada página  
+       var currentPage = 0;// El valor predeterminado de la página actual es 0 
+         $table.bind('paging',function(){  
+             $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
+         });       
+         var sumRows = $table.find('tbody tr').length;  
+         var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
+           
+         var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+         for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
+             $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
+                 currentPage = event.data["newPage"];  
+                 $table.trigger("paging");  
+                   // Activar la función de paginación  
+                 }).appendTo($pager);  
+                 $pager.append(" ");  
+             }     
+             $pager.insertAfter($table);  
+             $table.trigger("paging");  
+               
+             // El efecto predeterminado de una etiqueta en la primera página  
+             var $pagess = $('#pageStyle');  
+             //$pagess[0].style.backgroundColor="#006B00";  
+             //$pagess[0].style.color="#ffffff";  
+          } 
+          if (val==100) {
+         $('#page').text("");
+            var pageSize = 100;// Número que se muestra en cada página  
+       var currentPage = 0;// El valor predeterminado de la página actual es 0 
+         $table.bind('paging',function(){  
+             $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
+         });       
+         var sumRows = $table.find('tbody tr').length;  
+         var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
+           
+         var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+         for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
+             $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
+                 currentPage = event.data["newPage"];  
+                 $table.trigger("paging");  
+                   // Activar la función de paginación  
+                 }).appendTo($pager);  
+                 $pager.append(" ");  
+             }     
+             $pager.insertAfter($table);  
+             $table.trigger("paging");  
+               
+             // El efecto predeterminado de una etiqueta en la primera página  
+             var $pagess = $('#pageStyle');  
+             //$pagess[0].style.backgroundColor="#006B00";  
+             //$pagess[0].style.color="#ffffff";  
+          } 
+          if (val==50) {
+         $('#page').text("");
+            var pageSize = 50;// Número que se muestra en cada página  
+       var currentPage = 0;// El valor predeterminado de la página actual es 0 
+         $table.bind('paging',function(){  
+             $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
+         });       
+         var sumRows = $table.find('tbody tr').length;  
+         var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
+           
+         var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+         for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
+             $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
+                 currentPage = event.data["newPage"];  
+                 $table.trigger("paging");  
+                   // Activar la función de paginación  
+                 }).appendTo($pager);  
+                 $pager.append(" ");  
+             }     
+             $pager.insertAfter($table);  
+             $table.trigger("paging");  
+               
+             // El efecto predeterminado de una etiqueta en la primera página  
+             var $pagess = $('#pageStyle');  
+             //$pagess[0].style.backgroundColor="#006B00";  
+             //$pagess[0].style.color="#ffffff";  
+          } 
+        });
+         
+         
+      
     });  
       
     // haga clic en un enlace para cambiar el color, luego haga clic en otro para restaurar el color original  
@@ -879,6 +968,69 @@ $(function(){
      return false;        
 }
 
+// otro buscador 1
+$(document).ready(() => {
+            $('#b1').click(function(evento) {
+                evento.preventDefault();
+
+                let clave = $('#busqueda1').val().trim();
+
+                if (clave) {
+                    $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(1);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+
+// otro buscador 2
+$(document).ready(() => {
+            $('#b2').click(function(evento) {
+                evento.preventDefault();
+
+                let clave = $('#busqueda2').val().trim();
+
+                if (clave) {
+                    $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(2);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+
+
+// otro buscador3
+$(document).ready(() => {
+            $('#b3').click(function(evento) {
+                evento.preventDefault();
+
+                let clave = $('#busqueda3').val().trim();
+
+                if (clave) {
+                    $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(4);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
 
 </script>
 @endsection

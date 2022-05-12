@@ -360,7 +360,6 @@ class VentaMarcaAlmacenController extends Controller
             FROM fin 
         )
         ";
-       // return dd($marcxusr);
         $ventas = DB::connection('sqlsrv')->select(DB::raw($vari . $marcxusr.
         "SELECT *, 
         CONVERT(varchar,CAST(partic as decimal(20,2))) as part, 
