@@ -262,7 +262,7 @@ class ProgramSeeder extends Seeder
             'nombre'=>'Reporte de Kardex',      
             'desc'=>'Reporte de Kardex',  
             'modulo_id'=>'6',
-            'route'=>'kardex.index',
+            'route'=>'kardexreport.index',
             'icon'=>'fas fa-bookmark',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));

@@ -164,7 +164,7 @@ Route::prefix('reports')->group(function(){
     Route::resource('kardexreport', 'Reports\KardexReportController');
     Route::any('ventamarcauser/table/products2','Reports\kardexreportController@products')->name('kardexreport.products');  
 
-    Route::resource('kardex', 'Reports\KardexController');
+    // Route::resource('kardex', 'Reports\KardexController');
 });
 
 Route::prefix('dev')->group(function(){

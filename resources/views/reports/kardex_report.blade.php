@@ -58,19 +58,46 @@
         <h5 id="title_prod">Producto</h5>
       </div>
       <table class="cell-border compact" id="detalle_costo" style="width:100%; font-size:0.8rem;">
+        <thead>
+          <tr>
+            <th rowspan="2"></th>
+            <th rowspan="2"></th>
+            <th colspan="3" class="bg-success">Entradas</th>
+            <th colspan="3" class="bg-warning">Salidas</th>
+            <th colspan="3" class="bg-info">Saldos</th>
+          </tr>
+          <tr>
+            <th>NroTrans</th>
+            <th>Fecha</th>
+            <th>Cant</th>
+            <th>P.U.</th>
+            <th>P.T.</th>
+            <th>Cant</th>
+            <th>P.U.</th>
+            <th>P.T.</th>
+            <th>Cant</th>
+            <th>P.T.</th>
+            <th>Cant Acum</th>
+            <th>Cost Prom</th>
+            <th>Costo Val</th>
+            <th>Costo Acum</th>
+            <th>Dif</th>
+            <th>Trans Ini</th>
+          </tr>
+        </thead>
         <tfoot>
           <tr>
             <th></th>
             <th>TOTAL</th>
-            <td class="sumCANA bg-success"></td>
+            <td class="sumCANA bg-success text-end"></td>
             <td></td>
-            <td class="sumTOTA bg-success"></td>
-            <td class="sumCANB bg-warning"></td>
+            <td class="sumTOTA bg-success text-end"></td>
+            <td class="sumCANB bg-warning text-end"></td>
             <td></td>
-            <td class="sumTOTB bg-warning"></td>
-            <td class="sumCANC bg-info"></td>
+            <td class="sumTOTB bg-warning text-end"></td>
+            <td class="sumCANC bg-info text-end"></td>
             <td></td>
-            <td class="sumTOTC bg-info"></td>
+            <td class="sumTOTC bg-info text-end"></td>
             <th></th>
             <th></th>
             <th></th>
@@ -193,7 +220,7 @@
         processing: true,
         columns: [{
             data: '_Ntra',
-            title: 'NroTrans'
+            title: 'NroTrans',
           },
           {
             data: '_Ftra',
@@ -305,9 +332,9 @@
         drawCallback: function(settings) {
           var prod = this.api().ajax.json().producto.Produ;
           var desc = this.api().ajax.json().producto.ProdNomb;
-          var _SalCan = this.api().ajax.json().array._SalCan;
-          var _SalTot = this.api().ajax.json().array._SalTot;
-          console.log(_SalCan, _SalTot);
+          var sumCANC = this.api().ajax.json().array._SalCan;
+          var sumTOTT = this.api().ajax.json().array._SalTot;
+
           $('#title_prod').text(prod + ' - ' + desc);
 
           function totales() {
@@ -326,24 +353,16 @@
             var sumTOTB = table2.column(7, {
               search: 'applied'
             }).data().sum();
-            var sumCANC = table2.column(8, {
-              search: 'applied'
-            }).data().sum();
-            var sumTOTC = table2.column(10, {
-              search: 'applied'
-            }).data().sum();
             sumCANA = Math.round((sumCANA + Number.EPSILON) * 100) / 100;
             sumTOTA = Math.round((sumTOTA + Number.EPSILON) * 100) / 100;
             sumCANB = Math.round((sumCANB + Number.EPSILON) * 100) / 100;
             sumTOTB = Math.round((sumTOTB + Number.EPSILON) * 100) / 100;
-            sumCANC = Math.round((sumCANC + Number.EPSILON) * 100) / 100;
-            sumTOTC = Math.round((sumTOTC + Number.EPSILON) * 100) / 100;
             $('.dataTables_scrollFootInner .sumCANA').html(sumCANA.toFixed(2));
             $('.dataTables_scrollFootInner .sumTOTA').html(sumTOTA.toFixed(2));
             $('.dataTables_scrollFootInner .sumCANB').html(sumCANB.toFixed(2));
             $('.dataTables_scrollFootInner .sumTOTB').html(sumTOTB.toFixed(2));
-            $('.dataTables_scrollFootInner .sumCANC').html(sumCANC.toFixed(2));
-            $('.dataTables_scrollFootInner .sumTOTC').html(sumTOTC.toFixed(2));
+            $('.dataTables_scrollFootInner .sumCANC').text(sumCANC.toFixed(2));
+            $('.dataTables_scrollFootInner .sumTOTC').text(sumTOTT.toFixed(2));
           }
           totales();
           $('#example_filter label input').on('keyup change', function() {
