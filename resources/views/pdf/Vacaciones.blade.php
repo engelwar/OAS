@@ -27,7 +27,7 @@
                 <p>FORMULARIO DE VACACIONES</p>                
             </td>
             <td>
-                <p>Nro. 1</p>
+                <p>Nro. 1aaaaaaaa</p>
             </td>
         </tr>
         <tr>

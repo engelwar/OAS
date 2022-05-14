@@ -5,15 +5,23 @@
     color: black;
     text-transform: uppercase;
 }
-
+.input {
+    color: rgb(12, 11, 11);
+    width: 500px;
+    border:none;
+    border-bottom:1px solid rgb(5, 4, 4);
+} 
 body{
     margin: 1cm;
 }
 
-.container{
+.containerA{
     border: 0.4mm solid black;
     padding: 0.4cm;
     display: block;
+}
+.itemA{
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .container_header{
@@ -57,7 +65,7 @@ body{
 
 .form-group1{
     position: relative;
-    width: 100%;
+    width: 90%;
     display: table;
 }
 
@@ -66,44 +74,88 @@ body{
 }
 
 .form-group1 .item1{
-    width: 10%;
+    width: 30%;
     padding-top: 0.1cm;
+    text-indent: 30px;
 }
 
 .form-group1 .item2{
-    width: 20%;
+    width: 40%;
+    margin-right: 20em;
 }
 
 .form-group1 .item3{
-    width: 2%;
+    width: 20%;
     padding-top: 0.1cm;
-    padding-left: 1cm;
+    text-indent: 50px;
+    text-align: left;
 }
 
 .form-group1 .item4{
-    width: 20%;
-}
-
-.form-group1 .item5{
-    width: 10%;
-    padding-top: 0.1cm;
-    padding-left: 1cm;
-}
-
-.form-group1 .item6{
-    width: 40%;
-    padding-right: 0.2cm;
+    width: 25%;
+    margin-right: 20em;
 }
 
 .form-group1 .item input,.form-group1 .item label{
-    width: 100%;
+    width: 110%;
 }
 
+
+.form-group1A{
+    position: relative;
+    width: 70%;
+    display: table;
+}
+
+.form-group1A .item{
+    display: table-cell;
+}
+
+.form-group1A .item1A{
+    width: 30%;
+    padding-top: 0.1cm;
+    text-indent: 30px;
+    text-align: left;
+}
+
+.form-group1A .item2A{
+    width: 40%;
+    margin-right: 20em;
+}
+
+.form-group1A .item3A{
+    width: 20%;
+    padding-top: 0.1cm;
+    text-indent: 25px;
+    
+}
+
+.form-group1A .item4A{
+    width: 25%;
+    margin-right: 20em;
+}
+.form-group1A .item45{
+   left: 25px; 
+    
+}
+
+
+
+
+.form-group1A .item input,.form-group1 .item label{
+    width: 110%;
+}
+
+
+
+
+
+
 .form-group2{
-    margin: 0.5cm 0 0.5cm 0;
+    text-indent: 5em;
     position: relative;
     display: table;
-    width: 100%;
+    width: 90%;
 }
 
 .form-group2 .item{
@@ -111,41 +163,58 @@ body{
 }
 
 .form-group2 .item1{
-    width: 8%;
+    padding-left: 0.2cm;
+    width: 4%;
     padding-top: 0.1cm;
 }
 
 .form-group2 .item2{
-    width: 92%;
+    
+    width: 10%;
+    
 }
 
-.form-group3{
-    width: 80%;
-    margin: auto;
+.form-group2 .item3{
+    width: 20%;
+    padding-top: 0.1cm;
+    text-indent: 5px;
+    text-align: left;
 }
 
-.form-group3 .item{
-    width: 100%;
-    height: 1.6cm;
+.form-group2 .item4{
+    width: 20%;
+}
+.fg3{
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .form-group4{
     display: table;
-    width: 80%;
+    width: 5%;
     position: relative;
     margin: auto;
     margin-bottom: 1cm;
+    padding: 1px;
 }
 
 .form-group4 .item{
     display: table-cell;
     text-align: center;
-    width: 100%;
+    width: 10%;
+    margin: 5px; width: 50px; height: 10px;
 }
-
+#divAc{
+    position: relative;
+    left: 50px;
+}
+#divAb{
+    position: relative;
+    left: 55px;
+}
 .form-group4 .item .form-group{
     display: table;
-    margin-top: 0.5cm;
+    margin-top: 0.1cm;
+    padding-bottom: -1cm;
 }
 
 .form-group4 .item .form-group div{
@@ -160,9 +229,17 @@ body{
 
 .form-group4 .item .form-group .fechas input{
     height: 0.4cm;
+
+}
+.inputV2{
+    width: 18%;
+    text-align: right;
+ 
 }
 
 .form-group5{
+    position: relative;
+    left: 90px;
     width: 65%;
     margin: auto;
     display: table;
@@ -195,4 +272,8 @@ body{
 
 .form-group6 .item div .firma{
     margin-top: 1.2cm;
+}
+.divRe{
+    display: flex;
+    justify-content: center;
 }

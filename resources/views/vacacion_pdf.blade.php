@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<style>
+    
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
@@ -8,94 +10,115 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="containerA">
         <div class="container_header">
             <div class="header header1">
                 <img src="{{ asset('imagenes/logo_fondo.jpg') }}" alt="">
             </div>
             <div class="header header2">
-                <h2>FORMULARIO ADMINISTRATIVO - RRHH</h2>
+                <h2>SOLICITUD DE PERMISO - RRHH</h2>
                 <h2>SOLICITUD DE VACACIONES</h2>
             </div>
             <div class="header header3">
-                <h3>LyPO/FARH/V.02</h3>
+                <h3>LyPO/RRHH/FOL-V2</h3>
                 <h3>No. 000001</h3>
                 <h3>ADMINISTRACION</h3>
             </div>
         </div>
         <form method="GET" action="{{ route('vacacion.estado',$VacacionForm->id) }}" class="formRegistro">
             @csrf
+           
+            
+
+
             <div class="form-group1">
                 <div class="item item1">
                     <label for="nombre" class="col-md-2 col-form-label text-md-right">
-                        {{ __('FUNCIONARIO:') }}
+                        {{ __('NOMBRE Y APELLIDO:') }}
+                     
                     </label>
                 </div>
                 <div class="item item2">
-                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
+                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
                     @error('ci')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
+               
                 <div class="item item3">
-                    <label for="ci" class="">
-                        {{ __('CI:') }}
-                    </label>
-                </div>
-                <div class="item item4">
-                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->ci}}" class="form-control @error('ci') is-invalid @enderror" name="ci">
-                    @error('sucursal')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="item item5">
                     <label for="cargo" class="">
                         {{ __('CARGO:') }}
                     </label>
                 </div>
-                <div class="item item6">
-                    <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror" name="cargo">
+                <div class="item item4">
+                    <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
                     @error('sucursal')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
+                   
+
             </div>
-            <div class="form-group2">
+            <div class="form-group1">
                 <div class="item item1">
                     <label for="area" class="col-md-2 col-form-label text-md-right">
-                        {{ __('UNIDAD:') }}
+                        {{ __('DEPARTAMENTO:') }}
                     </label>
                 </div>
                 <div class="item item2">
-                    <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+                    <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror input" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
                     @error('area')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
+
+                <div class="item item3">
+                    <label for="area" class="col-md-2 col-form-label text-md-right">
+                        {{ __('FECHA:') }}
+                    </label>
+                </div>
+                <div class="item item4">
+                    <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror input" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
+                    @error('area')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+
             </div>
-            <div class="form-group3">
-                <textarea class="item" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion">{{$VacacionForm->detalle_vacacion}}</textarea>
+            <div class="fg3">
+                <textarea class="itemA" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion">{{$VacacionForm->detalle_vacacion}}</textarea>
             </div>
+
+          
+           
+
+
+
+
             <div class="form-group4">
                 <div class="item item1">
                     <div class="text-center">
-                        <h4>SOLICITADO</h4>
+                        <h4 id="divAc">SOLICITADO</h4>
                     </div>
+
+               
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_ini" class="">
-                                {{ __('FECHA DE SALIDA') }}
+                                {{ __('1° día de Vacación:') }}
                             </label>
                         </div>
                         <div class="fechas">
+                           
                             <input id="fecha_ini" type="text" class="form-control form-control @error('fecha_ini') is-invalid @enderror" value="{{ $VacacionForm->fecha_ini }}" required autocomplete="fecha_ini">
                             @error('fecha_ini')
                             <span class="invalid-feedback" role="alert">
@@ -107,7 +130,7 @@
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_fin" class="">
-                                {{ __('FECHA FINALIZACION') }}
+                                {{ __('Último día de Vacación:') }}
                             </label>
                         </div>
                         <div class="fechas">
@@ -122,7 +145,7 @@
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_ret" class="">
-                                {{ __('FECHA RETORNO') }}
+                                {{ __('Retorno:') }}
                             </label>
                         </div>
                         <div class="fechas">
@@ -137,12 +160,12 @@
                 </div>
                 <div class="item item2">
                     <div class="">
-                        <h4>AUTORIZADO</h4>
+                        <h4 id="divAb">AUTORIZADO</h4>
                     </div>
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_ini_aut" class="">
-                                {{ __('FECHA DE SALIDA') }}
+                                {{ __('') }}
                             </label>
                         </div>
                         <div class="fechas">
@@ -157,7 +180,7 @@
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_fin_aut" class="">
-                                {{ __('FECHA FINALIZACION') }}
+                                {{ __('') }}
                             </label>
                         </div>
                         <div class="fechas">
@@ -172,7 +195,7 @@
                     <div class="form-group">
                         <div class="fecha_label">
                             <label for="fecha_ret_aut" class="">
-                                {{ __('FECHA RETORNO') }}
+                                {{ __('') }}
                             </label>
                         </div>
                         <div class="fechas">
@@ -189,109 +212,114 @@
             <div class="form-group5">
                 <div class="dias_label">
                     <label for="dias_v" class="">
-                        {{ __('DIAS DE VACACION') }}
+                        {{ __('VACACIONES PENDIENTES') }}
                     </label>
                 </div>
                 <div class="">
-                    <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v" value="{{ $VacacionForm->dias_v }}" required autocomplete="dias_v">
+                    <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror inputV2" name="dias_v" value="{{ $VacacionForm->dias_v }}" required autocomplete="dias_v">
                     @error('dias_v')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
-                <div class="">
-                    <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v_l" value="{{ $VacacionForm->dias_v_l }}" required autocomplete="dias_v_l">
-                    @error('dias_v_l')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+               
             </div>
             <div class="form-group5">
                 <div class="dias_label">
                     <label for="dias" class="">
-                        {{ __('DIAS') }}
+                        {{ __('VACACIONES AUTORIZADAS') }}
                     </label>
                 </div>
                 <div class="">
-                    <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror" name="dias" value="{{ $VacacionForm->dias }}" required autocomplete="dias">
+                    <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror inputV2" name="dias" value="{{ $VacacionForm->dias }}" required autocomplete="dias">
                     @error('dias')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
-                <div class="">
-                    <input id="dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_l" value="{{ $VacacionForm->dias_l }}" required autocomplete="dias">
-                    @error('dias')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+              
             </div>
             <div class="form-group5">
                 <div class="dias_label">
                     <label for="saldo_dias" class="">
-                        {{ __('SALDO DIAS DE VACACION') }}
+                        {{ __('SALDO VACACIONES PENDIENTES') }}
                     </label>
                 </div>
                 <div class="">
-                    <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ $VacacionForm->saldo_dias }}" required autocomplete="saldo_dias">
+                    <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror inputV2" value="{{ $VacacionForm->saldo_dias }}" required autocomplete="saldo_dias">
                     @error('dias')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
                 </div>
-                <div class="">
-                    <input id="saldo_dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="saldo_dias_l" value="{{ $VacacionForm->saldo_dias_l }}" required autocomplete="dias">
-                    @error('dias')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+             
             </div>
-            <div class="form-group6">
-                <div class="item">
-                    <div class="">
-                        <h3 class="">Solicitante</h3>
-                        <p class="">{{$VacacionForm->user->nombre}} {{$VacacionForm->user->paterno}} {{$VacacionForm->user->materno}}</p>
-                        <label for="direc" class="">Cargo:</label>
-                        <p class="">{{$VacacionForm->user->cargo}}</p>
-                        <p class="firma">....................................................</p>
-                        <label for="direc" class="">
-                            FIRMA
-                        </label>
-                    </div>
+            <br>
+            <div class="form-group1A">
+                <div class="item item1A">
+                    <label for="nombre" class="col-md-2 col-form-label text-md-right">
+                        {{ __('AUTORIZADO:') }}
+                     
+                    </label>
                 </div>
-                <div class="item">
-                    <div class="">
-                        <h3 class="">Inmediato superior</h3>
-                        <p class="">....................................................</p>
-                        <label for="direc" class="">Cargo:</label>
-                        <p class="">....................................................</p>
-                        <p class="firma">....................................................</p>
-                        <label for="direc" class="">
-                            FIRMA
-                        </label>
-                    </div>
+                <div class="item item2A">
+                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+                    @error('ci')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
-                <div class="item">
-                    <div class="">
-                        <h3 class="">Gerente administrativo</h3>
-                        <p class="">....................................................</p>
-                        <label for="direc" class="">Cargo:</label>
-                        <p class="">....................................................</p>
-                        <p class="firma">....................................................</p>
-                        <label for="direc" class="">
-                            FIRMA
-                        </label>
-                    </div>
+                <div class="item item3A">
+                    <label for="cargo" class="">
+                        {{ __('CARGO:') }}
+                    </label>
                 </div>
+                <div class="item item4A">
+                    <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
+                    @error('sucursal')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                             
+            </div>
+            <div class="form-group1A">
+                <div class="item item1A">
+                    <label for="nombre" class="col-md-2 col-form-label text-md-right">
+                        {{ __('GERENTE ADMINISTRATIVO:') }}
+                     
+                    </label>
+                </div>
+                <div class="item item2A">
+                    <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+                    @error('ci')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                <div class="item item3A">
+                    <label for="cargo" class="">
+                        {{ __('CARGO:') }}
+                    </label>
+                </div>
+                <div class="item item4A">
+                    <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
+                    @error('sucursal')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+                             
+            </div>
+
+
             </div>
         </form>
     </div>
