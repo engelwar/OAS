@@ -103,8 +103,10 @@ body{
 
 .form-group1A{
     position: relative;
-    width: 70%;
+    width: 90%;
     display: table;
+    top: -20px;
+    left: -20px;
 }
 
 .form-group1A .item{
@@ -112,30 +114,36 @@ body{
 }
 
 .form-group1A .item1A{
-    width: 30%;
+    width: 80%;
     padding-top: 0.1cm;
     text-indent: 30px;
     text-align: left;
 }
 
 .form-group1A .item2A{
-    width: 40%;
+    width: 70%;
     margin-right: 20em;
+   
 }
 
 .form-group1A .item3A{
-    width: 20%;
+    width: 80%;
     padding-top: 0.1cm;
-    text-indent: 25px;
-    
+    text-indent: 30px;
+    text-align: left;
 }
 
 .form-group1A .item4A{
-    width: 25%;
+    width: 20%;
     margin-right: 20em;
+    position: relative;
+    float:left;
 }
-.form-group1A .item45{
-   left: 25px; 
+.form-group1A .item5A{
+    width: 10%;
+    padding-top: 0.1cm;
+    left: 10px;
+    
     
 }
 
@@ -234,15 +242,15 @@ body{
 .inputV2{
     width: 18%;
     text-align: right;
- 
 }
 
 .form-group5{
     position: relative;
-    left: 90px;
+    left: 235px;
     width: 65%;
     margin: auto;
     display: table;
+    top: -25px;
     margin-top: 0.2cm;
 }
 
@@ -251,7 +259,7 @@ body{
 }
 
 .form-group5 .dias_label{
-    width: 3.8cm;
+    width: 40%;
 }
 
 

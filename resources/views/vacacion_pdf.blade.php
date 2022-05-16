@@ -286,6 +286,11 @@
                     </span>
                     @enderror
                 </div>
+
+                <div class="item item5A">
+                    
+                    ___________________________
+                </div>
                              
             </div>
             <div class="form-group1A">
@@ -315,6 +320,9 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
+                </div>
+                <div class="item item5A">
+                    ___________________________
                 </div>
                              
             </div>
