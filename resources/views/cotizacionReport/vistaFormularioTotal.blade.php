@@ -156,6 +156,12 @@ $(document).ready(function()
             { data: 'FechaFac', title: 'Fecha fac'},
             { data: 'numerofactura', title: 'Nro Fac'},
             { data: 'estado', title: 'Estado'},
+<<<<<<< HEAD
+         
+            { data: "NR",
+    render: function (data, type, row,$estadoF) {
+     
+=======
        /*     
           { data: null,
           render: function (data, type, row) {
@@ -164,6 +170,7 @@ $(document).ready(function()
             return '<span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i> </span>';
             //return ' @foreach ($estadoF as $i) @if($i->estado=="Seguimiento"&&$i->cotizacion_form_id==1010117123)'+data+' @break  @endif @endforeach ';
       }          
+>>>>>>> eb117a0bd5592af9a05c44ae98d56d9cafad4883
      },title: 'S'},
 
             {"data":null,

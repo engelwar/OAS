@@ -121,6 +121,9 @@ Route::prefix('reports')->group(function(){
     Route::post('reports/stockventa','Reports\StockVentaController@historia')->name('stockventa.historia');
     Route::get('reports/stockventa/{alm_origen}/{alm_destino}','Reports\StockVentaController@show2')->name('stockventa.show2');
 
+    Route::resource('stockminmax', 'Reports\StockMinMaxController');
+    Route::any('stockminmax/store/almxu', 'Reports\StockMinMaxController@store_almxu')->name('stockminmax.store_almxu');
+
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
     Route::resource('resumenventastotal', 'Reports\ResumenVentasTotalController');
@@ -256,7 +259,7 @@ Route::get('/equipos/create/{id_empleado}', 'EquipoController@creates')->name('e
 
 Route::post('/empleados/{id}', 'ComputadoraController@cambio')->name('computadoras.cambio');
 
-//-------------------caminos de reprotte cotizacion------------------------------------------
+//!-------------------caminos de reprotte cotizacion------------------------------------------
 Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
 //Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','Sistemas\CotizacionReportController@show')->name('CotizacionReporte.show');
@@ -286,3 +289,5 @@ Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar
 
 Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
 
+Route::resource('permisos', 'PermisoController');
+Route::resource('vacaciones', 'VacacionesController');

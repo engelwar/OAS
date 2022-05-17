@@ -3,6 +3,7 @@
 
 @section('mi_estilo')
 <style>
+<<<<<<< HEAD
 
 .switch {
   position: relative;
@@ -64,6 +65,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+=======
+  .scrollable-element {
+  scrollbar-width: thin;
+}
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
   .transformacion {
      text-transform: lowercase;
   }
@@ -294,17 +300,286 @@ th:first-child div{
                     <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
                    
                 </div>
+<<<<<<< HEAD
                 <div class="col">
                   <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
+=======
+                
+            </div>
+            
+       
+       
+          
+      <div class="table-responsive text-center cont">
+          <h4 id="h"></h4>
+      </div>
+            <div class="div1"> 
+                <div class="row">
+                    <div id="div0" class="col div2"></div>
+                    <div id="div1" class="col div2"></div>
+                    <div id="div2" class="col div2" style="width: 400px;"></div>
+                    <div id="div3" class="col div2"></div>
+                    <div id="div4" class="col div2"></div>
+                    <div id="div5" class="col div2"></div>
+                    <div id="div6" class="col div2"></div>
+                    <div id="div7" class="col div2"></div>
+                    <div id="div8" class="col div2"></div>
+                    <div id="div9" class="col div2"></div>
+                    <div id="div10" class="col div2"></div>
+                    <div id="div11" class="col div2"></div>
+                    <div id="div12" class="col div2"></div>
+                    <div id="div13" class="col div2"></div>
+                    <div id="div14" class="col div2" style="width: 130px;"></div>
+                    
+                </div>
+            </div>
+            
+           
+         
+           
+    </div>  
+    <BR>
+       <div class="container">
+              <div class="row">
+                <div class="col-sm-11">  
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
                   
                  
               </div>
+<<<<<<< HEAD
                 
             </div>
             
        
     </div>  
     
+=======
+                <div class="col-sm-1"> 
+                  <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
+                  <span>paginas a visualizar</span>
+                  <option value="10" id="a1">10</option>
+                  <option value="20" id="a2">20</option>
+                  <option value="50" id="a3">50</option>
+                  <option value="100" id="a3">100</option>
+                  <option value="200" id="a3">200</option>
+             
+                </select>
+              </div>
+              </div>
+            </div>
+            <div class="table-responsive text-center" >
+
+              <div class="headercontainer">
+                <div class="tablecontainer">
+
+                <table class="table table-bordered table-sm" id="miTabla">
+                    
+                
+                 <thead class="bg-primary text-light">
+                    <th style="width: 130px; ">Fecha Cot</th>
+                    <th style="width: 100px;">Nro Cot</th>
+                    <th style="width: 600px;">Cliente</th> 
+                    <th style="width: 300px;">Fecha NR</th> 
+                    <th style="width: 160px;">NR</th>
+                    <th style="width: 190px;" >Total Ventas</th>
+                    
+                    <th style="width: 10px;">Moneda</th>
+                    <th style="width: 130px;">Usuario vendedor</th>
+                    <th style="width: 130px;">Local</th>
+                    <th style="width: 130px;">Fecha fac</th>
+                    <th style="width: 130px;">Nro Fac</th>
+                    <th style="width: 70px;">Estado</th>
+                    <th style="width: 30px;">S</th>
+                    <th style="width: 30px;">E</th>
+                    <th style="width: 130px;">OBS</th>
+                   
+   
+                 </thead>
+
+                 @if ($observacionBD->isEmpty())
+                   
+                     @foreach($consutas as $co)
+                     <tbody>
+                      <tr>
+                          <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+                          @if(strval($co->NroCotizacion)==="0")
+                          <td style="text-align:center" class="bold">-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+                          @endif                   
+                          
+                          <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+                          <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+                          <td style="text-align:center" class="bold">{{$co->NR}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+                          <td style="text-align:center" class="bold">{{$co->Local}}</td>
+                          @if (is_null($co->FechaFac))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+                          @endif
+                                              
+                          @if (is_null($co->numerofactura))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+                          @endif
+                          
+                          
+                          @if (is_null($co->estado))
+                          <td style="text-align:center" class="bold" >-</td>
+                          @else
+                          <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+                          @endif
+                          <td style="text-align:center" class="bold"></td> 
+                          <td style="text-align:center" class="bold"></td> 
+                          <td style="text-align:center" class="bold"> 
+                             
+                          <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+                          
+                        
+                      </tr>
+                    </tbody>
+                           @endforeach
+                 @else
+                   
+ @foreach($consutas as $co)
+ @foreach ($observacionBD as $item)
+     @if ($co->NR==$item->id)
+     <tbody>
+         <tr>
+             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+             @if(strval($co->NroCotizacion)==="0")
+             <td style="text-align:center" class="bold">-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+             @endif                   
+             
+             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+             <td style="text-align:center" class="bold">{{$co->NR}}</td>
+             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+             <td style="text-align:center" class="bold">{{$co->Local}}</td>
+             @if (is_null($co->FechaFac))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+             @endif
+                                 
+             @if (is_null($co->numerofactura))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+             @endif
+             
+             
+             @if (is_null($co->estado))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+             @endif
+           
+             
+             <td style="text-align:center" class="bold">
+               @if ($item->nro==1)
+               <span  class="text-info"><i class="text-info  fas fa-check fa-lg"></i></span>
+               @endif   
+               @if ($item->nro==2)
+               <span class="text-danger"><i class="fa-lg text-danger fas fa-times"></i></span>
+               @endif     
+               </td>  
+
+             <td style="text-align:center" class="bold"> 
+            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==0)
+            <span><i class="fa-lg text-adjud fas fa-handshake"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==0)
+            <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==1&&$item->nroT==1)
+            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+            @endif
+            @if ($item->nroA==1&&$item->nroP==0&&$item->nroT==1)
+            <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
+            @endif
+             </td>
+             <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
+         </td>
+          
+         </tr>
+       </tbody>
+       @break 
+       @endif
+ @endforeach
+ @if ($co->NR!=$item->id)
+           
+     <tbody>
+         <tr>
+             <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
+             @if(strval($co->NroCotizacion)==="0")
+             <td style="text-align:center" class="bold">-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->NroCotizacion}}</td> 
+             @endif                   
+             
+             <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
+             <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
+             <td style="text-align:center" class="bold">{{$co->NR}}</td>
+             <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
+             <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+             <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
+             <td style="text-align:center" class="bold">{{$co->Local}}</td>
+             @if (is_null($co->FechaFac))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->FechaFac}}</td>
+             @endif
+                                 
+             @if (is_null($co->numerofactura))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->numerofactura}}</td> 
+             @endif
+             
+             
+             @if (is_null($co->estado))
+             <td style="text-align:center" class="bold" >-</td>
+             @else
+             <td style="text-align:center" class="bold">{{$co->estado}}</td> 
+             @endif
+             <td style="text-align:center" class="bold"></td> 
+             <td style="text-align:center" class="bold"></td> 
+             <td style="text-align:center" class="bold"> 
+                
+             <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+             
+           
+         </tr>
+       </tbody>
+       @endif
+@endforeach
+                 
+                 
+                 
+                 @endif
+
+              
+
+                 
+                
+              </table>
+              <div class="page" id="page">
+          
+      </div>
+             
+            </div>
+          </div>    
+        </div>  
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
 
        
           
@@ -855,29 +1130,54 @@ $(document).ready(function() {
     $('input[type="text"]').val('');
   });
 });
-
+/** 
+ *  $('#op').change(function( ) {
+         var val = $("#op option:selected").text();
+         var currentPage = 0;// El valor predeterminado de la página actual es 0  
+          if (val==10) {
+           // Número que se muestra en cada página  
+           return val;
+          }     
+        
+          if (val==20) {
+  
+            return val;
+          }   
+          if (val==50) {
+            // Número que se muestra en cada página  
+            return val;
+          }  
+          
+        });
+ * 
+*/
 
 
 $(function(){  
          var $table = $("#miTabla"); 
-        
-         a1=$("#a1").prop("value");
-         a2=$("#a2").prop("value");
-         a3=$("#a3").prop("value");
-       
+        var pageSize=10;
+
+      
 
          $('#op').change(function() {
          var val = $("#op option:selected").text();
+<<<<<<< HEAD
          
           if (val==10) {
             $('#page').text("");
             var pageSize = 10;// Número que se muestra en cada página  
        var currentPage = 0;// El valor predeterminado de la página actual es 0 
+=======
+           var pageSize = val; 
+         var currentPage = 0;// El valor predeterminado de la página actual es
+       //  var pageSize = a1;// Número que se muestra en cada página  
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
          $table.bind('paging',function(){  
              $table.find('tbody tr').hide().slice(currentPage*pageSize,(currentPage+1)*pageSize).show();  
          });       
          var sumRows = $table.find('tbody tr').length;  
          var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
+<<<<<<< HEAD
            
          var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
          for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
@@ -909,6 +1209,10 @@ $(function(){
          var sumPages = Math.ceil(sumRows/pageSize);//paginas totales    
            
          var $pager = $('#page');  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+=======
+        
+         var $pager = $("#h");  // Crea un nuevo div, coloca una etiqueta, muestra el número de página inferior  
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
          for(var pageIndex = 0 ; pageIndex<sumPages ; pageIndex++){  
              $('<a href="#" id="pageStyle" onclick="changCss(this)"><span>'+(pageIndex+1)+'</span></a>').bind("click",{"newPage":pageIndex},function(event){  
                  currentPage = event.data["newPage"];  
@@ -923,6 +1227,7 @@ $(function(){
              // El efecto predeterminado de una etiqueta en la primera página  
              var $pagess = $('#pageStyle');  
              //$pagess[0].style.backgroundColor="#006B00";  
+<<<<<<< HEAD
              //$pagess[0].style.color="#ffffff";  
           }   
           if (val==50) {
@@ -1010,6 +1315,13 @@ $(function(){
          
          
       
+=======
+             //$pagess[0].style.color="#ffffff"
+        
+        });
+       
+      ;  
+>>>>>>> 1bb1a76661915961f55ddff29625543a255500a0
     });  
       
     // haga clic en un enlace para cambiar el color, luego haga clic en otro para restaurar el color original  
