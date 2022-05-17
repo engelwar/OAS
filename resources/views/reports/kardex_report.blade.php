@@ -59,6 +59,7 @@
       </div>
       <table class="cell-border compact" id="detalle_costo" style="width:100%; font-size:0.8rem;">
         <thead>
+          @if(Auth::user()->tienePermiso(23, 11))
           <tr>
             <th rowspan="2"></th>
             <th rowspan="2"></th>
@@ -66,6 +67,16 @@
             <th colspan="3" class="bg-warning">Salidas</th>
             <th colspan="3" class="bg-info">Saldos</th>
           </tr>
+          @else
+          <tr>
+            <th rowspan="2"></th>
+            <th rowspan="2"></th>
+            <th colspan="1" class="bg-success">Entradas</th>
+            <th colspan="1" class="bg-warning">Salidas</th>
+            <th colspan="1" class="bg-info">Saldos</th>
+          </tr>
+          @endif
+          @if(Auth::user()->tienePermiso(23, 11))
           <tr>
             <th>NroTrans</th>
             <th>Fecha</th>
@@ -76,16 +87,25 @@
             <th>P.U.</th>
             <th>P.T.</th>
             <th>Cant</th>
+            <th>P.U.</th>
             <th>P.T.</th>
-            <th>Cant Acum</th>
             <th>Cost Prom</th>
             <th>Costo Val</th>
             <th>Costo Acum</th>
             <th>Dif</th>
-            <th>Trans Ini</th>
           </tr>
+          @else
+          <tr>
+            <th>NroTrans</th>
+            <th>Fecha</th>
+            <th>Cant</th>
+            <th>Cant</th>
+            <th>Cant</th>
+          </tr>
+          @endif
         </thead>
         <tfoot>
+          @if(Auth::user()->tienePermiso(23, 11))
           <tr>
             <th></th>
             <th>TOTAL</th>
@@ -104,20 +124,29 @@
             <th></th>
             <th></th>
             <th></th>
+          </tr>
+          @else
+          <tr>
+            <th></th>
+            <th>TOTAL</th>
+            <td class="sumCANA bg-success text-end"></td>
+            <td class="sumCANB bg-warning text-end"></td>
+            <td class="sumCANC bg-info text-end"></td>
+            <th></th>
             <th></th>
           </tr>
+          @endif
         </tfoot>
       </table>
     </div>
   </div>
-  <form action="{{route('kardexreport.show', 4)}}">
-    <button type="submit">hola</button>
-  </form>
   <button id="actualizar">actualizar Totales</button>
 </div>
 @endsection
 @section('mis_scripts')
 <script>
+  var titulos = {!!json_encode($titulos) !!};
+  var permiso = {!!json_encode($permiso) !!};
   $(document).ready(function() {
     var createTable = function createDataTable() {
       var alm = $('#alm').val();
@@ -216,100 +245,13 @@
               console.log(data);
           }*/
         },
+        dom: 'Bfrtip',
+        buttons: [
+          'excel'
+        ],
         serverSide: true,
         processing: true,
-        columns: [{
-            data: '_Ntra',
-            title: 'NroTrans',
-          },
-          {
-            data: '_Ftra',
-            title: 'Fecha'
-          },
-          {
-            data: '_CanA',
-            title: 'Cant',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CosP',
-            title: 'P.U.',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_TotP',
-            title: 'P.T.',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CanB',
-            title: 'Cant',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CosN',
-            title: 'P.U.',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_TotN',
-            title: 'P.T.',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_SalCan',
-            title: 'Cant',
-            className: 'dt-body-right',
-            render: $.fn.dataTable.render.number(',', '.', 2)
-          },
-          {
-            data: '_SalCos',
-            title: 'P.U.',
-            className: 'dt-body-right',
-            render: $.fn.dataTable.render.number(',', '.', 2)
-          },
-          {
-            data: '_SalTot',
-            title: 'P.T.',
-            className: 'dt-body-right',
-            render: $.fn.dataTable.render.number(',', '.', 2)
-          },
-          {
-            data: '_CantAcum',
-            title: 'Cant Acum',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CostAvg',
-            title: 'Cost Prom',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CTmi',
-            title: 'Costo Val',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_CostAcum',
-            title: 'Costo Acum',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_Diferencia',
-            title: 'Dif',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_Ntri',
-            title: 'Trans Ini',
-            className: 'dt-body-right'
-          },
-          {
-            data: '_TmovN',
-            title: 'Tipo de Mov',
-            className: 'dt-body-center'
-          },
-        ],
+        columns: titulos,
         scrollY: "65vh",
         scrollX: true,
         scrollCollapse: true,
@@ -341,28 +283,42 @@
             //var sum = table.column(4).data();
             //var tab = table.rows( { selected: true, search: 'applied' } ).data();
             //console.log(tab); 
-            var sumCANA = table2.column(2, {
-              search: 'applied'
-            }).data().sum();
-            var sumTOTA = table2.column(4, {
-              search: 'applied'
-            }).data().sum();
-            var sumCANB = table2.column(5, {
-              search: 'applied'
-            }).data().sum();
-            var sumTOTB = table2.column(7, {
-              search: 'applied'
-            }).data().sum();
-            sumCANA = Math.round((sumCANA + Number.EPSILON) * 100) / 100;
-            sumTOTA = Math.round((sumTOTA + Number.EPSILON) * 100) / 100;
-            sumCANB = Math.round((sumCANB + Number.EPSILON) * 100) / 100;
-            sumTOTB = Math.round((sumTOTB + Number.EPSILON) * 100) / 100;
-            $('.dataTables_scrollFootInner .sumCANA').html(sumCANA.toFixed(2));
-            $('.dataTables_scrollFootInner .sumTOTA').html(sumTOTA.toFixed(2));
-            $('.dataTables_scrollFootInner .sumCANB').html(sumCANB.toFixed(2));
-            $('.dataTables_scrollFootInner .sumTOTB').html(sumTOTB.toFixed(2));
-            $('.dataTables_scrollFootInner .sumCANC').text(sumCANC.toFixed(2));
-            $('.dataTables_scrollFootInner .sumTOTC').text(sumTOTT.toFixed(2));
+            if (permiso == true) {
+              var sumCANA = table2.column(2, {
+                search: 'applied'
+              }).data().sum();
+              var sumTOTA = table2.column(4, {
+                search: 'applied'
+              }).data().sum();
+              var sumCANB = table2.column(5, {
+                search: 'applied'
+              }).data().sum();
+              var sumTOTB = table2.column(7, {
+                search: 'applied'
+              }).data().sum();
+              sumCANA = Math.round((sumCANA + Number.EPSILON) * 100) / 100;
+              sumTOTA = Math.round((sumTOTA + Number.EPSILON) * 100) / 100;
+              sumCANB = Math.round((sumCANB + Number.EPSILON) * 100) / 100;
+              sumTOTB = Math.round((sumTOTB + Number.EPSILON) * 100) / 100;
+              $('.dataTables_scrollFootInner .sumCANA').html(sumCANA.toFixed(0));
+              $('.dataTables_scrollFootInner .sumTOTA').html(sumTOTA.toFixed(2));
+              $('.dataTables_scrollFootInner .sumCANB').html(sumCANB.toFixed(0));
+              $('.dataTables_scrollFootInner .sumTOTB').html(sumTOTB.toFixed(2));
+              $('.dataTables_scrollFootInner .sumCANC').text(sumCANC.toFixed(0));
+              $('.dataTables_scrollFootInner .sumTOTC').text(sumTOTT.toFixed(2));
+            } else {
+              var sumCANA = table2.column(2, {
+                search: 'applied'
+              }).data().sum();
+              var sumCANB = table2.column(3, {
+                search: 'applied'
+              }).data().sum();
+              sumCANA = Math.round((sumCANA + Number.EPSILON) * 100) / 100;
+              sumCANB = Math.round((sumCANB + Number.EPSILON) * 100) / 100;
+              $('.dataTables_scrollFootInner .sumCANA').html(sumCANA.toFixed(0));
+              $('.dataTables_scrollFootInner .sumCANB').html(sumCANB.toFixed(0));
+              $('.dataTables_scrollFootInner .sumCANC').text(sumCANC.toFixed(0));
+            }
           }
           totales();
           $('#example_filter label input').on('keyup change', function() {

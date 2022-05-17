@@ -266,6 +266,7 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-bookmark',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(11));
 
         $smod = Program::create([  
             'id'=>24,  

@@ -100,7 +100,6 @@ body{
     width: 110%;
 }
 
-
 .form-group1A{
     position: relative;
     width: 90%;
@@ -114,50 +113,38 @@ body{
 }
 
 .form-group1A .item1A{
-    width: 80%;
+    width: 160%;
     padding-top: 0.1cm;
     text-indent: 30px;
     text-align: left;
 }
 
 .form-group1A .item2A{
-    width: 70%;
+    width: 100%;
     margin-right: 20em;
-   
 }
 
 .form-group1A .item3A{
-    width: 80%;
+    width: 70%;
     padding-top: 0.1cm;
     text-indent: 30px;
     text-align: left;
 }
 
 .form-group1A .item4A{
-    width: 20%;
-    margin-right: 20em;
+    width: 100%;
     position: relative;
     float:left;
 }
 .form-group1A .item5A{
-    width: 10%;
-    padding-top: 0.1cm;
-    left: 10px;
-    
-    
+    width: 100%;
+    padding-top: 0.2cm;
+    padding-left: 1.5cm;
 }
-
-
-
 
 .form-group1A .item input,.form-group1 .item label{
     width: 110%;
 }
-
-
-
-
-
 
 .form-group2{
     text-indent: 5em;
@@ -237,8 +224,8 @@ body{
 
 .form-group4 .item .form-group .fechas input{
     height: 0.4cm;
-
 }
+
 .inputV2{
     width: 18%;
     text-align: right;
@@ -284,4 +271,26 @@ body{
 .divRe{
     display: flex;
     justify-content: center;
+}
+
+#sello1{
+  position: absolute;
+  z-index: 500;
+  color: rgba(0, 128, 0, 0.397);
+  right: -0.3cm;
+  top: 1cm;
+  font-size: 4em;
+  -webkit-transform: rotate(30deg); 
+  -moz-transform: rotate(30deg);    
+}
+
+#sello2{
+  position: absolute;
+  z-index: 500;
+  color: rgba(128, 0, 0, 0.397);
+  right: -0.3cm;
+  top: 1.2cm;
+  font-size: 4em;
+  -webkit-transform: rotate(30deg); 
+  -moz-transform: rotate(30deg);    
 }

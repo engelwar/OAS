@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Exports\KardexReport;
 use DB;
-use DataTables; 
+use DataTables;
+use Auth;
 
 class KardexReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $query = 
-        "SELECT inalmCalm as id, inalmNomb as alm
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    $query =
+      "SELECT inalmCalm as id, inalmNomb as alm
         FROM inalm
         WHERE 
         inalmCalm IN
@@ -28,19 +30,54 @@ class KardexReportController extends Controller
             GROUP BY intraCalm
         )
         ORDER BY inalmNomb";
-        $almacenes = DB::connection('sqlsrv')->select(DB::raw($query));
-        return view('reports.kardex_report', compact('almacenes')); 
-    }
+    $almacenes = DB::connection('sqlsrv')->select(DB::raw($query));
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function products(Request $request){
-        $alm = $request->alm;
-        $query = 
-        "WITH tab AS
+    $titulos = [];
+    if (Auth::user()->tienePermiso(23, 11)) {
+      $titulos = [
+        ['data' => '_Ntra', 'title' => 'NroTrans'],
+        ['data' => '_Ftra', 'title' => 'Fecha'],
+        ['data' => '_CanA', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_CosP', 'title' => 'P.U.', 'className' => 'dt-body-right'],
+        ['data' => '_TotP', 'title' => 'P.T.', 'className' => 'dt-body-right'],
+        ['data' => '_CanB', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_CosN', 'title' => 'P.U.', 'className' => 'dt-body-right'],
+        ['data' => '_TotN', 'title' => 'P.T.', 'className' => 'dt-body-right'],
+        ['data' => '_SalCan', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_SalCos', 'title' => 'P.U.', 'className' => 'dt-body-right'],
+        ['data' => '_SalTot', 'title' => 'P.T.', 'className' => 'dt-body-right'],
+        ['data' => '_CostAvg', 'title' => 'Cost Prom', 'className' => 'dt-body-right'],
+        ['data' => '_CTmi', 'title' => 'Costo Val', 'className' => 'dt-body-right'],
+        ['data' => '_CostAcum', 'title' => 'Costo Acum', 'className' => 'dt-body-right'],
+        ['data' => '_Diferencia', 'title' => 'Dif', 'className' => 'dt-body-right'],
+        ['data' => '_Ntri', 'title' => 'Trans Ini', 'className' => 'dt-body-right'],
+        ['data' => '_TmovN', 'title' => 'Tipo de Mov', 'className' => 'dt-body-center'],
+      ];
+    } else {
+      $titulos = [
+        ['data' => '_Ntra', 'title' => 'NroTrans'],
+        ['data' => '_Ftra', 'title' => 'Fecha'],
+        ['data' => '_CanA', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_CanB', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_SalCan', 'title' => 'Cant', 'className' => 'dt-body-right'],
+        ['data' => '_Ntri', 'title' => 'Trans Ini', 'className' => 'dt-body-right'],
+        ['data' => '_TmovN', 'title' => 'Tipo de Mov', 'className' => 'dt-body-center'],
+      ];
+    }
+    $permiso = Auth::user()->tienePermiso(23, 11);
+    return view('reports.kardex_report', compact('almacenes', 'titulos', 'permiso'));
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function products(Request $request)
+  {
+    $alm = $request->alm;
+    $query =
+      "WITH tab AS
         (
             SELECT 
             intrdCpro as Prod,
@@ -73,36 +110,35 @@ class KardexReportController extends Controller
         SUM(salida) as salidas
         FROM tab
         JOIN inalm ON inalmCalm = Calm    
-        WHERE Calm = ".$alm."
+        WHERE Calm = " . $alm . "
         GROUP BY Prod, inalmNomb, inalmCalm, insalCupb
         --HAVING AVG(dif) <> 0
         ";
-        $ventas = DB::connection('sqlsrv')->select(DB::raw($query)); 
-        return Datatables::of($ventas)
-        ->with([
-            "titulos"=>"XD"
-         ])
-        ->make(); 
-    }
-    
-    public function create()
-    {
-        
-    }
+    $ventas = DB::connection('sqlsrv')->select(DB::raw($query));
+    return Datatables::of($ventas)
+      ->with([
+        "titulos" => "XD"
+      ])
+      ->make();
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $prod = $request->prod;
-        $alm = $request->alm;
-        $query = 
-        "DECLARE @Cpro nvarchar(9),@Calm int
-        SELECT @Cpro = '".$prod."', @Calm = '".$alm."'
+  public function create()
+  {
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $prod = $request->prod;
+    $alm = $request->alm;
+    $query =
+      "DECLARE @Cpro nvarchar(9),@Calm int
+        SELECT @Cpro = '" . $prod . "', @Calm = '" . $alm . "'
         SELECT intrdNtra, intrdClot, intrdCpro, intrdItem, 
         case when intrdCanT > 0 then intrdCanT else 0 end as positivo,
         case when intrdCanT > 0 then Case 
@@ -125,8 +161,7 @@ class KardexReportController extends Controller
             Else intrdCTmi/intrdCanb 
             End as _CostUnit, 
         inproCumb as _Cumb,           
-        admonAbrv as _admonAbrv, 
-        CAST (0.0 as float) _CantAcum, 
+        admonAbrv as _admonAbrv,  
         CAST (0.0 as float) _CostAvg, 
         CAST (0.0 as float) _Diferencia,
         CAST (0.0 as float) _CostAcum
@@ -195,7 +230,7 @@ class KardexReportController extends Controller
         SET @CantidadUpdAnt = @CantidadUpdate;      
         SET @CostoUpdAnt = @CostoUpdate; 
 
-        UPDATE #Mov_Prod SET _CantAcum=@CantidadUpdate, _CostAvg=@CostUPB, _Diferencia=@Diferencia, _CostAcum = @CostoUpdate          
+        UPDATE #Mov_Prod SET _CostAvg=@CostUPB, _Diferencia=@Diferencia, _CostAcum = @CostoUpdate          
         WHERE intrdCpro=@CodProd AND intrdItem=@item AND intrdNtra=@Ntra 
                 
         FETCH NEXT FROM MovProd_CURSOR            
@@ -204,10 +239,10 @@ class KardexReportController extends Controller
         CLOSE MovProd_CURSOR;        
         DEALLOCATE MovProd_CURSOR;      
         ";
-        $insert = DB::connection('sqlsrv')->unprepared(DB::raw($query));
+    $insert = DB::connection('sqlsrv')->unprepared(DB::raw($query));
 
-        $movimientos = DB::connection('sqlsrv')
-        ->select(DB::raw(
+    $movimientos = DB::connection('sqlsrv')
+      ->select(DB::raw(
         "SELECT 
         intrdCpro as _Cpro,
         inproNomb as ProdDesc,
@@ -233,7 +268,6 @@ class KardexReportController extends Controller
         --intrdUmbs as _Umbs,
         --intrdUmtr as _Umtr,
         _Calm,
-        _CantAcum,
         CONVERT(varchar, CAST(_CostAvg as decimal(10,4)),1) as _CostAvg,        
         _Cumb,
         CONVERT(varchar, CAST(_Diferencia as decimal(10,4)),1) as _Diferencia,
@@ -244,30 +278,31 @@ class KardexReportController extends Controller
         JOIN maTmo ON _Tmov = maTmoItem
         LEFT JOIN inpro ON inproCpro = intrdCpro
         ORDER BY _Ntra, _Ftra
-        ")); 
-        // return response()->json($movimientos);
+        "
+      ));
+    // return response()->json($movimientos);
 
-        $array = [];
-        foreach($movimientos as $i => $val){
-          if($i == 0){
-            $array[] = ['_Cpro' => $val->_Cpro, 'ProdDesc' => $val->ProdDesc, '_Ntra' => $val->_Ntra, '_Ftra' => $val->_Ftra, '_CanA' => $val->_CanA, '_CosP' => $val->_CosP, '_TotP' => $val->_TotP, '_CanB' => $val->_CanB, '_CosN' => $val->_CosN, '_TotN' => $val->_TotN,'_SalCan' => ($val->_CanA + $val->_CanB), '_SalCos' => ($val->_CosP + $val->_CosN), '_SalTot' => ($val->_TotP + $val->_TotN), '_CTmi' => $val->_CTmi, '_CostAcum' => $val->_CostAcum, '_admonAbrv' => $val->_admonAbrv, '_Calm' => $val->_Calm, '_CantAcum' => $val->_CantAcum, '_CostAvg' => $val->_CostAvg, '_Cumb' => $val->_Cumb, '_Diferencia' => $val->_Diferencia, '_Ntri' => $val->_Ntri, '_TmovN' => $val->_TmovN, 'Ttra' => $val->Ttra];
-          } else {
-            $array[] = ['_Cpro' => $val->_Cpro, 'ProdDesc' => $val->ProdDesc, '_Ntra' => $val->_Ntra, '_Ftra' => $val->_Ftra, '_CanA' => $val->_CanA, '_CosP' => $val->_CosP, '_TotP' => $val->_TotP, '_CanB' => $val->_CanB, '_CosN' => $val->_CosN, '_TotN' => $val->_TotN,'_SalCan' => ($val->_CanA + $val->_CanB + $array[$i-1]['_SalCan']), '_SalCos' => ($val->_CosP + $val->_CosN + $array[$i-1]['_SalCos']), '_SalTot' => ($val->_TotP + $val->_TotN + $array[$i-1]['_SalTot']), '_CTmi' => $val->_CTmi, '_CostAcum' => $val->_CostAcum, '_admonAbrv' => $val->_admonAbrv, '_Calm' => $val->_Calm, '_CantAcum' => $val->_CantAcum, '_CostAvg' => $val->_CostAvg, '_Cumb' => $val->_Cumb, '_Diferencia' => $val->_Diferencia, '_Ntri' => $val->_Ntri, '_TmovN' => $val->_TmovN, 'Ttra' => $val->Ttra];
-          }
-        }
+    $array = [];
+    foreach ($movimientos as $i => $val) {
+      if ($i == 0) {
+        $array[] = ['_Cpro' => $val->_Cpro, 'ProdDesc' => $val->ProdDesc, '_Ntra' => $val->_Ntra, '_Ftra' => $val->_Ftra, '_CanA' => $val->_CanA, '_CosP' => $val->_CosP, '_TotP' => $val->_TotP, '_CanB' => $val->_CanB, '_CosN' => $val->_CosN, '_TotN' => $val->_TotN, '_SalCan' => ($val->_CanA + $val->_CanB), '_SalCos' => round(($val->_CosP + $val->_CosN), 4), '_SalTot' => round(($val->_TotP + $val->_TotN),4), '_CTmi' => $val->_CTmi, '_CostAcum' => $val->_CostAcum, '_admonAbrv' => $val->_admonAbrv, '_Calm' => $val->_Calm, '_CostAvg' => $val->_CostAvg, '_Cumb' => $val->_Cumb, '_Diferencia' => $val->_Diferencia, '_Ntri' => $val->_Ntri, '_TmovN' => $val->_TmovN, 'Ttra' => $val->Ttra];
+      } else {
+        $array[] = ['_Cpro' => $val->_Cpro, 'ProdDesc' => $val->ProdDesc, '_Ntra' => $val->_Ntra, '_Ftra' => $val->_Ftra, '_CanA' => $val->_CanA, '_CosP' => $val->_CosP, '_TotP' => $val->_TotP, '_CanB' => $val->_CanB, '_CosN' => $val->_CosN, '_TotN' => $val->_TotN, '_SalCan' => ($val->_CanA + $val->_CanB + $array[$i - 1]['_SalCan']), '_SalCos' => round(($val->_CosP + $val->_CosN + $array[$i - 1]['_SalCos']), 4), '_SalTot' => round(($val->_TotP + $val->_TotN + $array[$i - 1]['_SalTot']), 4), '_CTmi' => $val->_CTmi, '_CostAcum' => $val->_CostAcum, '_admonAbrv' => $val->_admonAbrv, '_Calm' => $val->_Calm, '_CostAvg' => $val->_CostAvg, '_Cumb' => $val->_Cumb, '_Diferencia' => $val->_Diferencia, '_Ntri' => $val->_Ntri, '_TmovN' => $val->_TmovN, 'Ttra' => $val->Ttra];
+      }
+    }
 
-        $sum = DB::connection('sqlsrv')
-        ->select(DB::raw
-        ("SELECT 
+    $sum = DB::connection('sqlsrv')
+      ->select(DB::raw(
+        "SELECT 
         REPLACE(sum_CanA,',', '.') as sumIC, 
         REPLACE(sum_TotP,',', '.') as sumIT, 
         REPLACE(sum_CanB,',', '.') as sumEC, 
         REPLACE(sum_TotN,',', '.') as sumET
         FROM (
         SELECT 
-        SUM(cast(_CanA as decimal(10,2))) over() as sum_CanA, 
+        SUM(cast(_CanA as decimal(10,0))) over() as sum_CanA, 
         SUM(cast(_TotP as decimal(10,2))) over() as sum_TotP, 
-        SUM(cast(_CanB as decimal(10,2))) over() as sum_CanB,
+        SUM(cast(_CanB as decimal(10,0))) over() as sum_CanB,
         SUM(cast(_TotN as decimal(10,2))) over() as sum_TotN
         FROM (SELECT 
         intrdCpro as _Cpro,
@@ -294,7 +329,6 @@ class KardexReportController extends Controller
         --intrdUmbs as _Umbs,
         --intrdUmtr as _Umtr,
         _Calm,
-        _CantAcum,
         CONVERT(varchar, CAST(_CostAvg as decimal(10,4)),1) as _CostAvg,        
         _Cumb,
         CONVERT(varchar, CAST(_Diferencia as decimal(10,4)),1) as _Diferencia,
@@ -306,65 +340,78 @@ class KardexReportController extends Controller
         LEFT JOIN inpro ON inproCpro = intrdCpro) as cxc
         ) 
         as sum GROUP BY sum_CanA,sum_TotP,sum_CanB,sum_TotN"
-        )); 
+      ));
 
-        $produ = 
-        "SELECT inproCpro as Produ, inproNomb as ProdNomb 
-        FROM inpro WHERE inproMDel = 0 AND inproCpro = '".$prod."'";
-        $produ = DB::connection('sqlsrv')->select($produ);
-        return Datatables::of($array)
-        ->with([
-            "producto"=>$produ[0],
-            "sum"=>$sum[0],
-            "array"=>$array[count($array)-1],
-        ])
-        ->make(); 
+    $produ =
+      "SELECT inproCpro as Produ, inproNomb as ProdNomb 
+        FROM inpro WHERE inproMDel = 0 AND inproCpro = '" . $prod . "'";
+    $produ = DB::connection('sqlsrv')->select($produ);
+    $permiso = Auth::user()->tienePermiso(23, 11);
+    // return view('reports.kardex_report', compact('titulos', '$array'));
+    return Datatables::of($array)
+      ->with([
+        "producto" => $produ[0],
+        "sum" => $sum[0],
+        "array" => $array[count($array) - 1],
+      ])
+      ->make();
 
-        // return view('reports.kardexreport', compact('array','sum','produ'));
-    }
+    // return view('reports.kardexreport', compact('array','sum','produ'));
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    //
+    $titulos = [
+      ['data' => '_Ntra', 'title' => 'NroTrans'],
+      ['data' => '_Ftra', 'title' => 'Fecha'],
+      ['data' => '_CanA', 'title' => 'Cant', 'className' => 'dt-body-right'],
+      ['data' => '_CanB', 'title' => 'Cant', 'className' => 'dt-body-right'],
+      ['data' => '_SalCan', 'title' => 'Cant', 'className' => 'dt-body-right', 'render' => '$.fn.dataTable.render.number(', ', ' . ', 2)'],
+      ['data' => '_Diferencia', 'title' => 'Dif', 'className' => 'dt-body-right'],
+      ['data' => '_Ntri', 'title' => 'Trans Ini', 'className' => 'dt-body-right'],
+      ['data' => '_TmovN', 'title' => 'Tipo de Mov', 'className' => 'dt-body-center'],
+    ];
+    dd($titulos);
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    //
+  }
 }
