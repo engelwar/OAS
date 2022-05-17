@@ -3,6 +3,67 @@
 
 @section('mi_estilo')
 <style>
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #355296;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #355296;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
   .transformacion {
      text-transform: lowercase;
   }
@@ -180,7 +241,7 @@ th:first-child div{
 @include('layouts.sidebar', ['hide'=>'0']) 
 @section('content')
 
-<meta http-equiv="refresh" content="180">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="container border rounded">
        <!--<meta http-equiv="refresh" content="10" />---> 
@@ -229,9 +290,15 @@ th:first-child div{
                       </form>
                 </div>
                 <div class="col">
-                    <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
-            
+                    <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
+                    <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
+                   
                 </div>
+                <div class="col">
+                  <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
+                  
+                 
+              </div>
                 
             </div>
             
@@ -255,7 +322,7 @@ th:first-child div{
           <option value="20" id="a2">20</option>
           <option value="50" id="a3">50</option>
           <option value="100" id="a4">100</option>
-     
+            
         </select>
       </div>
       </div>
@@ -1011,7 +1078,7 @@ $(document).ready(() => {
         });
 
 
-// otro buscador3
+// otro buscador3 busca segun la table se mejora del primer buscador
 $(document).ready(() => {
             $('#b3').click(function(evento) {
                 evento.preventDefault();
@@ -1031,6 +1098,53 @@ $(document).ready(() => {
                 }
             });
         });
+
+// busca estados anulados
+$(document).ready(() => {
+            $('#d2').click(function(evento) {
+                evento.preventDefault();
+
+                let clave = "a";
+
+                if (clave) {
+                    $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(11);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+        
+
+        $(document).ready(() => {
+            $('#d1').click(function(evento) {
+                evento.preventDefault();
+
+                    $('table').find('tbody tr').show();
+
+                   
+                
+            });
+        });
+
+//recarga segun el movimiento o pulsacion del tecledo contador en milisegundos  se mejoro 
+        var time = new Date().getTime(); 
+        $(document.body).bind("mousemove keypress", function(e) { 
+          time = new Date().getTime();
+         });
+          function refresh() {
+             if(new Date().getTime() - time >= 300000) 
+             window.location.reload(true);
+              else setTimeout(refresh, 10000); 
+            } 
+            setTimeout(refresh, 10000);
+
+
 
 </script>
 @endsection

@@ -78,15 +78,32 @@ class CotizacionReportController extends Controller
         OR adusrNomb ='AUDINI CARRILLO'
         OR adusrNomb ='INS MARISCAL'
         OR adusrNomb ='INS BALLIVIAN'
-        OR adusrNomb ='ADRIANA CHAVEZ'
+        
         OR adusrNomb ='CONTRATOS INSTITUCIONALES'
         OR adusrNomb ='INES VELASQUEZ'
         OR adusrNomb ='GUADALUPE AMBA'
-        order by adusrNomb asc";
-        $usu = DB::connection('sqlsrv')->select(DB::raw($consultaListaEmpleados)); 
-     
+        order by adusrNomb
 
-        return view('cotizacionReport.vistaCotizacionReport', compact('user','usu'));
+       ";
+
+        $usu = DB::connection('sqlsrv')->select(DB::raw($consultaListaEmpleados)); 
+        $consultaListaEmpleadosM = "select adusrNomb as 'nombreX',adusrCusr as 'codigoX' from bd_admOlimpia.dbo.adusr where 
+        adusrNomb ='DAVID MAMANI'
+        OR adusrNomb ='ROSALIA TICONA'
+        OR adusrNomb ='ERWIN VILLARROEL'
+        OR adusrNomb ='JAVIER MACHICADO'
+        OR adusrNomb ='DANI CALDERON'
+        OR adusrNomb ='CARMELA ESCOBAR'
+        OR adusrNomb ='DAVID CUTIPA'
+        order by adusrNomb
+       ";    
+         $mayo=   DB::connection('sqlsrv')->select(DB::raw($consultaListaEmpleadosM));      
+
+        $array=[];
+          
+        $array=array_merge($usu,$mayo);
+        //dd($array);    
+        return view('cotizacionReport.vistaCotizacionReport', compact('user','usu','mayo','array'));
         //return ("desde cotizacionreport");
         //return view('cotizacionReport.vistaCotizacionReport');
     }
@@ -187,7 +204,7 @@ class CotizacionReportController extends Controller
        // $otroUsuario="";  
       //  $otroUsuario2=" OR adusrNomb = ";  
       $otroUsuario = "AND adusrNomb IS NULL";
-      if($request->options){
+      if($request->options||$request->optionss){
         $otroUsuario = "AND adusrNomb IN ('".implode("','",$request->options)."')";
       }
        
