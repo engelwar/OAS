@@ -22,12 +22,12 @@
         <img src="{{ asset('imagenes/logo_fondo.jpg') }}" alt="">
       </div>
       <div class="header header2">
-        <h2>SOLICITUD DE PERMISO - RRHH</h2>
+        <h2>FORMULARIO - RRHH</h2>
         <h2>SOLICITUD DE VACACIONES</h2>
       </div>
       <div class="header header3">
         <h3>LyPO/RRHH/FOL-V2</h3>
-        <h3>No. 000001</h3>
+        <h3>No. {{ $VacacionForm->id }}</h3>
         <h3>ADMINISTRACION</h3>
       </div>
     </div>
@@ -82,7 +82,7 @@
           </label>
         </div>
         <div class="item item4">
-          <input id="area" type="text" value="{{$VacacionForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror input" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
+          <input id="area" type="text" value="{{$VacacionForm->created_at}}" class="form-control @error('area') is-invalid @enderror input" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
           @error('area')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -262,7 +262,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+          <input id="ci" type="text" value="{{$superior[0]->nombre}} {{$superior[0]->paterno}} {{$superior[0]->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -275,7 +275,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
+          <input id="cargo" type="text" value="{{$superior[0]->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -284,7 +284,7 @@
         </div>
 
         <div class="item item5A">
-          ___________________________
+          _________________
         </div>
       </div>
       <div class="form-group1A">
@@ -294,7 +294,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="{{$VacacionForm->user->perfiles->nombre}} {{$VacacionForm->user->perfiles->paterno}} {{$VacacionForm->user->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+          <input id="ci" type="text" value="{{$administrativo[0]->nombre}} {{$administrativo[0]->paterno}} {{$administrativo[0]->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -307,7 +307,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
+          <input id="cargo" type="text" value="{{$administrativo[0]->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -315,7 +315,7 @@
           @enderror
         </div>
         <div class="item item5A">
-          ___________________________
+          _________________
         </div>
       </div>
   </div>

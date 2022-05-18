@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Auth;
 use App\DataForm;
 use App\LicenciaForm;
+use App\Perfil;
 use App\FirmaLicencia;
+use DB;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -63,7 +65,8 @@ class LicenciaController extends Controller
    */
   public function create()
   {
-    return view("forms.permisos");
+    $users = DB::select('select * from perfils');
+    return view("forms.permisos", compact('users'));
   }
 
   /**
@@ -189,7 +192,9 @@ class LicenciaController extends Controller
   public function generatePDF($id)
   {
     $LicenciaForm = LicenciaForm::find($id);
-    $pdf = PDF::loadView('licencia_pdf', compact('LicenciaForm'));
+    $superior = Perfil::where('user_id', $LicenciaForm->superior)->get();
+    $administrativo = Perfil::where('user_id', $LicenciaForm->administrativo)->get();
+    $pdf = PDF::loadView('licencia_pdf', compact('LicenciaForm', 'superior', 'administrativo'));
     return $pdf->stream('prueba.pdf');
   }
 }

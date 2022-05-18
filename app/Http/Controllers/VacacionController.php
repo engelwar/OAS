@@ -6,8 +6,11 @@ use Auth;
 use App\Http\Controllers\Controller;
 use App\VacacionForm;
 use App\FirmaVacacion;
+use App\Perfil;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use DB;
+use Illuminate\Foundation\Auth\User;
 
 class VacacionController extends Controller
 {
@@ -67,7 +70,8 @@ class VacacionController extends Controller
    */
   public function create()
   {
-    return view("forms.vacaciones");
+    $users = DB::select('select * from perfils');
+    return view("forms.vacaciones", compact('users'));
   }
 
   public function estadoForm($id)
@@ -107,6 +111,8 @@ class VacacionController extends Controller
       'dias_l' => $request->dias_l,
       'saldo_dias' => $request->saldo_dias,
       'saldo_dias_l' => $request->saldo_dias_l,
+      'superior' => $request->superior,
+      'administrativo' => $request->administrativo,
 
       'user_id' => Auth::user()->id,
     ]);
@@ -215,7 +221,9 @@ class VacacionController extends Controller
   public function generatePDF($id)
   {
     $VacacionForm = VacacionForm::find($id);
-    $pdf = PDF::loadView('vacacion_pdf', compact('VacacionForm'));
+    $superior = Perfil::where('user_id', $VacacionForm->superior)->get();
+    $administrativo = Perfil::where('user_id', $VacacionForm->administrativo)->get();
+    $pdf = PDF::loadView('vacacion_pdf', compact('VacacionForm', 'superior', 'administrativo'));
     return $pdf->stream('prueba.pdf');
   }
 }

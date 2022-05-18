@@ -8,7 +8,7 @@ class VacacionForm extends Model
 {
   protected $fillable = [
     'detalle_vacacion', 'fecha_ini', 'fecha_fin', 'fecha_ret', 'fecha_fin_aut', 'fecha_ret_aut', 'fecha_ini_aut', 'dias_v', 'dias_v_l',
-    'dias', 'dias_l', 'saldo_dias', 'saldo_dias_l', 'estado', 'user_id'
+    'dias', 'dias_l', 'saldo_dias', 'saldo_dias_l', 'estado', 'user_id', 'superior', 'administrativo',
   ];
   public function user()
   {

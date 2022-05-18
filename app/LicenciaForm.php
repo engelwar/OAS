@@ -9,7 +9,7 @@ class LicenciaForm extends Model
 {
   protected $fillable = [
     'respaldo', 'motivo', 'hora_ini', 'hora_fin',
-    'fecha_ini', 'fecha_fin', 'dias', 'horas', 'estado', 'user_id'
+    'fecha_ini', 'fecha_fin', 'dias', 'horas', 'estado', 'user_id', 'superior', 'administrativo'
 
   ];
   public function user()

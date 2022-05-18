@@ -113,33 +113,32 @@ body{
 }
 
 .form-group1A .item1A{
-    width: 160%;
+    width: 5cm;
     padding-top: 0.1cm;
     text-indent: 30px;
     text-align: left;
 }
 
 .form-group1A .item2A{
-    width: 100%;
+    width: 6cm;
     margin-right: 20em;
 }
 
 .form-group1A .item3A{
-    width: 70%;
+    width: 2cm;
     padding-top: 0.1cm;
     text-indent: 30px;
     text-align: left;
 }
 
 .form-group1A .item4A{
-    width: 100%;
+    width: 2.5cm;
     position: relative;
     float:left;
 }
 .form-group1A .item5A{
-    width: 100%;
     padding-top: 0.2cm;
-    padding-left: 1.5cm;
+    padding-left: 0.6cm;
 }
 
 .form-group1A .item input,.form-group1 .item label{
