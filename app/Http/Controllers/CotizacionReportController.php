@@ -78,7 +78,6 @@ class CotizacionReportController extends Controller
         OR adusrNomb ='AUDINI CARRILLO'
         OR adusrNomb ='INS MARISCAL'
         OR adusrNomb ='INS BALLIVIAN'
-        
         OR adusrNomb ='CONTRATOS INSTITUCIONALES'
         OR adusrNomb ='INES VELASQUEZ'
         OR adusrNomb ='GUADALUPE AMBA'
@@ -279,7 +278,8 @@ class CotizacionReportController extends Controller
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','nro','nroA','nroP','nroT','fechaC']);
         $cr=observacion_estados::all(['id']);
         $consutas = DB::connection('sqlsrv')->select(DB::raw($esUnaQuery));
-      
+        
+        
 
  
 
