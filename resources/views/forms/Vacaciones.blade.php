@@ -72,7 +72,7 @@
     </div>
 
     <div class="m-auto form-group row col-md-10">
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion" required></textarea>
     </div>
 
     <div class="form-group row mt-4">
@@ -120,12 +120,13 @@
     </div>
 
     <div class="form-group row d-flex">
-      <label for="dias_v" class="col-md-2 col-form-label text-md-right ml-auto">
+      <label for="dias_v" class="col-md-3 col-form-label text-md-right ml-auto">
         {{ __('DIAS DE VACACION') }}
       </label>
 
       <div class="col-md-1">
-        <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v" value="{{ old('dias_v') }}" required autocomplete="dias_v">
+        <input id="dias_v" type="text" class="form-control @error('dias_v') is-invalid @enderror d-none" name="dias_v" value="{{ $dias_vacaciones }}" required autocomplete="dias_v">
+        <input id="dias_v_a" type="text" class="form-control @error('dias_v') is-invalid @enderror" value="{{ $dias_vacaciones }}" required autocomplete="dias_v" disabled>
         @error('dias_v')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -134,7 +135,7 @@
       </div>
 
       <div class="col-md-4">
-        <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v') is-invalid @enderror" name="dias_v_l" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l">
+        <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v_l') is-invalid @enderror" name="dias_v_l" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l">
         @error('dias_v_l')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -142,14 +143,37 @@
         @enderror
       </div>
     </div>
-
-    <div class="form-group row d-flex">
-      <label for="dias" class="col-md-2 col-form-label text-md-right ml-auto">
-        {{ __('DIAS') }}
+    <div class="form-group row">
+      <label for="dias_tomados" class="col-md-3 col-form-label text-md-right ml-auto">
+        {{ __('DIAS TOMADOS') }}
       </label>
 
       <div class="col-md-1">
-        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror" name="dias" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_tomados" name="dias_tomados" type="text" class="form-control @error('dias') is-invalid @enderror d-none" value="{{ $dias_tomados[0]->suma }}" required autocomplete="dias_tomados">
+        <input id="dias_tomados_a" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ $dias_tomados[0]->suma }}" required autocomplete="dias_tomados" disabled>
+        @error('dias')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+      </div>
+      <div class="col-md-4">
+        <input id="dias_tomados_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_tomados" value="{{ old('dias') }}" required autocomplete="dias">
+        @error('dias')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+      </div>
+    </div>
+    <div class="form-group row d-flex">
+      <label for="dias" class="col-md-3 col-form-label text-md-right ml-auto">
+        {{ __('DIAS SOLICITADOS') }}
+      </label>
+
+      <div class="col-md-1">
+        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror d-none" name="dias" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_a" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="dias" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -171,7 +195,8 @@
       </label>
 
       <div class="col-md-1">
-        <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="saldo_dias">
+        <input id="saldo_dias" name="saldo_dias" type="text" class="form-control @error('dias') is-invalid @enderror d-none" value="{{ old('dias') }}" required autocomplete="saldo_dias">
+        <input id="saldo_dias_a" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="saldo_dias" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -187,37 +212,7 @@
         @enderror
       </div>
     </div>
-    <div class="d-flex w-100 mb-2">
-      <div class="w-100">
-        <div>
-          <label for="superior" class="col-md-3 col-form-label text-md-right ml-auto">
-          {{ __('Inmediato Superior') }}
-        </label>
-        </div>
-        <div>
-          <select class="form-select" size="3" aria-label="size 3 select example" name="superior" required>
-            @foreach ($users as $u)
-            <option value="{{ $u->user_id }}">{{ $u->nombre }} {{ $u->paterno }} {{ $u->materno }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-      <div class="w-100">
-        <div>
-          <label for="administrativo" class="col-md-3 col-form-label text-md-right ml-auto">
-          {{ __('Gerente Administrativo') }}
-        </label>
-        </div>
-        <div>
-          <select class="form-select" size="3" aria-label="size 3 select example" name="administrativo" required>
-            @foreach ($users as $u)
-            <option value="{{ $u->user_id }}">{{ $u->nombre }} {{ $u->paterno }} {{ $u->materno }}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row d-flex justify-content-center">
+    <div class="form-group row d-flex justify-content-center mt-2">
       <div class="col-md-10 d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">
           {{ __('Enviar') }}
@@ -228,34 +223,54 @@
 </div>
 @endsection
 @section('mis_scripts')
+<script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
-  document.getElementById("dias_v").addEventListener("keyup", function(e) {
+  document.getElementById("fecha_ini").addEventListener("click", function(e) {
+    var fecha_ini = moment($("#fecha_ini").val());
+    var fecha_fin = moment($("#fecha_fin").val());
+    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    $("#dias_a").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+  });
+  document.getElementById("fecha_fin").addEventListener("click", function(e) {
+    var fecha_ini = moment($("#fecha_ini").val());
+    var fecha_fin = moment($("#fecha_fin").val());
+    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    $("#dias_a").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+
     var letras = NumeroALetras(this.value);
     $("#dias_v_l").val(letras);
     var val1 = $("#dias_v").val();
     var val2 = $("#dias").val();
+    var val3 = $("#dias_tomados").val();
     if (val2 == "") {
       val2 = 0;
     }
-    $("#saldo_dias").val(parseInt(val1) - parseInt(val2));
+    $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
+    $("#saldo_dias_a").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
 
-  });
-  document.getElementById("dias").addEventListener("keyup", function(e) {
     var letras = NumeroALetras(this.value);
     $("#dias_l").val(letras);
     var val1 = $("#dias_v").val();
     var val2 = $("#dias").val();
+    var val3 = $("#dias_tomados").val();
     if (val1 == "") {
       val1 = 0;
     }
-    $("#saldo_dias").val(parseInt(val1) - parseInt(val2));
-  });
-  document.getElementById("dias").addEventListener("keyup", function(e) {
-    var valor = $("#saldo_dias").val();
+    $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
+    $("#saldo_dias_a").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
+
+    var valor = $("#dias_v").val();
     var letras = NumeroALetras(valor);
-    $("#saldo_dias_l").val(letras);
-  });
-  document.getElementById("dias_v").addEventListener("keyup", function(e) {
+    $("#dias_v_l").val(letras);
+
+    var valor = $("#dias").val();
+    var letras = NumeroALetras(valor);
+    $("#dias_l").val(letras);
+
+    var valor = $("#dias_tomados").val();
+    var letras = NumeroALetras(valor);
+    $("#dias_tomados_l").val(letras);
+
     var valor = $("#saldo_dias").val();
     var letras = NumeroALetras(valor);
     $("#saldo_dias_l").val(letras);
@@ -432,7 +447,7 @@
       letrasCentavos: "",
     };
 
-    if (data.enteros == 0)
+    if (data.enteros == 0 && data.enteros == NaN)
       return "CERO ";
     if (data.enteros < 0)
       return "EL VALOR NO PUEDE SER NEGATIVO";

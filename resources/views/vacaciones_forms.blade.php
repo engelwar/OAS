@@ -60,7 +60,6 @@
             <th>NOMBRE DEL SOLICITANTE</th>
             <th>SUCURSAL</th>
             <th>CI</th>
-            <th>AREA</th>
             <th>CARGO</th>
             <th>FECHA DE SALIDA</th>
             <th>FECHA DE FINALIZACION</th>
@@ -74,7 +73,6 @@
               <td>{{$f->user->perfiles->nombre}} {{$f->user->perfiles->paterno}} {{$f->user->materno}}</td>
               <td>{{$f->user->perfiles->unidad->nombre}}</td>
               <td>{{$f->user->perfiles->ci}}</td>
-              <td>{{$f->user->perfiles->area_id}}</td>
               <td>{{$f->user->perfiles->cargo}}</td>
               <td>{{$f->fecha_ini}}</td>
               <td>{{$f->fecha_fin}}</td>

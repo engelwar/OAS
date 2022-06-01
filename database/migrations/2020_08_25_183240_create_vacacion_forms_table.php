@@ -29,8 +29,6 @@ class CreateVacacionFormsTable extends Migration
             $table->integer('saldo_dias');
             $table->string('saldo_dias_l');
             $table->string('estado',10)->nullable();
-            $table->integer('superior');
-            $table->integer('administrativo');
             $table->timestamps();
 
             $table->integer('user_id');

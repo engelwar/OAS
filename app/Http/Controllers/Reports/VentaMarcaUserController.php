@@ -38,7 +38,6 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }
         else{
@@ -49,7 +48,6 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }  
         $grupo = [
@@ -59,8 +57,7 @@ class VentaMarcaUserController extends Controller
             ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
-            ['name'=>'INS. CALACOTO', 'abrv'=>'INS. CALACOTO', 'users'=>[57,29]],
-            ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64], 'cochabamba'=>[61]]
+            ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
         ];
         $user = $this->getUsers($segmento, $grupo, $usuario);
         $capas = 
@@ -82,7 +79,6 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]], 'alm'=>[61],
             ];
         }
         else{
@@ -93,7 +89,6 @@ class VentaMarcaUserController extends Controller
                 ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64]],
             ];
         }  
         $grupo = [
@@ -103,8 +98,7 @@ class VentaMarcaUserController extends Controller
             ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
-            ['name'=>'INS. CALACOTO', 'abrv'=>'INS. CALACOTO', 'users'=>[57,29]],
-            ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[64], 'cochabamba'=>[61]]
+            ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
         ];
         $user = $this->getUsers($segmento, $grupo, $usuario);
         $capas = 
@@ -174,7 +168,6 @@ class VentaMarcaUserController extends Controller
     }
     public function general(Request $request)
     {
-        // $alm_rules = ;
         $fini = date("d/m/Y", strtotime($request->fini));  
         $ffin = date("d/m/Y", strtotime($request->ffin));  
         $usr = $request->usuarios;
@@ -196,7 +189,7 @@ class VentaMarcaUserController extends Controller
 
             if(!array_key_exists($v['Grupo'], $users))
             {
-                $users[$v['Grupo']] = ['user'=>$v['user_id']];   
+                $users[$v['Grupo']] = [$v['user_id']];   
             } 
             else
             {
@@ -207,7 +200,6 @@ class VentaMarcaUserController extends Controller
         foreach($users as $k => $us)
         {
             $gru_usr[] = "WHEN vtvtaCusr IN (".implode(",",$us).") THEN '".$k."'"; 
-            // $gru_usr[] = "WHEN vtvtaCusr IN (".implode(",",$us).") AND vtvtaCalm IN (".implode(",", $).") THEN '".$k."'"; 
             $gru_tit[] = 
             "
             CONVERT(VARCHAR, cast(ISNULL([".$k."],0) as money),1) as [".$k."],

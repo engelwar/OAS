@@ -52,6 +52,8 @@ class LicenciaController extends Controller
   public function estado(Request $request, $id)
   {
     $licencia = LicenciaForm::find($id);
+    $licencia->dias = $request->get('dias');
+    $licencia->horas = $request->get('horas');
     $licencia->estado = $request->get('estado');
     $licencia->save();
 
@@ -110,9 +112,7 @@ class LicenciaController extends Controller
   public function edit($id)
   {
     $form = LicenciaForm::find($id);
-    $firma = $form->firmas->where('tipo', 'Superior')->last();
-    $firma_rrhh = $form->firmas->where('tipo', 'RRHH')->last();
-    return view('detalle.Permisos', compact('form', 'firma', 'firma_rrhh'));
+    return view('detalle.Permisos', compact('form'));
   }
 
   /**

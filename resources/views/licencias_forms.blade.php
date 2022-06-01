@@ -142,4 +142,5 @@
     $(".page-wrapper").removeClass("toggled");
   });
 </script>
+<script src="http://momentjs.com/downloads/moment.min.js"></script>
 @endsection

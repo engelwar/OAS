@@ -13,7 +13,7 @@ use App\Exports\CuentasPorCobrarExport;
 use DataTables; 
 use App\VentaSegmento;
 
-class VentaMarcaAlmacenController extends Controller
+class VentaMarcaUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,41 +26,35 @@ class VentaMarcaAlmacenController extends Controller
         $config = $this->getConf($sucur);
         $user = $config['users'];
         $capas = $config['capas'];
-        return view('reports.ventamarcaalmacen', compact('user', 'capas', 'sucur'));  
+        return view('reports.ventamarcaseg', compact('user', 'capas', 'sucur'));  
     }
     public function getConf($sucur){
         if($sucur == 'sucur')
         {
             $segmento = [
-                ['name'=>'INSTITUCIONAL', 'abrv'=>'INSTITUCIONAL', 'users'=>[8,20,21,22]],
-                ['name'=>'MAYORISTA', 'abrv'=>'MAYORISTA', 'users'=>[9,48,49,50,53]],
-                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[7,13]],
-                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[4,13]],
-                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[6,30]],
-                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[5,29]],
+                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[7,10,31]],
+                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[4,13,32,36]],
+                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[6,30,34,38]],
+                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[5,29,33]],
+                ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[8,9,20,21,22,48,49,50,53,56]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[45]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[61]],
-                ['name'=>'SUCRE', 'abrv'=>'SUCRE', 'users'=>[57]],
-                ['name'=>'POTOSI', 'abrv'=>'POTOSI', 'users'=>[58]],
-                ['name'=>'TARIJA', 'abrv'=>'TARIJA', 'users'=>[59]],
-                ['name'=>'ORURO', 'abrv'=>'ORURO', 'users'=>[60]],
             ];
         }
         else{
             $segmento = [
-                ['name'=>'RETAIL', 'abrv'=>'RETAIL', 'users'=>[42,50,26,52,32,43,51,44,38,49,22,41]],
+                ['name'=>'RETAIL', 'abrv'=>'RETAIL', 'users'=>[]],
                 ['name'=>'INSTITUCIONAL', 'abrv'=>'INST', 'users'=>[16,17,28,29,57,37,46]],
                 ['name'=>'MAYORISTAS', 'abrv'=>'MAYO', 'users'=>[18,19,55,21,20,39,40,58]],
                 ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
-                ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
-                ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
+                ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[55]],
+                ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[56]],
             ];
         }  
         $grupo = [
-            ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[7,13]],
-            ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[4,13]],
-            ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[6,30]],
-            ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[5,29]],
+            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41]],
+            ['name'=>'RETAIL CALACOTO', 'abrv'=>'RETAIL CAL', 'users'=>[52,32,43]],
+            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26]],
+            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
             ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
@@ -79,18 +73,12 @@ class VentaMarcaAlmacenController extends Controller
         if($sucur == 'sucur')
         {
             $segmento = [
-                ['name'=>'INSTITUCIONAL', 'abrv'=>'INSTITUCIONAL', 'users'=>[8,20,21,22]],
-                ['name'=>'MAYORISTA', 'abrv'=>'MAYORISTA', 'users'=>[9,48,49,50,53]],
-                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[7,13]],
-                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[4,13]],
-                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[6,30]],
-                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[5,29]],
-                ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[45]],
-                ['name'=>'COCHABAMBA', 'abrv'=>'COCHABAMBA', 'users'=>[61]],
-                ['name'=>'SUCRE', 'abrv'=>'SUCRE', 'users'=>[57]],
-                ['name'=>'POTOSI', 'abrv'=>'POTOSI', 'users'=>[58]],
-                ['name'=>'TARIJA', 'abrv'=>'TARIJA', 'users'=>[59]],
-                ['name'=>'ORURO', 'abrv'=>'ORURO', 'users'=>[60]],
+                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[22,41,49,46]],
+                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[26,42,50,28]],
+                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[38,44,51,37]],
+                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
+                ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
+                ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
             ];
         }
         else{
@@ -104,10 +92,10 @@ class VentaMarcaAlmacenController extends Controller
             ];
         }  
         $grupo = [
-            ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[7,13]],
-            ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[4,13]],
-            ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[6,30]],
-            ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[5,29]],
+            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41]],
+            ['name'=>'RETAIL CALACOTO', 'abrv'=>'RETAIL CAL', 'users'=>[52,32,43]],
+            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26]],
+            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
         ];
         $usuario = [
             ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
@@ -125,13 +113,13 @@ class VentaMarcaAlmacenController extends Controller
     public function getUsers($segmento, $grupo, $usuario) {
         $segm=[]; $grup = []; $usua=[];
         foreach ($segmento as $s) {
-            $segm[] = "WHEN inalmCalm IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
+            $segm[] = "WHEN adusrCusr IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
         }
         foreach ($grupo as $s) {
-            $grup[] = "WHEN inalmCalm IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
+            $grup[] = "WHEN adusrCusr IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
         }
         foreach ($usuario as $s) {
-            $usua[] = "WHEN inalmCalm IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
+            $usua[] = "WHEN adusrCusr IN (".implode(",",$s['users']).") THEN '".$s['name']."'";
         }
         $user = 
         "WITH users AS(
@@ -142,19 +130,19 @@ class VentaMarcaAlmacenController extends Controller
                 END as Segmento,  
                 CASE
                     ".implode($grup)."
-                    ELSE inalmNomb
+                    ELSE adusrNomb
                 END as Grupo,
                 CASE
                     ".implode($usua)."
-                    ELSE inalmNomb
+                    ELSE adusrNomb
                 END as 'Usuario',
-                inalmCalm, inalmNomb
-                FROM inalm
-                WHERE inalmMdel = 0 AND 
-                (inalmCalm IN(
-                    SELECT vtvtaCalm
+                adusrCusr, adusrNomb
+                FROM bd_admOlimpia.dbo.adusr
+                WHERE adusrMdel = 0 AND 
+                (adusrCusr IN(
+                    SELECT vtvtaCusr
                     FROM vtVta WHERE vtvtaMdel=0
-                    GROUP BY vtvtaCalm))
+                    GROUP BY vtvtaCusr))
         )
         SELECT * FROM users ORDER BY segmento, grupo DESC";
         //return dd($user);
@@ -211,7 +199,7 @@ class VentaMarcaAlmacenController extends Controller
         
         foreach($users as $k => $us)
         {
-            $gru_usr[] = "WHEN vtvtaCalm IN (".implode(",",$us).") THEN '".$k."'"; 
+            $gru_usr[] = "WHEN vtvtaCusr IN (".implode(",",$us).") THEN '".$k."'"; 
             $gru_tit[] = 
             "
             CONVERT(VARCHAR, cast(ISNULL([".$k."],0) as money),1) as [".$k."],
@@ -317,9 +305,9 @@ class VentaMarcaAlmacenController extends Controller
                     ) as mov
                     ON intraNtrI =vtvtaNtra AND intrdCpro = vtvtdCpro
                     WHERE  vtvtdMdel = 0 ".$marc. $client." 
-                    --AND vtvtaCalm IN (4) 
+                    --AND vtvtaCusr IN (4) 
                     AND (vtvtaFtra BETWEEN @fini AND @ffin) 
-                    GROUP BY vtvtaCalm, ".$xmp." vtvtaMtra
+                    GROUP BY vtvtaCusr, ".$xmp." vtvtaMtra
                     ) as gr
                 CROSS APPLY (VALUES (Grupo+'', total), (Grupo+'_can', cant), (Grupo+'_cost', costo)) tot_val (tot_can, val)
                 WHERE Grupo IN ('".implode("','",$grupos)."')

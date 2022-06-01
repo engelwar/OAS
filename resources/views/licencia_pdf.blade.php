@@ -201,7 +201,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="{{$superior[0]->nombre}} {{$superior[0]->paterno}} {{$superior[0]->materno}}" class="form-control @error('ci') is-invalid @enderror input">
+          <input id="ci" type="text" value="Ernesto Weinberg Jauregui" class="form-control @error('ci') is-invalid @enderror input">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -214,7 +214,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$superior[0]->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="Administración" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -233,7 +233,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="{{$administrativo[0]->nombre}} {{$administrativo[0]->paterno}} {{$administrativo[0]->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+          <input id="ci" type="text" value="Angela Ochoa Quispe" class="form-control @error('ci') is-invalid @enderror input">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -246,7 +246,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$administrativo[0]->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="Administracion" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -260,5 +260,4 @@
     </form>
   </div>
 </body>
-
 </html>

@@ -9,6 +9,7 @@ use App\FirmaVacacion;
 use App\Perfil;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use DateTime;
 use DB;
 use Illuminate\Foundation\Auth\User;
 
@@ -29,7 +30,7 @@ class VacacionController extends Controller
     $estado = $request->get('estado');
     $buscar = $request->get('buscar');
     $dato = $request->get('dato');
-    if(Auth::user()->tienePermiso(18,4)){
+    if (Auth::user()->tienePermiso(18, 4)) {
       $forms = VacacionForm::orderBy('id', 'DESC')
         ->estado($estado)
         ->user($buscar, $dato)
@@ -42,25 +43,6 @@ class VacacionController extends Controller
         ->paginate(8);
       return view('vacaciones_forms', compact('forms'));
     }
-    // if (Auth::user()->authorizePermisos(['auth_vacacion_form', 'auth_vacacion_form'])) {
-    //   $forms = VacacionForm::orderBy('id', 'DESC')
-    //     ->estado($estado)
-    //     ->user($buscar, $dato)
-    //     ->paginate(8);
-    //   return view('vacaciones_forms', compact('forms'));
-    // } elseif (Auth::user()->rol != 'admin') {
-    //   $forms = VacacionForm::orderby('id', 'DESC')
-    //     ->where('user_id', '=', Auth::user()->id)
-    //     ->estado($estado)
-    //     ->paginate(8);
-    //   return view('vacaciones_forms', compact('forms'));
-    // } elseif (Auth::user()->authorizePermisos(['auth_vacacion_form'])) {
-    //   $forms = VacacionForm::where('user_id', $user->id)->orderBy('id', 'DESC')
-    //     ->estado($estado)
-    //     ->user($buscar, $dato)
-    //     ->paginate(8);
-    //   return view('vacaciones_forms', compact('forms'));
-    // }
   }
 
   /**
@@ -70,14 +52,27 @@ class VacacionController extends Controller
    */
   public function create()
   {
-    $users = DB::select('select * from perfils');
-    return view("forms.vacaciones", compact('users'));
+    $fecha_ingreso = new DateTime(Auth::user()->perfiles->fecha_ingreso);
+    $fecha_actual = new DateTime(date('Y-m-d'));
+    $diff = $fecha_ingreso->diff($fecha_actual)->days;
+    $dias_vacaciones = intval($diff / 366) * 15;
+    $query_tomados = 'SELECT ((SELECT SUM(dias) as suma FROM vacacion_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada") +
+    (SELECT SUM(dias) FROM licencia_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada")) as suma';
+    $dias_tomados = DB::select($query_tomados);
+    return view("forms.vacaciones", compact('dias_vacaciones', 'dias_tomados'));
   }
 
   public function estadoForm($id)
   {
     $VacacionForm = VacacionForm::find($id);
-    return view('forms.vacaciones_detalle')->with('VacacionForm', $VacacionForm);
+    $fecha_ingreso = new DateTime(Auth::user()->perfiles->fecha_ingreso);
+    $fecha_actual = new DateTime(date('Y-m-d'));
+    $diff = $fecha_ingreso->diff($fecha_actual)->days;
+    $dias_vacaciones = intval($diff / 366) * 15;
+    $query_tomados = 'SELECT ((SELECT SUM(dias) as suma FROM vacacion_forms WHERE user_id = ' . $VacacionForm->user_id . ' AND estado = "Aceptada") +
+    (SELECT SUM(dias) FROM licencia_forms WHERE user_id = ' .   $VacacionForm->user_id . ' AND estado = "Aceptada")) as suma';
+    $dias_tomados = DB::select($query_tomados);
+    return view('forms.vacaciones_detalle', compact('dias_vacaciones', 'dias_tomados'))->with('VacacionForm', $VacacionForm);
   }
 
   public function estado(Request $request, $id)
@@ -86,6 +81,22 @@ class VacacionController extends Controller
     $vacacion->fecha_ini_aut = $request->get('fecha_ini_aut');
     $vacacion->fecha_fin_aut = $request->get('fecha_fin_aut');
     $vacacion->fecha_ret_aut = $request->get('fecha_ret_aut');
+    $vacacion->dias_v = $request->get('dias_v');
+    $vacacion->dias_v_l = $request->get('dias_v_l');
+    if ($vacacion->dias = $request->get('dias') != 'NaN') {
+      $vacacion->dias = $request->get('dias');
+      $vacacion->dias_l = $request->get('dias_l');
+    } else {
+      $vacacion->dias = 0;
+      $vacacion->dias_l = 'CERO';
+    }
+    if ($request->get('saldo_dias') != 'NaN') {
+      $vacacion->saldo_dias = $request->get('saldo_dias');
+      $vacacion->saldo_dias_l = $request->get('saldo_dias_l');
+    } else {
+      $vacacion->saldo_dias = '0';
+      $vacacion->saldo_dias_l = 'CERO';
+    }
     $vacacion->estado = $request->get('estado');
     $vacacion->save();
 
@@ -111,8 +122,6 @@ class VacacionController extends Controller
       'dias_l' => $request->dias_l,
       'saldo_dias' => $request->saldo_dias,
       'saldo_dias_l' => $request->saldo_dias_l,
-      'superior' => $request->superior,
-      'administrativo' => $request->administrativo,
 
       'user_id' => Auth::user()->id,
     ]);

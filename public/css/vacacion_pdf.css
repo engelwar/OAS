@@ -246,13 +246,16 @@ body{
 
 .form-group5 .dias_label{
     width: 40%;
+    margin-top: 0.2cm;
 }
 
+#dias_v{
+  margin-top: -0.1cm;
+}
 
 .form-group6{
     width: 100%;
     display: table;
-    margin-top: 2cm;
 }
 
 .form-group6 .item{
