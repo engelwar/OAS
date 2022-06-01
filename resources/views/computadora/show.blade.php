@@ -30,7 +30,9 @@
                         </div>
                         <div class="form-group">
                             <strong>Estado:</strong>
-                            {{ $computadora->estado }}
+                                {{ $computadora->estado }}
+                        sasa
+                          
                         </div>
 
                     </div>

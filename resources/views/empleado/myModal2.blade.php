@@ -14,6 +14,7 @@
               <option selected>Tipo de Equipo</option>
               <option value="cpu">CPU</option>
               <option value="laptop">Laptop</option>
+              
             </select>
             <input class="form-control" type="text" name="ip" id="" placeholder="IP" required>
             <select class="form-select" name="estado" aria-label="Default select example" required>
@@ -51,11 +52,13 @@
                   <td>
                     <input class="form-control" type="text" name="estado2[]" placeholder="Estado" required>
                   </td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
             <div class="form-group">
-              <button type="button" class="btn btn-success mb-2" onclick="agregarFila()">Agregar Fila</button>
+              <button type="button" class="btn btn-outline-success mb-2" onclick="agregarFila()" ><i class='fa fa-plus'></i></button>
+           
             </div>
           </div>
         </div>
@@ -83,6 +86,17 @@
                   </td>
                   <td>
                     <input class="form-control" type="text" name="estado2[]" placeholder="Estado" required>
-                  </td>`;
+                  </td>
+                  <td>   <button type="button" class="btn btn-outline-danger mb-2 borrar" onclick="eliminarFila()"><i class='fa fa-minus'></i></button></td>
+                  `
+                  ;
   }
+  //removedor de filas
+  function eliminarFila(){
+    $(document).on('click', '.borrar', function(event) {
+  event.preventDefault();
+  $(this).closest('tr').remove();
+});
+}
+
 </script>

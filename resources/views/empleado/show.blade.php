@@ -78,7 +78,14 @@
                       <tr>
                         <td>{{ $cpu->tipo }}</td>
                         <td>{{ $cpu->ip }}</td>
-                        <td>{{ $cpu->estado }}</td>
+                        <td>
+                          @if ($cpu->estado=="si")
+                        <button type="button" class="btn btn-outline-success" disabled><i class='fa fa-bolt'></i></button>
+                          @else
+                          <button type="button" class="btn btn-outline-danger" disabled><i class='fa fa-bolt'></i></button>
+                          @endif
+                        
+                        </td>
                         <td>
                           <form action="" method="POST">
                             {{-- <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal4{{ $cpu->id }}"><i class="fa fa-fw fa-eye"></i></button> --}}

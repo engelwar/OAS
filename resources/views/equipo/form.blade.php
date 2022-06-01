@@ -18,6 +18,7 @@
             <th>N/S</th>
             <th>Caracteristicas</th>
             <th>Estado</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,11 @@
               <input class="form-control" type="text" name="estado[]" placeholder="Estado">
             </td>
             <td>
+              <select class="form-select" name="estado" aria-label="Default select example" required>
+                <option selected>Funcional</option>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+              </select>
               <input class="form-control d-none" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
             </td>
           </tr>
@@ -49,7 +55,7 @@
     </div>
   </div>
   <div class="form-group">
-    <button type="button" class="btn btn-success mb-2" onclick="agregarFila()">Agregar Fila</button>
+    <button type="button" class="btn btn-outline-success mb-2" onclick="agregarFila()"><i class='fa fa-plus'></i></button>
   </div>
   <div class="box-footer text-center">
     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -77,6 +83,15 @@
             </td>
             <td>
               <input class="form-control d-none" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
-            </td>`;
+            </td>
+            <td>   <button type="button" class="btn btn-outline-danger mb-2 borrar" onclick="eliminarFila()"><i class='fa fa-minus'></i></button></td>
+            `;
   }
+   //removedor de filas
+   function eliminarFila(){
+    $(document).on('click', '.borrar', function(event) {
+  event.preventDefault();
+  $(this).closest('tr').remove();
+});
+}
 </script>

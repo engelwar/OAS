@@ -35,7 +35,13 @@
                                     <td>{{ $componente->marca }}</td>
                                     <td>{{ $componente->modelo }}</td>
                                     <td>{{ $componente->caracteristicas }}</td>
-                                    <td>{{ $componente->estado }}</td>
+                                    <td>
+                                      @if ($componente->estado =="Funcional")
+                                      <button type="button" class="btn btn-outline-success" disabled><i class='fa fa-bolt'></i></button>
+                                      @else
+                                      <button type="button" class="btn btn-outline-danger" disabled><i class='fa fa-bolt'></i></button>
+                                      @endif
+                                     
                                   </tr>
                               @endforeach 
                               @endif
