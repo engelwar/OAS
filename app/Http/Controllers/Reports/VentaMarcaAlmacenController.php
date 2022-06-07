@@ -13,7 +13,7 @@ use App\Exports\CuentasPorCobrarExport;
 use DataTables; 
 use App\VentaSegmento;
 
-class VentaMarcaUserController extends Controller
+class VentaMarcaAlmacenController extends Controller
 {
     /**
      * Display a listing of the resource.

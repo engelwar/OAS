@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\User;
-use App\Stockventa;
+use App\Stockenta;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\StockExport;
+use App\Exports\StockVentaExport;
 use App\TempStockParam;
 
 class StockVentaController extends Controller
@@ -132,12 +132,11 @@ class StockVentaController extends Controller
             OR inpro.inproNomb LIKE '%" . $request->producto . "%')";
     }
     $stock = "";
-    $stocki="";
-    if($request->stock0==null)
-    {
+    $stocki = "";
+    if ($request->stock0 == null) {
       $stock = "AND (stocks.Total IS NOT NULL)";
       $stocki = "AND stocks.Total <> 0";
-    } 
+    }
     if ($request->selectAlmacen == 1) {
       $nombAlmacen = 'Ballivian';
       $idAlmacen = 7;
@@ -165,6 +164,11 @@ class StockVentaController extends Controller
     $titulos[] = ['name' => 'Ventas', 'data' => 'Ventas', 'title' => 'Ventas', 'tip' => 'decimal'];
     $titulos[] = ['name' => 'Saldo', 'data' => 'Saldo', 'title' => 'Saldo', 'tip' => 'decimal'];
 
+    $titulos_excel[] = $nombAlmacen;
+    $titulos_excel[] = 'IET';
+    $titulos_excel[] = 'Ventas';
+    $titulos_excel[] = 'Saldo';
+
     $grup_tit = [];
     $grup_t = [];
     $temp2 = [];
@@ -177,7 +181,7 @@ class StockVentaController extends Controller
           if (array_search($v->inalmCalm, $almacenes)) {
             $grup_tit[] = "ISNULL([" . $v->inalmCalm . "],0) as [" . $v->inalmCalm . "]";
             $grup_t[] = "CAST(ISNULL([" . $v->inalmCalm . "],0) as varchar) as [" . $v->inalmNomb . "]";
-            $titulos[] = ['name' => $v->inalmNomb, 'data' => $v->inalmNomb, 'title' => $v->inalmNomb, 'tip' => 'decimal'];
+            $titulos[] = ['name' => $v->inalmNomb, 'data' => $v->inalmNomb, 'title' => $v->inalmNomb, 'tip' => 'decimal', 'id' => $v->inalmNomb];
             $titulos_excel[] = $v->inalmNomb;
           }
         }
@@ -213,9 +217,8 @@ class StockVentaController extends Controller
       $x1++;
     };
 
-
     //dd(($grup_tit[4]).($grup_t[4]).($temp2[4]));
-
+    // dd($titulos_excel);
     // return dd($request->all());
     $alma = [];
     $alma_total = [];
@@ -306,22 +309,22 @@ class StockVentaController extends Controller
             WHERE maconCcon = 113 ) as marc ON inpro.inproMarc = marc.maconMarc 
         LEFT JOIN ( SELECT intrdCpro, 
         " . implode(",", $grup_tit) . ",
-        ".implode("+",$alma_total)." as 'Total'
+        " . implode("+", $alma_total) . " as 'Total'
             FROM ( SELECT intrdCpro, intraCalm, SUM(intrdCanb) as cant 
                 FROM intra JOIN intrd ON intraNtra = intrdNtra 
                 WHERE intraMdel = 0 AND intrdMdel = 0 AND intraFtra <= '" . $ffact . "' 
                 GROUP BY intrdCpro, intraCalm ) as sotck 
                 pivot ( 
                   SUM(cant) 
-                  for intraCalm IN (".implode(",",$alma).") ) as ptv ) as stocks ON stocks.intrdCpro = inpro.inproCpro ".$stocki."
+                  for intraCalm IN (" . implode(",", $alma) . ") ) as ptv ) as stocks ON stocks.intrdCpro = inpro.inproCpro " . $stocki . "
         WHERE inproMdel = 0 AND inproStat = 0 
         --AND marc.maconNomb LIKE '%%'
         --AND (inpro.inproCpro LIKE '%%' OR inpro.inproNomb LIKE '%%') 
         --AND stocks.Total 
         --AND (inpro.inproCpro LIKE '%PTLXXX003%' OR inpro.inproNomb LIKE '%PTLXXX003%')
-        ".$categ."
-        ".$prod."
-        ".$stock."
+        " . $categ . "
+        " . $prod . "
+        " . $stock . "
         GROUP BY marc.maconNomb, 
             inpro.inproCpro, 
             inpro.inproNomb, 
@@ -331,15 +334,33 @@ class StockVentaController extends Controller
 		        inpro.inproSmin,
             " . implode(",", $temp2) . "
         ORDER BY inpro.inproCpro
-        ";   
+        ";
     $test = DB::connection('sqlsrv')->select(DB::raw($query));
 
     $array = [];
+    $array_excel = [];
     foreach ($test as $val) {
       $array[] = [
-        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
+        'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, 'Ballivian' => $val->Ballivian, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, 'Calacoto' => $val->Calacoto, 'Handal' => $val->Handal, 'Mariscal' => $val->Mariscal, 'Planta' => $val->Planta, 'Pedido' => '<input id="' . $val->codigo . '" type="number" class="form-control form-control-sm" name="cantprod" value=0 min=0>
             <button type="button" class="btnAdd btn btn-primary"><i class="fas fa-plus"></i></button>', 'Total' => $val->Total
       ];
+      if ($nombAlmacen == 'Ballivian') {
+        $array_excel[] = [
+          'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, $nombAlmacen => $val->$nombAlmacen, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, $titulos_excel[9] => $val->Calacoto, $titulos_excel[10] => $val->Handal, $titulos_excel[11] => $val->Mariscal, $titulos_excel[12] => $val->Planta
+        ];
+      } elseif ($nombAlmacen == 'Calacoto') {
+        $array_excel[] = [
+          'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, $nombAlmacen => $val->$nombAlmacen, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, $titulos_excel[9] => $val->Ballivian, $titulos_excel[10] => $val->Handal, $titulos_excel[11] => $val->Mariscal, $titulos_excel[12] => $val->Planta
+        ];
+      } elseif ($nombAlmacen == 'Handal') {
+        $array_excel[] = [
+          'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, $nombAlmacen => $val->$nombAlmacen, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, $titulos_excel[9] => $val->Ballivian, $titulos_excel[10] => $val->Calacoto, $titulos_excel[11] => $val->Mariscal, $titulos_excel[12] => $val->Planta
+        ];
+      } elseif ($nombAlmacen == 'Mariscal') {
+        $array_excel[] = [
+          'categoria' => $val->categoria, 'codigo' => $val->codigo, 'descripcion' => $val->descripcion, 'umprod' => $val->umprod, $nombAlmacen => $val->$nombAlmacen, 'IET' => $val->IET, 'Ventas' => $val->Ventas, 'Ventas' => $val->Ventas, 'Saldo' => $val->Saldo, 'AC2' => $val->AC2, $titulos_excel[9] => $val->Ballivian, $titulos_excel[10] => $val->Calacoto, $titulos_excel[11] => $val->Handal, $titulos_excel[12] => $val->Planta
+        ];
+      }
     }
 
     // if ($val->Saldo < $val->MIN){
@@ -347,27 +368,16 @@ class StockVentaController extends Controller
     // } else {
     //   'Saldo' => '<span class="bg-success">'.$val->Saldo.'</span>';
     // }
-    
-    $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
-    $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
-    $titulos_excel[] = 'Total';
 
-    //if($request->gen =="export")
-    //{
-    //return dd($pvp);
-    //$export = new StockExport($test, $titulos_excel);    
-    //return Excel::download($export, 'Reporte de Stock Actual.xlsx');
-    //}
+    $titulos[] = ['name' => 'Pedido', 'data' => 'Pedido', 'title' => 'Pedido', 'tip' => 'decimal'];
+    $titulos[] = ['name' => 'Total', 'data' => 'Total', 'title' => 'Total', 'tip' => 'decimal'];
+
     if ($request->gen == "export") {
-      $pdf = \PDF::loadView('reports.pdf.stockventa')
-        ->setOrientation('landscape')
-        ->setPaper('letter')
-        ->setOption('footer-right', 'Pag [page] de [toPage]')
-        ->setOption('footer-font-size', 8);
-      return $pdf->inline('Cuentas Por Cobrar Al_.pdf');
+      $export = new StockVentaExport($array_excel, $titulos_excel);
+      return Excel::download($export, 'Reporte de Stock Venta.xlsx');
     } else {
       //return dd($titulos);
-      return view('reports.vista.stockventa', compact('test', 'array', 'titulos','nombAlmacen'));
+      return view('reports.vista.stockventa', compact('test', 'array', 'titulos', 'nombAlmacen'));
     }
     //return Excel::download(new ComprasMovExport, 'users.xlsx');
   }
@@ -383,10 +393,10 @@ class StockVentaController extends Controller
   {
     if ($request['catprod2'][0] != null) {
       foreach ($request->umprod2 as $i => $j) {
-        Stockventa::create(['catprod' => $request['catprod2'][$i], 'codprod' => $request['codprod2'][$i], 'desprod' => $request['desprod2'][$i], 'umprod' => $request['umprod2'][$i], 'canprod' => $request['canprod2'][$i], 'alm_origen' => $request['alm_origen'],'alm_destino' => $request['alm_destino'], 'cod_user' => $request['cod_user']]);
+        Stockventa::create(['catprod' => $request['catprod2'][$i], 'codprod' => $request['codprod2'][$i], 'desprod' => $request['desprod2'][$i], 'umprod' => $request['umprod2'][$i], 'canprod' => $request['canprod2'][$i], 'alm_origen' => $request['alm_origen'], 'alm_destino' => $request['alm_destino'], 'cod_user' => $request['cod_user']]);
       }
     }
-    return redirect()->route('stockventa.show2', [$request['alm_origen'],$request['alm_destino']]);
+    return redirect()->route('stockventa.show2', [$request['alm_origen'], $request['alm_destino']]);
   }
 
   public function show2($alm_origen, $alm_destino)

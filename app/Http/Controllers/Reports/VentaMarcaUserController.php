@@ -32,10 +32,10 @@ class VentaMarcaUserController extends Controller
         if($sucur == 'sucur')
         {
             $segmento = [
-                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[22,41,49,46]],
-                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[26,42,50,28]],
-                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[38,44,51,37]],
-                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
+                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[22,41,49,46,68]],
+                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[26,42,50,28,69]],
+                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[38,44,51,37,67]],
+                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57,74]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
             ];
@@ -43,18 +43,18 @@ class VentaMarcaUserController extends Controller
         else{
             $segmento = [
                 ['name'=>'RETAIL', 'abrv'=>'RETAIL', 'users'=>[42,50,26,52,32,43,51,44,38,49,22,41]],
-                ['name'=>'INSTITUCIONAL', 'abrv'=>'INST', 'users'=>[16,17,28,29,57,37,46]],
+                ['name'=>'INSTITUCIONAL', 'abrv'=>'INST', 'users'=>[16,17,28,29,57,37,46,74]],
                 ['name'=>'MAYORISTAS', 'abrv'=>'MAYO', 'users'=>[18,19,55,21,20,39,40,58]],
-                ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
+                ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9,65]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
             ];
         }  
         $grupo = [
-            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41]],
+            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41,68]],
             ['name'=>'RETAIL CALACOTO', 'abrv'=>'RETAIL CAL', 'users'=>[52,32,43]],
-            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26]],
-            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
+            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26,69]],
+            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38,67]],
         ];
         $usuario = [
             ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
@@ -73,10 +73,10 @@ class VentaMarcaUserController extends Controller
         if($sucur == 'sucur')
         {
             $segmento = [
-                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[22,41,49,46]],
-                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[26,42,50,28]],
-                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[38,44,51,37]],
-                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57]],
+                ['name'=>'BALLIVIAN', 'abrv'=>'BALLIVIAN', 'users'=>[22,41,49,46,68]],
+                ['name'=>'HANDAL', 'abrv'=>'HANDAL', 'users'=>[26,42,50,28,69]],
+                ['name'=>'MARISCAL', 'abrv'=>'MARISCAL', 'users'=>[38,44,51,37,67]],
+                ['name'=>'CALACOTO', 'abrv'=>'CALACOTO', 'users'=>[32,43,52,29,57,74]],
                 ['name'=>'CASA MATRIZ', 'abrv'=>'CASA MATRIZ', 'users'=>[16,17,18,19,55,21,20,58,3,4,9, 61, 62]],
                 ['name'=>'SANTA CRUZ', 'abrv'=>'SANTA CRUZ', 'users'=>[40, 39]],
             ];
@@ -84,18 +84,18 @@ class VentaMarcaUserController extends Controller
         else{
             $segmento = [
                 ['name'=>'RETAIL', 'abrv'=>'RETAIL', 'users'=>[42,50,26,52,32,43,51,44,38,49,22,41]],
-                ['name'=>'INSTITUCIONAL', 'abrv'=>'INST', 'users'=>[16,17,28,29,57,37,46]],
+                ['name'=>'INSTITUCIONAL', 'abrv'=>'INST', 'users'=>[16,17,28,29,57,37,46,74]],
                 ['name'=>'MAYORISTAS', 'abrv'=>'MAYO', 'users'=>[18,19,55,21,20,39,40,58]],
-                ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9]],
+                ['name'=>'ADMINISTRATIVO', 'abrv'=>'RETAIL', 'users'=>[3,4,9,65]],
                 ['name'=>'FERIA', 'abrv'=>'FERIA', 'users'=>[61]],
                 ['name'=>'CONTRATO', 'abrv'=>'CONTRATO', 'users'=>[62]],
             ];
         }  
         $grupo = [
-            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41]],
+            ['name'=>'RETAIL BALLIVIAN', 'abrv'=>'RETAIL BALL', 'users'=>[49,22,41,68]],
             ['name'=>'RETAIL CALACOTO', 'abrv'=>'RETAIL CAL', 'users'=>[52,32,43]],
-            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26]],
-            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38]],
+            ['name'=>'RETAIL HANDAL', 'abrv'=>'RETAIL HAN', 'users'=>[25,27,42,50,26,69]],
+            ['name'=>'RETAIL MARISCAL', 'abrv'=>'RETAIL MCAL', 'users'=>[51,44,38,67]],
         ];
         $usuario = [
             ['name'=>'ADRIANA CHAVEZ', 'abrv'=>'ADRIANA CHAVEZ', 'users'=>[57,29]]
