@@ -57,7 +57,7 @@ class ComputadoraController extends Controller
     
     if ($request['marca2'][0] != null) {
       foreach ($request->marca2 as $i => $j) {
-        Componente::create(['tipo' => $request['tipo2'][$i], 'marca' => $request['marca2'][$i], 'modelo' => $request['modelo2'][$i], 'caracteristicas' => $request['caracteristicas2'][$i], 'estado' => $request['estado2'][$i], 'id_compu' => $idcpu['id']]);
+        Componente::create(['tipo' => $request['tipo2'][$i], 'marca' => $request['marca2'][$i], 'modelo' => $request['modelo2'][$i], 'caracteristicas' => $request['caracteristicas2'][$i], 'estado' => $request['estado2'][$i], 'id_compu' => $idcpu['id'], 'estadoBM'=> $request['estado3'][$i]]);
       }
     }
 

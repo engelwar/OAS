@@ -23,6 +23,7 @@
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Caracteristicas</th>
+                                <th style="text-align: center">Descripcion de estado</th>
                                 <th>Estado</th>
                                 <th></th>
                               </tr>
@@ -35,8 +36,9 @@
                                     <td>{{ $componente->marca }}</td>
                                     <td>{{ $componente->modelo }}</td>
                                     <td>{{ $componente->caracteristicas }}</td>
+                                    <td>{{ $componente->estado }}</td>
                                     <td>
-                                      @if ($componente->estado =="Funcional")
+                                      @if ($componente->estadoBM =="bueno")
                                       <button type="button" class="btn btn-outline-success" disabled><i class='fa fa-bolt'></i></button>
                                       @else
                                       <button type="button" class="btn btn-outline-danger" disabled><i class='fa fa-bolt'></i></button>

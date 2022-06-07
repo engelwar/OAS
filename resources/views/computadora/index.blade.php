@@ -39,6 +39,8 @@
 										<th>Tipo</th>
 										<th>Ip</th>
 										<th>Estado</th>
+                                        
+
 
                                         <th></th>
                                     </tr>

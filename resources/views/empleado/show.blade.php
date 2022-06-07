@@ -68,8 +68,10 @@
                   <tr>
                     <th>Tipo</th>
                     <th>IP</th>
+                    <th>Nombre dispositivo</th>
+                    <th>Observacion</th>
                     <th>Estado</th>
-                    <th></th>
+                    <th>Opciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -78,6 +80,12 @@
                       <tr>
                         <td>{{ $cpu->tipo }}</td>
                         <td>{{ $cpu->ip }}</td>
+                        <td>
+                          {{$cpu->nom_dispositivo}}
+                        </td>
+                        <td>
+                          {{$cpu->observacion}}
+                        </td>
                         <td>
                           @if ($cpu->estado=="si")
                         <button type="button" class="btn btn-outline-success" disabled><i class='fa fa-bolt'></i></button>
@@ -120,7 +128,7 @@
                   <th>Marca</th>
                   <th>Tipo</th>
                   <th>Modelo</th>
-                  <th>Ns</th>
+                  <th>N/S</th>
                   <th>Caracteristicas</th>
                   <th>Estado</th>
                   <th></th>

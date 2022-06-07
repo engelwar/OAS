@@ -17,6 +17,8 @@
               
             </select>
             <input class="form-control" type="text" name="ip" id="" placeholder="IP" required>
+            <input class="form-control" type="text" name="nom_dispositivo" id="" placeholder="Nombre dispositivo" required>
+            <input class="form-control" type="text" name="observacion" id="" placeholder="Observacion" required>
             <select class="form-select" name="estado" aria-label="Default select example" required>
               <option selected>Funcional</option>
               <option value="si">Si</option>
@@ -32,6 +34,7 @@
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Caracteristicas</th>
+                  <th style="text-align: center">Descripcion de estado</th>
                   <th>Estado</th>
                 </tr>
               </thead>
@@ -50,8 +53,14 @@
                     <input class="form-control" type="text" name="caracteristicas2[]" placeholder="Caracteristicas" required>
                   </td>
                   <td>
-                    <input class="form-control" type="text" name="estado2[]" placeholder="Estado" required>
+                    <input class="form-control" type="text" name="estado2[]" placeholder="Descripcion" required>
                   </td>
+                  <td><select class="form-select"  name="estado3[]" aria-label="Default select example" required>
+                    <option selected>Estado</option>
+                    <option value="bueno">Bueno</option>
+                    <option value="malo">Malo</option>
+                  </select></td>
+                  
                   <td></td>
                 </tr>
               </tbody>
@@ -87,6 +96,11 @@
                   <td>
                     <input class="form-control" type="text" name="estado2[]" placeholder="Estado" required>
                   </td>
+                  <td><select class="form-select" name="estado3[]" aria-label="Default select example" required>
+                    <option selected>Estado</option>
+                    <option value="bueno">Bueno</option>
+                    <option value="malo">Malo</option>
+                  </select></td>
                   <td>   <button type="button" class="btn btn-outline-danger mb-2 borrar" onclick="eliminarFila()"><i class='fa fa-minus'></i></button></td>
                   `
                   ;

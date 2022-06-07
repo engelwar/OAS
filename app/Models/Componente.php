@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $caracteristicas
  * @property $estado
  * @property $id_compu
+ * @property $estadoBM
  * @property $created_at
  * @property $updated_at
  *
@@ -30,6 +31,7 @@ class Componente extends Model
 		'caracteristicas' => 'required',
 		'estado' => 'required',
 		'id_compu' => 'required',
+    'estadoBM' => 'required',
     ];
 
     protected $perPage = 20;
@@ -39,7 +41,7 @@ class Componente extends Model
      *
      * @var array
      */
-    protected $fillable = ['tipo','marca','modelo','caracteristicas','estado','id_compu'];
+    protected $fillable = ['tipo','marca','modelo','caracteristicas','estado','id_compu','estadoBM'];
 
 
 

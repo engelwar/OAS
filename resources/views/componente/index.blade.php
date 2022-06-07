@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Componente
+    Componentes
 @endsection
 
 @section('content')

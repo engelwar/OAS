@@ -27,6 +27,9 @@ class Computadora extends Model
     'ip' => 'required',
     'estado' => 'required',
     'id_empleado' => 'required',
+    'nom_dispositivo'=>'required',
+    'observacion'=>'required',
+   
   ];
 
   protected $perPage = 20;
@@ -36,7 +39,7 @@ class Computadora extends Model
    *
    * @var array
    */
-  protected $fillable = ['tipo', 'ip', 'estado', 'id_empleado'];
+  protected $fillable = ['tipo', 'ip', 'estado', 'id_empleado','nom_dispositivo','observacion'];
 
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasMany

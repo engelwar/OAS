@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <strong>Estado:</strong>
                                 {{ $computadora->estado }}
-                        sasa
+                   
                           
                         </div>
 

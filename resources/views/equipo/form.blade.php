@@ -18,6 +18,7 @@
             <th>N/S</th>
             <th>Caracteristicas</th>
             <th>Estado</th>
+            
             <th> </th>
           </tr>
         </thead>
@@ -42,11 +43,7 @@
               <input class="form-control" type="text" name="estado[]" placeholder="Estado">
             </td>
             <td>
-              <select class="form-select" name="estado" aria-label="Default select example" required>
-                <option selected>Funcional</option>
-                <option value="si">Si</option>
-                <option value="no">No</option>
-              </select>
+            
               <input class="form-control d-none" type="text" name="id_empleado[]" value="{{ $id_empleado }}">
             </td>
           </tr>
