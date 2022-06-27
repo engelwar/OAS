@@ -106,6 +106,11 @@ class CuentasPorCobrarController extends Controller
         } elseif ($request->checkfecha == 2) {
           $fil = "AND liqXCFtra BETWEEN '".$fecha1."' AND '".$fecha2."'";
         }
+        $saldo0 = "";
+        if ($request->saldo0 != "on") {
+          $saldo0 = "AND REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') != '0.00'";
+        } 
+
         $fil2 = "DECLARE @fechaA DATE
         SELECT @fechaA = '".date("d/m/Y")."'";
         $query =
@@ -186,20 +191,20 @@ class CuentasPorCobrarController extends Controller
         
         LEFT JOIN
         (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF, liqXCFtra
+            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
             FROM liqdC
             JOIN liqXC ON liqdCNtra = liqXCNtra
             WHERE liqXCMdel = 0 
             ".$fil."
-            GROUP BY liqdCNtcc, liqXCFtra
+            GROUP BY liqdCNtcc
         )as cobros
         ON cobros.liqdCNtcc = cxcTrNtra
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
+        ".$saldo0."
         ".$user."
         ".$cliente."
         ".$estado2."
         ";
-        
         $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
         $sum = DB::connection('sqlsrv')
         ->select(DB::raw
@@ -226,9 +231,10 @@ class CuentasPorCobrarController extends Controller
         estado
         FROM (". $query. ") as cxc 
         GROUP BY estado")); 
+        $requestFecha = $request->checkfecha;
         if($request->gen =="export")
         {
-            $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2'))
+            $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2','fecha', 'requestFecha'))
             ->setOrientation('landscape')
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')

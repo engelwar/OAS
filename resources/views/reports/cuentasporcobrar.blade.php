@@ -143,6 +143,12 @@
                 </select>
               </div>
             </div>
+            <div class="col-12 d-flex justify-content-center mt-2 mb-2">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="saldo0" name="saldo0" checked>
+                <label class="form-check-label" for="stock02">Mostrar Saldos en 0</label>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mb-3 row">
