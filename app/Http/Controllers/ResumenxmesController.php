@@ -1072,8 +1072,8 @@ class ResumenxmesController extends Controller
         $resum2 = DB::connection('sqlsrv')->select(DB::raw($vari . $query)); 
         $resumen2=[]; 
         //datos --------------------------------- total
-        $fini = date('01/03/2021');
-        $ffin = date('31/03/2021');
+        $fini = date('01/01/2021');
+        $ffin = date('31/01/2021');
         $vari = "DECLARE @fini DATE, @ffin DATE
     SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
     

@@ -212,7 +212,9 @@ body{
     </tbody>
 <!---prueba-->
 @foreach($resumen2 as $f => $g)                                   
-                     
+        @foreach ($resumen2T as $f2=>$g2)
+            
+        @endforeach             
 <tbody>
     @if($g)
     @foreach($total2[$f] as $h => $i)
