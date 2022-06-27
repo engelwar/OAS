@@ -51,7 +51,7 @@ class StockController extends Controller
             FROM inalm 
             WHERE inalmMdel = 0 AND inalmStat = 1 AND inalmCalm NOT IN (42, 44, 51,36,38,52)
             ORDER BY estado DESC, inalmNomb";
-
+          
             $almacen = DB::connection('sqlsrv')->select(DB::raw($alm_q));
             $almacen_grupo = [];
             foreach ($almacen as $key => $value) {
@@ -263,6 +263,7 @@ class StockController extends Controller
         //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
         $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
+        
         $titulos_excel[] = 'Total';
         if($request->gen =="export")
         {
@@ -272,7 +273,7 @@ class StockController extends Controller
         }
         else
         {
-            //return dd($titulos);
+           // return dd($titulos);
             return view('reports.vista.stock', compact('test', 'titulos'));
         }
         //return Excel::download(new ComprasMovExport, 'users.xlsx');

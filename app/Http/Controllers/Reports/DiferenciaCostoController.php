@@ -191,6 +191,7 @@ class DiferenciaCostoController extends Controller
         CLOSE MovProd_CURSOR;        
         DEALLOCATE MovProd_CURSOR;      
         ";
+ 
         $insert = DB::connection('sqlsrv')->unprepared(DB::raw($query));
         $movimientos = DB::connection('sqlsrv')
         ->select(DB::raw(

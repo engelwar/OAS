@@ -81,6 +81,7 @@ class CotizacionReportController extends Controller
         OR adusrNomb ='CONTRATOS INSTITUCIONALES'
         OR adusrNomb ='INES VELASQUEZ'
         OR adusrNomb ='GUADALUPE AMBA'
+        OR adusrNomb ='PATRICIA ROJAS'
         order by adusrNomb
 
        ";

@@ -10,6 +10,7 @@ body{
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
 <div class="container-fluid">
+   
     <div class="row mt-4 p-4">
         <div class="col-7">
             <div class="table-responsive mt-4" style="height:80vh;overflow:auto;">

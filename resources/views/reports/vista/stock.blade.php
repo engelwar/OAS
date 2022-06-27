@@ -12,6 +12,7 @@
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
 <div class="container-fluid">
+
     <div class="row justify-content-center mt-4">
         <div class="col">
             <table id="example" class="cell-border compact hover" style="width:100%">

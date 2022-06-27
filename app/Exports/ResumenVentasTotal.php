@@ -7,11 +7,12 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class ResumenVentasTotal implements FromArray, WithHeadings,ShouldAutoSize
 {
-    public function __construct(array $resum, $fini, $ffin)
+    public function __construct(array $resum, $fini, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen)
     {
         $this->resum = $resum;
         $this->fini = $fini;
         $this->ffin = $ffin;
+        
     }
 
     public function array(): array
@@ -29,7 +30,7 @@ class ResumenVentasTotal implements FromArray, WithHeadings,ShouldAutoSize
         ],
         [
             'Local',
-            'Guupo',
+            'Grupo',
             'Total',
             'Moneda',
             'Efectivo',

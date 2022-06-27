@@ -129,6 +129,9 @@ Route::prefix('reports')->group(function(){
     Route::resource('resumenventastotal', 'Reports\ResumenVentasTotalController');
     Route::resource('notasremision', 'Reports\NotasRemisionController');
 
+    
+  
+
     Route::resource('traspasos', 'Reports\TraspasosController');
     Route::resource('traspasosdetalle', 'Reports\TraspasoDetalleController');
 
@@ -273,6 +276,13 @@ Route::get('/CotizacionReporte/vistaTotal/vs','CotizacionReportController@store'
 Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
 
 Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar')->name('Cotizacion.buscar');
+
+///////////////////////////////
+Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
+//Route::get('/resumenventaspormes/vista','ResumenxmesController@store')->name('resumenventaspormes.store');
+
+    //Route::get('reports/resumenvetaspormes', 'Reports\ComparativoController@store');
+//////////////////////////////  
 
 //--------------------reporte  mixto de ventas -----------------------------------------------------------
 //Route::resource('ventamarcauserAlmacenes', 'Reports\VentaMarcaUserController');

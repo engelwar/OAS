@@ -46,6 +46,7 @@
 @include('layouts.sidebar', ['hide'=>'0']) 
 <div class="container-fluid">
     <div class="row d-flex mt-2">
+    
         <div class="offset-md-1 col-4">
             <p id="title"></p>
         </div>
