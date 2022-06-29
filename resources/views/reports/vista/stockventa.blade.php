@@ -15,12 +15,31 @@
   .sumtotal {
     display: none;
   }
+
+  table th:nth-child(6),
+  table td:nth-child(6) {
+    background-color: rgba(84, 112, 198, 0.3);
+  }
+
+  .bg-ingreso {
+    background-color: blue;
+  }
 </style>
 @endsection
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0'])
 <div class="container-fluid">
   <div class="row justify-content-center mt-4">
+    <div class="mb-1 w-25">
+      <select class="form-select" aria-label="Default select example" name="alm_origen" id="sel_alm">
+        <option value="AC2">Almacen AC2</option>
+        <option value="Planta">Almacen Planta</option>
+        <option value="Ballivian">Almacen Ballivian</option>
+        <option value="Calacoto">Almacen Calacoto</option>
+        <option value="Handal">Almacen Handal</option>
+        <option value="Mariscal">Almacen Mariscal</option>
+      </select>
+    </div>
     <div class="col">
       <table id="example" class="cell-border compact hover" style="width:100%">
         <!-- <thead>
@@ -74,19 +93,18 @@
 
 @section('mis_scripts')
 <script>
-  var json_data2 = {
-    !!json_encode($array) !!
-  };
+  var json_data2 = {!!json_encode($array) !!};
+
   const btn1 = document.getElementById('btn1');
   const table1 = document.getElementById('example');
   const table2 = document.getElementById('example2');
+  const sel_alm = document.getElementById('sel_alm');
+
   let id = 0;
   let id2 = 0;
 
-  var titulos = {
-    !!json_encode($titulos) !!
-  };
-  console.log(titulos);
+  var titulos = {!!json_encode($titulos) !!};
+  console.log(titulos[4]['name']);
   var money = [],
     decimal = [];
   titulos.forEach(function(element, key) {
@@ -104,6 +122,7 @@
         $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;"/>');
       }
     });
+
     $('#example').DataTable({
       data: json_data2,
       columns: titulos,
@@ -116,8 +135,32 @@
           "targets": [0]
         },
         {
+          className: titulos[4]['name'],
+          "targets": [4]
+        },
+        {
           className: "punto_referencia",
           "targets": [7]
+        },
+        {
+          className: "AC2",
+          "targets": [8]
+        },
+        {
+          className: "Planta",
+          "targets": [9]
+        },
+        {
+          className: titulos[10]['name'],
+          "targets": [10]
+        },
+        {
+          className: "" + titulos[11]['name'] + "",
+          "targets": [11]
+        },
+        {
+          className: "" + titulos[12]['name'] + "",
+          "targets": [12]
         },
         {
           className: "pedido_max",
@@ -188,7 +231,123 @@
             });
           }
         });
+      },
+      // createdRow: function( row, data, dataIndex ) {
+      //   sel_alm.addEventListener("click", ()=>{
+      //   let opcionAlm = sel_alm.value;
+      //   console.log("'."+opcionAlm+"'");
+      //   });
+      //   if (data['Ballivian'] == 0 ) {
+      //       let td = $(this).DataTable().cell(dataIndex,8).node();
+      //       $(td).addClass('text-success');
+      //   }
+      //   else{
+      //       let td = $(this).DataTable().cell(dataIndex,8).node();
+      //       $(td).addClass('text-danger');
+      //   }
+      // },
+    });
+
+    var table = $('#example').DataTable();
+    var data = table.row(this).data();
+
+    sel_alm.addEventListener('click', function() {
+      if (sel_alm.value == 'Ballivian') {
+        $('.Ballivian').css('background-color', 'Red');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'AC2') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'Red');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Planta') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'Red');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Calacoto') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'Red');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Handal') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'Red');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Mariscal') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'Red');
       }
+      // alert('You clicked on ' + data['Ballivian'] + "'s row");
+    });
+
+    $('.paginate_button').on('click', function(){
+      if (sel_alm.value == 'Ballivian') {
+        $('.Ballivian').css('background-color', 'Red');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'AC2') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'Red');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Planta') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'Red');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Calacoto') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'Red');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Handal') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'Red');
+        $('.Mariscal').css('background-color', 'White');
+      } else if (sel_alm.value == 'Mariscal') {
+        $('.Ballivian').css('background-color', 'White');
+        $('.AC2').css('background-color', 'White');
+        $('.Planta').css('background-color', 'White');
+        $('.Calacoto').css('background-color', 'White');
+        $('.Handal').css('background-color', 'White');
+        $('.Mariscal').css('background-color', 'Red');
+      }
+    })
+
+    $('#sel_alm').on('click', 'tr', function() {
+      var data = table.row(this).data();
+      // alert('You clicked on ' + data['Ballivian'] + "'s row");
+      $('.Ballivian').css('background-color', 'Red');
     });
 
     $("#example").on('click', '.btnAdd', function() {

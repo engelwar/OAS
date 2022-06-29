@@ -41,7 +41,7 @@ body{
                         </div>
                     </td>
                     <td style="width: 20%; text-align: right;">
-                        <h4 style="text-align: left; margin-left: 0.5cm;">N°</h4>
+                        <h3 style="text-align: left; margin-left: 0.5cm;">N° {{$data->id}}</h3>
                     </td>
                 </tr>                       
             </table>

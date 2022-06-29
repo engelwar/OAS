@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\User;
-use App\Stockenta;
+use App\Stockventa;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StockVentaExport;
 use App\TempStockParam;
@@ -409,7 +409,7 @@ class StockVentaController extends Controller
       ->where('cod_user', '=', Auth::user()->id)
       ->where('created_at', '=', $fffin)
       ->paginate(400);
-    $pdf = \PDF::loadView('reports.pdf.stockventa', compact('query', 'fffin', 'alm_origen', 'alm_destino'))
+    $pdf = \PDF::loadView('reports.pdf.stockventa', compact('query', 'fffin', 'alm_origen', 'alm_destino', 'data'))
       ->setOrientation('landscape')
       ->setPaper('letter')
       ->setOption('footer-right', 'Pag [page] de [toPage]')
