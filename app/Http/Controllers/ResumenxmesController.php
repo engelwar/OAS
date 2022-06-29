@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use mysqli;
 use DateTime;
+use Illuminate\Support\Arr;
+use PhpParser\Node\Stmt\Return_;
 
 class ResumenxmesController extends Controller
 {
@@ -47,8 +49,9 @@ class ResumenxmesController extends Controller
         $fini = date("d/m/Y", strtotime($request->fini));
         $ffin = date("d/m/Y", strtotime($request->ffin));
         $ff1=$ffin;
-        $fdia=date("d", strtotime($request->fhoy));
+       // $fdia=date("d", strtotime($request->fhoy));
         $fmes = date("d/m/Y", strtotime($request->fhoy));
+        $mesini="";
         $totalGT1='0';
         $totalGT2='0';
         $totalGT3='0';
@@ -96,29 +99,40 @@ class ResumenxmesController extends Controller
         $fx12="";
         //variables de arrays x mes
         $farray1=$farray2=$farray3=$farray4=$farray5=$farray6=$farray7=$farray8=$farray9=$farray10=$farray11=$farray12=[];
-         $fxmes=$request->options;
+         $fxmes=$request->options;// dato enviado desde la pagina de inicio <==========
 
          // variables para caso 2
        
-        $mesini=$fxmes[0];
+        $bandera=0; 
         
         $arrayAnios=array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $nn=1;
-        while($nn<=2){
-        $cc=1;    
-        for ($i=0; $i <sizeof($arrayAnios) ; $i++) { 
-            if ($mesini==$arrayAnios[$i]&&$nn==1) {
-                $cc=$i+$cc;
-                 $mesini=date("01/0"."$cc"."/2021");
-                 
-            break;
-            }
-          
+      
+        $arrayDiasF=array("31/01/202","28/02/202","31/03/202","30/04/202","31/05/202","30/06/202","31/07/202","31/08/202","30/09/202","31/10/202","30/11/202","31/12/202");       
+        if (empty($fxmes)&&$bandera==0) {
+          return dd("no se puede mandar datos nulos o vacios");
+          $bandera=1;
+        } 
+
+        if (sizeof($fxmes)>=1&&$bandera==0) {
+          $cc=1; 
+          for ($i=0; $i <sizeof($arrayAnios); $i++) { 
+            if ($arrayAnios[$i]==$fxmes[0]) {
+              $cc=$i+$cc;
+              $mesini=date("01/0"."$cc"."/2021");
+              $bandera=1;
+              break;
+            }  
+            
+          }
         }
-        $nn=$nn+1;
+       $fmesfin=$fxmes[sizeof($fxmes)-1];
+       for ($i=0; $i < sizeof($arrayAnios); $i++) { 
+        if ($arrayAnios[$i]==$fmesfin) {
+          $fmesfin=$arrayDiasF[$i];
         }
-  
-        
+       }
+       //return dd($fmesfin);
+     
 
        for ($ff=0; $ff < sizeof($fxmes); $ff++) { 
          if ($fxmes[$ff]=="ENERO"){
@@ -171,12 +185,7 @@ class ResumenxmesController extends Controller
                 $tarray1[$contador]=$totalGT1[0]->Total;
               }
 
-              
-
-
-
-
-              
+            
                 $contador=$contador+1;
             }
             
@@ -969,7 +978,9 @@ class ResumenxmesController extends Controller
         }
        }
 
-      
+//comparativo anul<----------------------------------------      
+
+       
         $contador=1;
         while($contador<=2){
             if ($contador==1) {
@@ -1021,6 +1032,1085 @@ class ResumenxmesController extends Controller
           
             $contador=$contador+1;
         }
+
+
+//-----------NOMBRES DE SUCURSALES POR MES--------------------
+      $compa=[];
+      $contar=0;
+      $su1=[];
+    
+      for ($ff=0; $ff <sizeof($fxmes); $ff++) { 
+        if ($fxmes[$ff]=="ENERO"){
+          $contador=1;
+          while($contador<=2){
+              if ($contador==1) {
+              $fini = date('01/01/2021');
+              $ffin = date('31/01/2021');
+              }
+              if ($contador==2) {
+              $fini = date('01/01/2022');
+              $ffin = date('31/01/2022');
+              }
+              $vari = "DECLARE @fini DATE, @ffin DATE
+              SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+              $query=
+              "SELECT 
+              loc as 'Local', 
+              CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+              FROM
+              (
+                  SELECT 
+                  cptraFtra as 'Fec', 
+                  adusrNomb as 'Usr',
+                  inlocNomb as 'Loc',
+                  vtvtaTotT as 'tot', 
+                  admonAbrv as 'mon', 
+                  cptraCajS as 'efe', 
+                  cptraBanS as 'ban', 
+                  cptraCxcS as 'cxc',
+                  cptraTarS as 'tar', 
+                  cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+                  FROM cptra
+                  JOIN vtVta ON vtvtaNtra = cptraNtrI
+                  JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+                  JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+                  join inloc ON inlocCloc = vtvtaCloc
+                  WHERE 
+                  cptraMdel = 0 AND cptraTtra = 21
+                 AND adusrCusr NOT IN (9,65)--NO VENDEN
+              ) as venta
+              WHERE (fec BETWEEN @fini AND @ffin)
+              GROUP BY loc, mon
+              ORDER BY loc, mon";
+           
+           $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+                
+                  for ($j=0; $j <sizeof($pp) ; $j++) { 
+                    if (empty($totalSursal3)) {
+                      $compa[$contar]=0;
+                      $contar=$contar+1;
+                     }
+                     else{
+                      $compa[$contar]=$pp[$j]->Local;
+                      $contar=$contar+1;
+                     }
+                }
+            
+                $contador=$contador+1;  
+    }
+  }  
+  if ($fxmes[$ff]=="FEBRERO"){
+    $contador=1;
+    while($contador<=2){
+        if ($contador==1) {
+        $fini = date('01/02/2021');
+        $ffin = date('28/02/2021');
+        }
+        if ($contador==2) {
+        $fini = date('01/02/2022');
+        $ffin = date('28/02/2022');
+        }
+        $vari = "DECLARE @fini DATE, @ffin DATE
+        SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+        $query=
+        "SELECT 
+        loc as 'Local', 
+        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+        FROM
+        (
+            SELECT 
+            cptraFtra as 'Fec', 
+            adusrNomb as 'Usr',
+            inlocNomb as 'Loc',
+            vtvtaTotT as 'tot', 
+            admonAbrv as 'mon', 
+            cptraCajS as 'efe', 
+            cptraBanS as 'ban', 
+            cptraCxcS as 'cxc',
+            cptraTarS as 'tar', 
+            cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+            FROM cptra
+            JOIN vtVta ON vtvtaNtra = cptraNtrI
+            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+            join inloc ON inlocCloc = vtvtaCloc
+            WHERE 
+            cptraMdel = 0 AND cptraTtra = 21
+           AND adusrCusr NOT IN (9,65)--NO VENDEN
+        ) as venta
+        WHERE (fec BETWEEN @fini AND @ffin)
+        GROUP BY loc, mon
+        ORDER BY loc, mon";
+     
+     $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+          
+            for ($j=0; $j <sizeof($pp) ; $j++) { 
+              if (empty($pp)) {
+                $compa[$$contar]=0;
+                $contar=$contar+1;
+               }
+               else{
+                $compa[$contar]=$pp[$j]->Local;
+                $contar=$contar+1;
+               }
+          }
+          $contador=$contador+1;
+   
+}
+} 
+if ($fxmes[$ff]=="MARZO"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/03/2021');
+      $ffin = date('31/03/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/03/2022');
+      $ffin = date('31/03/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+} 
+if ($fxmes[$ff]=="ABRIL"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/04/2021');
+      $ffin = date('30/04/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/04/2022');
+      $ffin = date('30/04/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+} 
+
+if ($fxmes[$ff]=="MAYO"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/05/2021');
+      $ffin = date('31/05/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/05/2022');
+      $ffin = date('31/05/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+} 
+if ($fxmes[$ff]=="JUNE"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/06/2021');
+      $ffin = date('30/06/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/06/2022');
+      $ffin = date('30/06/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+} 
+if ($fxmes[$ff]=="JULIO"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/07/2021');
+      $ffin = date('31/07/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/07/2022');
+      $ffin = date('31/07/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}
+if ($fxmes[$ff]=="AGOSTO"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/08/2021');
+      $ffin = date('31/08/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/08/2022');
+      $ffin = date('31/08/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}  
+if ($fxmes[$ff]=="SEPTIEMBRE"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/09/2021');
+      $ffin = date('30/09/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/09/2022');
+      $ffin = date('30/09/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}  
+if ($fxmes[$ff]=="OCTUBRE"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/10/2021');
+      $ffin = date('31/10/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/10/2022');
+      $ffin = date('31/10/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}  
+if ($fxmes[$ff]=="NOVIEMBRE"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/11/2021');
+      $ffin = date('30/11/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/11/2022');
+      $ffin = date('30/11/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}  
+if ($fxmes[$ff]=="DICIEMBRE"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/12/2021');
+      $ffin = date('31/12/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/12/2022');
+      $ffin = date('31/12/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        
+          for ($j=0; $j <sizeof($pp) ; $j++) { 
+            if (empty($pp)) {
+              $compa[$$contar]=0;
+              $contar=$contar+1;
+             }
+             else{
+              $compa[$contar]=$pp[$j]->Local;
+              $contar=$contar+1;
+             }
+        }
+    
+        $contador=$contador+1;
+}
+}  
+}
+
+$compa=array_unique($compa);
+$compa=array_filter($compa);
+//return dd(sizeof($compa));
+////////////////////////TOTALES DE  SUCURSAL//////////////////////////////
+$totalSt1=[];
+$totalSt11=[];
+for ($ff=0; $ff <sizeof($fxmes); $ff++) { 
+  if ($fxmes[$ff]=="ENERO"){
+    $contador=1;
+    while($contador<=2){
+        if ($contador==1) {
+        $fini = date('01/01/2021');
+        $ffin = date('31/01/2021');
+        }
+        if ($contador==2) {
+        $fini = date('01/01/2022');
+        $ffin = date('31/01/2022');
+        }
+        $vari = "DECLARE @fini DATE, @ffin DATE
+        SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+        $query=
+        "SELECT 
+        loc as 'Local', 
+        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+        FROM
+        (
+            SELECT 
+            cptraFtra as 'Fec', 
+            adusrNomb as 'Usr',
+            inlocNomb as 'Loc',
+            vtvtaTotT as 'tot', 
+            admonAbrv as 'mon', 
+            cptraCajS as 'efe', 
+            cptraBanS as 'ban', 
+            cptraCxcS as 'cxc',
+            cptraTarS as 'tar', 
+            cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+            FROM cptra
+            JOIN vtVta ON vtvtaNtra = cptraNtrI
+            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+            join inloc ON inlocCloc = vtvtaCloc
+            WHERE 
+            cptraMdel = 0 AND cptraTtra = 21
+           AND adusrCusr NOT IN (9,65)--NO VENDEN
+        ) as venta
+        WHERE (fec BETWEEN @fini AND @ffin)
+        GROUP BY loc, mon
+        ORDER BY loc, mon";
+     
+     $pp = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+              
+         
+       if ($contador==1) {
+       
+        for ($j=0; $j <sizeof($compa) ; $j++) { 
+          for ($jo=0; $jo < sizeof($pp); $jo++) { 
+            if ($compa[$j]==$pp[$jo]->Local) {
+              $totalSt1[$j]=$pp[$jo]->Total;
+            }
+          
+          }
+          if(empty($totalSt1[$j])){
+            $totalSt1[$j]=0; 
+          }
+        }
+      
+       }   
+       if ($contador==2) {
+       
+        for ($j=0; $j <sizeof($compa) ; $j++) { 
+          for ($jo=0; $jo < sizeof($pp); $jo++) { 
+            if ($compa[$j]==$pp[$jo]->Local) {
+              $totalSt11[$j]=$pp[$jo]->Total;
+            }
+          
+          }
+          if(empty($totalSt11[$j])){
+            $totalSt11[$j]=0; 
+          }
+        }
+      
+       }  
+      
+            
+      
+          $contador=$contador+1;  
+}
+}  
+}
+
+
+
+///////////////////////////////////////////////////////////
+        //totales por sucursale --------------------------
+$fmesfin=$fmesfin."1";
+//return dd($mesini.$fmesfin);
+$totalSursal1="";
+      $totalSursal2="";
+      $totalSursal3="";
+      $arraySucursal1=[];
+       $arraySucursal2=[];
+       $arraySucursal3=[];
+       $arraySucursal33=[];
+for ($ff=0; $ff < sizeof($fxmes); $ff++) { 
+  if ($ff==0){
+    $contador=1;
+    while($contador<=2){
+        if ($contador==1) {
+        $fini = date($mesini);
+        $ffin = date($fmesfin);
+        }
+      
+        $vari = "DECLARE @fini DATE, @ffin DATE
+        SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+        $query=
+        "SELECT 
+        loc as 'Local', 
+        
+        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+        FROM
+        (
+            SELECT 
+            cptraFtra as 'Fec', 
+            adusrNomb as 'Usr',
+            inlocNomb as 'Loc',
+            vtvtaTotT as 'tot', 
+            admonAbrv as 'mon', 
+            cptraCajS as 'efe', 
+            cptraBanS as 'ban', 
+            cptraCxcS as 'cxc',
+            cptraTarS as 'tar', 
+            cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+            FROM cptra
+            JOIN vtVta ON vtvtaNtra = cptraNtrI
+            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+            join inloc ON inlocCloc = vtvtaCloc
+            WHERE 
+            cptraMdel = 0 AND cptraTtra = 21
+           AND adusrCusr NOT IN (9,65)--NO VENDEN
+        ) as venta
+        WHERE (fec BETWEEN @fini AND @ffin)
+        GROUP BY loc, mon
+        ORDER BY loc, mon";
+     
+     $totalSursal3 = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+          if ($contador==1) {
+            for ($j=0; $j <sizeof($totalSursal3) ; $j++) { 
+              if (empty($totalSursal3)) {
+                $arraySucursal33[$j]="";
+               }
+               else{
+                $arraySucursal33[$j]=$totalSursal3[$j]->Local;
+               }
+          }
+      }
+    
+  
+    //return dd($arraySucursal3);
+  
+    
+        $contador=$contador+1;
+    }
+    
+  }
+
+
+
+  
+  if ($fxmes[$ff]=="ENERO"){
+     $contador=1;
+     while($contador<=2){
+         if ($contador==1) {
+         $fini = date('01/01/2021');
+         $ffin = date('31/01/2021');
+         }
+         if ($contador==2) {
+         $fini = date('01/01/2022');
+         $ffin = date('31/01/2022');
+         }
+         $vari = "DECLARE @fini DATE, @ffin DATE
+         SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+         $query=
+         "SELECT 
+         loc as 'Local', 
+         CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+         FROM
+         (
+             SELECT 
+             cptraFtra as 'Fec', 
+             adusrNomb as 'Usr',
+             inlocNomb as 'Loc',
+             vtvtaTotT as 'tot', 
+             admonAbrv as 'mon', 
+             cptraCajS as 'efe', 
+             cptraBanS as 'ban', 
+             cptraCxcS as 'cxc',
+             cptraTarS as 'tar', 
+             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+             FROM cptra
+             JOIN vtVta ON vtvtaNtra = cptraNtrI
+             JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+             JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+             join inloc ON inlocCloc = vtvtaCloc
+             WHERE 
+             cptraMdel = 0 AND cptraTtra = 21
+            AND adusrCusr NOT IN (9,65)--NO VENDEN
+         ) as venta
+         WHERE (fec BETWEEN @fini AND @ffin)
+         GROUP BY loc, mon
+         ORDER BY loc, mon";
+      
+      $totalSursal1 = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+       if (empty($totalSursal1)) {
+        $arraySucursal1[$contador]=0;
+       }
+       else{
+        $arraySucursal1[$contador]=$totalSursal1[0]->Total;
+       }
+
+     
+         $contador=$contador+1;
+     }
+     
+  }
+  if ($fxmes[$ff]=="FEBRERO"){
+    $contador=1;
+    while($contador<=2){
+        if ($contador==1) {
+        $fini = date('01/02/2021');
+        $ffin = date('28/02/2021');
+        }
+        if ($contador==2) {
+        $fini = date('01/02/2022');
+        $ffin = date('28/02/2022');
+        }
+        $vari = "DECLARE @fini DATE, @ffin DATE
+        SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+        $query=
+        "SELECT 
+        loc as 'Local', 
+        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+        FROM
+        (
+            SELECT 
+            cptraFtra as 'Fec', 
+            adusrNomb as 'Usr',
+            inlocNomb as 'Loc',
+            vtvtaTotT as 'tot', 
+            admonAbrv as 'mon', 
+            cptraCajS as 'efe', 
+            cptraBanS as 'ban', 
+            cptraCxcS as 'cxc',
+            cptraTarS as 'tar', 
+            cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+            FROM cptra
+            JOIN vtVta ON vtvtaNtra = cptraNtrI
+            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+            join inloc ON inlocCloc = vtvtaCloc
+            WHERE 
+            cptraMdel = 0 AND cptraTtra = 21
+           AND adusrCusr NOT IN (9,65)--NO VENDEN
+        ) as venta
+        WHERE (fec BETWEEN @fini AND @ffin)
+        GROUP BY loc, mon
+        ORDER BY loc, mon";
+     
+     $totalSursal2 = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+      if (empty($totalSursal2)) {
+       $arraySucursal2[$contador]=0;
+      }
+      else{
+       $arraySucursal2[$contador]=$totalSursal2[0]->Total;
+      }
+
+    
+        $contador=$contador+1;
+    }
+    
+ }
+ if ($fxmes[$ff]=="MARZO"){
+  $contador=1;
+  while($contador<=2){
+      if ($contador==1) {
+      $fini = date('01/03/2021');
+      $ffin = date('31/03/2021');
+      }
+      if ($contador==2) {
+      $fini = date('01/03/2022');
+      $ffin = date('31/03/2022');
+      }
+      $vari = "DECLARE @fini DATE, @ffin DATE
+      SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
+      $query=
+      "SELECT 
+      loc as 'Local', 
+      CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total'
+      FROM
+      (
+          SELECT 
+          cptraFtra as 'Fec', 
+          adusrNomb as 'Usr',
+          inlocNomb as 'Loc',
+          vtvtaTotT as 'tot', 
+          admonAbrv as 'mon', 
+          cptraCajS as 'efe', 
+          cptraBanS as 'ban', 
+          cptraCxcS as 'cxc',
+          cptraTarS as 'tar', 
+          cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+          FROM cptra
+          JOIN vtVta ON vtvtaNtra = cptraNtrI
+          JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+          JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+          join inloc ON inlocCloc = vtvtaCloc
+          WHERE 
+          cptraMdel = 0 AND cptraTtra = 21
+         AND adusrCusr NOT IN (9,65)--NO VENDEN
+      ) as venta
+      WHERE (fec BETWEEN @fini AND @ffin)
+      GROUP BY loc, mon
+      ORDER BY loc, mon";
+   
+   $totalSursal3 = DB::connection('sqlsrv')->select(DB::raw($vari.$query));
+        if ($contador==1) {
+          for ($j=0; $j <sizeof($totalSursal3) ; $j++) { 
+            if (empty($totalSursal3)) {
+              $arraySucursal3[$j]=0;
+             }
+             else{
+              $arraySucursal3[$j]=$totalSursal3[$j]->Total;
+             }
+        }
+    }
+    if ($contador==2) {
+      for ($j=0; $j <sizeof($totalSursal3) ; $j++) { 
+
+        if (empty($totalSursal3)) {
+          $arraySucursal3[$j]=0;
+         }
+         else{
+          $arraySucursal3[$j]=$totalSursal3[$j]->Total;
+         }
+    }
+}
+
+  //return dd($arraySucursal3);
+
+  
+      $contador=$contador+1;
+  }
+  
+}
+}
+
+//-------------------------------------------------
+
+
     ///////////////////////// resumen
     
     $vari = "DECLARE @fini DATE, @ffin DATE
@@ -1070,10 +2160,11 @@ class ResumenxmesController extends Controller
         GROUP BY loc, tip, mon
         ORDER BY loc, tip, mon";
         $resum2 = DB::connection('sqlsrv')->select(DB::raw($vari . $query)); 
+     //   return dd($resum2);
         $resumen2=[]; 
         //datos --------------------------------- total
-        $fini = date('01/01/2021');
-        $ffin = date('31/01/2021');
+        $fini = date('01/03/2021');
+        $ffin = date('31/03/2021');
         $vari = "DECLARE @fini DATE, @ffin DATE
     SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
     
@@ -1166,7 +2257,8 @@ class ResumenxmesController extends Controller
             {
                 array_push($resumen2[$value->Local], $resum2[$key]);
             }
-        }foreach ($resum2T as $key => $value) {
+        }
+        foreach ($resum2T as $key => $value) {
             if (!array_key_exists($value->Local, $resumen2T)) 
             {
                 $resumen2T[$value->Local] = [$resum2T[$key]];
@@ -1189,11 +2281,13 @@ class ResumenxmesController extends Controller
             }
         }
       
+        //return dd($total2);
  
         ///////////////////////////////////////////////////////////////
     
 
-
+         $fini='01/03/2021';
+         $ffin='31/03/2021'; 
      
         $vari = "DECLARE @fini DATE, @ffin DATE
         SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
@@ -1452,10 +2546,13 @@ class ResumenxmesController extends Controller
           
         }
 
-            return view('reports.vista.resumenxmesvista', compact('tarrayAnual','fdia','fmes','resumen','total2','resumen2','resumen2T','fxmes','ffin','tarray1','tarray2','tarray3','tarray4','tarray5','tarray6','tarray7','tarray8','tarray9','tarray10','tarray11','tarray12','fini', 'total', 'totalgen','resumenAdmin','totalQ'));
+            return view('reports.vista.resumenxmesvista', compact('compa','arraySucursal33','totalSursal3','arraySucursal1','arraySucursal2','arraySucursal3','tarrayAnual','fmes','resumen','total2','resumen2','resumen2T','fxmes','ffin','tarray1','tarray2','tarray3','tarray4','tarray5','tarray6','tarray7','tarray8','tarray9','tarray10','tarray11','tarray12','fini', 'total', 'totalgen','resumenAdmin','totalQ'));
         
        
     }
+    
+
+
 
     /**
      * Display the specified resource.
@@ -1463,6 +2560,7 @@ class ResumenxmesController extends Controller
      * @param  \App\resumenxmes  $resumenxmes
      * @return \Illuminate\Http\Response
      */
+    
     public function show(resumenxmes $resumenxmes)
     {
         //

@@ -198,32 +198,38 @@ body{
             
         </tr>  
 
-        
-
-
-
-
- 
-
-
-
-
-     
     </tbody>
+    <!--totales por sucursales-->
+   
+    
+  
+    @foreach ($compa as $key=>$val)
+    <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:solid #000 1px">
+       @if (is_null($val)  || $val=="0")
+        
+       @else
+       @if ($val!="0")
+       <td style="text-align:left" class="bold">SUCURSAL {{$val}}</td>
+       @endif
+     
+        @endif
+
+  
+    @endforeach
+
+   
 <!---prueba-->
 @foreach($resumen2 as $f => $g)                                   
-        @foreach ($resumen2T as $f2=>$g2)
-            
-        @endforeach             
+                   
 <tbody>
     @if($g)
     @foreach($total2[$f] as $h => $i)
     <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:1.1px solid #000">
     <td style="text-align:left" class="bold">SUCURSAL {{$f}}</td>
   
-    <td class="bold">{{$i->Total}}</td>
+  <!--<td class="bold">{{$i->Total}}</td>-->  
     
-  
+  <td>0</td>
     <td>0</td>
     </tr> 
 @endforeach
@@ -231,8 +237,9 @@ body{
             <tr class="text-right table-bordered derecha">
                 <td style="text-align:left" class="bold">{{$i->Tipo}}</td>
            
-    <td class="bold">{{$i->Total}}</td>
+<!--<td class="bold">{{$i->Total}}</td>-->
     
+    <td>0</td>
     <td>0</td>
             </tr>
         @endforeach
