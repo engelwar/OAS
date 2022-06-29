@@ -1819,21 +1819,7 @@ for ($ff=0; $ff <sizeof($fxmes); $ff++) {
         }
       
        }   
-       if ($contador==2) {
-       
-        for ($j=0; $j <sizeof($compa) ; $j++) { 
-          for ($jo=0; $jo < sizeof($pp); $jo++) { 
-            if ($compa[$j]==$pp[$jo]->Local) {
-              $totalSt11[$j]=$pp[$jo]->Total;
-            }
-          
-          }
-          if(empty($totalSt11[$j])){
-            $totalSt11[$j]=0; 
-          }
-        }
-      
-       }  
+  
       
             
       
