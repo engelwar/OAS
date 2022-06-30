@@ -213,8 +213,180 @@ body{
        @endif
      
         @endif
+             @if (!empty($totalSt1)&&!empty($totalSt11))
+             @if (empty($totalSt1[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt1[$key]}}</td>
+             @endif
+             @if (empty($totalSt11[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt11[$key]}}</td>
+            @endif
+             @endif
 
-  
+             @if (!empty($totalSt2)&&!empty($totalSt22))
+             @if (empty($totalSt2[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt2[$key]}}</td>
+             @endif
+             @if (empty($totalSt22[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt22[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt3)&&!empty($totalSt33))
+             @if (empty($totalSt3[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt3[$key]}}</td>
+             @endif
+             @if (empty($totalSt33[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt33[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt4)&&!empty($totalSt44))
+             @if (empty($totalSt4[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt4[$key]}}</td>
+             @endif
+             @if (empty($totalSt44[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt44[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt5)&&!empty($totalSt55))
+             @if (empty($totalSt5[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt5[$key]}}</td>
+             @endif
+             @if (empty($totalSt55[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt55[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt6)&&!empty($totalSt66))
+             @if (empty($totalSt6[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt6[$key]}}</td>
+             @endif
+             @if (empty($totalSt66[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt66[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt7)&&!empty($totalSt77))
+             @if (empty($totalSt7[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt7[$key]}}</td>
+             @endif
+             @if (empty($totalSt77[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt77[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt8)&&!empty($totalSt88))
+             @if (empty($totalSt8[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt8[$key]}}</td>
+             @endif
+             @if (empty($totalSt88[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt88[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt9)&&!empty($totalSt99))
+             @if (empty($totalSt9[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt9[$key]}}</td>
+             @endif
+             @if (empty($totalSt99[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt99[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt10)&&!empty($totalSt100))
+             @if (empty($totalSt10[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt10[$key]}}</td>
+             @endif
+             @if (empty($totalSt110[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt110[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt11)&&!empty($totalSt110))
+             @if (empty($totalSt11[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt11[$key]}}</td>
+             @endif
+             @if (empty($totalSt110[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt110[$key]}}</td>
+            @endif
+             @endif
+
+
+             @if (!empty($totalSt12)&&!empty($totalSt120))
+             @if (empty($totalSt12[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt12[$key]}}</td>
+             @endif
+             @if (empty($totalSt120[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt120[$key]}}</td>
+            @endif
+             @endif
+         
+        
+
+   
+ 
+
+       
+
+
     @endforeach
 
    
@@ -362,8 +534,8 @@ body{
                             @foreach($total[$f] as $h => $i)
                             <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:1.1px solid #000">
                             <td style="text-align:left" class="bold">SUCURSAL {{$f}}</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -396,8 +568,8 @@ body{
                                     <tr class="text-right table-bordered derecha">
                                         <td style="text-align:left" class="bold">{{$i->Tipo}}</td>
                                         <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>2</td>
+                            <td>2</td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
