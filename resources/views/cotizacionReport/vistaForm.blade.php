@@ -292,7 +292,11 @@ th:first-child div{
                 <div class="col">
                     <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
                     <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
-                   
+                    <form class="form-inline" action="" method="GET">
+                      <br>
+                      <input id="busqueda4" name="busqueda4" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar #fac (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+                      <input id="b4" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
+                    </form>
                 </div>
                 <div class="col">
                   <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
@@ -1150,6 +1154,29 @@ $(document).ready(() => {
                 }
             });
         });
+        // busca por numero de factura 
+
+        $(document).ready(() => {
+ 
+ $('#b4').click(function(evento) {
+   $('#page').text(""); 
+   evento.preventDefault();
+
+     let clave = $('#busqueda4').val().trim();
+
+     if (clave) {
+         $('table').find('tbody tr').hide();
+
+         $('table tbody tr').each(function() {
+             let nombres = $(this).children().eq(10);
+
+             if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                 $(this).show();
+             }
+         });
+     }
+ });
+});
 
 // busca estados anulados
 $(document).ready(() => {

@@ -74,6 +74,7 @@ body{
           @else
               <td class="bold">{{$val}}</td>
           @endif
+        
           @endforeach
           @endif
         <!--febrero-->
@@ -205,26 +206,35 @@ body{
   
     @foreach ($compa as $key=>$val)
     <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:solid #000 1px">
-       @if (is_null($val)  || $val=="0")
+       
+        @if (is_null($val)  || $val=="0")
         
        @else
        @if ($val!="0")
-       <td style="text-align:left" class="bold">SUCURSAL {{$val}}</td>
-       @endif
-     
+       <td style="text-align:left " class="bold">SUCURSAL {{$val}}</td>
         @endif
+   
+        @endif
+   
              @if (!empty($totalSt1)&&!empty($totalSt11))
              @if (empty($totalSt1[$key]))
              <td>0</td>
               @else
               <td>{{$totalSt1[$key]}}</td>
              @endif
+             
              @if (empty($totalSt11[$key]))
             <td>0</td>
              @else
             <td>{{$totalSt11[$key]}}</td>
             @endif
-             @endif
+            
+        @endif
+
+       
+    
+          
+    
 
              @if (!empty($totalSt2)&&!empty($totalSt22))
              @if (empty($totalSt2[$key]))
@@ -379,47 +389,35 @@ body{
             @endif
              @endif
          
+      <tr>
         
-
-   
- 
-
+      </tr>
+    </tr>
        
-
+    <!------------------DATOS TIPO SUCURSAL---------------------------->
+    @foreach ($clonL as $mu=>$im)
+       
+    @if ($im==$val)
+        @if ($otroArray[$mu]!="0")
+        <tr class="text-right table-bordered derecha">
+            <td style="text-align:left" >{{$otroArray[$mu]}}</td> 
+            <!--aqui los td-->
+            
+            <td >{{$otroArrayT[$mu]}}</td>
+            <td >{{$otroArrayT2[$mu]}}</td>
+        
+            
+           </tr>
+          
+        @endif
+        
+    
+    @endif
+    @endforeach
 
     @endforeach
 
    
-<!---prueba-->
-@foreach($resumen2 as $f => $g)                                   
-                   
-<tbody>
-    @if($g)
-    @foreach($total2[$f] as $h => $i)
-    <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:1.1px solid #000">
-    <td style="text-align:left" class="bold">SUCURSAL {{$f}}</td>
-  
-  <!--<td class="bold">{{$i->Total}}</td>-->  
-    
-  <td>0</td>
-    <td>0</td>
-    </tr> 
-@endforeach
-        @foreach($g as $h => $i)
-            <tr class="text-right table-bordered derecha">
-                <td style="text-align:left" class="bold">{{$i->Tipo}}</td>
-           
-<!--<td class="bold">{{$i->Total}}</td>-->
-    
-    <td>0</td>
-    <td>0</td>
-            </tr>
-        @endforeach
-        
-    @endif  
- 
-</tbody>
-@endforeach
 
 
 
