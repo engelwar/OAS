@@ -285,7 +285,7 @@ Route::resource('/CotizacionReporte', 'CotizacionReportController');
 //Route::get('/CotizacionReporte/ReportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');
 Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->name('prueba.show');
 
-
+Route::resource('/resumenxmes','Reports\ResumenMesVentasController');
 
 //-------------------caminos de reprotte cotizacion------------------------------------------
 // Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
@@ -297,5 +297,3 @@ Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->n
 // //Route::get('/CotizacionRepore/vistaTotal/v/edit','CotizacionReportController@edit')->name('CotizacionReporte.edit');
 // Route::any('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/update','CotizacionReportController@update')->name('CotizacionReporte.update');
 //Route::get('/CotizacionReporte', 'CotizacionReportController@sshow')->name('vistainforme.show');
-
-Route::get('pruebaview','Reports\StockVentaController@prueba')->name('prueba');
