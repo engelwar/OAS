@@ -278,7 +278,8 @@ Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','Cotizacio
 Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar')->name('Cotizacion.buscar');
 
 ///////////////////////////////
-Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
+// Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
+Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 //Route::get('/resumenventaspormes/vista','ResumenxmesController@store')->name('resumenventaspormes.store');
 
     //Route::get('reports/resumenvetaspormes', 'Reports\ComparativoController@store');
