@@ -94,13 +94,107 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
-        <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td>
+        @if ($value=="Enero")
+        <td>440,348.93</td>    
+        @endif
+        @if ($value=="Enero")
+        <td>388,409.86</td> 
+        @endif
+        
+        @if ($value=="Febrero")
+        <td>500.639,11</td>    
+        @endif
+        @if ($value=="Febrero")
+        <td>478.107,56</td> 
+        @endif
+        
+        @if ($value=="Marzo")
+        <td>177.278,10</td>    
+        @endif
+        @if ($value=="Marzo")
+        <td>128.066,42 </td> 
+        @endif
+        
+        @if ($value=="Abril")
+        <td>156.035,79</td>    
+        @endif
+        @if ($value=="Abril")
+        <td>0,00</td> 
+        @endif
+        
+        @if ($value=="Mayo")
+        <td>130.247,12
+        </td>    
+        @endif
+        @if ($value=="Mayo")
+        <td>723,02</td> 
+        @endif
+        
+        @if ($value=="Junio")
+        <td>150.236,76</td>    
+        @endif
+        @if ($value=="Junio")
+        <td>113.389,69</td> 
+        @endif
+        
+        @if ($value=="Julio")
+        <td>141.357,51</td>    
+        @endif
+        @if ($value=="Julio")
+        <td>92.619,62</td> 
+        @endif
+        
+        @if ($value=="Agosto")
+        <td>120.111,97</td>    
+        @endif
+        @if ($value=="Agosto")
+        <td>76.494,68</td> 
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td>203.046,23</td>    
+        @endif
+        @if ($value=="Septiempre")
+        <td>116.231,47</td> 
+        @endif
+        
+
+        @if ($value=="Octubre")
+        <td>132.808,72</td>    
+        @endif
+        @if ($value=="Octubre")
+        <td>95.066,21</td> 
+        @endif
+
+        @if ($value=="Noviembre")
+        <td>128.258,66</td>    
+        @endif
+        @if ($value=="Noviembre")
+        <td>195.058,58</td> 
+        @endif
+        @if ($value=="Diciembre")
+        <td>169.932,69</td>    
+        @endif
+        @if ($value=="Diciembre")
+        <td>137.845,04</td> 
+        @endif
+        
+        @if ($value=="Enero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
+            <td>142.423,02</td>
+        @else
+          @if ($value=="Febrero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
+              <td>302.272,91</td>
+          @else
+          <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td> 
+          @endif
+     
+        @endif
+        
         <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+    
+        <td>2.241.219,68</td><!--el total -->
+        <td>1.651.344,02</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
       </tr>
@@ -112,8 +206,18 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
+        
+        @if ($value=="Enero"&&$val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+        @else
         <td></td>
         <td></td>
+        @endif
+      
+
+        
+    
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
@@ -130,8 +234,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>33</td>
+        <td>33</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
@@ -147,8 +251,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[1]['HANDAL'][0]->$val1 }}</td>
         <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
         @endforeach
@@ -200,8 +304,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[2]['MARISCAL'][0]->$val1 }}</td>
         <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
         @endforeach
@@ -253,8 +357,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[3]['CALACOTO'][0]->$val1 }}</td>
         <td>{{ $total[3]['CALACOTO'][0]->$val2 }}</td>
         @endforeach
@@ -306,8 +410,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val1 }}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val2 }}</td>
         @endforeach
@@ -342,8 +446,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->$val1 }}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->$val2 }}</td>
         @endforeach
@@ -378,8 +482,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+       <td>{{$k}}</td>
+       <td>{{$k}}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val1 }}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val2 }}</td>
         @endforeach
@@ -415,8 +519,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+       <td>{{$k}}</td>
+       <td>{{$k}}</td>
         <td>{{ $total_regional[0]['REGIONAL1'][0]->$val1 }}</td>
         <td>{{ $total_regional[0]['REGIONAL1'][0]->$val2 }}</td>
         @endforeach
@@ -451,8 +555,8 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total_regional[1]['REGIONAL2'][0]->$val1 }}</td>
         <td>{{ $total_regional[1]['REGIONAL2'][0]->$val2 }}</td>
         @endforeach

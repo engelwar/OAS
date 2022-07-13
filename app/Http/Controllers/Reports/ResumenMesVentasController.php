@@ -602,10 +602,10 @@ class ResumenMesVentasController extends Controller
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_retail . "";
-      // dd($sql_total_retail);
+       //dd($sql_total_retail);
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
-
+ 
     $grupoExcel = [
       ['name' => 'BALLIVIAN', 'datos' => [
         'retail' => [
@@ -676,7 +676,7 @@ class ResumenMesVentasController extends Controller
         ],
       ]],
     ];
-
+//dd($grupoExcel);
 
     if ($request->gen == "export") {
       $export = new ResumenVentasExport();
