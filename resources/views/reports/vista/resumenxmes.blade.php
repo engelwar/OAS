@@ -37,7 +37,9 @@
     <thead class="text-white" style="background-color: #283056;">
       <TR>
         <TH colspan="1" class="text-center"></TH>
+       
         @foreach ($options as $k => $value)
+
         <TH colspan="4" class="text-center">{{$value}}</TH>
         @endforeach
         <TH colspan="4" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
@@ -77,13 +79,13 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <td>44</td>
+        <td>44</td>
         <td>{{ $total_general[0]->$val1}}</td>
         <td>{{ $total_general[0]->$val2}}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>88</td>
+        <td>88</td>
         <td>{{ $total_general[0]->Tot1}}</td>
         <td>{{ $total_general[0]->Tot2}}</td>
       </tr>
@@ -96,93 +98,69 @@
         @endphp
         @if ($value=="Enero")
         <td>440,348.93</td>    
-        @endif
-        @if ($value=="Enero")
         <td>388,409.86</td> 
         @endif
         
         @if ($value=="Febrero")
         <td>500.639,11</td>    
-        @endif
-        @if ($value=="Febrero")
         <td>478.107,56</td> 
         @endif
         
         @if ($value=="Marzo")
         <td>177.278,10</td>    
-        @endif
-        @if ($value=="Marzo")
         <td>128.066,42 </td> 
         @endif
         
         @if ($value=="Abril")
         <td>156.035,79</td>    
-        @endif
-        @if ($value=="Abril")
         <td>0,00</td> 
         @endif
         
         @if ($value=="Mayo")
         <td>130.247,12
         </td>    
-        @endif
-        @if ($value=="Mayo")
-        <td>723,02</td> 
+         <td>723,02</td> 
         @endif
         
         @if ($value=="Junio")
         <td>150.236,76</td>    
-        @endif
-        @if ($value=="Junio")
         <td>113.389,69</td> 
         @endif
         
         @if ($value=="Julio")
         <td>141.357,51</td>    
-        @endif
-        @if ($value=="Julio")
         <td>92.619,62</td> 
         @endif
         
         @if ($value=="Agosto")
         <td>120.111,97</td>    
-        @endif
-        @if ($value=="Agosto")
         <td>76.494,68</td> 
         @endif
         
         @if ($value=="Septiembre")
         <td>203.046,23</td>    
-        @endif
-        @if ($value=="Septiempre")
         <td>116.231,47</td> 
         @endif
         
 
         @if ($value=="Octubre")
         <td>132.808,72</td>    
-        @endif
-        @if ($value=="Octubre")
         <td>95.066,21</td> 
         @endif
 
         @if ($value=="Noviembre")
         <td>128.258,66</td>    
-        @endif
-        @if ($value=="Noviembre")
         <td>195.058,58</td> 
         @endif
         @if ($value=="Diciembre")
         <td>169.932,69</td>    
-        @endif
-        @if ($value=="Diciembre")
         <td>137.845,04</td> 
         @endif
         
         @if ($value=="Enero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
             <td>142.423,02</td>
         @else
-          @if ($value=="Febrero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
+          @if ($value=="Febrero"&&$total[0]['BALLIVIAN'][0]->$val2==0.00)
               <td>302.272,91</td>
           @else
           <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td> 
@@ -192,9 +170,10 @@
         
         <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
-    
+     
         <td>2.241.219,68</td><!--el total -->
         <td>1.651.344,02</td>
+       
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
       </tr>
@@ -385,8 +364,9 @@
        <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+         <td>123</td>
+      
+        <td>{{$val->adusrNomb}} {{$k}}</td>
         <td>{{ $val->Tot1 }}</td>
         <td>{{ $val->Tot2 }}</td>
       </tr>
@@ -398,13 +378,90 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td>33</td>
-        <td>33</td>
-        <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>
+        @if ($value=="Enero")
+            <td>186.044,81
+            </td>
+            <td>155.402,37
+            </td>  
+            <td>110.191,12
+            </td>            
+        @endif
+        @if ($value=="Febrero")
+        <td>268.987,64
+        </td>
+        <td>219.199,19
+        </td> 
+        <td>161.395,70
+        </td>              
+        @endif
+        @if ($value=="Marzo")
+        <td>118.553,95
+        </td>
+        <td>59.161,67
+        </td>                 
+        @endif
+        @if ($value=="Abril")
+        <td>127.472,30
+        </td>
+        <td>0,00
+        </td>                 
+        @endif
+        @if ($value=="Mayo")
+        <td>101.707,24
+        </td>
+        <td>111,72
+        </td>              
+        @endif
+        @if ($value=="Junio")
+        <td>105.679,51
+        </td>
+        <td>95.990,49
+        </td>               
+        @endif
+        @if ($value=="Julio")
+        <td>122.298,99
+        </td>
+        <td>49.237,09
+        </td>              
+        @endif
+        @if ($value=="Agosto")
+        <td>103.953,14
+        </td>
+        <td>57.718,75
+        </td>                
+        @endif
+        @if ($value=="Septiembre")
+        <td>122.265,63
+        </td>
+        <td>92.762,62
+        </td>               
+        @endif
+        @if ($value=="Octubre")
+        <td>110.176,42
+        </td>
+        <td>80.767,23
+        </td>               
+        @endif
+        @if ($value=="Noviembre")
+        <td>101.186,86
+        </td>
+        <td>181.953,82
+        </td>                
+        @endif
+        @if ($value=="Diciembre")
+        <td>143.692,43
+        </td>
+        <td>116.644,91
+        </td>                
+        @endif
+        @if ($value!="Enero"&&$value!="Febrero")
+        <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>   
+        @endif
+        
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>11</td>
+        <td>11</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
       </tr>
@@ -415,13 +472,95 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td>{{$k}}</td>
-        <td>{{$k}}</td>
+        @if ($value=="Enero")
+        <td>368.632,59
+        </td>    
+        <td>451.405,91
+        </td> 
+        @endif
+        
+        @if ($value=="Febrero")
+        <td>760.261,92
+        </td>    
+        <td>549.250,15
+        </td> 
+        @endif
+        
+        @if ($value=="Marzo")
+        <td>393.815,50
+        </td>    
+        <td>167.548,28
+        </td> 
+        @endif
+        
+        @if ($value=="Abril")
+        <td>317.294,33
+        </td>    
+        <td>91.477,34
+        </td> 
+        @endif
+        
+        @if ($value=="Mayo")
+        <td>235.646,50
+        </td>    
+         <td>100.336,76
+        </td> 
+        @endif
+        
+        @if ($value=="Junio")
+        <td>266.317,17
+        </td>    
+        <td>210.269,07
+        </td> 
+        @endif
+        
+        @if ($value=="Julio")
+        <td>343.948,62
+        </td>    
+        <td>199.998,16
+        </td> 
+        @endif
+        
+        @if ($value=="Agosto")
+        <td>296.007,78
+        </td>    
+        <td>239.477,71
+        </td> 
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td>203.046,23</td>    
+        <td>116.231,47</td> 
+        @endif
+        
+
+        @if ($value=="Octubre")
+        <td>268.364,97
+        </td>    
+        <td>237.885,30
+        </td> 
+        @endif
+
+        @if ($value=="Noviembre")
+        <td>330.136,48
+        </td>    
+        <td>356.698,17
+        </td> 
+        @endif
+        @if ($value=="Diciembre")
+        <td>335.867,93
+        </td>    
+        <td>343.440,08
+        </td> 
+        @endif
+        
+   
+       
         <td>{{ $total[1]['HANDAL'][0]->$val1 }}</td>
         <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{$k}}</td>
+        <td>{{$k}}</td>
         <td>{{ $total[1]['HANDAL'][0]->Tot1 }}</td>
         <td>{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
       </tr>
@@ -433,8 +572,9 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        <!--datp-->
+        <td>{{ $val->adusrNomb }}</td>
+        <td>{{ $val->adusrNomb }}</td>
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
@@ -1888,5 +2028,12 @@
     });
   });
   $(".page-wrapper").removeClass("toggled");
+
+
+var sum=0;
+$('.ss').each(function() {  
+ sum += parseFloat($(this).text().replace(/,/g, ''), 10);  
+}); 
+$("#t").val(sum.toFixed(2));
 </script>
 @endsection

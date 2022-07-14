@@ -605,7 +605,22 @@ class ResumenMesVentasController extends Controller
        //dd($sql_total_retail);
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
- 
+    
+    //---
+    $totalxSucursal=[
+      ['name'=>'enero','datos'=>[
+        
+        '2019'=>[
+             231267.02,368632.59,40247.20,440348.93,174490.36,173105.08,1063848.00,561600.52
+
+
+
+
+           ]
+      ]
+      ]
+    ];
+    //---
     $grupoExcel = [
       ['name' => 'BALLIVIAN', 'datos' => [
         'retail' => [
