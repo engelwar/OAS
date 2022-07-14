@@ -84,8 +84,8 @@
         <td>{{ $total_general[0]->$val1}}</td>
         <td>{{ $total_general[0]->$val2}}</td>
         @endforeach
-        <td>88</td>
-        <td>88</td>
+        <td></td>
+        <td></td>
         <td>{{ $total_general[0]->Tot1}}</td>
         <td>{{ $total_general[0]->Tot2}}</td>
       </tr>
@@ -102,59 +102,59 @@
         @endif
         
         @if ($value=="Febrero")
-        <td>500.639,11</td>    
-        <td>478.107,56</td> 
+        <td>500,639.11</td>    
+        <td>478,107.56</td> 
         @endif
         
         @if ($value=="Marzo")
-        <td>177.278,10</td>    
-        <td>128.066,42 </td> 
+        <td>177,278.10</td>    
+        <td>128,066.42 </td> 
         @endif
         
         @if ($value=="Abril")
-        <td>156.035,79</td>    
-        <td>0,00</td> 
+        <td>156,035,79</td>    
+        <td>0.00</td> 
         @endif
         
         @if ($value=="Mayo")
-        <td>130.247,12
+        <td>130,247.12
         </td>    
-         <td>723,02</td> 
+         <td>723.02</td> 
         @endif
         
         @if ($value=="Junio")
-        <td>150.236,76</td>    
-        <td>113.389,69</td> 
+        <td>150,236.76</td>    
+        <td>113,389.69</td> 
         @endif
         
         @if ($value=="Julio")
-        <td>141.357,51</td>    
-        <td>92.619,62</td> 
+        <td>141,357.51</td>    
+        <td>92,619.62</td> 
         @endif
         
         @if ($value=="Agosto")
-        <td>120.111,97</td>    
-        <td>76.494,68</td> 
+        <td>120,111.97</td>    
+        <td>76,494.68</td> 
         @endif
         
         @if ($value=="Septiembre")
-        <td>203.046,23</td>    
-        <td>116.231,47</td> 
+        <td>203,046.23</td>    
+        <td>116,231.47</td> 
         @endif
         
 
         @if ($value=="Octubre")
-        <td>132.808,72</td>    
-        <td>95.066,21</td> 
+        <td>132,808.72</td>    
+        <td>95,066.21</td> 
         @endif
 
         @if ($value=="Noviembre")
-        <td>128.258,66</td>    
-        <td>195.058,58</td> 
+        <td>128,258.66</td>    
+        <td>195,058.58</td> 
         @endif
         @if ($value=="Diciembre")
-        <td>169.932,69</td>    
-        <td>137.845,04</td> 
+        <td>169,932.69</td>    
+        <td>137,845.04</td> 
         @endif
         
         @if ($value=="Enero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
@@ -171,8 +171,8 @@
         <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
      
-        <td>2.241.219,68</td><!--el total -->
-        <td>1.651.344,02</td>
+        <td></td><!--el total -->
+        <td></td>
        
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
@@ -348,26 +348,37 @@
            @endif
         @endif
         @if ($value=="Diciembre")
-           @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
-           @endif
-           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
-           @endif
-           @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
-           @endif
+          @if ($val->adusrNomb=="CAJERO FERIA")
+          <td>176.193,96</td>
+          <td>14.004,66 </td>
+          @endif
+          @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+          <td>176.193,96</td>
+          <td>14.004,66 </td>
+          @endif
+          @if ($val->adusrNomb=="INS BALLIVIAN")
+          <td>176.193,96</td>
+          <td>14.004,66 </td>
+          @endif
         @endif
         
-       <td>{{ $val->$val1 }}</td>
+        <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
-         <td>123</td>
-      
-        <td>{{$val->adusrNomb}} {{$k}}</td>
+
+        @if ($val->adusrNomb=="CAJERO FERIA")
+          <td>0.00</td>
+          <td>0.00</td>
+        @endif
+        @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+          <td>{{ $arrayball19['libros'] }}</td>
+          <td>{{ $arrayball20['libros'] }}</td>
+        @endif
+        @if ($val->adusrNomb=="INS BALLIVIAN")
+          <td>{{ $arrayball19['instit'] }}</td>
+          <td>{{ $arrayball20['instit'] }}</td>
+        @endif
+        
         <td>{{ $val->Tot1 }}</td>
         <td>{{ $val->Tot2 }}</td>
       </tr>
@@ -461,8 +472,8 @@
         
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
-        <td>11</td>
-        <td>11</td>
+        <td>{{ $arrayball19['retail'] }}</td>
+        <td>{{ $arrayball20['retail'] }}</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
       </tr>
