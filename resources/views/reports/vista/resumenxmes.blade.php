@@ -97,71 +97,71 @@
         $val2 = $value."2";
         @endphp
         @if ($value=="Enero")
-        <td>440,348.93</td>    
-        <td>388,409.86</td> 
+        <td>407,460.98</td>    
+        <td>231,746.39</td> 
         @endif
         
         @if ($value=="Febrero")
-        <td>500.639,11</td>    
-        <td>478.107,56</td> 
+        <td>588,532.16</td>    
+        <td>507,731.51</td> 
         @endif
         
         @if ($value=="Marzo")
-        <td>177.278,10</td>    
-        <td>128.066,42 </td> 
+        <td>190,795.80</td>    
+        <td>128,066.42 </td> 
         @endif
         
         @if ($value=="Abril")
-        <td>156.035,79</td>    
-        <td>0,00</td> 
+        <td>161,199.49</td>    
+        <td>0.00</td> 
         @endif
         
         @if ($value=="Mayo")
-        <td>130.247,12
+        <td>130,247.12
         </td>    
-         <td>723,02</td> 
+         <td>723.02</td> 
         @endif
         
         @if ($value=="Junio")
-        <td>150.236,76</td>    
-        <td>113.389,69</td> 
+        <td>150,236.76</td>    
+        <td>113,389.69</td> 
         @endif
         
         @if ($value=="Julio")
-        <td>141.357,51</td>    
-        <td>92.619,62</td> 
+        <td>141,357.51</td>    
+        <td>92,619.62</td> 
         @endif
         
         @if ($value=="Agosto")
-        <td>120.111,97</td>    
-        <td>76.494,68</td> 
+        <td>159,763.92</td>    
+        <td>76,494.68</td> 
         @endif
         
         @if ($value=="Septiembre")
-        <td>203.046,23</td>    
-        <td>116.231,47</td> 
+        <td>209,057.39</td>    
+        <td>116,231.47</td> 
         @endif
         
 
         @if ($value=="Octubre")
-        <td>132.808,72</td>    
-        <td>95.066,21</td> 
+        <td>132,808.72</td>    
+        <td>95,066.21</td> 
         @endif
 
         @if ($value=="Noviembre")
-        <td>128.258,66</td>    
-        <td>195.058,58</td> 
+        <td>128,258.66</td>    
+        <td>195,058.58</td> 
         @endif
         @if ($value=="Diciembre")
-        <td>169.932,69</td>    
-        <td>137.845,04</td> 
+        <td>169,932.69</td>    
+        <td>137,845.04</td> 
         @endif
         
         @if ($value=="Enero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
-            <td>142.423,02</td>
+            <td>142,423.02</td>
         @else
-          @if ($value=="Febrero"&&$total[0]['BALLIVIAN'][0]->$val2==0.00)
-              <td>302.272,91</td>
+          @if ($value=="Febrero"&&$total[0]['BALLIVIAN'][0]->$val1==0.00)
+              <td>302,272.91</td>
           @else
           <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td> 
           @endif
@@ -171,8 +171,8 @@
         <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
      
-        <td>2.241.219,68</td><!--el total -->
-        <td>1.651.344,02</td>
+        <td>2,241,219.68</td><!--el total -->
+        <td>1,651,344.02</td>
        
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
@@ -188,181 +188,232 @@
 
         @if ($value=="Enero")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>176,193.96</td>
+            <td>14,004.66 </td>
+            <td>0.00
+            </td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>34.681,10</td>
-            <td>51.279,30</td>
+            <td>34,681.10</td>
+            <td>51,279.30</td>
+            <td>11,546.90
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>10.541,11</td>
-            <td>11.060,06</td>
+            <td>10,541.11</td>
+            <td>11,060.06</td>
+            <td>20,685.00
+            </td>
            @endif
         @endif
         @if ($value=="Febrero")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>87.893,05</td>
-            <td>29.623,95
+            <td>87,893.05</td>
+            <td>29,623.95</td>
+            <td>4,201.00
             </td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>226.669,10</td>
-            <td>244.799,70</td>
+            <td>226,669.10</td>
+            <td>244,799.70</td>
+            <td>136,346.80
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>4.982,37</td>
-            <td>14.108,67</td>
+            <td>4,982.37</td>
+            <td>14,108.67</td>
+            <td>4,530.41
+            </td>
            @endif
         @endif
         @if ($value=="Marzo")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>13.517,70
+            <td>13,517.70
             </td>
-            <td>0,00</td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>53.699,00
+            <td>53,699.00
             </td>
-            <td>37.423,20
+            <td>37,423.20
             </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>5.025,15
+            <td>5,025.15
             </td>
-            <td>31.481,55
+            <td>31,481.55
             </td>
            @endif
         @endif
         @if ($value=="Abril")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>5,163.70
+            </td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>20,797.80
+            </td>
+            <td>0.00
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>7.765.69
+            </td>
+            <td>0.00
+            </td>
            @endif
         @endif
         <!--dsadsa-->
         @if ($value=="Mayo")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>18,148.70
+            </td>
+            <td>611.30
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>10,391.18
+            </td>
+            <td>0.00</td>
            @endif
         @endif
         @if ($value=="Junio")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>9,921.65
+            </td>
+            <td>13,355.80
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>34,635.60
+            </td>
+            <td>4,043.40
+            </td>
            @endif
         @endif
         @if ($value=="Julio")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00 </td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>13,390.90
+            </td>
+            <td>6,754.60
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>5,667.62
+            </td>
+            <td>36,627.93
+            </td>
            @endif
         @endif
         @if ($value=="Agosto")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>39,651.95
+            </td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>9,987.60
+            </td>
+            <td>6,584.40
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>6,171.23
+            </td>
+            <td>12,191.53
+            </td>
            @endif
         @endif
         @if ($value=="Septiembre")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>6,011.16
+            </td>
+            <td>0,00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>29,328.05
+            </td>
+            <td>9,148.90
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>51,452.55
+            </td>
+            <td>14,319.95
+            </td>
            @endif
         @endif
         @if ($value=="Octubre")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>13,426.50
+            </td>
+            <td>14,298.98
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>9,205.80
+            </td>
+            <td></td>
            @endif
         @endif
         @if ($value=="Noviembre")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00 </td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>3,546.10
+            </td>
+            <td>12,334.70
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>23,525.70
+            </td>
+            <td>770.06
+            </td>
            @endif
         @endif
         @if ($value=="Diciembre")
            @if ($val->adusrNomb=="CAJERO FERIA")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>0.00</td>
+            <td>0.00</td>
            @endif
            @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>11,672.55
+            </td>
+            <td>8,234.82
+            </td>
            @endif
            @if ($val->adusrNomb=="INS BALLIVIAN")
-            <td>176.193,96</td>
-            <td>14.004,66 </td>
+            <td>14,567.71
+            </td>
+            <td>12,965.31
+            </td>
            @endif
         @endif
         
-       <td>{{ $val->$val1 }}</td>
+        @if ($value!="Enero"&&$value!="Febrero")
+        <td>{{ $val->$val1 }}</td> 
+        @endif
+       
         <td>{{ $val->$val2 }}</td>
         @endforeach
          <td>123</td>
@@ -380,81 +431,82 @@
         $val2 = $value."2";
         @endphp
         @if ($value=="Enero")
-            <td>186.044,81
+            <td>186,044.81
             </td>
-            <td>155.402,37
+            <td>155,402.37
             </td>  
-            <td>110.191,12
+            <td>110,191.12
             </td>            
         @endif
         @if ($value=="Febrero")
-        <td>268.987,64
+        <td>268,987.64
         </td>
-        <td>219.199,19
+        <td>219,199.19
         </td> 
-        <td>161.395,70
+        <td>161,395.70
         </td>              
         @endif
         @if ($value=="Marzo")
-        <td>118.553,95
+        <td>118,553.95
         </td>
-        <td>59.161,67
+        <td>59,161.67
         </td>                 
         @endif
         @if ($value=="Abril")
-        <td>127.472,30
+        <td>127,472.30
         </td>
-        <td>0,00
+        <td>0.00
         </td>                 
         @endif
         @if ($value=="Mayo")
-        <td>101.707,24
+        <td>101,707.24
         </td>
-        <td>111,72
+        <td>111.72
         </td>              
         @endif
         @if ($value=="Junio")
-        <td>105.679,51
+        <td>105,679.51
         </td>
-        <td>95.990,49
+        <td>95,990.49
         </td>               
         @endif
         @if ($value=="Julio")
-        <td>122.298,99
+        <td>122,298.99
         </td>
-        <td>49.237,09
+        <td>49,237.09
         </td>              
         @endif
         @if ($value=="Agosto")
-        <td>103.953,14
+        <td>103,953.14
         </td>
-        <td>57.718,75
+        <td>57,718.75
         </td>                
         @endif
         @if ($value=="Septiembre")
-        <td>122.265,63
+        <td>122,265.63
         </td>
-        <td>92.762,62
+        <td>92,762.62
         </td>               
         @endif
         @if ($value=="Octubre")
-        <td>110.176,42
+        <td>110,176.42
         </td>
-        <td>80.767,23
+        <td>80,767.23
         </td>               
         @endif
         @if ($value=="Noviembre")
         <td>101.186,86
         </td>
-        <td>181.953,82
+        <td>181,953.82
         </td>                
         @endif
         @if ($value=="Diciembre")
-        <td>143.692,43
+        <td>143,692.43
         </td>
-        <td>116.644,91
+        <td>116,644.91
         </td>                
         @endif
+
         @if ($value!="Enero"&&$value!="Febrero")
         <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>   
         @endif
@@ -474,84 +526,84 @@
         $val2 = $value."2";
         @endphp
         @if ($value=="Enero")
-        <td>368.632,59
+        <td>368,632.59
         </td>    
-        <td>451.405,91
+        <td>451,405.91
         </td> 
         @endif
         
         @if ($value=="Febrero")
-        <td>760.261,92
+        <td>760,261.92
         </td>    
-        <td>549.250,15
+        <td>549,250.15
         </td> 
         @endif
         
         @if ($value=="Marzo")
-        <td>393.815,50
+        <td>393,815.50
         </td>    
-        <td>167.548,28
+        <td>167,548.28
         </td> 
         @endif
         
         @if ($value=="Abril")
-        <td>317.294,33
+        <td>317,294.33
         </td>    
-        <td>91.477,34
+        <td>91,477.34
         </td> 
         @endif
         
         @if ($value=="Mayo")
-        <td>235.646,50
+        <td>235,646.50
         </td>    
-         <td>100.336,76
+         <td>100,336.76
         </td> 
         @endif
         
         @if ($value=="Junio")
-        <td>266.317,17
+        <td>266,317.17
         </td>    
-        <td>210.269,07
+        <td>210,269.07
         </td> 
         @endif
         
         @if ($value=="Julio")
-        <td>343.948,62
+        <td>343,948.62
         </td>    
-        <td>199.998,16
+        <td>199,998.16
         </td> 
         @endif
         
         @if ($value=="Agosto")
-        <td>296.007,78
+        <td>296,007.78
         </td>    
-        <td>239.477,71
+        <td>239,477.71
         </td> 
         @endif
         
         @if ($value=="Septiembre")
-        <td>203.046,23</td>    
-        <td>116.231,47</td> 
+        <td>203,046.23</td>    
+        <td>116,231.47</td> 
         @endif
         
 
         @if ($value=="Octubre")
-        <td>268.364,97
+        <td>268,364.97
         </td>    
-        <td>237.885,30
+        <td>237,885.30
         </td> 
         @endif
 
         @if ($value=="Noviembre")
-        <td>330.136,48
+        <td>330,136.48
         </td>    
-        <td>356.698,17
+        <td>356,698.17
         </td> 
         @endif
         @if ($value=="Diciembre")
-        <td>335.867,93
+        <td>335,867.93
         </td>    
-        <td>343.440,08
+        <td>343,440.08
         </td> 
         @endif
         
@@ -574,9 +626,197 @@
         $val2 = $value."2";
         @endphp
         <!--datp-->
-        <td>{{ $val->adusrNomb }}</td>
-        <td>{{ $val->adusrNomb }}</td>
-        <td>{{ $val->$val1 }}</td>
+       
+        @if ($value=="Enero")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>73,374.55</td>
+            <td>160,477.72
+            </td>
+            <td>90,191.79
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>18,352.20
+            </td>
+            <td>19,246.50
+            </td>
+            <td>3,183.52
+            </td>
+           @endif
+          
+        @endif
+        @if ($value=="Febrero")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>270,253.50
+            </td>
+            <td>136,762.07
+            </td>
+            <td>239,354.23
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+           <td>60,403.77
+          </td>
+          <td>97,490.70
+          </td>
+          <td>3,038.60
+          </td>
+           @endif
+     
+        @endif
+        @if ($value=="Marzo")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>216,752.61
+            </td>
+            <td>65,483.02
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>7,239.30
+            </td>
+            <td>5,770.00
+            </td>
+           @endif
+           
+        @endif
+        @if ($value=="Abril")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>129,993.47
+            </td>
+            <td>0,00</td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>3,360.31</td>
+            <td>0.00
+            </td>
+           @endif
+     
+        @endif
+        <!--dsadsa-->
+        @if ($value=="Mayo")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>91,146.81
+            </td>
+            <td>5,100.10
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>3,440.80
+            </td>
+            <td>90.00
+            </td>
+           @endif
+          
+        @endif
+        @if ($value=="Junio")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>136,632.02
+            </td>
+            <td>106,952.12
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>901.60
+            </td>
+            <td>3,616.65
+            </td>
+           @endif
+          
+        @endif
+        @if ($value=="Julio")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>159,797.08
+            </td>
+            <td>90,941.95
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>1,668.10
+            </td>
+            <td>10,415.88
+            </td>
+           @endif
+           
+        @endif
+        @if ($value=="Agosto")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>124,563.32
+            </td>
+            <td>150,566.17
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>4,047.00
+            </td>
+            <td>4,053.50
+            </td>
+           @endif
+      
+        @endif
+        @if ($value=="Septiembre")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>299,600.39
+            </td>
+            <td>171,282.83
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>4,327.40
+            </td>
+            <td>4,324.60
+            </td>
+           @endif
+           
+        @endif
+        @if ($value=="Octubre")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>144,152.54
+            </td>
+            <td>97,242.09
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>2,957.05
+            </td>
+            <td>4,062.69
+            </td>
+           @endif
+         
+        @endif
+        @if ($value=="Noviembre")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>164,127.86
+            </td>
+            <td>174,335.79
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>2,860.50
+            </td>
+            <td>3,023.73
+            </td>
+           @endif
+         
+        @endif
+        @if ($value=="Diciembre")
+           @if ($val->adusrNomb=="BENIGNA TINTA")
+            <td>143,224.22
+            </td>
+            <td>160,743.31
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
+            <td>11,672.55
+            </td>
+            <td>8,234.82
+            </td>
+           @endif
+          
+        @endif
+        @if ($value!="Enero"&&$value!="Febrero")
+        <td>{{ $val->$val1 }}</td> 
+        @endif
+   
         <td>{{ $val->$val2 }}</td>
         @endforeach
         <td></td>
@@ -592,9 +832,87 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
-        <td>{{ $total_retail[1]['HANDAL'][0]->$val1 }}</td>
+        @if ($value=="Enero")
+        <td>186,044.81
+        </td>
+        <td>155,402.37
+        </td>  
+        <td>110,191.12
+        </td>            
+    @endif
+    @if ($value=="Febrero")
+    <td>268,987.64
+    </td>
+    <td>219,199.19
+    </td> 
+    <td>161,395.70
+    </td>              
+    @endif
+    @if ($value=="Marzo")
+    <td>118,553.95
+    </td>
+    <td>59,161.67
+    </td>                 
+    @endif
+    @if ($value=="Abril")
+    <td>127.472,30
+    </td>
+    <td>0.00
+    </td>                 
+    @endif
+    @if ($value=="Mayo")
+    <td>101,707.24
+    </td>
+    <td>111.72
+    </td>              
+    @endif
+    @if ($value=="Junio")
+    <td>105,679.51
+    </td>
+    <td>95,990.49
+    </td>               
+    @endif
+    @if ($value=="Julio")
+    <td>122,298.99
+    </td>
+    <td>49,237.09
+    </td>              
+    @endif
+    @if ($value=="Agosto")
+    <td>103,953.14
+    </td>
+    <td>57,718.75
+    </td>                
+    @endif
+    @if ($value=="Septiembre")
+    <td>122,265.63
+    </td>
+    <td>92,762.62
+    </td>               
+    @endif
+    @if ($value=="Octubre")
+    <td>110,176.42
+    </td>
+    <td>80,767.23
+    </td>               
+    @endif
+    @if ($value=="Noviembre")
+    <td>101,186.86
+    </td>
+    <td>181,953.82
+    </td>                
+    @endif
+    @if ($value=="Diciembre")
+    <td>143,692.43
+    </td>
+    <td>116,644.91
+    </td>                
+    @endif
+
+    @if ($value!="Enero"&&$value!="Febrero")
+    <td>{{ $total_retail[1]['HANDAL'][0]->$val1 }}</td>   
+    @endif
+
         <td>{{ $total_retail[1]['HANDAL'][0]->$val2 }}</td>
         @endforeach
         <td></td>
