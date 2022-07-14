@@ -676,8 +676,7 @@ class ResumenMesVentasController extends Controller
         ],
       ]],
     ];
-//dd($grupoExcel);
-
+// dd($grupoExcel,$options);
     if ($request->gen == "export") {
       $export = new ResumenVentasExport();
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');

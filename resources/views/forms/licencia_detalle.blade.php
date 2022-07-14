@@ -195,6 +195,13 @@
     @elseif (Auth::user()->rol != 'admin' && $LicenciaForm->estado != null)
     <h4 class="text-bold text-danger text-center">{{$LicenciaForm->estado}}</h4>
     @endif
+    <h4 class="text-bold text-danger text-center">{{$LicenciaForm->estado}}</h4>
+    <div class="m-auto form-group row col-md-10">
+      <label for="detalle_estado" class="col-md-3 col-form-label text-md-right ml-auto">
+        {{ __('MOTIVO:') }}
+      </label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_estado">{{$LicenciaForm->detalle_estado}}</textarea>
+    </div>
   </form>
 </div>
 @section('mis_scripts')

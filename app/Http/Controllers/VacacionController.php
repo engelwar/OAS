@@ -98,6 +98,7 @@ class VacacionController extends Controller
       $vacacion->saldo_dias_l = 'CERO';
     }
     $vacacion->estado = $request->get('estado');
+    $vacacion->detalle_estado = $request->get('detalle_estado');
     $vacacion->save();
 
     return redirect()->route('vacacion.index');

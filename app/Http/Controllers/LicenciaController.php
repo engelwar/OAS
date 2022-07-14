@@ -55,6 +55,7 @@ class LicenciaController extends Controller
     $licencia->dias = $request->get('dias');
     $licencia->horas = $request->get('horas');
     $licencia->estado = $request->get('estado');
+    $licencia->detalle_estado = $request->get('detalle_estado');
     $licencia->save();
 
     return redirect()->route('licencia.index');

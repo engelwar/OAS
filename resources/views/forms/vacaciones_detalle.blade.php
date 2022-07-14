@@ -74,7 +74,7 @@
     </div>
 
     <div class="m-auto form-group row col-md-10">
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion">{{$VacacionForm->detalle_vacacion}}</textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_vacacion" required>{{$VacacionForm->detalle_vacacion}}</textarea>
     </div>
 
     <div class="d-flex flex-wrap justify-content-center">
@@ -263,23 +263,98 @@
       <button name="estado" type="submit" class="button btn btn-primary btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
     </div>
     @elseif (Auth::user()->rol != 'admin' && $VacacionForm->estado != null)
-    <h4 class="text-bold text-danger text-center">{{$VacacionForm->estado}}</h4>
     @endif
+    <h4 class="text-bold text-danger text-center">{{$VacacionForm->estado}}</h4>
+    <div class="m-auto form-group row col-md-10">
+      <label for="detalle_estado" class="col-md-3 col-form-label text-md-right ml-auto">
+        {{ __('MOTIVO:') }}
+      </label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalle_estado" required>{{$VacacionForm->detalle_estado}}</textarea>
+    </div>
   </form>
 </div>
 @endsection
 @section('mis_scripts')
 <script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
-  document.getElementById("fecha_ini_aut").addEventListener("click", function(e) {
+  var diasEntreFechas = function(desde, hasta) {
+    var dia_actual = desde;
+    var fechas = [];
+    while (dia_actual.isSameOrBefore(hasta)) {
+      fechas.push(dia_actual.format('DD-MM-YYYY'));
+      dia_actual.add(1, 'days');
+    }
+    return fechas;
+  };
+  document.getElementById("fecha_ini_aut").addEventListener("blur", function(e) {
     var fecha_ini = moment($("#fecha_ini_aut").val());
     var fecha_fin = moment($("#fecha_fin_aut").val());
-    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
+    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
+    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
+    let count = 0;
+    fechas_dias.forEach(element => {
+      feriados.forEach(element2 => {
+        if (element === element2) {
+          count++;
+        }
+      });
+    });
+    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    $("#dias").val(resul_dias);
+
+    var letras = NumeroALetras(this.value);
+    $("#dias_v_l").val(letras);
+    var val1 = $("#dias_v").val();
+    var val2 = $("#dias").val();
+    var val3 = $("#dias_tomados").val();
+    if (val2 == "") {
+      val2 = 0;
+    }
+    $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
+
+    $("#dias_l").val(letras);
+    var val1 = $("#dias_v").val();
+    var val2 = $("#dias").val();
+    var val3 = $("#dias_tomados").val();
+    if (val1 == "") {
+      val2 = 0;
+    }
+    $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
+
+    var valor = $("#dias_v").val();
+    var letras = NumeroALetras(valor);
+    $("#dias_v_l").val(letras);
+
+    var valor = $("#dias").val();
+    var letras = NumeroALetras(valor);
+    $("#dias_l").val(letras);
+
+    var valor = $("#dias_tomados").val();
+    var letras = NumeroALetras(valor);
+    $("#dias_tomados_l").val(letras);
+
+    var valor = $("#saldo_dias").val();
+    var letras = NumeroALetras(valor);
+    $("#saldo_dias_l").val(letras);
   });
-  document.getElementById("fecha_fin_aut").addEventListener("click", function(e) {
+  document.getElementById("fecha_fin_aut").addEventListener("blur", function(e) {
     var fecha_ini = moment($("#fecha_ini_aut").val());
     var fecha_fin = moment($("#fecha_fin_aut").val());
-    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
+    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
+    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
+    let count = 0;
+    fechas_dias.forEach(element => {
+      feriados.forEach(element2 => {
+        if (element === element2) {
+          count++;
+        }
+      });
+    });
+    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    $("#dias").val(resul_dias);
+
 
     var letras = NumeroALetras(this.value);
     $("#dias_v_l").val(letras);

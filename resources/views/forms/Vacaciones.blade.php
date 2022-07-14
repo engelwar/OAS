@@ -225,17 +225,51 @@
 @section('mis_scripts')
 <script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
-  document.getElementById("fecha_ini").addEventListener("click", function(e) {
+  var diasEntreFechas = function(desde, hasta) {
+    var dia_actual = desde;
+    var fechas = [];
+    while (dia_actual.isSameOrBefore(hasta)) {
+      fechas.push(dia_actual.format('DD-MM-YYYY'));
+      dia_actual.add(1, 'days');
+    }
+    return fechas;
+  };
+  document.getElementById("fecha_ini").addEventListener("blur", function(e) {
     var fecha_ini = moment($("#fecha_ini").val());
     var fecha_fin = moment($("#fecha_fin").val());
-    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
-    $("#dias_a").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
+    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
+    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
+    let count = 0;
+    fechas_dias.forEach(element => {
+      feriados.forEach(element2 => {
+        if (element === element2) {
+          count++;
+        }
+      });
+    });
+    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    $("#dias").val(resul_dias);
+    $("#dias_a").val(resul_dias);
   });
-  document.getElementById("fecha_fin").addEventListener("click", function(e) {
+  document.getElementById("fecha_fin").addEventListener("blur", function(e) {
     var fecha_ini = moment($("#fecha_ini").val());
     var fecha_fin = moment($("#fecha_fin").val());
-    $("#dias").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
-    $("#dias_a").val(parseInt(fecha_fin.diff(fecha_ini, "days") + 1));
+    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
+    
+    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
+    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
+    let count = 0;
+    fechas_dias.forEach(element => {
+      feriados.forEach(element2 => {
+        if (element === element2) {
+          count++;
+        }
+      });
+    });
+    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    $("#dias").val(resul_dias);
+    $("#dias_a").val(resul_dias);
 
     var letras = NumeroALetras(this.value);
     $("#dias_v_l").val(letras);

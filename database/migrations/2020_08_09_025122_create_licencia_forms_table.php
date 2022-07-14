@@ -22,6 +22,7 @@ class CreateLicenciaFormsTable extends Migration
             $table->string('motivo');
             $table->string('respaldo');
             $table->string('estado',10)->nullable();
+            $table->text('detalle_estado');
             $table->timestamps();
 
             $table->integer('user_id');

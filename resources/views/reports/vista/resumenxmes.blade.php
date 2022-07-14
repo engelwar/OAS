@@ -206,19 +206,183 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        
-        @if ($value=="Enero"&&$val->adusrNomb=="CAJERO FERIA")
+
+        @if ($value=="Enero")
+           @if ($val->adusrNomb=="CAJERO FERIA")
             <td>176.193,96</td>
             <td>14.004,66 </td>
-        @else
-        <td></td>
-        <td></td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>34.681,10</td>
+            <td>51.279,30</td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>10.541,11</td>
+            <td>11.060,06</td>
+           @endif
         @endif
-      
-
+        @if ($value=="Febrero")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>87.893,05</td>
+            <td>29.623,95
+            </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>226.669,10</td>
+            <td>244.799,70</td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>4.982,37</td>
+            <td>14.108,67</td>
+           @endif
+        @endif
+        @if ($value=="Marzo")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>13.517,70
+            </td>
+            <td>0,00</td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>53.699,00
+            </td>
+            <td>37.423,20
+            </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>5.025,15
+            </td>
+            <td>31.481,55
+            </td>
+           @endif
+        @endif
+        @if ($value=="Abril")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Mayo")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Junio")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Julio")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Agosto")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Septiembre")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Octubre")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Noviembre")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
+        @if ($value=="Diciembre")
+           @if ($val->adusrNomb=="CAJERO FERIA")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+           @if ($val->adusrNomb=="INS BALLIVIAN")
+            <td>176.193,96</td>
+            <td>14.004,66 </td>
+           @endif
+        @endif
         
-    
-        <td>{{ $val->$val1 }}</td>
+       <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
         <td></td>
@@ -304,8 +468,91 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td>{{$k}}</td>
-        <td>{{$k}}</td>
+      
+        @if ($value=="Enero")
+        <td>174,490.36</td>
+        @endif
+        @if ($value=="Enero")
+        <td>262,379.54</td>
+        @endif
+        
+        @if ($value=="Febrero")
+        <td>447,578.47</td>
+        @endif
+        @if ($value=="Febrero")
+        <td>430,920.20</td>
+        @endif
+        
+        @if ($value=="Marzo")
+        <td>270,316.53</td>
+        @endif
+        @if ($value=="Marzo")
+        <td>221,743.66</td>
+        @endif
+        
+        @if ($value=="Abril")
+        <td>274,469.37</td>
+        @endif
+        @if ($value=="Abril")
+        <td>19,580.20</td>
+        @endif
+        
+        @if ($value=="Mayo")
+        <td>435,706.08</td>  
+        @endif
+        @if ($value=="Mayo")
+        <td>32,775.03</td>
+        @endif
+        
+        @if ($value=="Junio")
+        <td>380,626.32</td>
+        @endif
+        @if ($value=="Junio")
+        <td>242,005.93</td>
+        @endif
+        
+        @if ($value=="Julio")
+        <td>257,768.41</td>
+        @endif
+        @if ($value=="Julio")
+        <td>271,506.99</td>
+        @endif
+        
+        @if ($value=="Agosto")
+        <td>288,075.86</td>
+        @endif
+        @if ($value=="Agosto")
+        <td>232,889.40</td>
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td>305,573.93</td>
+        @endif
+        @if ($value=="Septiembre")
+        <td>263,863.58</td>
+        @endif
+        
+        @if ($value=="Octubre")
+        <td>283,797.88</td>
+        @endif
+        @if ($value=="Octubre")
+        <td>303,518.34</td>
+        @endif
+
+        @if ($value=="Noviembre")
+        <td>282,362.07</td> 
+        @endif
+        @if ($value=="Noviembre")
+        <td>398,042.85</td>
+        @endif
+
+        @if ($value=="Diciembre")
+        <td>435,544.63</td>
+        @endif
+        @if ($value=="Diciembre")
+        <td>341,017.44</td>
+        @endif
+
         <td>{{ $total[2]['MARISCAL'][0]->$val1 }}</td>
         <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
         @endforeach
@@ -322,8 +569,128 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        
+        @if ($value=="Enero")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>415.80</td>
+          <td>589.90</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>34,817.38</td>
+          <td>57,344.91</td>
+          @endif
+        @endif
+        @if ($value=="Febrero")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>4,106.75</td>
+          <td>3,765.70</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>187,834.00</td>
+          <td>156,969.00</td>
+          @endif
+        @endif
+        @if ($value=="Marzo")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>390.00</td>
+          <td>273.80</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>142,814.11</td>
+          <td>107,689.41</td>
+          @endif
+        @endif
+        @if ($value=="Abril")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>431.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>145,192.65</td>
+          <td>19,580.20</td>
+          @endif
+        @endif
+        @if ($value=="Mayo")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>224.00</td>
+          <td>18.80</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>289,214.41</td>
+          <td>18,782.01</td>
+          @endif
+        @endif
+        @if ($value=="Junio")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>0.00</td>
+          <td>570.00</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>272,603.11</td>
+          <td>119,480.03</td>
+          @endif
+        @endif
+        @if ($value=="Julio")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>50.00</td>
+          <td>154.30</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>120,757.42</td>
+          <td>172,539.19</td>
+          @endif
+        @endif
+        @if ($value=="Agosto")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>103.50</td>
+          <td>201.70</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>155,312.17</td>
+          <td>121,706.24</td>
+          @endif
+        @endif
+        @if ($value=="Septiembre")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>132.00</td>
+          <td>545.30</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>159,496.19</td>
+          <td>121,652.88</td>
+          @endif
+        @endif
+        @if ($value=="Octubre")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>151.00</td>
+          <td>358.30</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>166,601.43</td>
+          <td>162,944.47</td>
+          @endif
+        @endif
+        @if ($value=="Noviembre")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>176.76</td>
+          <td>66.15</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>145,672.90</td>
+          <td>225,398.67</td>
+          @endif
+        @endif
+        @if ($value=="Diciembre")
+          @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
+          <td>174.24</td>
+          <td>174.80</td>
+          @endif
+          @if ($val->adusrNomb=="INS MARISCAL")
+          <td>261,670.65</td>
+          <td>145,605.58</td>
+          @endif
+        @endif
+
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
@@ -410,8 +777,91 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td>{{$k}}</td>
-        <td>{{$k}}</td>
+
+        @if ($value=="Enero")
+        <td></td>
+        @endif
+        @if ($value=="Enero")
+        <td></td>
+        @endif
+        
+        @if ($value=="Febrero")
+        <td></td>
+        @endif
+        @if ($value=="Febrero")
+        <td></td>
+        @endif
+        
+        @if ($value=="Marzo")
+        <td></td>
+        @endif
+        @if ($value=="Marzo")
+        <td></td>
+        @endif
+        
+        @if ($value=="Abril")
+        <td></td>
+        @endif
+        @if ($value=="Abril")
+        <td></td>
+        @endif
+        
+        @if ($value=="Mayo")
+        <td></td>  
+        @endif
+        @if ($value=="Mayo")
+        <td></td>
+        @endif
+        
+        @if ($value=="Junio")
+        <td></td>
+        @endif
+        @if ($value=="Junio")
+        <td></td>
+        @endif
+        
+        @if ($value=="Julio")
+        <td></td>
+        @endif
+        @if ($value=="Julio")
+        <td></td>
+        @endif
+        
+        @if ($value=="Agosto")
+        <td></td>
+        @endif
+        @if ($value=="Agosto")
+        <td></td>
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td></td>
+        @endif
+        @if ($value=="Septiembre")
+        <td></td>
+        @endif
+        
+        @if ($value=="Octubre")
+        <td></td>
+        @endif
+        @if ($value=="Octubre")
+        <td></td>
+        @endif
+
+        @if ($value=="Noviembre")
+        <td></td> 
+        @endif
+        @if ($value=="Noviembre")
+        <td></td>
+        @endif
+
+        @if ($value=="Diciembre")
+        <td></td>
+        @endif
+        @if ($value=="Diciembre")
+        <td></td>
+        @endif
+
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val1 }}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val2 }}</td>
         @endforeach
@@ -428,8 +878,268 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+        
+        @if ($value=="Enero")
+          @if ($val->adusrNomb=="GUADALUPE AMBA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="INES VELASQUEZ")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="MAGDY VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="VENTA MÓVIL 1")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Febrero")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Marzo")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Abril")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Mayo")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Junio")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Julio")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Agosto")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Septiembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Octubre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Noviembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+        @if ($value=="Diciembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td></td>
+          <td></td>
+          @endif
+        @endif
+
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
@@ -446,8 +1156,91 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td>{{$k}}</td>
-        <td>{{$k}}</td>
+
+        @if ($value=="Enero")
+        <td></td>
+        @endif
+        @if ($value=="Enero")
+        <td></td>
+        @endif
+        
+        @if ($value=="Febrero")
+        <td></td>
+        @endif
+        @if ($value=="Febrero")
+        <td></td>
+        @endif
+        
+        @if ($value=="Marzo")
+        <td></td>
+        @endif
+        @if ($value=="Marzo")
+        <td></td>
+        @endif
+        
+        @if ($value=="Abril")
+        <td></td>
+        @endif
+        @if ($value=="Abril")
+        <td></td>
+        @endif
+        
+        @if ($value=="Mayo")
+        <td></td>  
+        @endif
+        @if ($value=="Mayo")
+        <td></td>
+        @endif
+        
+        @if ($value=="Junio")
+        <td></td>
+        @endif
+        @if ($value=="Junio")
+        <td></td>
+        @endif
+        
+        @if ($value=="Julio")
+        <td></td>
+        @endif
+        @if ($value=="Julio")
+        <td></td>
+        @endif
+        
+        @if ($value=="Agosto")
+        <td></td>
+        @endif
+        @if ($value=="Agosto")
+        <td></td>
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td></td>
+        @endif
+        @if ($value=="Septiembre")
+        <td></td>
+        @endif
+        
+        @if ($value=="Octubre")
+        <td></td>
+        @endif
+        @if ($value=="Octubre")
+        <td></td>
+        @endif
+
+        @if ($value=="Noviembre")
+        <td></td> 
+        @endif
+        @if ($value=="Noviembre")
+        <td></td>
+        @endif
+
+        @if ($value=="Diciembre")
+        <td></td>
+        @endif
+        @if ($value=="Diciembre")
+        <td></td>
+        @endif
+
         <td>{{ $total[5]['MAYORISTAS'][0]->$val1 }}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->$val2 }}</td>
         @endforeach
@@ -464,8 +1257,272 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+
+        @if ($value=="Enero")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>234,000.10</td>
+          <td>132,259.06</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>167,879.50</td>
+          <td>131,158.13</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>471,071.60</td>
+          <td>695,014.10</td>
+          @endif
+        @endif
+        @if ($value=="Febrero")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>97,270.11</td>
+          <td>270,771.12</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>115,210.32</td>
+          <td>61,972.40</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>895,147.10</td>
+          <td>782,622.82</td>
+          @endif
+        @endif
+        @if ($value=="Marzo")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>40,934.00</td>
+          <td>60,769.78</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>96,938.26</td>
+          <td>12,931.50</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>315,491.86</td>
+          <td>217,131.50</td>
+          @endif
+        @endif
+        @if ($value=="Abril")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>169,941.29</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>124,334.92</td>
+          <td>0.00</td>
+          @endif
+        @endif
+        @if ($value=="Mayo")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>112,117.20</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>2,893.60</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>130,663.28</td>
+          <td>0.00</td>
+          @endif
+        @endif
+        @if ($value=="Junio")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>111,963.41</td>
+          <td>68,675.90</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>161,885.18</td>
+          <td>17,493.67</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>109,068.20</td>
+          <td>238,801.70</td>
+          @endif
+        @endif
+        @if ($value=="Julio")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>164,138.92</td>
+          <td>59,022.65</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>97,510.00</td>
+          <td>16,667.70</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>124,515.80</td>
+          <td>25,146.72</td>
+          @endif
+        @endif
+        @if ($value=="Agosto")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>164,484.67</td>
+          <td>35,017.10</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>0.00</td>
+          <td>4,194.90</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>230,540.20</td>
+          <td>41,466.10</td>
+          @endif
+        @endif
+        @if ($value=="Septiembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>132,193.47</td>
+          <td>86,120.45</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>42,805.86</td>
+          <td>56,978.16</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>229,356.82</td>
+          <td>96,174.00</td>
+          @endif
+        @endif
+        @if ($value=="Octubre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>37,255.96</td>
+          <td>126,435.72</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>35,214.65</td>
+          <td>21,349.70</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>99,367.00</td>
+          <td>82,459.50</td>
+          @endif
+        @endif
+        @if ($value=="Noviembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>106,371.44</td>
+          <td>99,285.34</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>13,531.92</td>
+          <td>24,973.50</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>66,381.80</td>
+          <td>73,258.70</td>
+          @endif
+        @endif
+        @if ($value=="Diciembre")
+          @if ($val->adusrNomb=="DAVID CUTIPA")
+          <td>0.00</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DAVID MAMANI")
+          <td>104,609.00</td>
+          <td>52,637.50</td>
+          @endif
+          @if ($val->adusrNomb=="ERWIN VILLARROEL")
+          <td>59,859.44</td>
+          <td>38,963.50</td>
+          @endif
+          @if ($val->adusrNomb=="JAVIER MACHICADO")
+          <td></td>
+          <td></td>
+          @endif
+          @if ($val->adusrNomb=="ROSALIA TICONA")
+          <td>237,718.54</td>
+          <td>63,462.40</td>
+          @endif
+        @endif
+
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
@@ -482,8 +1539,90 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-       <td>{{$k}}</td>
-       <td>{{$k}}</td>
+        @if ($value=="Enero")
+        <td>561,600.52</td>    
+        @endif
+        @if ($value=="Enero")
+        <td>676,594.54</td> 
+        @endif
+        
+        @if ($value=="Febrero")
+        <td>382,253.30</td>    
+        @endif
+        @if ($value=="Febrero")
+        <td>434,288.50</td> 
+        @endif
+        
+        @if ($value=="Marzo")
+        <td>84,672.24</td>    
+        @endif
+        @if ($value=="Marzo")
+        <td>52,518.98</td> 
+        @endif
+        
+        @if ($value=="Abril")
+        <td>72,300.00</td>    
+        @endif
+        @if ($value=="Abril")
+        <td>0.00</td> 
+        @endif
+        
+        @if ($value=="Mayo")
+        <td>50,068.46</td>    
+        @endif
+        @if ($value=="Mayo")
+        <td>0.00</td> 
+        @endif
+        
+        @if ($value=="Junio")
+        <td>56,193.50</td>    
+        @endif
+        @if ($value=="Junio")
+        <td>45,236.60</td> 
+        @endif
+        
+        @if ($value=="Julio")
+        <td>80,478.70</td>    
+        @endif
+        @if ($value=="Julio")
+        <td>36,690.80</td> 
+        @endif
+        
+        @if ($value=="Agosto")
+        <td>139,248.70</td>    
+        @endif
+        @if ($value=="Agosto")
+        <td>42,483.60</td> 
+        @endif
+        
+        @if ($value=="Septiembre")
+        <td>99,842.70</td>    
+        @endif
+        @if ($value=="Septiembre")
+        <td>82,528.00</td> 
+        @endif
+        
+        @if ($value=="Octubre")
+        <td>83,826.68</td>    
+        @endif
+        @if ($value=="Octubre")
+        <td>43,755.70</td> 
+        @endif
+
+        @if ($value=="Noviembre")
+        <td>36,459.24</td>    
+        @endif
+        @if ($value=="Noviembre")
+        <td>83,501.90</td> 
+        @endif
+
+        @if ($value=="Diciembre")
+        <td>51,365.50</td>    
+        @endif
+        @if ($value=="Diciembre")
+        <td>52,485.10</td> 
+        @endif
+
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val1 }}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val2 }}</td>
         @endforeach
@@ -500,8 +1639,128 @@
         $val1 = $value."1";
         $val2 = $value."2";
         @endphp
-        <td></td>
-        <td></td>
+      
+        @if ($value=="Enero")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>80,553.50</td>
+          <td>89,986.96</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>313,899.60</td>
+          <td>406,926.08</td>
+          @endif
+        @endif
+        @if ($value=="Febrero")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>28,458.00</td>
+          <td>76,304.52</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>84,196.20</td>
+          <td>255,675.42</td>
+          @endif
+        @endif
+        @if ($value=="Marzo")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>24,318.24</td>
+          <td>31,766.00</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>20,269.60</td>
+          <td>10,145.98</td>
+          @endif
+        @endif
+        @if ($value=="Abril")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>31,478.60</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>16,910.00</td>
+          <td>0.00</td>
+          @endif
+        @endif
+        @if ($value=="Mayo")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>8,283.20</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>16,608.14</td>
+          <td>0.00</td>
+          @endif
+        @endif
+        @if ($value=="Junio")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>8,648.30</td>
+          <td>0.00</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>24,041.60</td>
+          <td>45,236.60</td>
+          @endif
+        @endif
+        @if ($value=="Julio")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>20,896.90</td>
+          <td>8,814.20</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>23,293.10</td>
+          <td>27,876.60</td>
+          @endif
+        @endif
+        @if ($value=="Agosto")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>57,877.20</td>
+          <td>18,145.60</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>28,173.70</td>
+          <td>24,338.00</td>
+          @endif
+        @endif
+        @if ($value=="Septiembre")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>25,290.00</td>
+          <td>28,367.20</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>26,121.70</td>
+          <td>54,160.80</td>
+          @endif
+        @endif
+        @if ($value=="Octubre")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>21,738.48</td>
+          <td>25,743.70</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>14,323.20</td>
+          <td>18,012.00</td>
+          @endif
+        @endif
+        @if ($value=="Noviembre")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>9,464.04</td>
+          <td>19,773.50</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>20,671.00</td>
+          <td>63,728.40</td>
+          @endif
+        @endif
+        @if ($value=="Diciembre")
+          @if ($val->adusrNomb=="CARMELA ESCOBAR")
+          <td>8,762.00</td>
+          <td>16,035.40</td>
+          @endif
+          @if ($val->adusrNomb=="DANI CALDERON")
+          <td>22,153.30</td>
+          <td>36,449.70</td>
+          @endif
+        @endif
+
         <td>{{ $val->$val1 }}</td>
         <td>{{ $val->$val2 }}</td>
         @endforeach
