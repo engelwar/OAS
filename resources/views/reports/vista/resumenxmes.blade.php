@@ -248,6 +248,7 @@
             <td>14.004,66 </td>
            @endif
         @endif
+        <!--dsadsa-->
         @if ($value=="Mayo")
            @if ($val->adusrNomb=="CAJERO FERIA")
             <td>176.193,96</td>
