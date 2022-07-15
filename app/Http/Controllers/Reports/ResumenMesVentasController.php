@@ -40,10 +40,10 @@ class ResumenMesVentasController extends Controller
   public function store(Request $request)
   {
     $segmento = [
-      ['name'  => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46, 61, 68, 69]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68, 69]],
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
-      ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 43, 52, 29, 57, 74]],
+      ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
       ['name' => 'INSTITUCIONALES', 'abrv' => 'INSTITUCIONALES', 'users' => [16, 17, 62, 56, 3, 58, 4]],
       ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20]],
       ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
@@ -53,7 +53,11 @@ class ResumenMesVentasController extends Controller
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 50, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 51, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 52]],
+      ['name' => 'INS CALACOTO', 'abrv' => 'INS CALACOTO', 'users' => [29,57,74]],
+      ['name' => 'CAJERO LIBRO CALACOTO', 'abrv' => 'CAJERO LIBRO CALACOTO', 'users' => [43]],
+
     ];
+     
     $regional = [
       ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'usr' => [63]],
       ['name' => 'REGIONAL2', 'abrv' => 'REGIONAL2', 'usr' => [64]],
@@ -368,6 +372,7 @@ class ResumenMesVentasController extends Controller
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr . "
+      AND adusrCusr NOT IN (29,57,74)
       ORDER BY adusrNomb;
       ";
       $total_seg[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_usr))];
@@ -606,6 +611,84 @@ class ResumenMesVentasController extends Controller
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
 
+    $sql_total_retail_calacoto = "
+      SELECT 
+      " . implode($group_mes_sum) . "
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot1]),0) AS MONEY),1) AS [Tot1],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      FROM
+      (
+        SELECT *
+        FROM bd_admOlimpia.dbo.adusr
+      ) AS usr
+      LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero1],
+      ISNULL([2],0) AS [Febrero1],
+      ISNULL([3],0) AS [Marzo1],
+      ISNULL([4],0) AS [Abril1],
+      ISNULL([5],0) AS [Mayo1],
+      ISNULL([6],0) AS [Junio1],
+      ISNULL([7],0) AS [Julio1],
+      ISNULL([8],0) AS [Agosto1],
+      ISNULL([9],0) AS [Septiembre1],
+      ISNULL([10],0) AS [Octubre1],
+      ISNULL([11],0) AS [Noviembre1],
+      ISNULL([12],0) AS [Diciembre1],
+      " . implode($group_sum_tot) . " AS [tot1]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        FROM vtVta
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2021
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) totalventa1 ON totalventa1.vtvtaCusr = usr.adusrCusr
+      LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero2],
+      ISNULL([2],0) AS [Febrero2],
+      ISNULL([3],0) AS [Marzo2],
+      ISNULL([4],0) AS [Abril2],
+      ISNULL([5],0) AS [Mayo2],
+      ISNULL([6],0) AS [Junio2],
+      ISNULL([7],0) AS [Julio2],
+      ISNULL([8],0) AS [Agosto2],
+      ISNULL([9],0) AS [Septiembre2],
+      ISNULL([10],0) AS [Octubre2],
+      ISNULL([11],0) AS [Noviembre2],
+      ISNULL([12],0) AS [Diciembre2],
+      " . implode($group_sum_tot) . " AS [Tot2]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        FROM vtVta
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      WHERE adusrCusr IN (29,57,74)";
+      //dd($sql_total_retail);
+      $total_retail_calacoto = DB::connection('sqlsrv')->select(DB::raw($sql_total_retail_calacoto));
+
+      // dd($total_retail_calacoto[0]);
+
     //! BALLIVIAN
 
     $ballExcel = [
@@ -680,7 +763,7 @@ class ResumenMesVentasController extends Controller
     $mariscalExcel = [
       'retail' => [
         '2019' => ['Enero' => 139257.18, 'Febrero' => 255637.72, 'Marzo' => 127112.42, 'Abril' => 128845.72, 'Mayo' => 146267.67, 'Junio' => 108023.21, 'Julio' => 136960.99, 'Agosto' => 132660.19, 'Septiembre' => 145945.74, 'Octubre' => 117045.45, 'Noviembre' => 136512.41, 'Diciembre' => 173699.74],
-        '2020' => ['Enero' => 204444.73, 'Febrero' => 270185.50, 'Marzo' => 113780.45, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 98813.50, 'Julio' => 49237.09, 'Agosto' => 110981.46, 'Septiembre' => 141665.40, 'Octubre' => 140215.57, 'Noviembre' => 172578.03, 'Diciembre' => 195237.06],
+        '2020' => ['Enero' => 204444.73, 'Febrero' => 270185.50, 'Marzo' => 113780.45, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 121955.90, 'Julio' => 49237.09, 'Agosto' => 110981.46, 'Septiembre' => 141665.40, 'Octubre' => 140215.57, 'Noviembre' => 172578.03, 'Diciembre' => 195237.06],
         '2021' => ['Enero' => 138752.06, 'Febrero' => 250795.79],
       ],
       'libros' => [
@@ -697,7 +780,7 @@ class ResumenMesVentasController extends Controller
 
     $arrayMariscal19 = [];
     $arrayMariscal20 = [];
-    foreach ($ballExcel as $key => $value) {
+    foreach ($mariscalExcel as $key => $value) {
       // dd($key);
       foreach ($options as $i => $j) {
         $count19 = $count19 + $value[2019][$j];
@@ -714,7 +797,7 @@ class ResumenMesVentasController extends Controller
     $calacotoExcel = [
       'retail' => [
         '2019' => ['Enero' => 322633.68, 'Febrero' => 250973.59, 'Marzo' => 100386.14, 'Abril' => 110301.08, 'Mayo' => 96695.56, 'Junio' => 80235.27, 'Julio' => 109747.11, 'Agosto' => 119887.80, 'Septiembre' => 109141.26, 'Octubre' => 111221.38, 'Noviembre' => 108726.54, 'Diciembre' => 142288.64],
-        '2020' => ['Enero' => 303527.40, 'Febrero' => 196544.81, 'Marzo' => 77526.19, 'Abril' => 0, 'Mayo' => 10704.97, 'Junio' => 73498.19, 'Julio' => 76525.02, 'Agosto' => 65777.11, 'Septiembre' => 92312.48, 'Octubre' => 115002.42, 'Noviembre' => 130162.52, 'Diciembre' => 157280.18],
+        '2020' => ['Enero' => 303527.40, 'Febrero' => 196544.81, 'Marzo' => 77526.19, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 73498.19, 'Julio' => 76525.02, 'Agosto' => 65777.11, 'Septiembre' => 92312.48, 'Octubre' => 115002.42, 'Noviembre' => 130162.52, 'Diciembre' => 157280.18],
         '2021' => ['Enero' => 239079.09, 'Febrero' => 173843.24],
       ],
       'libros' => [
@@ -852,7 +935,7 @@ class ResumenMesVentasController extends Controller
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     } else {
       //return dd($titulos);
-      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20' ,'arrayHandal19', 'arrayHandal20', 'arrayMariscal19', 'arrayMariscal20', 'arrayCalacoto19', 'arrayCalacoto20', 'arrayInstitucional19', 'arrayInstitucional20', 'arrayMayoristas19', 'arrayMayoristas20', 'arraySC19', 'arraySC20'));
+      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20' ,'arrayHandal19', 'arrayHandal20', 'arrayMariscal19', 'arrayMariscal20', 'arrayCalacoto19', 'arrayCalacoto20', 'arrayInstitucional19', 'arrayInstitucional20', 'arrayMayoristas19', 'arrayMayoristas20', 'arraySC19', 'arraySC20', 'total_retail_calacoto'));
     }
   }
 
