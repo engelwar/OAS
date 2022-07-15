@@ -606,6 +606,8 @@ class ResumenMesVentasController extends Controller
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
 
+    //! BALLIVIAN
+
     $ballExcel = [
       'retail' => [
         '2019' => ['Enero' => 186044.81, 'Febrero' => 268987.64, 'Marzo' => 118553.95, 'Abril' => 127472.30, 'Mayo' => 101707.24, 'Junio' => 105679.51, 'Julio' => 122298.99, 'Agosto' => 103953.14, 'Septiembre' => 122265.63, 'Octubre' => 110176.42, 'Noviembre' => 101186.86, 'Diciembre' => 143692.43],
@@ -640,6 +642,209 @@ class ResumenMesVentasController extends Controller
       $count20 = 0;
     }
 
+    //! HANDAL
+    
+    $handalExcel = [
+      'retail' => [
+        '2019' => ['Enero' => 274144.45, 'Febrero' => 419893.24, 'Marzo' => 167023.05, 'Abril' => 179004.95, 'Mayo' => 136155.37, 'Junio' => 123860.85, 'Julio' => 176196.99, 'Agosto' => 163614.60, 'Septiembre' => 157165.02, 'Octubre' => 115504.47, 'Noviembre' => 156444.62, 'Diciembre' => 186676.54],
+        '2020' => ['Enero' => 267218.90, 'Febrero' => 306195.73, 'Marzo' => 91813.56, 'Abril' => 91052.94, 'Mayo' => 86063.26, 'Junio' => 94748.40, 'Julio' => 91624.98, 'Agosto' => 81704.04, 'Septiembre' => 150834.58, 'Octubre' => 128420.92, 'Noviembre' => 176059.77, 'Diciembre' => 177705.89],
+        '2021' => ['Enero' => 157651.54, 'Febrero' => 232684.22],
+      ],
+      'libros' => [
+        '2019' => ['Enero' => 18352.20, 'Febrero' => 60403.77, 'Marzo' => 7239.30, 'Abril' => 3360.31, 'Mayo' => 3440.80, 'Junio' => 901.60, 'Julio' => 1668.10, 'Agosto' => 4047.00, 'Septiembre' => 4327.40, 'Octubre' => 2957.05, 'Noviembre' => 2860.50, 'Diciembre' => 4111.47],
+        '2020' => ['Enero' => 19246.50, 'Febrero' => 97490.70, 'Marzo' => 5770.00, 'Abril' => 0, 'Mayo' => 90.00, 'Junio' => 3616.65, 'Julio' => 10415.88, 'Agosto' => 4053.50, 'Septiembre' => 4324.60, 'Octubre' => 4062.69, 'Noviembre' => 3023.73, 'Diciembre' => 1432.30],
+        '2021' => ['Enero' => 3183.52, 'Febrero' => 3038.60],
+      ],
+      'instit' => [
+        '2019' => ['Enero' => 73374.55, 'Febrero' => 270253.50, 'Marzo' => 216752.61, 'Abril' => 129993.47, 'Mayo' => 91146.81, 'Junio' => 136632.02, 'Julio' => 159797.08, 'Agosto' => 124563.32, 'Septiembre' => 299600.39, 'Octubre' => 144152.54, 'Noviembre' => 164127.86, 'Diciembre' => 143224.22],
+        '2020' => ['Enero' => 160477.72, 'Febrero' => 136762.07, 'Marzo' => 65483.02, 'Abril' => 0, 'Mayo' => 5100.10, 'Junio' => 106952.12, 'Julio' => 90941.95, 'Agosto' => 150566.17, 'Septiembre' => 171282.83, 'Octubre' => 97242.09, 'Noviembre' => 174335.79, 'Diciembre' => 160743.31],
+        '2021' => ['Enero' => 90191.79, 'Febrero' => 239354.23],
+      ],
+    ];
+
+    $arrayHandal19 = [];
+    $arrayHandal20 = [];
+    foreach ($handalExcel as $key => $value) {
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arrayHandal19 [$key] = $count19;
+      $arrayHandal20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
+    //! MARISCAL
+
+    $mariscalExcel = [
+      'retail' => [
+        '2019' => ['Enero' => 139257.18, 'Febrero' => 255637.72, 'Marzo' => 127112.42, 'Abril' => 128845.72, 'Mayo' => 146267.67, 'Junio' => 108023.21, 'Julio' => 136960.99, 'Agosto' => 132660.19, 'Septiembre' => 145945.74, 'Octubre' => 117045.45, 'Noviembre' => 136512.41, 'Diciembre' => 173699.74],
+        '2020' => ['Enero' => 204444.73, 'Febrero' => 270185.50, 'Marzo' => 113780.45, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 98813.50, 'Julio' => 49237.09, 'Agosto' => 110981.46, 'Septiembre' => 141665.40, 'Octubre' => 140215.57, 'Noviembre' => 172578.03, 'Diciembre' => 195237.06],
+        '2021' => ['Enero' => 138752.06, 'Febrero' => 250795.79],
+      ],
+      'libros' => [
+        '2019' => ['Enero' => 415.80, 'Febrero' => 4106.75, 'Marzo' => 390.00, 'Abril' => 431.00, 'Mayo' => 224.00, 'Junio' => 0, 'Julio' => 50.00, 'Agosto' => 103.50, 'Septiembre' => 132.00, 'Octubre' => 151.00, 'Noviembre' => 176.76, 'Diciembre' => 174.24],
+        '2020' => ['Enero' => 589.90, 'Febrero' => 3765.70, 'Marzo' => 273.80, 'Abril' => 0, 'Mayo' => 18.80, 'Junio' => 570.00, 'Julio' => 154.30, 'Agosto' => 201.70, 'Septiembre' => 545.30, 'Octubre' => 358.30, 'Noviembre' => 66.15, 'Diciembre' => 174.80],
+        '2021' => ['Enero' => 187.20, 'Febrero' => 1088.10],
+      ],
+      'instit' => [
+        '2019' => ['Enero' => 34817.38, 'Febrero' => 187834.00, 'Marzo' => 142814.11, 'Abril' => 145192.65, 'Mayo' => 289214.41, 'Junio' => 272603.11, 'Julio' => 120757.42, 'Agosto' => 155312.17, 'Septiembre' => 159496.19, 'Octubre' => 166601.43, 'Noviembre' => 145672.90, 'Diciembre' => 261670.65],
+        '2020' => ['Enero' => 57344.91, 'Febrero' => 156969.00, 'Marzo' => 107689.41, 'Abril' => 19580.20, 'Mayo' => 18782.01, 'Junio' => 119480.03, 'Julio' => 172539.19, 'Agosto' => 121706.24, 'Septiembre' => 121652.88, 'Octubre' => 162944.47, 'Noviembre' => 225398.67, 'Diciembre' => 145605.58],
+        '2021' => ['Enero' => 94396.88, 'Febrero' => 93447.16],
+      ],
+    ];
+
+    $arrayMariscal19 = [];
+    $arrayMariscal20 = [];
+    foreach ($ballExcel as $key => $value) {
+      // dd($key);
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arrayMariscal19 [$key] = $count19;
+      $arrayMariscal20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
+    //! CALACOTO
+
+    $calacotoExcel = [
+      'retail' => [
+        '2019' => ['Enero' => 322633.68, 'Febrero' => 250973.59, 'Marzo' => 100386.14, 'Abril' => 110301.08, 'Mayo' => 96695.56, 'Junio' => 80235.27, 'Julio' => 109747.11, 'Agosto' => 119887.80, 'Septiembre' => 109141.26, 'Octubre' => 111221.38, 'Noviembre' => 108726.54, 'Diciembre' => 142288.64],
+        '2020' => ['Enero' => 303527.40, 'Febrero' => 196544.81, 'Marzo' => 77526.19, 'Abril' => 0, 'Mayo' => 10704.97, 'Junio' => 73498.19, 'Julio' => 76525.02, 'Agosto' => 65777.11, 'Septiembre' => 92312.48, 'Octubre' => 115002.42, 'Noviembre' => 130162.52, 'Diciembre' => 157280.18],
+        '2021' => ['Enero' => 239079.09, 'Febrero' => 173843.24],
+      ],
+      'libros' => [
+        '2019' => ['Enero' => 49711.20, 'Febrero' => 33861.30, 'Marzo' => 2289.25, 'Abril' => 2398.98, 'Mayo' => 2322.10, 'Junio' => 2719.30, 'Julio' => 13390.90, 'Agosto' => 4454.60, 'Septiembre' => 4347.50, 'Octubre' => 3448.80, 'Noviembre' => 2425.60, 'Diciembre' => 4893.07],
+        '2020' => ['Enero' => 5368.45, 'Febrero' => 5002.50, 'Marzo' => 2860.40, 'Abril' => 2346.40, 'Mayo' => 388.34, 'Junio' => 3084.50, 'Julio' => 2842.30, 'Agosto' => 2346.40, 'Septiembre' => 2806.10, 'Octubre' => 4499.08, 'Noviembre' => 4263.41, 'Diciembre' => 4401.70],
+        '2021' => ['Enero' => 3167.52, 'Febrero' => 2191.83],
+      ],
+      'instit' => [
+        '2019' => ['Enero' => 58658.03, 'Febrero' => 36515.78, 'Marzo' => 50105.12, 'Abril' => 58344.25, 'Mayo' => 45640.09, 'Junio' => 72011.68, 'Julio' => 48594.34, 'Agosto' => 54947.39, 'Septiembre' => 68784.07, 'Octubre' => 50196.26, 'Noviembre' => 58692.88, 'Diciembre' => 66394.85],
+        '2020' => ['Enero' => 59036.27, 'Febrero' => 50183.76, 'Marzo' => 40103.23, 'Abril' => 0, 'Mayo' => 11217.54, 'Junio' => 114254.97, 'Julio' => 35625.82, 'Agosto' => 25847.90, 'Septiembre' => 79222.62, 'Octubre' => 50408.32, 'Noviembre' => 369001.97, 'Diciembre' => 64804.62],
+        '2021' => ['Enero' => 34969.61, 'Febrero' => 34207.79],
+      ],
+    ];
+
+    $arrayCalacoto19 = [];
+    $arrayCalacoto20 = [];
+    foreach ($calacotoExcel as $key => $value) {
+      // dd($key);
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arrayCalacoto19 [$key] = $count19;
+      $arrayCalacoto20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
+    //! INSTITUCIONALES
+
+    $institucionalExcel = [
+      'velasquez' => [
+        '2019' => ['Enero' => 19343.59, 'Febrero' => 46078.97, 'Marzo' => 34589.33, 'Abril' => 141123.06, 'Mayo' => 296923.93, 'Junio' => 39356.60, 'Julio' => 37778.35, 'Agosto' => 43298.50, 'Septiembre' => 123230.75, 'Octubre' => 5357.20, 'Noviembre' => 17623.95, 'Diciembre' => 22077.25],
+        '2020' => ['Enero' => 11031.27, 'Febrero' => 72659.20, 'Marzo' => 44866.42, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 51718.26, 'Julio' => 91642.54, 'Agosto' => 72648.80, 'Septiembre' => 83476.25, 'Octubre' => 120691.84, 'Noviembre' => 17,623.95, 'Diciembre' => 45986.13],
+        '2021' => ['Enero' => 7966.40, 'Febrero' => 28087.33],
+      ],
+      'gamba' => [
+        '2019' => ['Enero' => 35646.87, 'Febrero' => 152593.01, 'Marzo' => 149090.63, 'Abril' => 77952.13, 'Mayo' => 230941.47, 'Junio' => 59090.49, 'Julio' => 70894.69, 'Agosto' => 36046.11, 'Septiembre' => 131789.30, 'Octubre' => 199752.18, 'Noviembre' => 112426.35, 'Diciembre' => 30234.92],
+        '2020' => ['Enero' => 558566.78, 'Febrero' => 45122.43, 'Marzo' => 246745.56, 'Abril' => 0, 'Mayo' => 9305.10, 'Junio' => 155482.44, 'Julio' => 27380.93, 'Agosto' => 100105.90, 'Septiembre' => 54232.90, 'Octubre' => 135060.62, 'Noviembre' => 281941.17, 'Diciembre' => 139206.17],
+        '2021' => ['Enero' => 36014.22, 'Febrero' => 528808.22],
+      ],
+      // 'retail' => [
+      //   '2019' => ['Enero' => , 'Febrero' => , 'Marzo' => , 'Abril' => , 'Mayo' => , 'Junio' => , 'Julio' => , 'Agosto' => , 'Septiembre' => , 'Octubre' => , 'Noviembre' => , 'Diciembre' => ],
+      //   '2020' => ['Enero' => , 'Febrero' => , 'Marzo' => , 'Abril' => , 'Mayo' => , 'Junio' => , 'Julio' => , 'Agosto' => , 'Septiembre' => , 'Octubre' => , 'Noviembre' => , 'Diciembre' => ],
+      //   '2021' => ['Enero' => , 'Febrero' => ],
+      // ],
+    ];
+
+    $arrayInstitucional19 = [];
+    $arrayInstitucional20 = [];
+    foreach ($institucionalExcel as $key => $value) {
+      // dd($key);
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arrayInstitucional19 [$key] = $count19;
+      $arrayInstitucional20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
+    //! MAYORISTAS
+
+    $mayoristasExcel = [
+      'ticona' => [
+        '2019' => ['Enero' => 471071.60, 'Febrero' => 895147.10, 'Marzo' => 315491.86, 'Abril' => 124334.92, 'Mayo' => 130663.28, 'Junio' => 109068.20, 'Julio' => 124515.80, 'Agosto' => 230540.20, 'Septiembre' => 229356.82, 'Octubre' => 99367.00, 'Noviembre' => 66381.80, 'Diciembre' => 237718.54],
+        '2020' => ['Enero' => 695014.10, 'Febrero' => 782622.82, 'Marzo' => 217131.50, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 238801.70, 'Julio' => 25146.72, 'Agosto' => 41466.10, 'Septiembre' => 96174.00, 'Octubre' => 82459.50, 'Noviembre' => 73258.70, 'Diciembre' => 63462.40],
+        '2021' => ['Enero' => 233271.20, 'Febrero' => 592159.80],
+      ],
+      'villarroel' => [
+        '2019' => ['Enero' => 167879.50, 'Febrero' => 115210.32, 'Marzo' => 96938.26, 'Abril' => 0, 'Mayo' => 2893.60, 'Junio' => 161885.18, 'Julio' => 97510.00, 'Agosto' => 0, 'Septiembre' => 42805.86, 'Octubre' => 35214.65, 'Noviembre' => 13531.92, 'Diciembre' => 59859.44],
+        '2020' => ['Enero' => 131158.13, 'Febrero' => 61972.40, 'Marzo' => 12931.50, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 17493.67, 'Julio' => 16667.70, 'Agosto' => 4194.90, 'Septiembre' => 56978.16, 'Octubre' => 21349.70, 'Noviembre' => 24973.50, 'Diciembre' => 38963.50],
+        '2021' => ['Enero' => 60634.90, 'Febrero' => 81860.45],
+      ],
+      'mamani' => [
+        '2019' => ['Enero' => 234000.10, 'Febrero' => 97270.11, 'Marzo' => 40934.00, 'Abril' => 169941.29, 'Mayo' => 112117.20, 'Junio' => 111963.41, 'Julio' => 164138.92, 'Agosto' => 164484.67, 'Septiembre' => 132193.47, 'Octubre' => 37255.96, 'Noviembre' => 106371.44, 'Diciembre' => 104609.00],
+        '2020' => ['Enero' => 132259.06, 'Febrero' => 270771.12, 'Marzo' => 60769.78, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 68675.90, 'Julio' => 59022.65, 'Agosto' => 35017.10, 'Septiembre' => 86120.45, 'Octubre' => 126435.72, 'Noviembre' => 99285.34, 'Diciembre' => 52637.50],
+        '2021' => ['Enero' => 171059.50, 'Febrero' => 136383.62],
+      ],
+      'cutipa' => [
+        '2019' => ['Enero' => 0, 'Febrero' => 0, 'Marzo' => 0, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 0, 'Septiembre' => 0, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
+        '2020' => ['Enero' => 0, 'Febrero' => 0, 'Marzo' => 0, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 0, 'Septiembre' => 0, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
+        '2021' => ['Enero' => 0, 'Febrero' => 0],
+      ],
+    ];
+
+    $arrayMayoristas19 = [];
+    $arrayMayoristas20 = [];
+    foreach ($mayoristasExcel as $key => $value) {
+      // dd($key);
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arrayMayoristas19 [$key] = $count19;
+      $arrayMayoristas20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
+    //! SANTA CRUZ
+
+    $SCExcel = [
+      'calderon' => [
+        '2019' => ['Enero' => 313899.60, 'Febrero' => 84196.20, 'Marzo' => 20269.60, 'Abril' => 16910.00, 'Mayo' => 16608.14, 'Junio' => 24041.60, 'Julio' => 23293.10, 'Agosto' => 28173.70, 'Septiembre' => 26121.70, 'Octubre' => 14323.20, 'Noviembre' => 20671.00, 'Diciembre' => 22153.30],
+        '2020' => ['Enero' => 406926.08, 'Febrero' => 255675.42, 'Marzo' => 10145.98, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 45236.60, 'Julio' => 27876.60, 'Agosto' => 24338.00, 'Septiembre' => 54160.80, 'Octubre' => 18012.00, 'Noviembre' => 63728.40, 'Diciembre' => 36449.70],
+        '2021' => ['Enero' => 79235.80, 'Febrero' => 103164.00],
+      ],
+      'escobar' => [
+        '2019' => ['Enero' => 80553.50, 'Febrero' => 28458.00, 'Marzo' => 24318.24, 'Abril' => 31478.60, 'Mayo' => 8283.20, 'Junio' => 8648.30, 'Julio' => 20896.90, 'Agosto' => 57877.20, 'Septiembre' => 25290.00, 'Octubre' => 21738.48, 'Noviembre' => 9464.04, 'Diciembre' => 8762.00],
+        '2020' => ['Enero' => 89986.96, 'Febrero' => 76304.52, 'Marzo' => 31766.00, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 8814.20, 'Agosto' => 18145.60, 'Septiembre' => 28367.20, 'Octubre' => 25743.70, 'Noviembre' => 19773.50, 'Diciembre' => 16035.40],
+        '2021' => ['Enero' => 77633.50, 'Febrero' => 89201.20],
+      ],
+    ];
+
+    $arraySC19 = [];
+    $arraySC20 = [];
+    foreach ($SCExcel as $key => $value) {
+      // dd($key);
+      foreach ($options as $i => $j) {
+        $count19 = $count19 + $value[2019][$j];
+        $count20 = $count20 + $value[2020][$j];
+      }
+      $arraySC19 [$key] = $count19;
+      $arraySC20 [$key] = $count20;
+      $count19 = 0;
+      $count20 = 0;
+    }
+
     // dd($arrayball19['retail']);
     
     if ($request->gen == "export") {
@@ -647,7 +852,7 @@ class ResumenMesVentasController extends Controller
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     } else {
       //return dd($titulos);
-      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20'));
+      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20' ,'arrayHandal19', 'arrayHandal20', 'arrayMariscal19', 'arrayMariscal20', 'arrayCalacoto19', 'arrayCalacoto20', 'arrayInstitucional19', 'arrayInstitucional20', 'arrayMayoristas19', 'arrayMayoristas20', 'arraySC19', 'arraySC20'));
     }
   }
 
