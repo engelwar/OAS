@@ -40,10 +40,10 @@ class ResumenMesVentasController extends Controller
   public function store(Request $request)
   {
     $segmento = [
-      ['name'  => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46, 61, 68, 69]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68, 69]],
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
-      ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 43, 52, 29, 57, 74]],
+      ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
       ['name' => 'INSTITUCIONALES', 'abrv' => 'INSTITUCIONALES', 'users' => [16, 17, 62, 56, 3, 58, 4]],
       ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20]],
       ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
@@ -53,7 +53,11 @@ class ResumenMesVentasController extends Controller
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 50, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 51, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 52]],
+      ['name' => 'INS CALACOTO', 'abrv' => 'INS CALACOTO', 'users' => [29,57,74]],
+      ['name' => 'CAJERO LIBRO CALACOTO', 'abrv' => 'CAJERO LIBRO CALACOTO', 'users' => [43]],
+
     ];
+     
     $regional = [
       ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'usr' => [63]],
       ['name' => 'REGIONAL2', 'abrv' => 'REGIONAL2', 'usr' => [64]],
@@ -602,10 +606,10 @@ class ResumenMesVentasController extends Controller
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_retail . "";
-       //dd($sql_total_retail);
+      //dd($sql_total_retail);
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
-    
+    //return dd($sql_total_retail);
     //---
     $totalxSucursal=[
       ['name'=>'enero','datos'=>[
