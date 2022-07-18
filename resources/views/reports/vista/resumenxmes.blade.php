@@ -85,8 +85,8 @@
         <td>{{ $total_general[0]->$val1}}</td>
         <td>{{ $total_general[0]->$val2}}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumGeneral19, 2) }}</td>
+        <td>{{ number_format($sumGeneral20, 2) }}</td>
         <td>{{ $total_general[0]->Tot1}}</td>
         <td>{{ $total_general[0]->Tot2}}</td>
       </tr>
@@ -172,9 +172,8 @@
         <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
         @endforeach
 
-        <td>2,241,219.68</td>
-        <!--el total -->
-        <td>1,651,344.02</td>
+        <td>{{ number_format($sumBall19, 2) }}</td>
+        <td>{{ number_format($sumBall20, 2) }}</td>
 
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
         <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
@@ -631,8 +630,8 @@
 
         <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
         @endforeach
-        <td>{{$k}}</td>
-        <td>{{$k}}</td>
+        <td>{{ number_format($sumHandal19, 2) }}</td>
+        <td>{{ number_format($sumHandal20, 2) }}</td>
         <td>{{ $total[1]['HANDAL'][0]->Tot1 }}</td>
         <td>{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
       </tr>
@@ -1023,8 +1022,8 @@
 
         <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumMariscal19, 2) }}</td>
+        <td>{{ number_format($sumMariscal20, 2) }}</td>
         <td>{{ $total[2]['MARISCAL'][0]->Tot1 }}</td>
         <td>{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
       </tr>
@@ -1374,8 +1373,8 @@
 
         <td>{{ $total[3]['CALACOTO'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumCalacoto19, 2) }}</td>
+        <td>{{ number_format($sumCalacoto20, 2) }}</td>
         <td>{{ $total[3]['CALACOTO'][0]->Tot1 }}</td>
         <td>{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
       </tr>
@@ -1739,8 +1738,8 @@
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val1 }}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumInstitucional19, 2) }}</td>
+        <td>{{ number_format($sumInstitucional20, 2) }}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->Tot1 }}</td>
         <td>{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
       </tr>
@@ -2256,8 +2255,8 @@
         <td>{{ $total[5]['MAYORISTAS'][0]->$val1 }}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumMayoristas19, 2) }}</td>
+        <td>{{ number_format($sumMayoristas20, 2) }}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->Tot1 }}</td>
         <td>{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
       </tr>
@@ -2667,8 +2666,8 @@
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val1 }}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->$val2 }}</td>
         @endforeach
-        <td></td>
-        <td></td>
+        <td>{{ number_format($sumSC19, 2) }}</td>
+        <td>{{ number_format($sumSC20, 2) }}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->Tot1 }}</td>
         <td>{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
       </tr>

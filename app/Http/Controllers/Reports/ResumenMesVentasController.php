@@ -928,6 +928,24 @@ class ResumenMesVentasController extends Controller
       $count20 = 0;
     }
 
+    $sumBall19 = array_sum($arrayball19);
+    $sumBall20 = array_sum($arrayball20);
+    $sumHandal19 = array_sum($arrayHandal19);
+    $sumHandal20 = array_sum($arrayHandal20);
+    $sumMariscal19 = array_sum($arrayMariscal19);
+    $sumMariscal20 = array_sum($arrayMariscal20);
+    $sumCalacoto19 = array_sum($arrayCalacoto19);
+    $sumCalacoto20 = array_sum($arrayCalacoto20);
+    $sumInstitucional19 = array_sum($arrayInstitucional19);
+    $sumInstitucional20 = array_sum($arrayInstitucional20);
+    $sumMayoristas19 = array_sum($arrayMayoristas19);
+    $sumMayoristas20 = array_sum($arrayMayoristas20);
+    $sumSC19 = array_sum($arraySC19);
+    $sumSC20 = array_sum($arraySC20);
+
+    $sumGeneral19 = $sumBall19 + $sumHandal19 + $sumMariscal19 + $sumCalacoto19 + $sumInstitucional19 + $sumMayoristas19 + $sumSC19;
+    $sumGeneral20 = $sumBall20 + $sumHandal20 + $sumMariscal20 + $sumCalacoto20 + $sumInstitucional20 + $sumMayoristas20 + $sumSC20;
+
     // dd($total_general);
 
     // dd($arrayball19['retail']);
@@ -937,7 +955,7 @@ class ResumenMesVentasController extends Controller
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');
     } else {
       //return dd($titulos);
-      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20' ,'arrayHandal19', 'arrayHandal20', 'arrayMariscal19', 'arrayMariscal20', 'arrayCalacoto19', 'arrayCalacoto20', 'arrayInstitucional19', 'arrayInstitucional20', 'arrayMayoristas19', 'arrayMayoristas20', 'arraySC19', 'arraySC20', 'total_retail_calacoto'));
+      return view('reports.vista.resumenxmes', compact('total_general', 'total', 'total_seg', 'total_retail', 'options', 'total_regional', 'total_seg_regional', 'arrayball19', 'arrayball20' ,'arrayHandal19', 'arrayHandal20', 'arrayMariscal19', 'arrayMariscal20', 'arrayCalacoto19', 'arrayCalacoto20', 'arrayInstitucional19', 'arrayInstitucional20', 'arrayMayoristas19', 'arrayMayoristas20', 'arraySC19', 'arraySC20', 'total_retail_calacoto', 'sumBall19', 'sumBall20', 'sumHandal19', 'sumHandal20', 'sumMariscal19', 'sumMariscal20', 'sumCalacoto19','sumCalacoto20', 'sumInstitucional19', 'sumInstitucional20', 'sumMayoristas19', 'sumMayoristas20', 'sumSC19', 'sumSC20', 'sumGeneral19', 'sumGeneral20'));
     }
   }
 
