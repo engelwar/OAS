@@ -928,6 +928,8 @@ class ResumenMesVentasController extends Controller
       $count20 = 0;
     }
 
+    // dd($total_general);
+
     // dd($arrayball19['retail']);
     
     if ($request->gen == "export") {
