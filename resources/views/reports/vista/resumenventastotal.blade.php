@@ -115,7 +115,7 @@ body{
                        
         </div>
     </div>
-</div>s
+</div>
 @endsection
 
 @section('mis_scripts')
