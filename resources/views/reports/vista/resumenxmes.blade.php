@@ -1,11 +1,9 @@
 @extends('layouts.app')
-
 @section('estilo')
 <style>
   body {
-    font-size: 0.9rem;
+    font-size: 1.0rem;
   }
-
   .derecha td,
   .derecha th {
     text-align: end;
@@ -14,6 +12,15 @@
   #table_ventas thead {
     position: sticky;
     top: 0;
+    
+    z-index: 10;
+  }
+  #encabezado {
+    position: sticky;
+    list-style-type: none;
+    margin: 0;
+    padding: 10;
+    top: 10;
     z-index: 10;
   }
 
@@ -23,11 +30,14 @@
 </style>
 @endsection
 @section('content')
-@include('layouts.sidebar', ['hide'=>'0'])
+<div id="encabezado">
+  @include('layouts.sidebar2', ['hide'=>'0']) 
+</div>
+
 <div class="mt-5 mb-3" style="width: 90%; height: 670px; margin: auto; overflow: scroll;">
   <div>
-    <div style="width: 20%;">
-      <img alt="foto" src="{{asset('imagenes/logo.png')}}" style="width: 100%;
+    <div style="width: 25%;">
+      <img alt="foto" src="{{asset('imagenes/logo.png')}}" style="width: 120%;
                               height: auto;" />
     </div>
     <div>
@@ -68,10 +78,10 @@
         <Td colspan="1" class="text-center">{{$value}}</Td>
         <Td colspan="1" class="text-center">{{$value}}</Td>
         @endforeach
-        <Td colspan="1" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</Td>
-        <Td colspan="1" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</Td>
-        <Td colspan="1" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</Td>
-        <Td colspan="1" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</Td>
+        <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
+        <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
+        <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
+        <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
       </TR>
       <tr class="bg-primary text-end text-white" style="font-weight: bold;">
         <td class="text-start" style="width: 14%;">SUMA GENERAL</td>
@@ -2758,10 +2768,16 @@
     </tbody>
   </table>
 </div>
+
 @section('mis_scripts')
+
+
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+
+
 <script>
+    
   $(document).ready(function() {
     $('#table_ventas').DataTable({
       "ordering": false,
@@ -2775,29 +2791,13 @@
         buttons: [{
           extend: "excel",
           text: 'Exportar a Excel',
-          className: 'btn btn-outline-success mb-2',
-          excelStyles: {
-            cells: ["2", "3", "4", "10", "15", "20", "27", "35", "41", "44", "47"],
-            style: {
-              font: {
-                name: 'Arial',
-                size: '12',
-                color: 'ffffff',
-                b: true
-              },
-              fill: {
-                pattern: {
-                  color: '283056'
-                }
-              }
-            },
-          }
+          className: 'btn btn-outline-primary mb-4',
+      
         }]
       },
       "aLengthMenu": [100]
     });
   });
-  $(".page-wrapper").removeClass("toggled");
 
 
   var sum = 0;
@@ -2805,5 +2805,8 @@
     sum += parseFloat($(this).text().replace(/,/g, ''), 10);
   });
   $("#t").val(sum.toFixed(2));
+
+  
 </script>
+
 @endsection
