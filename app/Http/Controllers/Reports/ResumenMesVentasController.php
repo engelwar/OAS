@@ -707,6 +707,11 @@ class ResumenMesVentasController extends Controller
         '2020' => ['Enero' => 11060.06, 'Febrero' => 14108.67, 'Marzo' => 31481.55, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 4043.40, 'Julio' => 36627.93, 'Agosto' => 12191.53, 'Septiembre' => 14319.95, 'Octubre' => 0, 'Noviembre' => 770.06, 'Diciembre' => 12965.31],
         '2021' => ['Enero' => 20685.00, 'Febrero' => 4530.41],
       ],
+      'feria' => [
+        '2019' => ['Enero' => 176193.96, 'Febrero' => 87893.05, 'Marzo' => 13517.70, 'Abril' => 5163.70, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 39651.95, 'Septiembre' => 6011.16, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
+        '2020' => ['Enero' => 14004.66, 'Febrero' => 29623.95, 'Marzo' => 0, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 0, 'Septiembre' => 0, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
+        '2021' => ['Enero' => 0, 'Febrero' => 4201.00],
+      ],
     ];
 
     $arrayball19 = [];
@@ -735,7 +740,7 @@ class ResumenMesVentasController extends Controller
       ],
       'libros' => [
         '2019' => ['Enero' => 18352.20, 'Febrero' => 60403.77, 'Marzo' => 7239.30, 'Abril' => 3360.31, 'Mayo' => 3440.80, 'Junio' => 901.60, 'Julio' => 1668.10, 'Agosto' => 4047.00, 'Septiembre' => 4327.40, 'Octubre' => 2957.05, 'Noviembre' => 2860.50, 'Diciembre' => 4111.47],
-        '2020' => ['Enero' => 19246.50, 'Febrero' => 97490.70, 'Marzo' => 5770.00, 'Abril' => 0, 'Mayo' => 90.00, 'Junio' => 3616.65, 'Julio' => 10415.88, 'Agosto' => 4053.50, 'Septiembre' => 4324.60, 'Octubre' => 4062.69, 'Noviembre' => 3023.73, 'Diciembre' => 1432.30],
+        '2020' => ['Enero' => 19246.50, 'Febrero' => 97490.70, 'Marzo' => 5770.00, 'Abril' => 0, 'Mayo' => 90.00, 'Junio' => 3616.65, 'Julio' => 10415.88, 'Agosto' => 4053.50, 'Septiembre' => 4324.60, 'Octubre' => 4062.69, 'Noviembre' => 3023.73, 'Diciembre' => 8234.82],
         '2021' => ['Enero' => 3183.52, 'Febrero' => 3038.60],
       ],
       'instit' => [
@@ -763,7 +768,7 @@ class ResumenMesVentasController extends Controller
     $mariscalExcel = [
       'retail' => [
         '2019' => ['Enero' => 139257.18, 'Febrero' => 255637.72, 'Marzo' => 127112.42, 'Abril' => 128845.72, 'Mayo' => 146267.67, 'Junio' => 108023.21, 'Julio' => 136960.99, 'Agosto' => 132660.19, 'Septiembre' => 145945.74, 'Octubre' => 117045.45, 'Noviembre' => 136512.41, 'Diciembre' => 173699.74],
-        '2020' => ['Enero' => 204444.73, 'Febrero' => 270185.50, 'Marzo' => 113780.45, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 121955.90, 'Julio' => 49237.09, 'Agosto' => 110981.46, 'Septiembre' => 141665.40, 'Octubre' => 140215.57, 'Noviembre' => 172578.03, 'Diciembre' => 195237.06],
+        '2020' => ['Enero' => 204444.73, 'Febrero' => 270185.50, 'Marzo' => 113780.45, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 121955.90, 'Julio' => 98813.50, 'Agosto' => 110981.46, 'Septiembre' => 141665.40, 'Octubre' => 140215.57, 'Noviembre' => 172578.03, 'Diciembre' => 195237.06],
         '2021' => ['Enero' => 138752.06, 'Febrero' => 250795.79],
       ],
       'libros' => [
@@ -797,12 +802,12 @@ class ResumenMesVentasController extends Controller
     $calacotoExcel = [
       'retail' => [
         '2019' => ['Enero' => 322633.68, 'Febrero' => 250973.59, 'Marzo' => 100386.14, 'Abril' => 110301.08, 'Mayo' => 96695.56, 'Junio' => 80235.27, 'Julio' => 109747.11, 'Agosto' => 119887.80, 'Septiembre' => 109141.26, 'Octubre' => 111221.38, 'Noviembre' => 108726.54, 'Diciembre' => 142288.64],
-        '2020' => ['Enero' => 303527.40, 'Febrero' => 196544.81, 'Marzo' => 77526.19, 'Abril' => 0, 'Mayo' => 13974.22, 'Junio' => 73498.19, 'Julio' => 76525.02, 'Agosto' => 65777.11, 'Septiembre' => 92312.48, 'Octubre' => 115002.42, 'Noviembre' => 130162.52, 'Diciembre' => 157280.18],
+        '2020' => ['Enero' => 303527.40, 'Febrero' => 196544.81, 'Marzo' => 77526.19, 'Abril' => 0, 'Mayo' => 10704.97, 'Junio' => 73498.19, 'Julio' => 76525.02, 'Agosto' => 65777.11, 'Septiembre' => 92312.48, 'Octubre' => 115002.42, 'Noviembre' => 130162.52, 'Diciembre' => 157280.18],
         '2021' => ['Enero' => 239079.09, 'Febrero' => 173843.24],
       ],
       'libros' => [
-        '2019' => ['Enero' => 49711.20, 'Febrero' => 33861.30, 'Marzo' => 2289.25, 'Abril' => 2398.98, 'Mayo' => 2322.10, 'Junio' => 2719.30, 'Julio' => 13390.90, 'Agosto' => 4454.60, 'Septiembre' => 4347.50, 'Octubre' => 3448.80, 'Noviembre' => 2425.60, 'Diciembre' => 4893.07],
-        '2020' => ['Enero' => 5368.45, 'Febrero' => 5002.50, 'Marzo' => 2860.40, 'Abril' => 2346.40, 'Mayo' => 388.34, 'Junio' => 3084.50, 'Julio' => 2842.30, 'Agosto' => 2346.40, 'Septiembre' => 2806.10, 'Octubre' => 4499.08, 'Noviembre' => 4263.41, 'Diciembre' => 4401.70],
+        '2019' => ['Enero' => 49711.20, 'Febrero' => 33861.30, 'Marzo' => 2289.25, 'Abril' => 2398.98, 'Mayo' => 2322.10, 'Junio' => 2719.30, 'Julio' => 2316.40, 'Agosto' => 4454.60, 'Septiembre' => 4347.50, 'Octubre' => 3448.80, 'Noviembre' => 2425.60, 'Diciembre' => 4893.07],
+        '2020' => ['Enero' => 5368.45, 'Febrero' => 5002.50, 'Marzo' => 2860.40, 'Abril' => 0, 'Mayo' => 388.34, 'Junio' => 3084.50, 'Julio' => 2842.30, 'Agosto' => 2346.40, 'Septiembre' => 2806.10, 'Octubre' => 4499.08, 'Noviembre' => 4263.41, 'Diciembre' => 4401.70],
         '2021' => ['Enero' => 3167.52, 'Febrero' => 2191.83],
       ],
       'instit' => [
@@ -831,7 +836,7 @@ class ResumenMesVentasController extends Controller
     $institucionalExcel = [
       'velasquez' => [
         '2019' => ['Enero' => 19343.59, 'Febrero' => 46078.97, 'Marzo' => 34589.33, 'Abril' => 141123.06, 'Mayo' => 296923.93, 'Junio' => 39356.60, 'Julio' => 37778.35, 'Agosto' => 43298.50, 'Septiembre' => 123230.75, 'Octubre' => 5357.20, 'Noviembre' => 17623.95, 'Diciembre' => 22077.25],
-        '2020' => ['Enero' => 11031.27, 'Febrero' => 72659.20, 'Marzo' => 44866.42, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 51718.26, 'Julio' => 91642.54, 'Agosto' => 72648.80, 'Septiembre' => 83476.25, 'Octubre' => 120691.84, 'Noviembre' => 17,623.95, 'Diciembre' => 45986.13],
+        '2020' => ['Enero' => 11031.27, 'Febrero' => 72659.20, 'Marzo' => 44866.42, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 51718.26, 'Julio' => 91642.54, 'Agosto' => 17553.17, 'Septiembre' => 83476.25, 'Octubre' => 120691.84, 'Noviembre' => 72648.80, 'Diciembre' => 45986.13],
         '2021' => ['Enero' => 7966.40, 'Febrero' => 28087.33],
       ],
       'gamba' => [
@@ -839,11 +844,11 @@ class ResumenMesVentasController extends Controller
         '2020' => ['Enero' => 558566.78, 'Febrero' => 45122.43, 'Marzo' => 246745.56, 'Abril' => 0, 'Mayo' => 9305.10, 'Junio' => 155482.44, 'Julio' => 27380.93, 'Agosto' => 100105.90, 'Septiembre' => 54232.90, 'Octubre' => 135060.62, 'Noviembre' => 281941.17, 'Diciembre' => 139206.17],
         '2021' => ['Enero' => 36014.22, 'Febrero' => 528808.22],
       ],
-      // 'retail' => [
-      //   '2019' => ['Enero' => , 'Febrero' => , 'Marzo' => , 'Abril' => , 'Mayo' => , 'Junio' => , 'Julio' => , 'Agosto' => , 'Septiembre' => , 'Octubre' => , 'Noviembre' => , 'Diciembre' => ],
-      //   '2020' => ['Enero' => , 'Febrero' => , 'Marzo' => , 'Abril' => , 'Mayo' => , 'Junio' => , 'Julio' => , 'Agosto' => , 'Septiembre' => , 'Octubre' => , 'Noviembre' => , 'Diciembre' => ],
-      //   '2021' => ['Enero' => , 'Febrero' => ],
-      // ],
+      'contra' => [
+        '2019' => ['Enero' => 51983.30, 'Febrero' => 163569.13, 'Marzo' => 242920.12, 'Abril' => 100498.15, 'Mayo' => 218356.84, 'Junio' => 101918.35, 'Julio' => 139081.04, 'Agosto' => 110767.28, 'Septiembre' => 156364.41, 'Octubre' => 168512.94, 'Noviembre' => 67193.29, 'Diciembre' => 165125.38],
+        '2020' => ['Enero' => 168035.32, 'Febrero' => 43661.58, 'Marzo' => 11419.55, 'Abril' => 424.40, 'Mayo' => 133308.65, 'Junio' => 175994.54, 'Julio' => 239691.90, 'Agosto' => 49067.00, 'Septiembre' => 51939.07, 'Octubre' => 154449.40, 'Noviembre' => 127393.64, 'Diciembre' => 250303.45],
+        '2021' => ['Enero' => 0, 'Febrero' => 0],
+      ],
     ];
 
     $arrayInstitucional19 = [];
