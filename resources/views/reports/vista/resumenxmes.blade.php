@@ -34,7 +34,7 @@
   @include('layouts.sidebar2', ['hide'=>'0']) 
 </div>
 
-<div class="mt-5 mb-3" style="width: 90%; height: 670px; margin: auto; overflow: scroll;">
+<div class="mt-4 mb-3" style="width: 90%; height: 670px; margin: auto; overflow: scroll;">
   <div>
     <div style="width: 25%;">
       <img alt="foto" src="{{asset('imagenes/logo.png')}}" style="width: 120%;
