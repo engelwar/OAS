@@ -119,6 +119,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
   background-color: #5cb85c;
   color: white;
 }
+#precio_retail{
+  border: none;
+  font-size: 24px;
+  text-align: center;
+  color: black;
+}
 </style>
 <script>
     
@@ -139,9 +145,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </div>
 
 <div class="w-25 d-flex p-4 text-center m-auto">
-    <div class="border p-3 w-100">
-        <h3>Retail Ballivian</h3>
-        <h4>Bs. 40</h4>
+    <div class="p-3 w-100" style="border: 2px solid darkgrey;">
+        <h2>Precio Retail</h2>
+        <input id="precio_retail" type="text" value="" disabled>
     </div>
 </div>
 @endsection
@@ -156,6 +162,24 @@ body {font-family: Arial, Helvetica, sans-serif;}
             $(this).html( '<input type="text" placeholder="'+title+'" style="width:100%;"/>' );
             }
         } );
+        document.getElementById("buscar").addEventListener("keyup", function(){
+          $.ajax({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')     
+            },
+            url: "{{route('invconsult.store')}}",
+            type: 'POST',
+            dataType: 'json',
+            data: {buscar: $("#buscar").val()},
+            dataType: 'json',
+                  success: function (data) {
+                    $('#precio_retail').val('Bs. '+data["data"][0]["retail"]);
+                  },
+                  // error: function (data) {
+                  //     console.log(data);
+                  // }
+          });
+        });
         $('#productos').DataTable( 
         {
             searching: true,
@@ -191,20 +215,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
                     d.buscar = $('#buscar').val();
                 },
                 dataType: 'json',
-                /*success: function (data) {
-                    console.log(data);
-                },
-                error: function (data) {
-                    console.log(data);
-                }*/
+                // success: function (data) {
+                //     console.log(data);
+                // },
+                // error: function (data) {
+                //     console.log(data);
+                // }
             },
             columns: [
                 {data: 'marca', title: 'MARCA'}, 
                 {data: 'prod', title: 'CODIGO'},  
                 {data: 'descrip', title: 'DESCRIPCION'}, 
                 {data: 'um', title: 'UM'}, 
-                {data: 'BarCod', title: 'COD.BARRA'},
-                {data: 'retail', title: 'P.V.P'}
+                {data: 'BarCod', title: 'COD.BARRA'}
             ],
             scrollY: "70vh",
             scrollX:true,
