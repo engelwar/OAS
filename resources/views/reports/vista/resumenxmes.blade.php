@@ -49,8 +49,8 @@
       <h3 class="text-center">COMPARATIVO DE VENTAS</h3>
     </div>
   </div>
-  <div style="overflow: scroll; height: 400px; font-size: 12px;">
-    <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive">
+  <div style="overflow: scroll; height: 450px; font-size: 12px;">
+    <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
       <thead class="text-white" style="background-color: #283056;">
         <TR>
           <TH colspan="1" class="text-center"></TH>
@@ -74,8 +74,6 @@
           <TH colspan="1" class="text-center" style="background-color: #284556;">2021</TH>
           <TH colspan="1" class="text-center" style="background-color: #284556;">2022</TH>
         </TR>
-      </thead>
-      <tbody>
         <TR class="d-none">
           <Td colspan="1" class="text-center"></Td>
           @foreach ($options as $k => $value)
@@ -84,10 +82,25 @@
           <Td colspan="1" class="text-center">{{$value}}</Td>
           <Td colspan="1" class="text-center">{{$value}}</Td>
           @endforeach
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
+        </TR>
+      </thead>
+      <tbody>
+        <TR class="d-none">
+          <TH colspan="1" class="text-center"></TH>
+          @foreach ($options as $k => $value)
+          <TH colspan="1" class="text-center">2019</TH>
+          <TH colspan="1" class="text-center">2020</TH>
+          <TH colspan="1" class="text-center">2021</TH>
+          <TH colspan="1" class="text-center">2022</TH>
+          @endforeach
+          <TH colspan="1" class="text-center" style="background-color: #284556;">2019</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">2020</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">2021</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">2022</TH>
         </TR>
         <tr class="bg-primary text-end text-white" style="font-weight: bold;">
           <td class="text-start" style="width: 14%;">SUMA GENERAL</td>
