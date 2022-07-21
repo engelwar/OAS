@@ -121,10 +121,24 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 #precio_retail{
   border: none;
-  font-size: 24px;
-  text-align: center;
+  font-size: 35px;
+ padding-left: 74px;
   color: black;
 }
+#ovalo {
+  padding-top: 7px;
+  width: 276px;
+    height: 110px;
+    background: rgb(233 236 239);
+    border-radius: 100px/50px;
+}
+.inputrasparente{
+  background: inherit;
+background-color:transparent;
+}
+
+
+
 </style>
 <script>
     
@@ -144,11 +158,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
     </div> 
 </div>
 
+
 <div class="w-25 d-flex p-4 text-center m-auto">
-    <div class="p-3 w-100" style="border: 2px solid darkgrey;">
-        <h2>Precio Retail</h2>
-        <input id="precio_retail" type="text" value="" disabled>
-    </div>
+  
+      <div id="ovalo">
+        <h2>PRECIO</h2>
+        <div id="diDer">
+          <input id="precio_retail" type="text" value=""  class="inputrasparente" disabled>
+        </div>
+        
+        
+      </div>
+      
+ 
 </div>
 @endsection
 @section('mis_scripts')
