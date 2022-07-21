@@ -2772,9 +2772,9 @@
 @section('mis_scripts')
 
 
-<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 
 <script>
     
@@ -2789,9 +2789,27 @@
           }
         },
         buttons: [{
+         
+            
           extend: "excel",
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
+          excelStyles: {                      
+                cells: [2,4,6],                     
+                style: {                      
+                    font: {                     
+                        name: "Arial",          // Font name
+                        size: "8",             // Font size
+                        color: "FFFFFF",        // Font Color
+                        b: false,               // Remove bolding from header row
+                    },
+                    fill: {                     
+                        pattern: {              
+                            color: "457B9D",   
+                        }
+                    }
+                }
+            },
       
         }]
       },
