@@ -84,10 +84,10 @@
           <Td colspan="1" class="text-center">{{$value}}</Td>
           <Td colspan="1" class="text-center">{{$value}}</Td>
           @endforeach
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
-          <Td colspan="1" class="text-center" style="background-color: #284556;"></Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">2019</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">2020</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">2021</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">2022</Td>
         </TR>
         <tr class="bg-primary text-end text-white" style="font-weight: bold;">
           <td class="text-start" style="width: 14%;">SUMA GENERAL</td>
@@ -2802,17 +2802,17 @@
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
           excelStyles: {                      
-                cells: [2,4,6],                     
+                cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
                 style: {                      
                     font: {                     
-                        name: "Arial",          // Font name
-                        size: "8",             // Font size
-                        color: "FFFFFF",        // Font Color
-                        b: false,               // Remove bolding from header row
+                        name: "Arial",         
+                        size: "12",         
+                        color: "FFFFFF",       
+                        b: false,             
                     },
                     fill: {                     
                         pattern: {              
-                            color: "457B9D",   
+                            color: "548236",   
                         }
                     }
                 }
