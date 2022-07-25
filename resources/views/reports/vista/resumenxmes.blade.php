@@ -111,65 +111,65 @@
           @endphp
           
           @if ($value=="Enero")
-          <td>2,358,750.41</td>
-          <td>3,005,065.83</td>
-          <td>1,504,872.60</td>
+          <td>2,753,203.51</td>
+          <td>3,501,978.87</td>
+          <td>1,661,741.90</td>
           @endif
   
           @if ($value=="Febrero")
-          <td>3,577,880.45</td>
-          <td>3,007,640.83</td>
-          <td>2,746,011.65</td>
+          <td>3,690,534.65</td>
+          <td>3,339,620.77</td>
+          <td>2,938,376.85</td>
           @endif
   
           @if ($value=="Marzo")
-          <td>1,884,872.00</td>
-          <td>1,227,230.79</td>
+          <td>1,929,459.84</td>
+          <td>1,269,142.77</td>
           @endif
   
           @if ($value=="Abril")
-          <td>1,532,921.45</td>
+          <td>1,581,310.05</td>
           <td>111,057.54</td>
           @endif
   
           @if ($value=="Mayo")
-          <td>1,933,250.25</td>
+          <td>1,958,141.59</td>
           <td>289,676.01</td>
           @endif
   
           @if ($value=="Junio")
-          <td>1,530,506.03</td>
-          <td>1,459,716.96</td>
+          <td>1,563,195.93</td>
+          <td>1,504,953.56</td>
           @endif
   
           @if ($value=="Julio")
-          <td>1,531,364.74</td>
-          <td>1,131,655.00</td>
+          <td>1,575,554.74</td>
+          <td>1,168,345.80</td>
           @endif
   
           @if ($value=="Agosto")
-          <td>1,504,491.25</td>
-          <td>887,083.37</td>
+          <td>1,590,542.15</td>
+          <td>929,566.97</td>
           @endif
   
           @if ($value=="Septiembre")
-          <td>1,973,737.57</td>
-          <td>1,309,799.09</td>
+          <td>2,025,149.27</td>
+          <td>1,392,327.09</td>
           @endif
   
           @if ($value=="Octubre")
-          <td>1,389,547.03</td>
-          <td>1,438,666.85</td>
+          <td>1,425,608.71</td>
+          <td>1,482,422.55</td>
           @endif
   
           @if ($value=="Noviembre")
-          <td>1,287,427.48</td>
-          <td>2,129,449.77</td>
+          <td>1,317,562.52</td>
+          <td>2,212,951.67</td>
           @endif
   
           @if ($value=="Diciembre")
-          <td>1,772,690.64</td>
-          <td>1,642,592.15</td>
+          <td>1,811,167.02</td>
+          <td>1,695,077.25</td>
           @endif
           
           @if ($value!="Enero"&&$value!="Febrero")
@@ -179,7 +179,7 @@
           @endforeach
           <td>{{ number_format($sumGeneral19, 2) }}</td>
           <td>{{ number_format($sumGeneral20, 2) }}</td>
-          <td>{{ $total_general[0]->Tot1}}</td>
+          <td>{{ number_format($total_general[0]->Tot1 + $sumGeneral21, 2) }}</td>
           <td>{{ $total_general[0]->Tot2}}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -261,7 +261,7 @@
           <td>{{ number_format($sumBall19, 2) }}</td>
           <td>{{ number_format($sumBall20, 2) }}</td>
   
-          <td>{{ $total[0]['BALLIVIAN'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[0]['BALLIVIAN'] as $val)
@@ -502,17 +502,20 @@
           @if ($val->adusrNomb=="CAJERO FERIA")
           <td>{{ number_format($arrayball19['feria'], 2) }}</td>
           <td>{{ number_format($arrayball20['feria'], 2) }}</td>
+          <td>{{ number_format($total_seg[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['feria'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="CAJERO LIBRO BALLIVIAN")
           <td>{{ number_format($arrayball19['libros'], 2) }}</td>
           <td>{{ number_format($arrayball20['libros'], 2) }}</td>
+          <td>{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="INS BALLIVIAN")
           <td>{{ number_format($arrayball19['instit'], 2) }}</td>
           <td>{{ number_format($arrayball20['instit'], 2) }}</td>
+          <td>{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
           @endif
   
-          <td>{{ $val->Tot1 }}</td>
+          
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -582,7 +585,7 @@
           @endforeach
           <td>{{ number_format($arrayball19['retail'], 2) }}</td>
           <td>{{ number_format($arrayball20['retail'], 2) }}</td>
-          <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot1 }}</td>
+          <td>{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -663,7 +666,7 @@
           @endforeach
           <td>{{ number_format($sumHandal19, 2) }}</td>
           <td>{{ number_format($sumHandal20, 2) }}</td>
-          <td>{{ $total[1]['HANDAL'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
           <td>{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[1]['HANDAL'] as $val)
@@ -807,7 +810,7 @@
           <td>160,743.31</td>
           @endif
           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
-          <td>11,672.55</td>
+          <td>4,111.47</td>
           <td>8,234.82</td>
           @endif
           @endif
@@ -821,12 +824,13 @@
           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
           <td>{{ number_format($arrayHandal19['libros'], 2) }}</td>
           <td>{{ number_format($arrayHandal20['libros'], 2) }}</td>
+          <td>{{ number_format($total_seg[1]['HANDAL'][0]->Tot1 + $arrayHandal21['libros'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>{{ number_format($arrayHandal19['instit'], 2) }}</td>
           <td>{{ number_format($arrayHandal20['instit'], 2) }}</td>
+          <td>{{ number_format($total_seg[1]['HANDAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
           @endif
-          <td>{{ $val->Tot1 }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -907,7 +911,7 @@
           @endforeach
           <td>{{ number_format($arrayHandal19['retail'], 2) }}</td>
           <td>{{ number_format($arrayHandal20['retail'], 2) }}</td>
-          <td>{{ $total_retail[1]['HANDAL'][0]->Tot1 }}</td>
+          <td>{{ number_format($total_retail[1]['HANDAL'][0]->Tot1 + $arrayHandal21['retail'], 2) }}</td>
           <td>{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -988,7 +992,7 @@
           @endforeach
           <td>{{ number_format($sumMariscal19, 2) }}</td>
           <td>{{ number_format($sumMariscal20, 2) }}</td>
-          <td>{{ $total[2]['MARISCAL'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
           <td>{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[2]['MARISCAL'] as $val)
@@ -1134,12 +1138,13 @@
           @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
           <td>{{ number_format($arrayMariscal19['libros'], 2) }}</td>
           <td>{{ number_format($arrayMariscal20['libros'], 2) }}</td>
+          <td>{{ number_format($total_seg[2]['MARISCAL'][0]->Tot1 + $arrayMariscal21['libros'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="INS MARISCAL")
           <td>{{ number_format($arrayMariscal19['instit'], 2) }}</td>
           <td>{{ number_format($arrayMariscal20['instit'], 2) }}</td>
+          <td>{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayMariscal21['instit'], 2) }}</td>
           @endif
-          <td>{{ $val->Tot1 }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -1209,7 +1214,7 @@
           @endforeach
           <td>{{ number_format($arrayMariscal19['retail'], 2) }}</td>
           <td>{{ number_format($arrayMariscal20['retail'], 2) }}</td>
-          <td>{{ $total_retail[2]['MARISCAL'][0]->Tot1 }}</td>
+          <td>{{ number_format($total_retail[2]['MARISCAL'][0]->Tot1 + $arrayMariscal21['retail'], 2) }}</td>
           <td>{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -1290,7 +1295,7 @@
           @endforeach
           <td>{{ number_format($sumCalacoto19, 2) }}</td>
           <td>{{ number_format($sumCalacoto20, 2) }}</td>
-          <td>{{ $total[3]['CALACOTO'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
           <td>{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[3]['CALACOTO'] as $val)
@@ -1398,7 +1403,7 @@
           @endforeach
           <td>{{ number_format($arrayCalacoto19['libros'], 2) }}</td>
           <td>{{ number_format($arrayCalacoto20['libros'], 2) }}</td>
-          <td>{{ $val->Tot1 }}</td>
+          <td>{{ number_format($total_seg[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['libros'], 2) }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -1474,7 +1479,7 @@
           @endforeach
           <td>{{ number_format($arrayCalacoto19['instit'], 2) }}</td>
           <td>{{ number_format($arrayCalacoto20['instit'], 2) }}</td>
-          <td>{{ $total_retail_calacoto[0]->Tot1 }}</td>
+          <td>{{ number_format($total_retail_calacoto[0]->Tot1 + $arrayCalacoto21['instit'], 2) }}</td>
           <td>{{ $total_retail_calacoto[0]->Tot2 }}</td>
         </tr>
         <tr class="text-end">
@@ -1555,7 +1560,7 @@
           @endforeach
           <td>{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
           <td>{{ number_format($arrayCalacoto20['retail'], 2) }}</td>
-          <td>{{ $total_retail[3]['CALACOTO'][0]->Tot1 }}</td>
+          <td>{{ number_format($total_retail[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['retail'], 2) }}</td>
           <td>{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -1635,7 +1640,7 @@
           @endforeach
           <td>{{ number_format($sumInstitucional19, 2) }}</td>
           <td>{{ number_format($sumInstitucional20, 2) }}</td>
-          <td>{{ $total[4]['INSTITUCIONALES'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[4]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
           <td>{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[4]['INSTITUCIONALES'] as $val)
@@ -2042,32 +2047,38 @@
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>{{ number_format($arrayInstitucional19['contra'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['contra'], 2) }}</td>
+          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][0]->Tot1 + $arrayInstitucional21['contra'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="GUADALUPE AMBA")
           <td>{{ number_format($arrayInstitucional19['gamba'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['gamba'], 2) }}</td>
+          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][1]->Tot1 + $arrayInstitucional21['gamba'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="INES VELASQUEZ")
           <td>{{ number_format($arrayInstitucional19['velasquez'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['velasquez'], 2) }}</td>
+          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][2]->Tot1 + $arrayInstitucional21['velasquez'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="JULIO MANCILLA")
+          <td>0.00</td>
           <td>0.00</td>
           <td>0.00</td>
           @endif
           @if ($val->adusrNomb=="MAGDY VILLARROEL")
           <td>0.00</td>
           <td>0.00</td>
+          <td>0.00</td>
           @endif
           @if ($val->adusrNomb=="RODRIGO DURAN")
+          <td>0.00</td>
           <td>0.00</td>
           <td>0.00</td>
           @endif
           @if ($val->adusrNomb=="VENTA MÓVIL 1")
           <td>0.00</td>
           <td>0.00</td>
+          <td>0.00</td>
           @endif
-          <td>{{ $val->Tot1 }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -2148,7 +2159,7 @@
           @endforeach
           <td>{{ number_format($sumMayoristas19, 2) }}</td>
           <td>{{ number_format($sumMayoristas20, 2) }}</td>
-          <td>{{ $total[5]['MAYORISTAS'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[5]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
           <td>{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[5]['MAYORISTAS'] as $val)
@@ -2454,24 +2465,28 @@
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
           <td>0.00</td>
+          <td>{{ number_format($total_seg[5]['MAYORISTAS'][0]->Tot1 + $arrayMayoristas21['cutipa'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="DAVID MAMANI")
           <td>{{ number_format($arrayMayoristas19['mamani'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['mamani'], 2) }} </td>
+          <td>{{ number_format($total_seg[5]['MAYORISTAS'][1]->Tot1 + $arrayMayoristas21['mamani'], 2) }} </td>
           @endif
           @if ($val->adusrNomb=="ERWIN VILLARROEL")
           <td>{{ number_format($arrayMayoristas19['villarroel'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['villarroel'], 2) }} </td>
+          <td>{{ number_format($total_seg[5]['MAYORISTAS'][2]->Tot1 + $arrayMayoristas21['villarroel'], 2) }} </td>
           @endif
           @if ($val->adusrNomb=="JAVIER MACHICADO")
           <td>0.00</td>
           <td>0.00</td>
+          <td>{{ number_format($total_seg[5]['MAYORISTAS'][3]->Tot1, 2) }}</td>
           @endif
           @if ($val->adusrNomb=="ROSALIA TICONA")
           <td>{{ number_format($arrayMayoristas19['ticona'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['ticona'], 2) }} </td>
+          <td>{{ number_format($total_seg[5]['MAYORISTAS'][4]->Tot1 + $arrayMayoristas21['ticona'], 2) }} </td>
           @endif
-          <td>{{ $val->Tot1 }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -2552,7 +2567,7 @@
           @endforeach
           <td>{{ number_format($sumSC19, 2) }}</td>
           <td>{{ number_format($sumSC20, 2) }}</td>
-          <td>{{ $total[6]['SANTA CRUZ'][0]->Tot1 }}</td>
+          <td>{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC20, 2) }}</td>
           <td>{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[6]['SANTA CRUZ'] as $val)
@@ -2698,12 +2713,13 @@
           @if ($val->adusrNomb=="CARMELA ESCOBAR")
           <td>{{ number_format($arraySC19['escobar'], 2) }}</td>
           <td>{{ number_format($arraySC20['escobar'], 2) }}</td>
+          <td>{{ number_format($total_seg[6]['SANTA CRUZ'][0]->Tot1 + $arraySC21['escobar'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="DANI CALDERON")
           <td>{{ number_format($arraySC19['calderon'], 2) }}</td>
           <td>{{ number_format($arraySC20['calderon'], 2) }}</td>
+          <td>{{ number_format($total_seg[6]['SANTA CRUZ'][1]->Tot1 + $arraySC21['calderon'], 2) }}</td>
           @endif
-          <td>{{ $val->Tot1 }}</td>
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach

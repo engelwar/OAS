@@ -206,6 +206,7 @@ class CuentasPorCobrarController extends Controller
         ".$estado2."
         ";
         $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
+        dd($query);
         $sum = DB::connection('sqlsrv')
         ->select(DB::raw
         ($fil2 .

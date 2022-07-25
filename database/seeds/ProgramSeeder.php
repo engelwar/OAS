@@ -362,5 +362,17 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+
+        $smod = Program::create([    
+            'id'=>33,
+            'nombre'=>'Cuentas Por Pagar',        
+            'modulo_id'=>6,
+            'sub_modulo_id'=>2,
+            'route'=>'cuentasporpagar.index',
+            'icon'=>'fas fa-file-contract',
+        ]); 
+        $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(5));
+        $smod->permisos()->attach(Permiso::find(6));
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuentas Por Cobrar</title>
+    <title>Cuentas Por Pagar</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
 body{
@@ -23,10 +23,10 @@ body{
                     </td>
                     <td style="width: 60%; text-align: center;">
                       @if ($requestFecha == 2)
-                      <h3 class="text-center">RESUMEN DE CUENTAS POR COBRAR</h3>
+                      <h3 class="text-center">RESUMEN DE CUENTAS POR PAGAR</h3>
                       <h6 class="text-center">ENTRE {{$fecha1}} - {{$fecha2}}</h6>               
                       @elseif ($requestFecha == 1)
-                      <h3 class="text-center">RESUMEN DE CUENTAS POR COBRAR</h3>
+                      <h3 class="text-center">RESUMEN DE CUENTAS POR PAGAR</h3>
                       <h6 class="text-center">AL {{$fecha}}</h6>               
                       @endif
                     </td>
@@ -38,9 +38,7 @@ body{
             <thead>
             <tr>
                 <th>Codigo</th>
-                <th>Cliente</th>
-                <th>RazonSocial</th>
-                <th>Nit</th>
+                <th>Proveedor</th>
                 <th>Fecha</th>
                 <th>FechaVenc</th>
                 <th>ImporteCXC</th>
@@ -49,31 +47,27 @@ body{
                 <th>Glosa</th>
                 <th>Usuario</th>
                 <th>M.</th>
-                <th>NVenta</th>
-                <th>Num. Fac</th>
+                <th>NCompra</th>
                 <th>Local</th>
                 <th>estado</th>
                 </tr>
             </thead>
             <tbody>
             
-            @if($cxc)
-            @foreach($cxc as $c)
+            @if($cxp)
+            @foreach($cxp as $c)
             </tr>
             <th>{{$c->Cod}} </th>
-            <th>{{$c->Cliente}}</th>
-            <th>{{$c->Rsocial}}</th>
-            <th>{{$c->Nit}}</th>
+            <th>{{$c->Proveedor}}</th>
             <th>{{$c->Fecha}}</th>
             <th>{{$c->FechaVenc}}</th>
-            <th>{{$c->ImporteCXC}}</th>
+            <th>{{$c->ImporteCXP}}</th>
             <th>{{$c->ACuenta}}</th>
             <th>{{$c->Saldo}}</th>
             <th>{{$c->Glosa}}</th>
             <th>{{$c->Usuario}}</th>
             <th>{{$c->Moneda}}</th>
-            <th>{{$c->NroVenta}}</th>
-            <th>{{$c->NroFac}}</th>
+            <th>{{$c->NroCompra}}</th>
             <th>{{$c->Local}}</th>
             <th>{{$c->estado}}</th>
             </tr>
@@ -84,7 +78,7 @@ body{
             <th style="border: none;">TOTAL</th>
             @if($sum)
             @foreach($sum as $su)
-            <td>{{$su->sumImporteCXC}}</td>
+            <td>{{$su->sumImporteCXP}}</td>
             <td>{{$su->sumACuenta}}</td>
             <td>{{$su->sumSaldo}}</td>
             @endforeach
@@ -93,7 +87,7 @@ body{
             </tr>
             <tr class="text-right">
             <td colspan = 3></td>
-            <th colspan = 4 class="text-center">Resumen Cuentas Por Cobrar</th>
+            <th colspan = 4 class="text-center">Resumen Cuentas Por Pagar</th>
             <td colspan = 8></td>
             </tr>
             @if($sum_estado)
@@ -101,7 +95,7 @@ body{
             <tr class="text-right">
             <td colspan = 3></td>
             <td>{{$sume->estado}}</td>
-            <td>{{$sume->ImporteCXC}}</td>
+            <td>{{$sume->ImporteCXP}}</td>
             <td>{{$sume->ACuenta}}</td>
             <td>{{$sume->Saldo}}</td>
             <td colspan = 8></td>
