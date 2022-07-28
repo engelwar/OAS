@@ -86,6 +86,18 @@ input:checked + .slider:before {
          width:600px;  
          text-align:center;  
          }  
+         thead tr th { 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+      
+            color: rgb(255, 255, 255)
+        }
+    
+        .table-responsive { 
+            height:100%;
+            overflow:scroll;
+        }
      table tr th,td{  
          height:30px;  
          line-height:30px;  
@@ -107,7 +119,7 @@ input:checked + .slider:before {
           background-color:#CCC;  
           }  
       #pageStyle .active{  
-          background-color:#0CF;  
+          background-color:#ffffff;  
           color:#ffffff;  
           } 
 .file-upload {
@@ -234,6 +246,9 @@ th:first-child div{
 .tablecontainer tbody  tr:nth-child(even){
      background-color: #ddd;
 }
+.parrafo{
+  font-size: 10px;
+}
 
 
 </style>
@@ -262,104 +277,163 @@ th:first-child div{
             </div>
           </div>
 
+<br><br>
 
-        
-           
-            <div class="row">
-                <div class="col">
-                   
-                        <form class="form-inline" action="" method="GET">
-                          <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
-                          <input id="b1" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto" /><br><br>
-                        </form>
-                       
-                   
-                </div>
-                <div class="col">
-                    <form class="form-inline" action="" method="GET">
-                        <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
-                        <input id="b2" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto "  />
-                        
-                        <br><br>
-                      </form>
-                </div>
-                <div class="col">
-                    <form class="form-inline" action="" method="GET">
-                        <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
-                        <input id="b3" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
-                      </form>
-                </div>
-                <div class="col">
-                    <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
-                    <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
-                    <form class="form-inline" action="" method="GET">
-                      <br>
-                      <input id="busqueda4" name="busqueda4" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar #fac (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
-                      <input id="b4" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
-                    </form>
-                </div>
-                <div class="col">
-                  <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
-                  
-                 
+          <div class="container">
+            <div class="row justify-content-md-center">
+              <div class="col">
+              
               </div>
+              <div class="col">
+                <p class="text-primary" hidden>importe total: <span id="suma" > 0000</span></p>
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-auto">
+                <input type="button" value="Ver sin contizar" class="btn btn-outline-primary"  id="d22"/> 
+              </div>
+              <div class="col-md-auto">
+                <input type="button" value="Ver sin facturar" class="btn btn-outline-primary"  id="d23"/> 
+              </div>
+              <div class="col-md-auto">
+                <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
+              </div>
+              <div class="col-md-auto">
+                <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
+              </div>
+              <div class="col-md-auto">
+             
+                <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
+              </div>
+              <div class="col">
                 
               </div>
+             
+              <div class="col-md-auto" style="text-align: left">
+                Buscar:
+              </div>
+              <div class="col-md-auto">
+   
+                <form class="form-inline" action="" method="GET">
+      <input id="busG" name="busG" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="" value ="" aria-label="Search" >
+                </form>
+              </div>
+            </div>
+          </div>
+        
+   
               
             </div>
          
        
           
      <br>
-            
+ 
+
+ 
     <div class="container">
       <div class="row">
-        <div class="col-sm-11">  
+        <div class="col">
           
-      </div>
-        <div class="col-sm-1"> 
+        </div>
+        <div class="col">
+          
+        </div>
+        <div class="col">
+       
+        </div>
+        <div class="col">
+        
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col col-lg-2">
+          
+        </div>
+       
+        <div class="col">
           <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
-          <span>paginas a visualizar</span>
-          <option value="1000000" id="a0">-</option>
-          <option value="10" id="a1">10</option>
-          <option value="20" id="a2">20</option>
-          <option value="50" id="a3">50</option>
-          <option value="100" id="a4">100</option>
-            
-        </select>
-      </div>
+            <span>paginas a visualizar</span>
+          
+            <option value="1000000" id="a0">-</option>
+            <option value="10" id="a1">10</option>
+            <option value="20" id="a2">20</option>
+            <option value="50" id="a3">50</option>
+            <option value="100" id="a4">100</option>
+              
+          </select>
+        </div>
       </div>
     </div>
- 
-    
+  
     <div class="table-responsive text-center" >
 
       <div class="headercontainer">
         <div class="tablecontainer">
 
         <table class="table table-bordered table-sm" id="miTabla">
+          <thead >
+            <th style="width: 180px; border-style: hidden;  position: static" scope="col">  <p class="text-primary" >Encontrados: <span id="parrafo"> 0</span></p></th>
+            <th style="width:100px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
+      </form>
+            </th>
+            <th style="width: 600px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
+                  
+              </form></th> 
+            <th style="width: 300px; border-style: hidden" scope="col"></th> 
+            <th style="width: 160px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+           </form></th>
+            <th style="width: 190px; border-style: hidden" scope="col"></th>
             
+            <th style="width: 10px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda5" name="busqueda5" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Busqueda por vendedor" value ="" aria-label="Search" >
+              </form>
+            </th>
+            <th style="width: 130px; border-style: hidden" scope="col">     <form class="form-inline" action="" method="GET">
+              <input id="busqueda6" name="busqueda6" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Local" value ="" aria-label="Search" >
+            </form></th>
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col">
+              
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda4" name="busqueda4" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Buscar #fac (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+              </form>
+            </th>
+            <th style="width: 70px; border-style: hidden" scope="col">
+  
+            </th>
+            <th style="width: 30px; border-style: hidden" scope="col"></th>
+            <th style="width: 30px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
+        </thead>
         
          <thead class="bg-primary text-light">
-            <th style="width: 130px; ">Fecha Cot</th>
-            <th style="width: 100px;">Nro Cot</th>
-            <th style="width: 600px;">Cliente</th> 
-            <th style="width: 300px;">Fecha NR</th> 
-            <th style="width: 160px;">NR</th>
-            <th style="width: 190px;" >Total Ventas</th>
+            <th style="width: 140px; background-color: rgb(37, 49, 104)" class="header" scope="col">Fecha Cot</th>
+            <th style="width: 100px; background-color: rgb(37, 49, 104)"class="header" scope="col">Nro Cot</th>
+            <th style="width: 600px; background-color: rgb(37, 49, 104)"class="header" scope="col">Cliente</th> 
+            <th style="width: 300px; background-color: rgb(37, 49, 104)"class="header" scope="col">Fecha NR</th> 
+            <th style="width: 160px; background-color: rgb(37, 49, 104)"class="header" scope="col">NR</th>
+            <th style="width: 190px; background-color: rgb(37, 49, 104)"class="header" scope="col">Total Ventas</th>
             
-            <th style="width: 10px;">Moneda</th>
-            <th style="width: 130px;">Usuario vendedor</th>
-            <th style="width: 130px;">Local</th>
-            <th style="width: 130px;">Fecha fac</th>
-            <th style="width: 130px;">Nro Fac</th>
-            <th style="width: 70px;">Estado</th>
-            <th style="width: 30px;">S</th>
-            <th style="width: 30px;">E</th>
-            <th style="width: 130px;">OBS</th>
-           
-
-         </thead>
+            <th style="width: 10px; background-color: rgb(37, 49, 104)"class="header" scope="col">Moneda</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Usuario vendedor</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Local</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Fecha fac</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Nro Fac</th>
+            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado</th>
+            <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">S</th>
+            <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">E</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">OBS</th>
+        </thead>
 
          @if ($observacionBD->isEmpty())
            
@@ -582,6 +656,30 @@ th:first-child div{
 @section('mis_scripts')
 
 <script>
+
+//buscador en general
+$(document).ready(function(){
+
+$("#busG").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+
+    if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+///////
 function readURL(input) {
   if (input.files && input.files[0]) {
 
@@ -999,8 +1097,7 @@ $(function(){
                
              // El efecto predeterminado de una etiqueta en la primera página  
              var $pagess = $('#pageStyle');  
-             //$pagess[0].style.backgroundColor="#006B00";  
-             //$pagess[0].style.color="#ffffff";  
+         
           } 
           if (val==100) {
          $('#page').text("");
@@ -1085,102 +1182,201 @@ $(function(){
      return false;        
 }
 
-// otro buscador 1
-$(document).ready(() => {
-  
-            $('#b1').click(function(evento) {
-                evento.preventDefault();
-                $('#page').text("");
-                $('#o1').text("-");
+// mejora del buscador nro cotizacion
+$(document).ready(function(){
+$("#busqueda1").keyup(function(){
+_this = this;
 
-                let clave = $('#busqueda1').val().trim();
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(1);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
 
-                if (clave) {
-                    $('table').find('tbody tr').hide();
+    $(this).hide();
 
-                    $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(1);
+    else
 
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                            $(this).show();
-                        }
-                    });
-                }
-            });
-        });
+    $(this).show();
 
-// otro buscador 2
-$(document).ready(() => {
- 
-            $('#b2').click(function(evento) {
-                evento.preventDefault();
-                $('#page').text("");
-                let clave = $('#busqueda2').val().trim();
+    });
 
-                if (clave) {
-                    $('table').find('tbody tr').hide();
+});
 
-                    $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(2);
+});
 
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                            $(this).show();
-                        }
-                    });
-                }
-            });
-        });
+
+//mejora del buscador, cliente
+$(document).ready(function(){
+$("#busqueda2").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(2);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
 
 
 // otro buscador3 busca segun la table se mejora del primer buscador
-$(document).ready(() => {
- 
-            $('#b3').click(function(evento) {
-              $('#page').text(""); 
-              evento.preventDefault();
+$(document).ready(function(){
+$("#busqueda3").keyup(function(){
+_this = this;
 
-                let clave = $('#busqueda3').val().trim();
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(4);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+
+// otro buscador6 segun local
+$(document).ready(function(){
+$("#busqueda6").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(8);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+      
+  // busca por numero de factura 
+$(document).ready(function(){
+$("#busqueda4").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(10);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+  // busca por vendedor
+  $(document).ready(function(){
+$("#busqueda5").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(7);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+// busca estados sin anular
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#d23').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
 
                 if (clave) {
-                    $('table').find('tbody tr').hide();
+        
+                   
+                  $('table').find('tbody tr').hide();
 
                     $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(4);
+                        let nombres = $(this).children().eq(10);
 
                         if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
                             $(this).show();
                         }
                     });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(10)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
                 }
             });
         });
-        // busca por numero de factura 
 
-        $(document).ready(() => {
- 
- $('#b4').click(function(evento) {
-   $('#page').text(""); 
-   evento.preventDefault();
 
-     let clave = $('#busqueda4').val().trim();
 
-     if (clave) {
-         $('table').find('tbody tr').hide();
 
-         $('table tbody tr').each(function() {
-             let nombres = $(this).children().eq(10);
 
-             if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                 $(this).show();
-             }
-         });
-     }
- });
-});
 
 // busca estados anulados
 $(document).ready(() => {
   
+  var Nanulados=0;
             $('#d2').click(function(evento) {
               $('#page').text("");
                 evento.preventDefault();
@@ -1188,7 +1384,9 @@ $(document).ready(() => {
                 let clave = "a";
 
                 if (clave) {
-                    $('table').find('tbody tr').hide();
+        
+                   
+                  $('table').find('tbody tr').hide();
 
                     $('table tbody tr').each(function() {
                         let nombres = $(this).children().eq(11);
@@ -1197,22 +1395,105 @@ $(document).ready(() => {
                             $(this).show();
                         }
                     });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='a') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
                 }
             });
         });
-        
 
-        $(document).ready(() => {
+
+// busca estados Nro cot -
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#d22').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
+
+                if (clave) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(1);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(1)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+            // renovar vista.....
+            $(document).ready(() => {
+              var contador=0;
             $('#d1').click(function(evento) {
               $('#page').text("");
                 evento.preventDefault();
 
                     $('table').find('tbody tr').show();
 
-                   
-                
+                    var nFilas = $("#miTabla tr").length;
+                    $('#parrafo').text(nFilas);
             });
         });
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+          
+
+        
+          
+    
+       
        
 //recarga segun el movimiento o pulsacion del tecledo contador en milisegundos  se mejoro 
         var time = new Date().getTime(); 
@@ -1226,7 +1507,28 @@ $(document).ready(() => {
             } 
             setTimeout(refresh, 10000);
 
+//contador de filas y columnas 
+$(function () {
+  $("#mi-boton").click(function () {
+      var nFilas = $("#mi-tabla tr").length;
+      var nColumnas = $("#mi-tabla tr:last td").length;
+      var msg = "Filas: "+nFilas+" - Columnas: "+nColumnas;
+      alert(msg);
+    });
+});
 
+ //sumaTotal de ventas
+                    var sumador=0;
+                     $("#miTabla tr").find('td:eq(5)').each(function() {
+                      //obtner el valor de la celda
+                      valo2=$(this).html();
+                      sumador=sumador+parseFloat(valo2);
+                    
+                     });
 
+                     var nFilas2 = $("#miTabla tr").length;
+                     $('#parrafo').text(nFilas2);
+
+                     $('#suma').text(sumador.toFixed(2));
 </script>
 @endsection
