@@ -259,7 +259,8 @@ class CotizacionReportController extends Controller
             inlocNomb as 'Local',
               CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
               imlvtNrfc as 'numerofactura',
-              imLvtEsfc as  'estado' 
+              imLvtEsfc as  'estado',
+              vtvtaMdel as 'estadoNR'  
                    
         from vtVta 
         LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
@@ -417,7 +418,8 @@ class CotizacionReportController extends Controller
                  inlocNomb as 'Local',
                      CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
                     imlvtNrfc as 'numerofactura',
-                   imLvtEsfc as  'estado' 
+                   imLvtEsfc as  'estado',
+                   vtvtaMdel as 'estadoNR' 
                    
         from vtVta 
         LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 

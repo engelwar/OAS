@@ -291,27 +291,21 @@ th:first-child div{
             <div class="row justify-content-md-center">
               <div class="col-md-auto">
                 <input type="button" value="Ver sin contizar" class="btn btn-outline-primary"  id="d22"/> 
-              </div>
-              <div class="col-md-auto">
                 <input type="button" value="Ver sin facturar" class="btn btn-outline-primary"  id="d23"/> 
-              </div>
-              <div class="col-md-auto">
                 <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
-              </div>
-              <div class="col-md-auto">
                 <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
+                <input type="button" value="Actualizar" class="btn btn-outline-primary" onclick="location.reload()"/>
+                <button type="button" class="btn btn-outline-success" id="exportar">Export</button>
+
               </div>
-              <div class="col-md-auto">
-             
-                <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
-              </div>
-              <div class="col">
-                
-              </div>
-             
-              <div class="col-md-auto" style="text-align: left">
-                Buscar:
-              </div>
+            
+          <div class="col">
+
+          </div>
+
+          <div class="col-md-auto">
+              Buscar:
+          </div>
               <div class="col-md-auto">
    
                 <form class="form-inline" action="" method="GET">
@@ -320,8 +314,7 @@ th:first-child div{
               </div>
             </div>
           </div>
-        
-   
+         
               
             </div>
          
@@ -393,6 +386,7 @@ th:first-child div{
             <th style="width: 190px; border-style: hidden" scope="col"></th>
             
             <th style="width: 10px; border-style: hidden" scope="col"></th>
+            <th style="width: 30px; border-style: hidden" scope="col"></th>
             <th style="width: 130px; border-style: hidden" scope="col">
               <form class="form-inline" action="" method="GET">
                 <input id="busqueda5" name="busqueda5" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Busqueda por vendedor" value ="" aria-label="Search" >
@@ -412,7 +406,8 @@ th:first-child div{
   
             </th>
             <th style="width: 30px; border-style: hidden" scope="col"></th>
-            <th style="width: 30px; border-style: hidden" scope="col"></th>
+           
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
             <th style="width: 130px; border-style: hidden" scope="col"></th>
         </thead>
         
@@ -425,11 +420,13 @@ th:first-child div{
             <th style="width: 190px; background-color: rgb(37, 49, 104)"class="header" scope="col">Total Ventas</th>
             
             <th style="width: 10px; background-color: rgb(37, 49, 104)"class="header" scope="col">Moneda</th>
+            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado NR</th>
             <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Usuario vendedor</th>
             <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Local</th>
             <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Fecha fac</th>
             <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Nro Fac</th>
-            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado</th>
+            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado Fac</th>
+
             <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">S</th>
             <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">E</th>
             <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">OBS</th>
@@ -452,6 +449,7 @@ th:first-child div{
                   <td style="text-align:center" class="bold">{{$co->NR}}</td>
                   <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
                   <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+                  <td style="text-align:center" class="bold">{{$co->estadoNR}}</td> 
                   <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
                   <td style="text-align:center" class="bold">{{$co->Local}}</td>
                   @if (is_null($co->FechaFac))
@@ -472,6 +470,7 @@ th:first-child div{
                   @else
                   <td style="text-align:center" class="bold">{{$co->estado}}</td> 
                   @endif
+               
                   <td style="text-align:center" class="bold"></td> 
                   <td style="text-align:center" class="bold"></td> 
                   <td style="text-align:center" class="bold"> 
@@ -501,6 +500,11 @@ th:first-child div{
      <td style="text-align:center" class="bold">{{$co->NR}}</td>
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     @if ($co->estadoNR ==9)
+     <td style="text-align:center" class="bold">a</td>  
+     @else
+     <td style="text-align:center" class="bold">v</td>    
+     @endif
      <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
      <td style="text-align:center" class="bold">{{$co->Local}}</td>
      @if (is_null($co->FechaFac))
@@ -570,6 +574,11 @@ th:first-child div{
      <td style="text-align:center" class="bold">{{$co->NR}}</td>
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     @if ($co->estadoNR ==9)
+     <td style="text-align:center" class="bold">a</td>  
+     @else
+     <td style="text-align:center" class="bold">v</td>    
+     @endif
      <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
      <td style="text-align:center" class="bold">{{$co->Local}}</td>
      @if (is_null($co->FechaFac))
@@ -590,6 +599,8 @@ th:first-child div{
      @else
      <td style="text-align:center" class="bold">{{$co->estado}}</td> 
      @endif
+   
+     
      <td style="text-align:center" class="bold"></td> 
      <td style="text-align:center" class="bold"></td> 
      <td style="text-align:center" class="bold"> 
@@ -655,6 +666,24 @@ th:first-child div{
 @endsection
 @section('mis_scripts')
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+<script>
+  $(document).ready(()=>{
+    $("#exportar").click(function(){
+  $("#miTabla").table2excel({
+    // exclude CSS class
+    exclude: ".noExl",
+    name: "Worksheet Name",
+    filename: "SomeFile", //do not include extension
+    fileext: ".xls" // file extension
+  }); 
+});
+  });
+
+</script>
 <script>
 
 //buscador en general
@@ -1256,7 +1285,7 @@ $("#busqueda6").keyup(function(){
 _this = this;
 
     $.each($("#miTabla tbody tr"), function() {
-      let nombres = $(this).children().eq(8);
+      let nombres = $(this).children().eq(9);
     if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
 
     $(this).hide();
@@ -1278,7 +1307,7 @@ $("#busqueda4").keyup(function(){
 _this = this;
 
     $.each($("#miTabla tbody tr"), function() {
-      let nombres = $(this).children().eq(10);
+      let nombres = $(this).children().eq(11);
     if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
 
     $(this).hide();
@@ -1300,7 +1329,7 @@ $("#busqueda5").keyup(function(){
 _this = this;
 
     $.each($("#miTabla tbody tr"), function() {
-      let nombres = $(this).children().eq(7);
+      let nombres = $(this).children().eq(8);
     if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
 
     $(this).hide();
@@ -1314,6 +1343,111 @@ _this = this;
 });
 
 });
+// buscar anualciom Nota de remicion
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#x02').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "v";
+                let clave2 ="a";
+
+                if (clave2) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(12);
+                
+                        if (nombres.text().toUpperCase().includes(clave2.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+
+// busca estados sin anular de nro de cotizacion 
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#x01').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
+                let clave2 ="a";
+
+                if (clave || clave2) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(1);
+                        let nombres2 = $(this).children().eq(12);
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())&&nombres2.text().toUpperCase().includes(clave2.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
 
 
 // busca estados sin anular
@@ -1325,6 +1459,7 @@ $(document).ready(() => {
                 evento.preventDefault();
 
                 let clave = "-";
+                let clave2 = "v";
 
                 if (clave) {
         
@@ -1332,9 +1467,10 @@ $(document).ready(() => {
                   $('table').find('tbody tr').hide();
 
                     $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(10);
+                        let nombres = $(this).children().eq(11);
+                        let nombres2 = $(this).children().eq(7);
 
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())&&nombres2.text().toUpperCase().includes(clave2.toUpperCase())) {
                             $(this).show();
                         }
                     });
@@ -1344,7 +1480,7 @@ $(document).ready(() => {
                  var sumaAnulados=0;
                  var contador=0;
                //  var valo3=0;
-                 $("#miTabla tr").find('td:eq(10)').each(function () {
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
  
                   //obtenemos el valor de la celda
                     valor = $(this).html();
@@ -1389,7 +1525,7 @@ $(document).ready(() => {
                   $('table').find('tbody tr').hide();
 
                     $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(11);
+                        let nombres = $(this).children().eq(12);
 
                         if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
                             $(this).show();
@@ -1424,6 +1560,7 @@ $(document).ready(() => {
                 }
             });
         });
+        
 
 
 // busca estados Nro cot -
@@ -1489,7 +1626,10 @@ $(document).ready(() => {
             });
         });
           
+     
+  
 
+        
         
           
     
