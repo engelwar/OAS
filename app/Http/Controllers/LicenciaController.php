@@ -61,6 +61,14 @@ class LicenciaController extends Controller
     return redirect()->route('licencia.index');
   }
 
+  public function listado()
+  {
+    $user = Auth::user();
+    $forms = LicenciaForm::orderBy('id', 'DESC')
+    ->paginate(8);
+    return view('forms.listadoLicencia', compact('forms'));
+  }
+
   /**
    * Show the form for creating a new resource.
    *

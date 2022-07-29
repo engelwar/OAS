@@ -162,7 +162,10 @@ Route::prefix('reports')->group(function(){
     Route::resource('precios', 'Reports\ReportePrecioController');
 
     Route::resource('difereciacosto', 'Reports\DiferenciaCostoController');
-    Route::any('ventamarcauser/table/products','Reports\DiferenciaCostoController@products')->name('difereciacosto.products');  
+    Route::any('ventamarcauser/table/products','Reports\DiferenciaCostoController@products')->name('difereciacosto.products');
+
+    Route::resource('kardexalmacen', 'Reports\KardexAlmacenController');
+    Route::any('ventamarcauser/table/products3','Reports\KardexAlmacenController@products')->name('kardexalmacen.products');  
 
     Route::resource('kardexreport', 'Reports\KardexReportController');
     Route::any('ventamarcauser/table/products2','Reports\kardexreportController@products')->name('kardexreport.products');  
@@ -274,14 +277,17 @@ Route::get('licencia/create/{cont}', 'LicenciaController@create')->name('licenci
 Route::get('licencia/estado/{id}', 'LicenciaController@estado')->name('licencia.estado');
 Route::get('licencia_detalle/{id}', 'LicenciaController@estadoForm')->name('licencia.estadoForm');
 Route::get('licencia_pdf/{id}','LicenciaController@generatePDF')->name('licencia_pdf');
+Route::get('listadoLicencia', 'LicenciaController@listado')->name('licencia.listado');
 
 Route::resource('permisos', 'IndexPermisosController');
 Route::resource('vacaciones', 'IndexVacacionesController');
+Route::resource('LV', 'IndexLVController');
 
 Route::resource('vacacion', 'VacacionController');
 Route::get('vacacion_pdf/{id}','VacacionController@generatePDF')->name('vacacion_pdf');
 Route::get('vacacion/estado/{id}', 'VacacionController@estado')->name('vacacion.estado');
 Route::get('vacacion_detalle/{id}', 'VacacionController@estadoForm')->name('vacacion.estadoForm');
+Route::get('listadoVacacion', 'VacacionController@listado')->name('vacacion.listado');
 
 //-------------------caminos de reprotte cotizacion------------------------------------------
 Route::resource('/CotizacionReporte', 'CotizacionReportController');

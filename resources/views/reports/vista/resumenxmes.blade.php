@@ -168,7 +168,7 @@
           @endif
   
           @if ($value=="Diciembre")
-          <td>1,811,167.02</td>
+          <td>1,803,605.94</td>
           <td>1,695,077.25</td>
           @endif
           
@@ -2062,22 +2062,22 @@
           @if ($val->adusrNomb=="JULIO MANCILLA")
           <td>0.00</td>
           <td>0.00</td>
-          <td>0.00</td>
+          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][3]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="MAGDY VILLARROEL")
           <td>0.00</td>
           <td>0.00</td>
-          <td>0.00</td>
+          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][4]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="RODRIGO DURAN")
           <td>0.00</td>
           <td>0.00</td>
-          <td>0.00</td>
+          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][5]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="VENTA MÓVIL 1")
           <td>0.00</td>
           <td>0.00</td>
-          <td>0.00</td>
+          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][6]->Tot1, 2)}}</td>
           @endif
           <td>{{ $val->Tot2 }}</td>
         </tr>
@@ -2567,7 +2567,7 @@
           @endforeach
           <td>{{ number_format($sumSC19, 2) }}</td>
           <td>{{ number_format($sumSC20, 2) }}</td>
-          <td>{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC20, 2) }}</td>
+          <td>{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
           <td>{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
         </tr>
         @foreach ($total_seg[6]['SANTA CRUZ'] as $val)
@@ -2805,6 +2805,37 @@
   </div>
 </div>
 
+<table id="example" class="display nowrap" style="width:100%">
+      <thead>
+          <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Position</th>
+              <th>Office</th>
+              <th>Age</th>
+              <th>Start date</th>
+              <th>Salary</th>
+              <th>Extn.</th>
+              <th>E-mail</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Tiger</td>
+              <td>Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>2011-04-25</td>
+              <td>$320,800</td>
+              <td>5421</td>
+              <td>t.nixon@datatables.net</td>
+          </tr>
+      </tbody>
+  </table>
+<div>
+</div>
+
 @section('mis_scripts')
 
 
@@ -2815,42 +2846,42 @@
 <script>
     
   $(document).ready(function() {
-    $('#table_ventas').DataTable({
-      "ordering": false,
-      dom: 'Bfrtip',
-      buttons: {
-        dom: {
-          button: {
-            className: 'btn'
-          }
-        },
-        buttons: [{
+    // $('#table_ventas').DataTable({
+    //   "ordering": false,
+    //   dom: 'Bfrtip',
+    //   buttons: {
+    //     dom: {
+    //       button: {
+    //         className: 'btn'
+    //       }
+    //     },
+    //     buttons: [{
          
             
-          extend: "excel",
-          text: 'Exportar a Excel',
-          className: 'btn btn-outline-primary mb-4',
-          excelStyles: {                      
-                cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
-                style: {                      
-                    font: {                     
-                        name: "Arial",         
-                        size: "12",         
-                        color: "FFFFFF",       
-                        b: false,             
-                    },
-                    fill: {                     
-                        pattern: {              
-                            color: "548236",   
-                        }
-                    }
-                }
-            },
+    //       extend: "excel",
+    //       text: 'Exportar a Excel',
+    //       className: 'btn btn-outline-primary mb-4',
+    //       excelStyles: {                      
+    //             cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
+    //             style: {                      
+    //                 font: {                     
+    //                     name: "Arial",         
+    //                     size: "12",         
+    //                     color: "FFFFFF",       
+    //                     b: false,             
+    //                 },
+    //                 fill: {                     
+    //                     pattern: {              
+    //                         color: "548236",   
+    //                     }
+    //                 }
+    //             }
+    //         },
       
-        }]
-      },
-      "aLengthMenu": [100]
-    });
+    //     }]
+    //   },
+    //   "aLengthMenu": [100]
+    // });
   });
 
 

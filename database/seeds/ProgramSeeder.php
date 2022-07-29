@@ -216,6 +216,9 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(2));
+        $smod->permisos()->attach(Permiso::find(3));
+        $smod->permisos()->attach(Permiso::find(4));
 
         $smod = Program::create([  
             'id'=>19,  
@@ -226,6 +229,9 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+        $smod->permisos()->attach(Permiso::find(2));
+        $smod->permisos()->attach(Permiso::find(3));
+        $smod->permisos()->attach(Permiso::find(4));
 
         $smod = Program::create([  
             'id'=>20,  
@@ -374,5 +380,15 @@ class ProgramSeeder extends Seeder
         $smod->permisos()->attach(Permiso::find(1));
         $smod->permisos()->attach(Permiso::find(5));
         $smod->permisos()->attach(Permiso::find(6));
+
+        $smod = Program::create([   
+            'id'=>34, 
+            'nombre'=>'Reporte LV',  
+            'desc'=>'Reporte LV',        
+            'modulo_id'=>3,
+            'route'=>'LV.index',
+            'icon'=>'fas fa-file-contract',
+        ]); 
+        $smod->permisos()->attach(Permiso::find(1));
     }
 }

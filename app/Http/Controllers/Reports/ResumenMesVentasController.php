@@ -614,7 +614,7 @@ class ResumenMesVentasController extends Controller
     }
 
     $sql_total_retail_calacoto = "
-      SELECT 
+      SELECT
       " . implode($group_mes_sum) . "
       ISNULL(SUM([Tot1]),0) AS [Tot1],
       CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
@@ -623,7 +623,7 @@ class ResumenMesVentasController extends Controller
         SELECT *
         FROM bd_admOlimpia.dbo.adusr
       ) AS usr
-      LEFT JOIN 
+      LEFT JOIN
       (
       SELECT vtvtaCusr,
       ISNULL([1],0) AS [Enero1],
@@ -866,7 +866,7 @@ class ResumenMesVentasController extends Controller
       'contra' => [
         '2019' => ['Enero' => 51983.30, 'Febrero' => 163569.13, 'Marzo' => 242920.12, 'Abril' => 100498.15, 'Mayo' => 218356.84, 'Junio' => 101918.35, 'Julio' => 139081.04, 'Agosto' => 110767.28, 'Septiembre' => 156364.41, 'Octubre' => 168512.94, 'Noviembre' => 67193.29, 'Diciembre' => 165125.38],
         '2020' => ['Enero' => 168035.32, 'Febrero' => 43661.58, 'Marzo' => 11419.55, 'Abril' => 424.40, 'Mayo' => 133308.65, 'Junio' => 175994.54, 'Julio' => 239691.90, 'Agosto' => 49067.00, 'Septiembre' => 51939.07, 'Octubre' => 154449.40, 'Noviembre' => 127393.64, 'Diciembre' => 250303.45],
-        '2021' => ['Enero' => 0, 'Febrero' => 0, 'Marzo' => 0, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 0, 'Septiembre' => 0, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
+        '2021' => ['Enero' => 91924.15, 'Febrero' => 41587.36, 'Marzo' => 0, 'Abril' => 0, 'Mayo' => 0, 'Junio' => 0, 'Julio' => 0, 'Agosto' => 0, 'Septiembre' => 0, 'Octubre' => 0, 'Noviembre' => 0, 'Diciembre' => 0],
       ],
     ];
 

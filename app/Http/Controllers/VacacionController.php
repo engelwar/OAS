@@ -104,6 +104,17 @@ class VacacionController extends Controller
     return redirect()->route('vacacion.index');
   }
 
+  public function listado()
+  {
+    $user = Auth::user();
+    $forms = VacacionForm::orderBy('id', 'DESC')
+    ->paginate(8);
+    // if (Auth::user()->tienePermiso(18, 4)) {
+    //   return view('vacaciones_forms', compact('forms'));
+    // }
+    return view('forms.listadoVacacion', compact('forms'));
+  }
+
   /**
    * Store a newly created resource in storage.
    *
