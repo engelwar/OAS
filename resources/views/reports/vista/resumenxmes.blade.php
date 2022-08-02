@@ -35,9 +35,7 @@
 </style>
 @endsection
 @section('content')
-<div id="encabezado">
-  @include('layouts.sidebar2', ['hide'=>'0']) 
-</div>
+@include('layouts.sidebar', ['hide'=>'0']) 
 
 <div class="mt-4 mb-3" style="width: 90%; height: 670px; margin: auto;">
   <div>
@@ -2805,83 +2803,55 @@
   </div>
 </div>
 
-<table id="example" class="display nowrap" style="width:100%">
-      <thead>
-          <tr>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
-              <th>Extn.</th>
-              <th>E-mail</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>Tiger</td>
-              <td>Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011-04-25</td>
-              <td>$320,800</td>
-              <td>5421</td>
-              <td>t.nixon@datatables.net</td>
-          </tr>
-      </tbody>
-  </table>
-<div>
-</div>
-
 @section('mis_scripts')
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 
 <script>
     
   $(document).ready(function() {
-    // $('#table_ventas').DataTable({
-    //   "ordering": false,
-    //   dom: 'Bfrtip',
-    //   buttons: {
-    //     dom: {
-    //       button: {
-    //         className: 'btn'
-    //       }
-    //     },
-    //     buttons: [{
+    $('#table_ventas').DataTable({
+      "ordering": false,
+      dom: 'Bfrtip',
+      buttons: {
+        dom: {
+          button: {
+            className: 'btn'
+          }
+        },
+        buttons: [{
          
             
-    //       extend: "excel",
-    //       text: 'Exportar a Excel',
-    //       className: 'btn btn-outline-primary mb-4',
-    //       excelStyles: {                      
-    //             cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
-    //             style: {                      
-    //                 font: {                     
-    //                     name: "Arial",         
-    //                     size: "12",         
-    //                     color: "FFFFFF",       
-    //                     b: false,             
-    //                 },
-    //                 fill: {                     
-    //                     pattern: {              
-    //                         color: "548236",   
-    //                     }
-    //                 }
-    //             }
-    //         },
+          extend: "excel",
+          text: 'Exportar a Excel',
+          className: 'btn btn-outline-primary mb-4',
+          excelStyles: {                      
+                cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
+                style: {                      
+                    font: {                     
+                        name: "Arial",         
+                        size: "12",         
+                        color: "FFFFFF",       
+                        b: false,             
+                    },
+                    fill: {                     
+                        pattern: {              
+                            color: "548236",   
+                        }
+                    }
+                }
+            },
       
-    //     }]
-    //   },
-    //   "aLengthMenu": [100]
-    // });
+        }]
+      },
+      "aLengthMenu": [100],
+      "paging": false,
+      "info": false,
+      searching: false,
+    });
   });
 
 

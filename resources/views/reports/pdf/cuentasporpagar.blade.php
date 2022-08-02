@@ -41,7 +41,7 @@ body{
                 <th>Proveedor</th>
                 <th>Fecha</th>
                 <th>FechaVenc</th>
-                <th>ImporteCXC</th>
+                <th>ImporteCXP</th>
                 <th>ACuenta</th>
                 <th>Saldo</th>
                 <th>Glosa</th>
