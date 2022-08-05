@@ -247,6 +247,7 @@ Route::prefix('inventario')->group(function(){
     Route::any('tominvreq/get/pdf', 'Inventarios\TomInvReqController@pdf')->name('tominvconfig.pdf');
     
     Route::resource('invconsult', 'Inventarios\InvProdConsultController');
+    Route::resource('invconsultdetalle', 'Inventarios\InvProdConsultDetalleController');
 
     Route::resource('tominvprodubi', 'Inventarios\TomInvProdUbiController');
     Route::any('tominvprodubi/get/prods', 'Inventarios\TomInvProdUbiController@prods')->name('tominvprodubi.prods');
