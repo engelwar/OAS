@@ -3027,7 +3027,7 @@
 
 
 <!-- Modal handal-->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -3045,14 +3045,14 @@
         <td>2022</td>
             
           </tr>
-        
+         
                <tr>
-            <td class="text-start" style="background-color: #284556;">SUCURSAL BALLIVIAN</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">SUCURSAL HANDAL</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal19, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal20, 2) }}</td>
     
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
           </tr>
           <tr>
           
