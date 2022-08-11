@@ -80,7 +80,7 @@ class InvProdConsultController extends Controller
             LEFT JOIN inume ON inumeCume = inproCumb 
             LEFT JOIN macon ON inproMarc = CAST(MaconCcon as varchar)+ '|' + CAST(MaconItem as varchar)
             LEFT JOIN vtLid on inproCpro = vtLidCpro
-            WHERE inproMdel = 0 and vtLidClis = 1
+            WHERE inproMdel = 0 and vtLidClis = 40
         )
         SELECT *  
         FROM produ

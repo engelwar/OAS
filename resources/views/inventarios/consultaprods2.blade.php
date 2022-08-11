@@ -141,6 +141,7 @@
     padding: 2px 16px;
     background-color: #5cb85c;
     color: white;
+    height: 40px;
   }
 
   .modal-body {
@@ -197,15 +198,11 @@
     <!-- Modal content -->
     <div class="modal-content overflow-hidden">
       <div class="modal-header">
-        <h3 id="title_prod" class="modal-title"></h3>
+        <h5 id="title_prod" class="modal-title"></h5>
         <span class="close h5">&times;</span>
       </div>
       <div class="modal-body">
-        <div id="ovalo">
-          <div id="diDer">
-            <input id="precio_retail" class="mt-2" type="text" value="" class="inputrasparente" disabled>
-          </div>
-        </div>
+        <h3 id="precio" class="text-center"></h3>
       </div>
     </div>
   </div>
@@ -353,7 +350,7 @@
           // Get the modal}
           console.log(data);
           $('#title_prod').text(data["detalle"][0]["prod"]);
-          $('#precio_retail').val('Bs. ' + data["detalle"][0]["retail"]);
+          $('#precio').text('Bs. ' + data["detalle"][0]["retail"]);
           $('#myModal').fadeIn();
 
         },

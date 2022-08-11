@@ -12,43 +12,35 @@ use App\Exports\CuentasPorCobrarExport;
 
 class CuentasPorCobrarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
 
-    public function index()
-    {
-        if(Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz']))
-        {
-            $usuario= "";
-        }
-        else if (Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios OAS']))
-        {
-            $users= User::where('dbiz_user','<>',NULL)->get()->pluck('dbiz_user')->toArray();
-            $users= implode(",", $users);
-            $usuario ="AND adusrCusr IN (".$users.")";
-        }
-        else
-        {
-            if(Auth::user()->dbiz_user == null)
-            {
-                $usuario= "AND adusrCusr = null";
-            }
-            else
-            {
-                $usuario= "AND adusrCusr = ".Auth::user()->dbiz_user;
-            }
-        }
-        $query = 
-        "SELECT * 
+  public function index()
+  {
+    if (Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios DualBiz'])) {
+      $usuario = "";
+    } else if (Auth::user()->authorizePermisos(['Cuentas Por Cobrar', 'Ver usuarios OAS'])) {
+      $users = User::where('dbiz_user', '<>', NULL)->get()->pluck('dbiz_user')->toArray();
+      $users = implode(",", $users);
+      $usuario = "AND adusrCusr IN (" . $users . ")";
+    } else {
+      if (Auth::user()->dbiz_user == null) {
+        $usuario = "AND adusrCusr = null";
+      } else {
+        $usuario = "AND adusrCusr = " . Auth::user()->dbiz_user;
+      }
+    }
+    $query =
+      "SELECT * 
         FROM bd_admOlimpia.dbo.adusr 
-        WHERE adusrMdel = 0 ".$usuario."
+        WHERE adusrMdel = 0 " . $usuario . "
         AND (adusrCusr IN 
         (
             SELECT cxcTrCcbr
@@ -56,65 +48,63 @@ class CuentasPorCobrarController extends Controller
             GROUP BY cxcTrCcbr
         ))
         ORDER BY adusrNomb";
-        $user = DB::connection('sqlsrv')->select(DB::raw($query));
-        return view('reports.cuentasporcobrar', compact('user'));
+    $user = DB::connection('sqlsrv')->select(DB::raw($query));
+    return view('reports.cuentasporcobrar', compact('user'));
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    //
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $user = "AND cxcTrCcbr IS NULL";
+    $cliente = "";
+    if ($request->cliente) {
+      $cliente = "AND cxcTrNcto LIKE '%" . $request->cliente . "%'";
+    }
+    if ($request->options) {
+      $user = "AND cxcTrCcbr IN (" . implode(",", $request->options) . ")";
+    }
+    $estado2 = "";
+    if ($request->estado2 == 1) {
+      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= 30";
+    } elseif ($request->estado2 == 2) {
+      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30)";
+    } elseif ($request->estado2 == 3) {
+      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30 + 15)";
+    }
+    $fechaA = date("d/m/Y");
+    $fil = "";
+    $fecha = date("d/m/Y", strtotime($request->ffin));
+    $fecha1 = date("d/m/Y", strtotime($request->ffin1));
+    $fecha2 = date("d/m/Y", strtotime($request->ffin2));
+    if ($request->checkfecha == 1) {
+      $fil = "AND liqXCFtra <= '" . $fecha . "'";
+    } elseif ($request->checkfecha == 2) {
+      $fil = "AND liqXCFtra BETWEEN '" . $fecha1 . "' AND '" . $fecha2 . "'";
+    }
+    $saldo0 = "";
+    if ($request->saldo0 != "on") {
+      $saldo0 = "AND REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') != '0.00'";
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = "AND cxcTrCcbr IS NULL";
-        $cliente = "";
-        if($request->cliente)
-        {
-            $cliente = "AND cxcTrNcto LIKE '%".$request->cliente."%'";
-        }
-        if($request->options)
-        {
-            $user = "AND cxcTrCcbr IN (".implode(",",$request->options).")"; 
-        }
-        $estado2 = "";
-        if ($request->estado2 == 1){
-          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') <= 30";
-        } elseif ($request->estado2 == 2){
-          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') > (30)";
-        } elseif ($request->estado2 == 3){
-          $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '".date("d/m/Y")."') > (30 + 15)";
-        }
-        $fechaA = date("d/m/Y");
-        $fil = "";
-        $fecha = date("d/m/Y", strtotime($request->ffin));
-        $fecha1 = date("d/m/Y", strtotime($request->ffin1));
-        $fecha2 = date("d/m/Y", strtotime($request->ffin2));
-        if($request->checkfecha == 1){
-          $fil = "AND liqXCFtra <= '".$fecha."'";
-        } elseif ($request->checkfecha == 2) {
-          $fil = "AND liqXCFtra BETWEEN '".$fecha1."' AND '".$fecha2."'";
-        }
-        $saldo0 = "";
-        if ($request->saldo0 != "on") {
-          $saldo0 = "AND REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') != '0.00'";
-        } 
-
-        $fil2 = "DECLARE @fechaA DATE
-        SELECT @fechaA = '".date("d/m/Y")."'";
-        $query =
-        "SELECT
+    $fil2 = "DECLARE @fechaA DATE
+        SELECT @fechaA = '" . date("d/m/Y") . "'";
+    $query =
+      "SELECT
         cxcTrNtra as 'Cod',
         cxcTrNcto as 'Cliente',
         isnull(imLvtRsoc,'-') as Rsocial,
@@ -195,22 +185,21 @@ class CuentasPorCobrarController extends Controller
             FROM liqdC
             JOIN liqXC ON liqdCNtra = liqXCNtra
             WHERE liqXCMdel = 0 
-            ".$fil."
+            " . $fil . "
             GROUP BY liqdCNtcc
         )as cobros
         ON cobros.liqdCNtcc = cxcTrNtra
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
-        ".$saldo0."
-        ".$user."
-        ".$cliente."
-        ".$estado2."
+        " . $saldo0 . "
+        " . $user . "
+        " . $cliente . "
+        " . $estado2 . "
         ";
-        $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
-        dd($query);
-        $sum = DB::connection('sqlsrv')
-        ->select(DB::raw
-        ($fil2 .
-        "SELECT 
+    $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
+    $sum = DB::connection('sqlsrv')
+      ->select(DB::raw(
+          $fil2 .
+            "SELECT 
         REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
         REPLACE(sumACuenta,',', '.') as sumACuenta, 
         REPLACE(sumSaldo,',', '.') as sumSaldo        
@@ -219,82 +208,95 @@ class CuentasPorCobrarController extends Controller
         SUM(cast(ImporteCXC as decimal(10,2))) over() as sumImporteCXC, 
         SUM(cast(ACuenta as decimal(10,2))) over() as sumACuenta, 
         SUM(cast(Saldo as decimal(10,2))) over() as sumSaldo
-        FROM (". $query. ") as cxc
+        FROM (" . $query . ") as cxc
         ) 
         as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        )); 
-        $sum_estado = DB::connection('sqlsrv')
-        ->select(DB::raw
-        ($fil2 ."SELECT 
+        ));
+    $sum_estado = DB::connection('sqlsrv')
+      ->select(DB::raw($fil2 . "SELECT 
         REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
         REPLACE(SUM(cast(ACuenta as decimal(10,2))),',', '.') as ACuenta, 
         REPLACE(SUM(cast(Saldo as decimal(10,2))),',', '.') as Saldo,
         estado
-        FROM (". $query. ") as cxc 
-        GROUP BY estado")); 
-        $requestFecha = $request->checkfecha;
-        if($request->gen =="export")
-        {
-            $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2','fecha', 'requestFecha'))
-            ->setOrientation('landscape')
-            ->setPaper('letter')
-            ->setOption('footer-right','Pag [page] de [toPage]')
-            ->setOption('footer-font-size',8);
-            return $pdf->inline('Cuentas Por Cobrar Entre_'.$fecha1.' - '.$fecha2.'.pdf');
-        }
-        elseif($request->gen =="excel")
-        {
-            $export = new CuentasPorCobrarExport($cxc, $request->checkfecha, $fecha, $fecha1, $fecha2);    
-            return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
-        }
-        else if($request->gen =="ver")
-        {
-            return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado'));
-        }
+        FROM (" . $query . ") as cxc 
+        GROUP BY estado"));
+    $requestFecha = $request->checkfecha;
+    $titulos =
+      [
+        ['name' => 'codigo', 'data' => 'codigo', 'title' => 'Codigo', 'tip' => 'filtro'],
+        ['name' => 'cliente', 'data' => 'cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
+        [],
+        ['name' => 'nit', 'data' => 'nit', 'title' => 'NIT', 'tip' => 'filtro'],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        ['name' => 'usuario', 'data' => 'usuario', 'title' => 'Usuario', 'tip' => 'filtro'],
+        [],
+        ['name' => 'nventa', 'data' => 'nventa', 'title' => 'NVenta', 'tip' => 'filtro'],
+        ['name' => 'num.Fac', 'data' => 'num.fac', 'title' => 'Num. Fac', 'tip' => 'filtro'],
+        ['name' => 'local', 'data' => 'local', 'title' => 'Local', 'tip' => 'filtro'],
+        ['name' => 'estado', 'data' => 'estado', 'title' => 'Estado', 'tip' => 'filtro'],
+      ];
+    if ($request->gen == "export") {
+      $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2', 'fecha', 'requestFecha'))
+        ->setOrientation('landscape')
+        ->setPaper('letter')
+        ->setOption('footer-right', 'Pag [page] de [toPage]')
+        ->setOption('footer-font-size', 8);
+      return $pdf->inline('Cuentas Por Cobrar Entre_' . $fecha1 . ' - ' . $fecha2 . '.pdf');
+    } elseif ($request->gen == "excel") {
+      $export = new CuentasPorCobrarExport($cxc, $request->checkfecha, $fecha, $fecha1, $fecha2);
+      return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
+    } else if ($request->gen == "ver") {
+      return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'titulos'));
     }
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    //
+  }
 }
