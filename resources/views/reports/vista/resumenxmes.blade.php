@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('estilo')
 <style>
+
   body {
     font-size: 1.0rem;
   }
@@ -43,9 +44,12 @@
       <img alt="foto" src="{{asset('imagenes/logo.png')}}" style="width: 120%;
                               height: auto;" />
     </div>
+    
     <div>
       <h3 class="text-center">COMPARATIVO DE VENTAS</h3>
     </div>
+    
+    
   </div>
   <div style="overflow: scroll; height: 450px; font-size: 12px;">
     <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
@@ -2800,8 +2804,299 @@
         @endforeach
       </tbody>
     </table>
+
+  </div>
+  <br>
+  <div class="container">
+    <div class="row row-cols-auto">
+      <div class="col">
+       
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Ver total
+</button>
+
+      </div>
+      <div class="col">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+          Ballivian
+        </button>
+
+      </div>
+      <div class="col">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+          Handal
+        </button>
+
+      </div>
+      <div class="col">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+          Mariscal
+        </button>
+
+      </div>
+      
+      <div class="col">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+          Calacoto
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Modal total-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Comparativo general</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
+          <thead class="text-white" style="background-color: #283056;">
+            <tr>
+              <td></td>
+        <td class="text-center">2019</td>
+        <td class="text-center">2020</td>
+        <td class="text-center">2021</td>
+        <td class="text-center">2022</td>
+            
+          </tr>
+        
+          <tr>
+            <td  class="text-start" style="background-color: #284556;">SUMA GENERAL</td>
+            <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral19, 2) }}</td>
+            <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral20, 2) }}</td>
+            <td class="text-end" style="background-color: #284556;">{{ number_format($total_general[0]->Tot1 + $sumGeneral21, 2) }}</td>
+            <td class="text-end" style="background-color: #284556;">{{ $total_general[0]->Tot2}}</td>
+                
+        
+          </tr>
+          <tr>
+            <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL BALLIVIAN</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall19, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall20, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL HANDAL</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal19, 2) }}</td>
+          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal20, 2) }}</td>
+          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
+          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+            <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL MARISCAL</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal19, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal20, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
+          </tr>
+          <TR>
+            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL CALACOTO</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto19, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto20, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
+          </TR>
+          <TR>
+            <td class="text-start" style="background: #f8f8f8; color: black">INTITUCIONALES</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional19, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional20, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[4]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
+          </TR>
+          <TR>
+            <TD class="text-start" style="background: hsl(217, 23%, 89%); color: black">MAYORISTAS</TD>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas19, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas20, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[5]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
+          </TR>
+          <tr>
+            <td class="text-start" style="background: #f8f8f8; color: black">SANTA CRUZ</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC19, 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC20, 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">REGIONAL 1</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot1 }}</td>
+            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+            <td class="text-start" style="background: #f8f8f8; color: black">REGIONAL 2</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot1 }}</td>
+            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot2 }}</td>
+          </tr>
+        </table>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>
+
+
+<!-- Modal ballivian-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sucursal Ballivian</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
+          <thead class="text-white" style="background-color: #283056;">
+            <tr>
+              <td></td>
+        <td>2019</td>
+        <td>2020</td>
+        <td>2021</td>
+        <td>2022</td>
+            
+          </tr>
+        
+               <tr>
+            <td class="text-start" style="background-color: #284556;">SUCURSAL BALLIVIAN</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
+    
+            <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+          
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">CAJERO FERIA</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][0]->Tot2}}</td>
+            </TR>
+              <TR>
+                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
+              </TR>
+              <TR>
+                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
+              </TR>
+         
+              <TR>
+                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+              </TR>
+            
+        </table>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal handal-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sucursal Handal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
+          <thead class="text-white" style="background-color: #283056;">
+            <tr>
+              <td></td>
+        <td>2019</td>
+        <td>2020</td>
+        <td>2021</td>
+        <td>2022</td>
+            
+          </tr>
+        
+               <tr>
+            <td class="text-start" style="background-color: #284556;">SUCURSAL BALLIVIAN</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
+    
+            <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+            <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+          </tr>
+          <tr>
+          
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">CAJERO FERIA</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['feria'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][0]->Tot2}}</td>
+            </TR>
+              <TR>
+                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
+              </TR>
+              <TR>
+                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
+          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
+              </TR>
+         
+              <TR>
+                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
+                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+              </TR>
+            
+        </table>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 @section('mis_scripts')
 
