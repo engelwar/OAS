@@ -11,6 +11,7 @@
 @endsection
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
+dsadsadsad
 <div class="container-fluid">
 
     <div class="row justify-content-center mt-4">
