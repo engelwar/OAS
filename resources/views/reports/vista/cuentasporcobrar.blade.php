@@ -21,46 +21,12 @@
   <div class="row justify-content-center mt-4">
     <div class="col-md-12">
       <table id="example" class="cell-border compact hover" style="width:100%">
-      <thead>
-      <tr>
-        <th>Codigo</th>
-        <th>Cliente</th>
-        <th>Rsocial</th>
-        <th>Nit</th>
-        <th>Fecha</th>
-        <th>FechaVenc</th>
-        <th>ImporteCXC</th>
-        <th>ACuenta</th>
-        <th>Saldo</th>
-        <th>Glosa</th>
-        <th>Usuario</th>
-        <th>M.</th>
-        <th>NVenta</th>
-        <th>Num. Fac</th>
-        <th>Local</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-      <thead>
-      <tr>
-        <th>Codigo</th>
-        <th>Cliente</th>
-        <th>Rsocial</th>
-        <th>Nit</th>
-        <th>Fecha</th>
-        <th>FechaVenc</th>
-        <th>ImporteCXC</th>
-        <th>ACuenta</th>
-        <th>Saldo</th>
-        <th>Glosa</th>
-        <th>Usuario</th>
-        <th>M.</th>
-        <th>NVenta</th>
-        <th>Num. Fac</th>
-        <th>Local</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
+        <!-- <thead>
+          <tr></tr>
+        </thead>
+        <thead id="thead_filtro">
+          
+        </thead> -->
         <!-- <tfoot class="table tabll-sm border">
           <tr class="text-right">
             <th colspan=5></th>
@@ -94,7 +60,7 @@
             <td colspan=8></td>
           </tr>
         </tfoot> -->
-        <tfoot>
+        <!-- <tfoot>
           <tr class="text-right">
             <th colspan=5></th>
             <th>TOTAL</th>
@@ -126,6 +92,11 @@
             <td class="sumMoraSaldo bg-info dt-right"></td>
             <td colspan=8></td>
           </tr>
+        </tfoot> -->
+        <tfoot>
+          @foreach ($titulos as $ti)
+          <th @if(isset($ti['tip']))class="{{$ti['tip']}}" @endif>@if(isset($ti['tip']) && $ti['tip'] == 'filtro'){{$ti['title']}}@endif</th>
+          @endforeach
         </tfoot>
       </table>
     </div>
@@ -159,7 +130,6 @@
 @endsection
 
 @section('mis_scripts')
-<script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
 <script>
   var json_data = {!!json_encode($cxc) !!};
   jQuery.fn.dataTable.Api.register('sum()', function() {
@@ -181,6 +151,118 @@
         $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;"/>');
       }
     });
+    // $("#busqueda0").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(0);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda1").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(1);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda3").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(3);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda10").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(10);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda12").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(12);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda13").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(13);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda14").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(14);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
+    // $("#busqueda15").keyup(function() {
+    //   _this = this;
+    //   $.each($("#example tbody tr"), function() {
+    //     let nombres = $(this).children().eq(15);
+    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    //       $(this).hide();
+
+    //     else
+
+    //       $(this).show();
+
+    //   });
+    // });
     var height = screen.height - 500 + 'px';
     var table = $('#example').DataTable({
 
@@ -239,7 +321,7 @@
         },
         {
           data: 'NroFac',
-          title: 'Num. Fac'
+          title: 'NroFac'
         },
         {
           data: 'Local',
@@ -258,8 +340,6 @@
         }*/
       ],
       "pageLength": 100,
-      "orderCellsTop": true,
-        "fixedHeader": true,
       "columnDefs": [{
           "targets": 0,
           "render": function(data, type, row, meta) {
@@ -299,7 +379,22 @@
       },
       "scrollX": false,
       "scrollY": height,
-      "scrollCollapse": true,initComplete: function() {
+      "scrollCollapse": true,
+      // initComplete: function(){
+      //   this.api().columns().every(function() {
+      //     if ($(this.header()).hasClass("filtro")) {
+      //       var that = this;
+      //       $('input', this.header()).on('keyup change clear', function() {
+      //         if (that.search() !== this.value) {
+      //           that
+      //             .search(this.value)
+      //             .draw();
+      //         }
+      //       });
+      //     }
+      //   });
+      // }
+      initComplete: function() {
         // Apply the search
         this.api().columns().every(function() {
           if ($(this.footer()).hasClass("filtro_select")) {
@@ -333,21 +428,6 @@
         });
       }
     });
-    $('#example thead tr').clone(true).appendTo( '#example thead' );
-
-    $('#example thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text(); //es el nombre de la columna
-        $(this).html( '<input type="text" style="width:100%;" placeholder="'+title+'" />' );
-  
-        $( 'input', this ).on( 'keyup change', function () {
-            if ( table.column(i).search() !== this.value ) {
-                table
-                    .column(i)
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );  
     //var sum = table.column(4).data().sum();
     //$("#sum").val(sum);
     function totales() {

@@ -44,6 +44,7 @@ class ResumenMesVentasController extends Controller
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
+      ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77]],
       ['name' => 'INSTITUCIONALES', 'abrv' => 'INSTITUCIONALES', 'users' => [16, 17, 62, 56, 3, 58, 4]],
       ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20]],
       ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
@@ -53,6 +54,7 @@ class ResumenMesVentasController extends Controller
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 50, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 51, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 52]],
+      ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77]],
       ['name' => 'INS CALACOTO', 'abrv' => 'INS CALACOTO', 'users' => [29,57,74]],
       ['name' => 'CAJERO LIBRO CALACOTO', 'abrv' => 'CAJERO LIBRO CALACOTO', 'users' => [43]],
 
@@ -299,6 +301,7 @@ class ResumenMesVentasController extends Controller
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_total . "";
+      // dd($sql_total);
       $total[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total))];
       $sql_usr = "
       SELECT 
@@ -377,6 +380,8 @@ class ResumenMesVentasController extends Controller
       AND adusrCusr NOT IN (29,57,74)
       ORDER BY adusrNomb;
       ";
+      
+      // dd($sql_usr);
       $total_seg[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_usr))];
     }
     // dd($total_seg[0]['BALLIVIAN']);
@@ -532,6 +537,7 @@ class ResumenMesVentasController extends Controller
       WHERE " . $alm . "
       ORDER BY inalmNomb;
       ";
+      dd($sql_regional);
       $total_seg_regional[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_regional))];
     }
     foreach ($retail as $key) {
@@ -609,7 +615,7 @@ class ResumenMesVentasController extends Controller
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_retail . "";
-      //dd($sql_total_retail);
+      // dd($sql_total_retail);
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
 

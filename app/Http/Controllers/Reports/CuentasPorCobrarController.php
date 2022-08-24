@@ -98,7 +98,7 @@ class CuentasPorCobrarController extends Controller
     }
     $saldo0 = "";
     if ($request->saldo0 != "on") {
-      $saldo0 = "AND REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') != '0.00'";
+      $saldo0 = "AND cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)) >= 1";
     }
 
     $fil2 = "DECLARE @fechaA DATE
@@ -195,6 +195,8 @@ class CuentasPorCobrarController extends Controller
         " . $cliente . "
         " . $estado2 . "
         ";
+
+        // dd($query);
     $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
     $sum = DB::connection('sqlsrv')
       ->select(DB::raw(
@@ -236,7 +238,7 @@ class CuentasPorCobrarController extends Controller
         ['name' => 'usuario', 'data' => 'usuario', 'title' => 'Usuario', 'tip' => 'filtro'],
         [],
         ['name' => 'nventa', 'data' => 'nventa', 'title' => 'NVenta', 'tip' => 'filtro'],
-        ['name' => 'num.Fac', 'data' => 'num.fac', 'title' => 'Num. Fac', 'tip' => 'filtro'],
+        ['name' => 'nrofac', 'data' => 'nrofac', 'title' => 'NroFac', 'tip' => 'filtro'],
         ['name' => 'local', 'data' => 'local', 'title' => 'Local', 'tip' => 'filtro'],
         ['name' => 'estado', 'data' => 'estado', 'title' => 'Estado', 'tip' => 'filtro'],
       ];

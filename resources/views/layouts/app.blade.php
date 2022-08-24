@@ -9,7 +9,6 @@
     <!-- Styles -->
     <link rel="icon" href="{{{ asset('imagenes/icon.png') }}}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
     @yield('mi_estilo')     
     <style>
       /**********LOGIN */

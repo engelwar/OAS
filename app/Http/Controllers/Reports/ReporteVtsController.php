@@ -177,7 +177,7 @@ class ReporteVtsController extends Controller
                 ) as st
                 GROUP BY Codigo, Descripcion, UM
             ') as stk";
-            // dd($qstock_o);
+      // dd($qstock_o);
       $stock = DB::connection('DUALBIZ_SERVER')->select(DB::raw($qstock_o));
       // dd($stock);
       foreach ($grupos as $ogk => $og) {
@@ -220,7 +220,7 @@ class ReporteVtsController extends Controller
                 ISNULL([" . $value->name . "_tot], 0) as [" . $value->name . "_tot]";
         $grupos_head[] = [$value->name, 'tipo' => 'grupo_vts'];
       }
-      
+
       foreach ($grupoxtipo as $key => $value) {
         $value = $value->toArray();
         $tipo_sum[$key . "_tot"] = "(ISNULL([" . implode("_tot],0)+ISNULL([", array_column($value, 'name')) . "_tot],0)) as " . $key . "_tot";
@@ -261,6 +261,7 @@ class ReporteVtsController extends Controller
             FROM " . $db . ".odoo_pycs
             WHERE mes = " . $m[0] . "
             ') as pyc";
+      // dd($qPYC);
       $pyc = DB::connection('DUALBIZ_SERVER')->select(DB::raw($qPYC));
       // dd($pyc);
       $qvts =
@@ -363,9 +364,38 @@ class ReporteVtsController extends Controller
             ) as stock
             ON stock.StockCod = inpro.prod
             ORDER BY prod";
-            dd($qvts);
+      // dd($qvts);
       $ini = DB::connection('DUALBIZ_SERVER')->select(DB::raw($qvts));
-      dd($ini);
+      $tituloVista = [
+        ['name' => 'marca', 'data' => 'marca', 'title' => 'Marca', 'tip' => 'filtro'],
+        ['name' => 'prod', 'data' => 'prod', 'title' => 'Prod', 'tip' => 'filtro'],
+        ['name' => 'descrip', 'data' => 'descrip', 'title' => 'Descrip', 'tip' => 'filtro'],
+        ['name' => 'costo', 'data' => 'costo', 'title' => 'Costo'],
+        ['name' => 'precio', 'data' => 'precio', 'title' => 'Precio'],
+        ['name' => 'cantidad', 'data' => 'cantidad', 'title' => 'Cantidad'],
+        ['name' => 'INS_tot', 'data' => 'INS_tot', 'title' => 'INSTI SUCURSAL', 'render' => '$.fn.dataTable.render.number(', ', ' . ', 2)'],
+        ['name' => 'INS_SUC_tot', 'data' => 'INS_SUC_tot', 'title' => 'PDV'],
+        ['name' => 'MAYO_tot', 'data' => 'MAYO_tot', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_tot', 'data' => 'PDV_tot', 'title' => 'MAYORISTA'],
+        ['name' => 'total', 'data' => 'total', 'title' => 'TOTAL'],
+        ['name' => 'StockValorado', 'data' => 'StockValorado', 'title' => 'STOCK VALORADO AL'],
+        ['name' => 'INS_can_costo', 'data' => 'INS_can_costo', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_can_costo', 'data' => 'INS_SUC_can_costo', 'title' => 'PDV'],
+        ['name' => 'MAYO_can_costo', 'data' => 'MAYO_can_costo', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_can_costo', 'data' => 'PDV_can_costo', 'title' => 'MAYORISTA'],
+        ['name' => 'cantidadxcosto', 'data' => 'cantidadxcosto', 'title' => 'TOTAL'],
+        ['name' => 'INS_totmargenutilidad', 'data' => 'INS_totmargenutilidad', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_totmargenutilidad', 'data' => 'INS_SUC_totmargenutilidad', 'title' => 'PDV'],
+        ['name' => 'MAYO_totmargenutilidad', 'data' => 'MAYO_totmargenutilidad', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_totmargenutilidad', 'data' => 'PDV_totmargenutilidad', 'title' => 'MAYORISTA'],
+        ['name' => 'total_margen', 'data' => 'total_margen', 'title' => 'TOTAL'],
+        ['name' => 'INS_totmargenutilidad_porc', 'data' => 'INS_totmargenutilidad_porc', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_totmargenutilidad_porc', 'data' => 'INS_SUC_totmargenutilidad_porc', 'title' => 'PDV'],
+        ['name' => 'MAYO_totmargenutilidad_porc', 'data' => 'MAYO_totmargenutilidad_porc', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_totmargenutilidad_porc', 'data' => 'PDV_totmargenutilidad_porc', 'title' => 'MAYORISTA'],
+        ['name' => 'total_margen_proc', 'data' => 'total_margen_proc', 'title' => 'TOTAL'],
+      ];
+      // dd($ini);
     } else if (strtotime($fini) >= strtotime('01-03-2021') && strtotime($ffin) >= strtotime('01-03-2021')) {
       if (strtotime($fini) <= strtotime('2021-03-01')) {
         $ant_fini = date('3-3-2021');
@@ -686,7 +716,7 @@ class ReporteVtsController extends Controller
                 FOR cant_totl IN (" . implode(",", $vts_f) . ")
                 ) AS p
             )
-            SELECT maconNomb, prod, inproNomb as Descrip, 
+            SELECT maconNomb, prod, inproNomb as descrip, inumeDesc,
             0.87 AS [0.87],
             CONVERT(VARCHAR, cast(ISNULL(costo.costo,0) as money),1) as [costo],
             CONVERT(VARCHAR, cast(ISNULL(precio.precio,0) as money),1) as [precio],
@@ -746,9 +776,16 @@ class ReporteVtsController extends Controller
                 GROUP BY inproCpro
             ) as stock
             ON stock.StockCod = ventpiv.prod
+            LEFT JOIN inume ON inumeCume = inproCumb
             ORDER BY prod
             ";
       $ini = DB::connection('sqlsrv')->select(DB::raw($qvts));
+      $tituloVista = [
+        ['name' => 'maconNomb', 'data' => 'maconNomb', 'title' => 'Marca', 'tip' => 'filtro'],
+        ['name' => 'prod', 'data' => 'prod', 'title' => 'Prod', 'tip' => 'filtro'],
+        ['name' => 'Descrip', 'data' => 'Descrip', 'title' => 'Descrip', 'tip' => 'filtro'],
+        [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [],
+      ];
       //return dd($ini);
     } else {
       $ant_fini = date('d-m-Y', strtotime($fini . '-1 day'));
@@ -1052,8 +1089,37 @@ class ReporteVtsController extends Controller
             ) as stock
             ON stock.StockCod = inpro.prod
             ORDER BY prod";
-      return dd($qvts);
+      // return dd($qvts);
       $ini = DB::connection('DUALBIZ_SERVER')->select(DB::raw($qvts));
+      $tituloVista = [
+        ['name' => 'marca', 'data' => 'marca', 'title' => 'Marca', 'tip' => 'filtro'],
+        ['name' => 'prod', 'data' => 'prod', 'title' => 'Prod', 'tip' => 'filtro'],
+        ['name' => 'descrip', 'data' => 'descrip', 'title' => 'Descrip', 'tip' => 'filtro'],
+        ['name' => 'costo', 'data' => 'costo', 'title' => 'Costo'],
+        ['name' => 'precio', 'data' => 'precio', 'title' => 'Precio'],
+        ['name' => 'cantidad', 'data' => 'cantidad', 'title' => 'Cantidad'],
+        ['name' => 'INS_tot', 'data' => 'INS_tot', 'title' => 'INSTI SUCURSAL', 'render' => '$.fn.dataTable.render.number(', ', ' . ', 2)'],
+        ['name' => 'INS_SUC_tot', 'data' => 'INS_SUC_tot', 'title' => 'PDV'],
+        ['name' => 'MAYO_tot', 'data' => 'MAYO_tot', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_tot', 'data' => 'PDV_tot', 'title' => 'MAYORISTA'],
+        ['name' => 'total', 'data' => 'total', 'title' => 'TOTAL'],
+        ['name' => 'StockValorado', 'data' => 'StockValorado', 'title' => 'STOCK VALORADO AL'],
+        ['name' => 'INS_can_costo', 'data' => 'INS_can_costo', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_can_costo', 'data' => 'INS_SUC_can_costo', 'title' => 'PDV'],
+        ['name' => 'MAYO_can_costo', 'data' => 'MAYO_can_costo', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_can_costo', 'data' => 'PDV_can_costo', 'title' => 'MAYORISTA'],
+        ['name' => 'cantidadxcosto', 'data' => 'cantidadxcosto', 'title' => 'TOTAL'],
+        ['name' => 'INS_totmargenutilidad', 'data' => 'INS_totmargenutilidad', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_totmargenutilidad', 'data' => 'INS_SUC_totmargenutilidad', 'title' => 'PDV'],
+        ['name' => 'MAYO_totmargenutilidad', 'data' => 'MAYO_totmargenutilidad', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_totmargenutilidad', 'data' => 'PDV_totmargenutilidad', 'title' => 'MAYORISTA'],
+        ['name' => 'total_margen', 'data' => 'total_margen', 'title' => 'TOTAL'],
+        ['name' => 'INS_totmargenutilidad_porc', 'data' => 'INS_totmargenutilidad_porc', 'title' => 'INSTI SUCURSAL'],
+        ['name' => 'INS_SUC_totmargenutilidad_porc', 'data' => 'INS_SUC_totmargenutilidad_porc', 'title' => 'PDV'],
+        ['name' => 'MAYO_totmargenutilidad_porc', 'data' => 'MAYO_totmargenutilidad_porc', 'title' => 'INSTITUCIONAL'],
+        ['name' => 'PDV_totmargenutilidad_porc', 'data' => 'PDV_totmargenutilidad_porc', 'title' => 'MAYORISTA'],
+        ['name' => 'total_margen_proc', 'data' => 'total_margen_proc', 'title' => 'TOTAL'],
+      ];
     }
     //$grupoxtipo = collect($g)->sortBy('tipo')->groupBy('tipo');
     $titulos_2 = [
@@ -1138,8 +1204,16 @@ class ReporteVtsController extends Controller
     $titulos = array_merge($titulos, $tit_marbru, $titulos_3, $titulos_2);
 
     ini_set('memory_limit', '-1');
-    $export = new ReporteVtsExport($reporte, $productos, $stock, $pyc, $ini, $titulos, $head, $range3, $ran4);
-    return Excel::download($export, 'INVENTARIO CV VS PV POR SEGMENTO ' . $mes . '.xlsx');
+    // dd($tituloVista);
+    // dd($ini);
+    $fini_format = date("m/d/Y", strtotime($fini));
+    $ffin_format = date("m/d/Y", strtotime($ffin));
+    if ($request->vista != null) {
+      return view('reports.vista.reportevts', compact('reporte', 'productos', 'stock', 'pyc', 'ini', 'titulos', 'head', 'range3', 'ran4', 'tituloVista', 'fini_format', 'ffin_format'));
+    } else {
+      $export = new ReporteVtsExport($reporte, $productos, $stock, $pyc, $ini, $titulos, $head, $range3, $ran4);
+      return Excel::download($export, 'INVENTARIO CV VS PV POR SEGMENTO ' . $mes . '.xlsx');
+    }
   }
 
   /**

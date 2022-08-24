@@ -409,6 +409,7 @@
                 } 
 
                 if(filtro == undefined){
+                  let cont_alm = 57;
                     Object.entries(users).forEach(([key, value])=> {
                         if(grupos.find(el=>el === value[estado])!=value[estado] ){
                             grupos.push(value[estado]);
@@ -432,6 +433,7 @@
                     });
                 }
                 else{
+                  let cont_alm = 57;
                     Object.entries(users).forEach(([key, value])=> {
                         if(value[anterior]==filtro){
                             if(grupos.find(el=>el === value[estado])!=value[estado] )
@@ -447,7 +449,16 @@
                                 }
                                 piepag=piepag+'<td style="font-weight: bold;" class="cellbordersh"></td>';                  
                             }
-                            usuarios.push({"Grupo":value[estado], 'user_id':value.adusrCusr}); 
+                            var cont_alm = 56;
+                            if(value.adusrCusr != 63 && value.adusrCusr != 64) {
+                              usuarios.push({"Grupo":value[estado], 'user_id':value.adusrCusr}); 
+                            } else if (value.adusrCusr == 63){
+                              usuarios.push({"Grupo":value[estado], 'user_id':cont_alm});
+                              cont_alm++;
+                            } else if (value.adusrCusr == 64){
+                              usuarios.push({"Grupo":value[estado], 'user_id':cont_alm});
+                              cont_alm++; 
+                            }
                             if(capas[anterior] == undefined){
                                 filtro_ant = undefined;
                             }  
@@ -515,7 +526,8 @@
                     $(".pareto_class").addClass("d-none");
                     $("#paretoG-tab").addClass("disabled");
                 }
-                console.log(titulos);
+                // console.log(titulos);
+                console.log(usuarios);
                     var table = $('#tableex').DataTable({
                         searching: false,
                         paging:false,

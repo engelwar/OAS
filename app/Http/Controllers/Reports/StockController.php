@@ -39,18 +39,19 @@ class StockController extends Controller
             WHEN inalmCalm IN (56) THEN 'Contratos'
             WHEN inalmCalm IN (43) THEN 'Produccion'
             WHEN inalmCalm IN (54) THEN 'VMovil1'
+            WHEN inalmCalm IN (67) THEN 'SanMiguel'
             ELSE 'Sin Grupo'
             END as grupo,
             CASE 
             WHEN inalmCalm IN (4,5,6,7,10,13,
-                29,30,39,40,43,45,46,47, 55,54) THEN 1
+                29,30,39,40,43,45,46,47, 55,54,67) THEN 1
             ELSE 0
             END as estado,
             inalmCalm, 
             inalmNomb 
             FROM inalm 
             WHERE inalmMdel = 0 AND inalmStat = 1 AND inalmCalm NOT IN (42, 44, 51,36,38,52)
-            ORDER BY estado DESC, inalmNomb";
+            ORDER BY estado DESC, grupo";
 
             $almacen = DB::connection('sqlsrv')->select(DB::raw($alm_q));
             $almacen_grupo = [];
@@ -102,7 +103,7 @@ class StockController extends Controller
         else{
             $almacenes = $request->almacen;
         }
-
+        // dd($almacenes);
         //return dd(implode("+",$alma_total));
         $pvp_sql = "";
         $pvp = false;
@@ -248,7 +249,7 @@ class StockController extends Controller
         LEFT JOIN 
         (
           SELECT vtLidPrco, vtLidCpro  FROM vtLis JOIN vtLid ON vtLidClis = vtLisClis
-          WHERE vtLisDesc = 'RETAIL BALLIVIAN'
+          WHERE vtLisDesc = '21 CALACOTO'
         ) as pvp
         ON pvp.vtLidCpro = inpro.inproCpro
         WHERE 

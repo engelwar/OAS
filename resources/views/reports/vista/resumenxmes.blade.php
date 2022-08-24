@@ -35,7 +35,9 @@
 </style>
 @endsection
 @section('content')
-@include('layouts.sidebar', ['hide'=>'0']) 
+<div id="encabezado">
+  @include('layouts.sidebar2', ['hide'=>'0']) 
+</div>
 
 <div class="mt-4 mb-3" style="width: 90%; height: 670px; margin: auto;">
   <div>
@@ -1562,6 +1564,36 @@
           <td>{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
+          <td class="text-start">SUCURSAL SAN MIGUEL</td>
+          @foreach ($options as $k => $value)
+          @php
+          $val1 = $value."1";
+          $val2 = $value."2";
+          @endphp
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->$val1 }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->$val2 }}</td>
+          @endforeach
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->Tot1 }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->Tot2 }}</td>
+        </tr>
+        <tr class="text-end">
+          <td class="text-start">RETAIL</td>
+          @foreach ($options as $k => $value)
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val1 }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val2 }}</td>
+          @endforeach
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>{{ number_format($total_retail[4]['SAN MIGUEL'][0]->Tot1, 2) }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->Tot2 }}</td>
+        </tr>
+        <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">INSTITUCIONALES</td>
           @foreach ($options as $k => $value)
           @php
@@ -1632,16 +1664,16 @@
           @endif
   
           @if ($value!="Enero"&&$value!="Febrero")
-          <td>{{ $total[4]['INSTITUCIONALES'][0]->$val1 }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->$val1 }}</td>
           @endif
-          <td>{{ $total[4]['INSTITUCIONALES'][0]->$val2 }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumInstitucional19, 2) }}</td>
           <td>{{ number_format($sumInstitucional20, 2) }}</td>
-          <td>{{ number_format($total[4]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
-          <td>{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
+          <td>{{ number_format($total[5]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->Tot2 }}</td>
         </tr>
-        @foreach ($total_seg[4]['INSTITUCIONALES'] as $val)
+        @foreach ($total_seg[5]['INSTITUCIONALES'] as $val)
         <tr class="text-end">
           <td class="text-start">{{ $val->adusrNomb }}</td>
           @foreach ($options as $k => $value)
@@ -2045,37 +2077,37 @@
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>{{ number_format($arrayInstitucional19['contra'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['contra'], 2) }}</td>
-          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][0]->Tot1 + $arrayInstitucional21['contra'], 2) }}</td>
+          <td>{{ number_format($total_seg[5]['INSTITUCIONALES'][0]->Tot1 + $arrayInstitucional21['contra'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="GUADALUPE AMBA")
           <td>{{ number_format($arrayInstitucional19['gamba'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['gamba'], 2) }}</td>
-          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][1]->Tot1 + $arrayInstitucional21['gamba'], 2) }}</td>
+          <td>{{ number_format($total_seg[5]['INSTITUCIONALES'][1]->Tot1 + $arrayInstitucional21['gamba'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="INES VELASQUEZ")
           <td>{{ number_format($arrayInstitucional19['velasquez'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['velasquez'], 2) }}</td>
-          <td>{{ number_format($total_seg[4]['INSTITUCIONALES'][2]->Tot1 + $arrayInstitucional21['velasquez'], 2) }}</td>
+          <td>{{ number_format($total_seg[5]['INSTITUCIONALES'][2]->Tot1 + $arrayInstitucional21['velasquez'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="JULIO MANCILLA")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][3]->Tot1, 2)}}</td>
+          <td>{{number_format($total_seg[5]['INSTITUCIONALES'][3]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="MAGDY VILLARROEL")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][4]->Tot1, 2)}}</td>
+          <td>{{number_format($total_seg[5]['INSTITUCIONALES'][4]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="RODRIGO DURAN")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][5]->Tot1, 2)}}</td>
+          <td>{{number_format($total_seg[5]['INSTITUCIONALES'][5]->Tot1, 2)}}</td>
           @endif
           @if ($val->adusrNomb=="VENTA MÓVIL 1")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{number_format($total_seg[4]['INSTITUCIONALES'][6]->Tot1, 2)}}</td>
+          <td>{{number_format($total_seg[5]['INSTITUCIONALES'][6]->Tot1, 2)}}</td>
           @endif
           <td>{{ $val->Tot2 }}</td>
         </tr>
@@ -2151,16 +2183,16 @@
           @endif
   
           @if ($value!="Enero"&&$value!="Febrero")
-          <td>{{ $total[5]['MAYORISTAS'][0]->$val1 }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->$val1 }}</td>
           @endif
-          <td>{{ $total[5]['MAYORISTAS'][0]->$val2 }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumMayoristas19, 2) }}</td>
           <td>{{ number_format($sumMayoristas20, 2) }}</td>
-          <td>{{ number_format($total[5]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
-          <td>{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
+          <td>{{ number_format($total[6]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->Tot2 }}</td>
         </tr>
-        @foreach ($total_seg[5]['MAYORISTAS'] as $val)
+        @foreach ($total_seg[6]['MAYORISTAS'] as $val)
         <tr class="text-end">
           <td class="text-start">{{ $val->adusrNomb }}</td>
           @foreach ($options as $k => $value)
@@ -2463,27 +2495,27 @@
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{ number_format($total_seg[5]['MAYORISTAS'][0]->Tot1 + $arrayMayoristas21['cutipa'], 2) }}</td>
+          <td>{{ number_format($total_seg[6]['MAYORISTAS'][0]->Tot1 + $arrayMayoristas21['cutipa'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="DAVID MAMANI")
           <td>{{ number_format($arrayMayoristas19['mamani'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['mamani'], 2) }} </td>
-          <td>{{ number_format($total_seg[5]['MAYORISTAS'][1]->Tot1 + $arrayMayoristas21['mamani'], 2) }} </td>
+          <td>{{ number_format($total_seg[6]['MAYORISTAS'][1]->Tot1 + $arrayMayoristas21['mamani'], 2) }} </td>
           @endif
           @if ($val->adusrNomb=="ERWIN VILLARROEL")
           <td>{{ number_format($arrayMayoristas19['villarroel'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['villarroel'], 2) }} </td>
-          <td>{{ number_format($total_seg[5]['MAYORISTAS'][2]->Tot1 + $arrayMayoristas21['villarroel'], 2) }} </td>
+          <td>{{ number_format($total_seg[6]['MAYORISTAS'][2]->Tot1 + $arrayMayoristas21['villarroel'], 2) }} </td>
           @endif
           @if ($val->adusrNomb=="JAVIER MACHICADO")
           <td>0.00</td>
           <td>0.00</td>
-          <td>{{ number_format($total_seg[5]['MAYORISTAS'][3]->Tot1, 2) }}</td>
+          <td>{{ number_format($total_seg[6]['MAYORISTAS'][3]->Tot1, 2) }}</td>
           @endif
           @if ($val->adusrNomb=="ROSALIA TICONA")
           <td>{{ number_format($arrayMayoristas19['ticona'], 2) }} </td>
           <td>{{ number_format($arrayMayoristas20['ticona'], 2) }} </td>
-          <td>{{ number_format($total_seg[5]['MAYORISTAS'][4]->Tot1 + $arrayMayoristas21['ticona'], 2) }} </td>
+          <td>{{ number_format($total_seg[6]['MAYORISTAS'][4]->Tot1 + $arrayMayoristas21['ticona'], 2) }} </td>
           @endif
           <td>{{ $val->Tot2 }}</td>
         </tr>
@@ -2559,16 +2591,16 @@
           @endif
   
           @if ($value!="Enero"&&$value!="Febrero")
-          <td>{{ $total[6]['SANTA CRUZ'][0]->$val1 }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->$val1 }}</td>
           @endif
-          <td>{{ $total[6]['SANTA CRUZ'][0]->$val2 }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumSC19, 2) }}</td>
           <td>{{ number_format($sumSC20, 2) }}</td>
-          <td>{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
-          <td>{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
+          <td>{{ number_format($total[7]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->Tot2 }}</td>
         </tr>
-        @foreach ($total_seg[6]['SANTA CRUZ'] as $val)
+        @foreach ($total_seg[7]['SANTA CRUZ'] as $val)
         <tr class="text-end">
           <td class="text-start">{{ $val->adusrNomb }}</td>
           @foreach ($options as $k => $value)
@@ -2711,12 +2743,12 @@
           @if ($val->adusrNomb=="CARMELA ESCOBAR")
           <td>{{ number_format($arraySC19['escobar'], 2) }}</td>
           <td>{{ number_format($arraySC20['escobar'], 2) }}</td>
-          <td>{{ number_format($total_seg[6]['SANTA CRUZ'][0]->Tot1 + $arraySC21['escobar'], 2) }}</td>
+          <td>{{ number_format($total_seg[7]['SANTA CRUZ'][0]->Tot1 + $arraySC21['escobar'], 2) }}</td>
           @endif
           @if ($val->adusrNomb=="DANI CALDERON")
           <td>{{ number_format($arraySC19['calderon'], 2) }}</td>
           <td>{{ number_format($arraySC20['calderon'], 2) }}</td>
-          <td>{{ number_format($total_seg[6]['SANTA CRUZ'][1]->Tot1 + $arraySC21['calderon'], 2) }}</td>
+          <td>{{ number_format($total_seg[7]['SANTA CRUZ'][1]->Tot1 + $arraySC21['calderon'], 2) }}</td>
           @endif
           <td>{{ $val->Tot2 }}</td>
         </tr>
@@ -2808,7 +2840,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 
 <script>
     
