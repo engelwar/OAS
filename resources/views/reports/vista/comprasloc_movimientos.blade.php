@@ -44,6 +44,7 @@ $(document).ready(function()
             { data: 'stockBALL', title: 'Ball'},
             { data: 'stockMARIS', title: 'Maris'},
             { data: 'stockCALA', title: 'Calac'},
+            { data: 'stockSanM', title: 'SanM'},
             { data: 'stockSCZ', title: 'SCZ'},            
             { data: 'fechaultventa', title: 'Fecha Ult. Venta'},
         ],   

@@ -34,6 +34,7 @@ class StockController extends Controller
             WHEN inalmCalm IN (7,10) THEN 'Ballivian'
             WHEN inalmCalm IN (6,30) THEN 'Mariscal'
             WHEN inalmCalm IN (5,29) THEN 'Calacoto'
+            WHEN inalmCalm IN (67,68) THEN 'SanMiguel'
             WHEN inalmCalm IN (45) THEN 'SantaCruz'
             WHEN inalmCalm IN (55) THEN 'Feria'
             WHEN inalmCalm IN (56) THEN 'Contratos'
@@ -43,7 +44,7 @@ class StockController extends Controller
             END as grupo,
             CASE 
             WHEN inalmCalm IN (4,5,6,7,10,13,
-                29,30,39,40,43,45,46,47, 55,54) THEN 1
+                29,30,39,40,43,45,46,47, 55,54,67,68) THEN 1
             ELSE 0
             END as estado,
             inalmCalm, 
@@ -260,7 +261,7 @@ class StockController extends Controller
         ".$prod."
         ".$stock."
         ORDER BY inpro.inproCpro";
-        return dd($query);
+        //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
         $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
         

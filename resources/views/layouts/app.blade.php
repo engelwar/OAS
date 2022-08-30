@@ -435,6 +435,7 @@
     @yield('estilo')
 </head>
 <body>
+  
         @auth
           <div id ="load">
             <div class="spinner-border vertical-center" role="status">
@@ -451,6 +452,10 @@
         @endauth        
       <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
       <script type="text/javascript" src="{{ asset('js/echarts.min.js') }}"></script> 
+      <script type="text/javascript" src="{{ asset('js/push.min.js') }}"></script> 
+          
+
+      
       <script type="text/javascript">
         $( document ).ready(function () 
         {
@@ -532,7 +537,23 @@
       $(".reload_page").click(function() {
         location.reload();
       });
+     
     </script>
+<script>
+   Push.create("numero 1",{
+    body: "Mensaje X",
+    //icon "images/algo.extencion",
+    timrout: 4000,
+    onClick:function(){
+      window.location="http://192.168.86.29:8022/oas/public/";  
+      this.close();
+    }
+   });
+
+
+
+</script>
+  
     @yield('mis_scripts')
 </body>
 </html>

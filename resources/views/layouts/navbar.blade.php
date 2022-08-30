@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{asset('imagenes/logo.png')}}"  height="40" class="d-inline-block align-top" alt="">
@@ -36,7 +37,7 @@
 
                         <!--NOTIFICAIONES-->    
                         <div class="btn-group" id="not">
-                            <li class="nav-item dropdown"  >
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown1" class="nav-link @if(Auth::user()->unreadNotifications->count()==0) disabled @endif" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell"></i>
                                     @if($count=Auth::user()->unreadNotifications->count())
                                         <span class="badge badge-pill badge-primary parpadea" id="contant">

@@ -279,7 +279,16 @@ Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar
 
 ///////////////////////////////
 // Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
-Route::resource('/pruebaxmes','PruebaController');// hecho por rem
+//Route::resource('/pruebaxmes','PruebaController');// hecho por rem
+
+
+
+Route::get('/', 'CuentasXCController@index')->name('inicio');  
+Route::get('/home', 'CuentasXCController@index')->name('inicio');  
+
+
+//Route::any('stock/store/almxu', 'Reports\StockController@store_almxu')->name('stock.store_almxu');
+
 //Route::get('/resumenventaspormes/vista','ResumenxmesController@store')->name('resumenventaspormes.store');
 
     //Route::get('reports/resumenvetaspormes', 'Reports\ComparativoController@store');

@@ -48,6 +48,7 @@ $(document).ready(function()
             { data: 'stockBALL', title: 'Ballivian'},
             { data: 'stockMARIS', title: 'Mariscal'},
             { data: 'stockCALA', title: 'Calacoto'},
+            { data: 'stockSanM', title: 'SanMiguel'},
             { data: 'stockSCZ', title: 'SCZ'},            
             { data: 'fechaultventa', title: 'Fecha Ult. Venta'},
         ],

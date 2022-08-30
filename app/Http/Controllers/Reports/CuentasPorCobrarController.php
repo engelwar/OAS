@@ -219,6 +219,7 @@ class CuentasPorCobrarController extends Controller
         ".$cliente."
         ".$estado2."
         ";
+        dd($query);
         $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
         $sum = DB::connection('sqlsrv')
         ->select(DB::raw
@@ -245,6 +246,8 @@ class CuentasPorCobrarController extends Controller
         estado
         FROM (". $query. ") as cxc 
         GROUP BY estado")); 
+
+       
         if($request->gen =="export")
         {
             $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2'))

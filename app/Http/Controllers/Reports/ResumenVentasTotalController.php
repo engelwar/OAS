@@ -78,7 +78,10 @@ class ResumenVentasTotalController extends Controller
             
             WHEN adusrCusr IN (35,36,38,51,67) THEN 'RETAIL MARISCAL'
             WHEN adusrCusr IN (63) THEN 'REGIONAL 1'   
-            WHEN adusrCusr IN (64) THEN 'REGIONAL 2'   
+            WHEN adusrCusr IN (64) THEN 'REGIONAL 2' 
+
+            WHEN adusrCusr IN (76,77) THEN 'RETAIL SAN MIGUEL'  
+            WHEN adusrCusr IN (78) THEN 'LIBROS SAN MIGUEL' 
             
             --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
             ELSE adusrNomb             
