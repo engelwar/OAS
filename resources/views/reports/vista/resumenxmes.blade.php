@@ -1583,6 +1583,10 @@
         <tr class="text-end">
           <td class="text-start">RETAIL</td>
           @foreach ($options as $k => $value)
+          @php
+          $val1 = $value."1";
+          $val2 = $value."2";
+          @endphp
           <td>0.00</td>
           <td>0.00</td>
           <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val1 }}</td>

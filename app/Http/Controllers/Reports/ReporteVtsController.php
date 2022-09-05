@@ -201,6 +201,7 @@ class ReporteVtsController extends Controller
                     GROUP BY grupo, prod, mon
                     ORDER BY grupo
                 ') as pest";
+                // dd($qpestañas_o);
         $result = DB::connection('DUALBIZ_SERVER')->select(DB::raw($qpestañas_o));
         // dd($result);
         if ($result) {

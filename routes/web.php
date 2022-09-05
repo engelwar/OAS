@@ -297,6 +297,8 @@ Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@show')->n
 
 Route::resource('/resumenxmes','Reports\ResumenMesVentasController');
 
+Route::resource('/resumenxmescosto','Reports\ResumenMesCostosVentasController');
+
 //-------------------caminos de reprotte cotizacion------------------------------------------
 // Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
 // //Route::get('/CotizacionReporte/reportePDF','CotizacionReportController@verPDF')->name('ReportePDF.verPDF');

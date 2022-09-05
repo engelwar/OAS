@@ -249,7 +249,7 @@ class StockController extends Controller
         LEFT JOIN 
         (
           SELECT vtLidPrco, vtLidCpro  FROM vtLis JOIN vtLid ON vtLidClis = vtLisClis
-          WHERE vtLisDesc = '21 CALACOTO'
+          WHERE vtLisDesc = 'RETAIL BALLIVIAN'
         ) as pvp
         ON pvp.vtLidCpro = inpro.inproCpro
         WHERE 

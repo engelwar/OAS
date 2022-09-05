@@ -43,11 +43,15 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
           <tr>
             <th>Marca</th>
             <th>Prod</th>
             <th>Descrip</th>
+            @if (strtotime($fini_format) >= strtotime('01-03-2021') && strtotime($ffin_format) >= strtotime('01-03-2021'))
+            <th>U.M.</th>
+            @endif
             <th>Costo</th>
             <th>Precio</th>
             <th>Cantidad</th>
