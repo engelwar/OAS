@@ -117,7 +117,7 @@
                     <li class="divider"></li>
                     <li><a class="option-link multi-select-op" href="#">
                         <label>
-                          <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->adusrCusr}}' />
+                          <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->adusrCusr}}'/>
                           {{$u->adusrNomb}}
                         </label>
                       </a></li>

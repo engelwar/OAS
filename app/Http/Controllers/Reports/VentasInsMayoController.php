@@ -468,6 +468,7 @@ class VentasInsMayoController extends Controller
         AND cptraCusr = @usuario
         "; 
         $q1 = DB::connection('sqlsrv')->select(DB::raw($vari . $fac));
+        // dd($fac);
         //return dd($q1);
         $t1=[];
         foreach ($q1 as $tt) {

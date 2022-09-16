@@ -1,4 +1,6 @@
 <?php
+
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteRegistrar;
@@ -115,6 +117,8 @@ Route::prefix('reports')->group(function(){
 
     Route::resource('stock', 'Reports\StockController');
     Route::any('stock/store/almxu', 'Reports\StockController@store_almxu')->name('stock.store_almxu');
+
+    Route::resource('listaPrecio', 'Reports\PrecioListaController');
     
     Route::resource('stockventa', 'Reports\StockVentaController');
     Route::any('stockventa/store/almxu', 'Reports\StockVentaController@store_almxu')->name('stockventa.store_almxu');
@@ -130,6 +134,9 @@ Route::prefix('reports')->group(function(){
     
     Route::resource('cuentasporpagar', 'Reports\CuentasPorPagarController');
     Route::resource('cuentasporpagardetalle', 'Reports\CuentasPorPagarDetalleController');
+
+    Route::resource('/ventacobranza', 'Reports\VentaCobranzaController');
+    Route::post('/cxc', 'Reports\CuentasPorCobrarController@cobranzas')->name('cxc.cobranzas');
     
     Route::resource('resumenventastotal', 'Reports\ResumenVentasTotalController');
     Route::resource('notasremision', 'Reports\NotasRemisionController');

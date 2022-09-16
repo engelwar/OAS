@@ -401,7 +401,7 @@ class KardexAlmacenController extends Controller
         CONVERT(varchar, CAST(costneg as decimal(10,4)),1) as _CosN,
         CONVERT(varchar, CAST(totneg as decimal(10,4)),1) as _TotN,
         CONVERT(varchar, CAST(intrdCTmi as decimal(10,4)),1) as _CTmi,
-        CONVERT(varchar, CAST(_CostAcum as decimal(10,4)),1) as _CostAcum,
+        _CostAcum as _CostAcum,
         --CONVERT(varchar, CAST(intrdCTmi as money),1) as _CTmt,        
         --intrdCant as _Cant,
         --intrdClot as _Clot,        

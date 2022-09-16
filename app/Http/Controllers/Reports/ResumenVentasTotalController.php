@@ -10,45 +10,45 @@ use App\Exports\ResumenVentasTotal;
 
 class ResumenVentasTotalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
 
-    public function index()
-    {
-        return view('reports.resumenventastotal');
-    }
+  public function index()
+  {
+    return view('reports.resumenventastotal');
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {        
-        $fini = date("d/m/Y", strtotime($request->fini));
-        $ffin = date("d/m/Y", strtotime($request->ffin));
-        $vari = "DECLARE @fini DATE, @ffin DATE
-        SELECT @fini = '".$fini."', @ffin = '".$ffin."'";
-        $query=
-        "SELECT 
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $fini = date("d/m/Y", strtotime($request->fini));
+    $ffin = date("d/m/Y", strtotime($request->ffin));
+    $vari = "DECLARE @fini DATE, @ffin DATE
+        SELECT @fini = '" . $fini . "', @ffin = '" . $ffin . "'";
+    $query =
+      "SELECT 
         loc as 'Local', 
         tip as 'Tipo', 
         CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',  
@@ -96,9 +96,10 @@ class ResumenVentasTotalController extends Controller
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY loc, tip, mon
         ORDER BY loc, tip, mon";
-        $resum = DB::connection('sqlsrv')->select(DB::raw($vari . $query));  
-        $total=
-        "SELECT 
+        // dd($query);
+    $resum = DB::connection('sqlsrv')->select(DB::raw($vari . $query));
+    $total =
+      "SELECT 
         loc as 'Local', 
         CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total', 
         mon as 'Moneda', 
@@ -133,9 +134,10 @@ class ResumenVentasTotalController extends Controller
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY loc, mon
         ORDER BY loc, mon";
-        $total = DB::connection('sqlsrv')->select(DB::raw($vari . $total));
-        $totalgen=
-        "SELECT 
+    // dd($total);
+    $total = DB::connection('sqlsrv')->select(DB::raw($vari . $total));
+    $totalgen =
+      "SELECT 
         CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',   
         mon as 'Moneda', 
         REPLACE(cast(SUM(efe) as decimal(10,2)),',', '.') as 'Efectivo', 
@@ -169,93 +171,85 @@ class ResumenVentasTotalController extends Controller
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY mon
         ORDER BY mon";
-        $totalgen = DB::connection('sqlsrv')->select(DB::raw($vari . $totalgen));
-        $resumen= [];  
-        foreach ($resum as $key => $value) {
-            if (!array_key_exists($value->Local, $resumen)) 
-            {
-                $resumen[$value->Local] = [$resum[$key]];
-            }
-            else
-            {
-                array_push($resumen[$value->Local], $resum[$key]);
-            }
-        }
-        foreach ($total as $key => $value) {
-            if (!array_key_exists($value->Local, $total)) 
-            {
-                $total[$value->Local] = [$total[$key]];
-                unset($total[$key]);
-            }
-            else
-            {
-                array_push($total[$value->Local], $total[$key]);
-                unset($total[$key]);
-            }
-        }
-        if($request->gen =="export")
-        {
-            $pdf = \PDF::loadView('reports.pdf.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen'))
-            //->setOrientation('landscape')
-            ->setPaper('letter')
-            ->setOption('footer-right','Pag [page] de [toPage]')
-            ->setOption('footer-font-size',8);
-            return $pdf->inline('Resumen_de_Ventas_Del_'.$fini.'Al_'.$ffin.'.pdf');
-        }
-        elseif($request->gen =="excel")
-        {
-            $export = new ResumenVentasTotal($resum, $ffin, $ffin);    
-            return Excel::download($export, 'Resumen de Ventas.xlsx');
-        }
-        else if($request->gen =="ver")
-        {
-            return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen'));
-        }
+    // dd($totalgen);
+    $totalgen = DB::connection('sqlsrv')->select(DB::raw($vari . $totalgen));
+    $resumen = [];
+    // dd($resum);
+    foreach ($resum as $key => $value) {
+      if (!array_key_exists($value->Local, $resumen)) {
+        $resumen[$value->Local] = [$resum[$key]];
+      } else {
+        array_push($resumen[$value->Local], $resum[$key]);
+      }
     }
-    
+    foreach ($total as $key => $value) {
+      if (!array_key_exists($value->Local, $total)) {
+        $total[$value->Local] = [$total[$key]];
+        unset($total[$key]);
+      } else {
+        array_push($total[$value->Local], $total[$key]);
+        unset($total[$key]);
+      }
+    }
+    // dd($resum,$resumen, $total);
+    if ($request->gen == "export") {
+      $pdf = \PDF::loadView('reports.pdf.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen'))
+        //->setOrientation('landscape')
+        ->setPaper('letter')
+        ->setOption('footer-right', 'Pag [page] de [toPage]')
+        ->setOption('footer-font-size', 8);
+      return $pdf->inline('Resumen_de_Ventas_Del_' . $fini . 'Al_' . $ffin . '.pdf');
+    } elseif ($request->gen == "excel") {
+      $export = new ResumenVentasTotal($resum, $ffin, $ffin);
+      return Excel::download($export, 'Resumen de Ventas.xlsx');
+    } else if ($request->gen == "ver") {
+      return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen'));
+    }
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    //
+  }
+
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    //
+  }
 }

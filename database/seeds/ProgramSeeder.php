@@ -390,5 +390,15 @@ class ProgramSeeder extends Seeder
             'icon'=>'fas fa-file-contract',
         ]); 
         $smod->permisos()->attach(Permiso::find(1));
+
+        $smod = Program::create([    
+            'id'=>35,
+            'nombre'=>'Ventas y Cobranzas',        
+            'modulo_id'=>6,
+            'sub_modulo_id'=>2,
+            'route'=>'ventacobranza.index',
+            'icon'=>'fas fa-file-contract',
+        ]); 
+        $smod->permisos()->attach(Permiso::find(1));
     }
 }
