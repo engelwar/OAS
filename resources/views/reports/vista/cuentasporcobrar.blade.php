@@ -151,118 +151,6 @@
         $(this).html('<input type="text" placeholder="' + title + '" style="width:100%;"/>');
       }
     });
-    // $("#busqueda0").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(0);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda1").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(1);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda3").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(3);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda10").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(10);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda12").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(12);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda13").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(13);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda14").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(14);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
-    // $("#busqueda15").keyup(function() {
-    //   _this = this;
-    //   $.each($("#example tbody tr"), function() {
-    //     let nombres = $(this).children().eq(15);
-    //     if ($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-
-    //       $(this).hide();
-
-    //     else
-
-    //       $(this).show();
-
-    //   });
-    // });
     var height = screen.height - 500 + 'px';
     var table = $('#example').DataTable({
 
@@ -380,6 +268,11 @@
       "scrollX": false,
       "scrollY": height,
       "scrollCollapse": true,
+      dom: 'Bfrtip',
+      buttons: [{
+        extend: "excel",
+        text: "Exportar en Excel"
+      }],
       // initComplete: function(){
       //   this.api().columns().every(function() {
       //     if ($(this.header()).hasClass("filtro")) {

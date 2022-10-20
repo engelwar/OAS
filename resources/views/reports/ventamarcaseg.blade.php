@@ -37,6 +37,9 @@
     .cellbordersh{
         border: 1px solid #000;
     }
+    .bg-margutil{
+      background-color: #ff00003d !important;
+    }
     table{
         border-collapse: collapse !important;
     }
@@ -497,9 +500,9 @@
                     {
                         titulos.push({title:'M.UTIL', data:'margutil', name:'M.UTIL', className: 'dt-body-right'});
                         titulos.push({title:'PORC.M.UTIL', data:'margutil_porc', name:'PORC.M.UTIL', className: 'dt-body-right',
-                            render: function (data) {
-                                return data+' %';
-                            }
+                          render: function (data) {
+                            return data+' %';
+                          }
                         });
                     }
                     titulos.push({title:'PARTI', data:'part', name:'partic', className: 'dt-body-right',
@@ -605,6 +608,11 @@
                         scrollY: "67vh",
                         scrollX:true,
                         scrollCollapse: true,
+                        createdRow: function(row, data, dataIndex){
+                          if (data.margutil < 0) {
+                            $(row).addClass( 'bg-margutil' );
+                          }
+                        },
                         drawCallback: function( settings ) {
                             if($.fn.DataTable.isDataTable( '#pareto_A')){
                                 $("#pareto_A").DataTable().clear().destroy();

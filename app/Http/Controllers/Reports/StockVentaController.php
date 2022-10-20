@@ -335,6 +335,7 @@ class StockVentaController extends Controller
             " . implode(",", $temp2) . "
         ORDER BY inpro.inproCpro
         ";
+        // dd($query);
     $test = DB::connection('sqlsrv')->select(DB::raw($query));
 
     $array = [];
