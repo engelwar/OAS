@@ -4,6 +4,36 @@
 @section('mi_estilo')
 <style>
 
+#divResplador {
+    padding: 20px;
+   
+    color: #ddd;
+    width: 300px;
+    font-size: 1.2em;
+    box-shadow: 0 0 40px rgb(248, 62, 5);
+    border-radius: 16px;
+  }
+
+.ipx{
+  width: 75%;
+  height: 34px;
+  
+}
+
+.divLiena{
+display: flex;
+justify-content: flex-start;
+padding-top: 15px;
+padding-left: 12px
+
+}
+.hihoDiv{
+  display: inline-block;
+  padding: 5px;
+}
+
+
+
 .switch {
   position: relative;
   display: inline-block;
@@ -274,6 +304,17 @@ th:first-child div{
                 - Parcial <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
                 - Completa <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
               </p>
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+          
+              <p style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 20px">
+                Factura consolidada <span class="text-danger">
+                  <span><i class="fas fa-file-export"></i></span>
+                
+              </p>
             </div>
           </div>
 
@@ -281,38 +322,46 @@ th:first-child div{
 
           <div class="container">
             <div class="row justify-content-md-center">
-              <div class="col">
-              
+              <div class="col" style="padding-bottom: 10px" >
+              <!-- Button trigger modal  de consolidacion de facturas -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalConsol">
+                  Ver facturas consolidadas 
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+                </button>
               </div>
               <div class="col">
                 <p class="text-primary" hidden>importe total: <span id="suma" > 0000</span></p>
               </div>
             </div>
-            <div class="row justify-content-md-center">
-              <div class="col-md-auto">
-                <input type="button" value="Ver sin contizar" class="btn btn-outline-primary"  id="d22"/> 
-                <input type="button" value="Ver sin facturar" class="btn btn-outline-primary"  id="d23"/> 
-                <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
-                <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
-                <input type="button" value="Actualizar" class="btn btn-outline-primary" onclick="location.reload()"/>
-                <button type="button" class="btn btn-outline-success" id="exportar">Export</button>
+          
 
-              </div>
-            
-          <div class="col">
 
-          </div>
+            <div class="container">
+         
+              <div class="row">
+                <div class="col-auto me-auto">  <input type="button" value="Ver sin contizar" class="btn btn-outline-primary"  id="d22"/> <input type="button" value="Ver sin facturar" class="btn btn-outline-primary"  id="d23"/>
+                  <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
+                  <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/>
+                  <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/>
+                  <input type="button" value="Actualizar" class="btn btn-outline-primary" onclick="location.reload()"/> 
+                  <button type="button" class="btn btn-outline-success" id="exportar">Exportar</button>
 
-          <div class="col-md-auto">
-              Buscar:
-          </div>
-              <div class="col-md-auto">
-   
-                <form class="form-inline" action="" method="GET">
-      <input id="busG" name="busG" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="" value ="" aria-label="Search" >
-                </form>
+                </div>
+                
+                <div class="col-auto">
+                  <span>Buscar:</span>
+                </div>
+                <div class="col-auto">  
+                 
+                  <form class="form-inline" action="" method="GET">
+                  <input id="busG" name="busG" class="form-control col-4 col-sm-auto ml-auto ipx" data-type="search" placeholder="" value ="" aria-label="Search" >
+                            </form></div>
               </div>
             </div>
+            
+
+
+
           </div>
          
               
@@ -446,10 +495,34 @@ th:first-child div{
                   
                   <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
                   <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-                  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+                
+                      <!-----------------------------boton modal de consolidacion---------1010221650------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold" id="divResplador">
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+     
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #fb2606"  id="{{$co->NR}}FAC">{{$co->NR}} </button>
+
+</form>
+   
+   </td>
+  @endif
+
+              
                   <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
                   <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
-                  <td style="text-align:center" class="bold">{{$co->estadoNR}}</td> 
+                  @if ($co->estadoNR ==9)
+                  <td style="text-align:center" class="bold">a</td>  
+                  @else
+                  <td style="text-align:center" class="bold">v</td>    
+                  @endif
+               
                   <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
                   <td style="text-align:center" class="bold">{{$co->Local}}</td>
                   @if (is_null($co->FechaFac))
@@ -475,7 +548,7 @@ th:first-child div{
                   <td style="text-align:center" class="bold"></td> 
                   <td style="text-align:center" class="bold"> 
                      
-                  <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+                  <button type="button" id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
                   
                 
               </tr>
@@ -497,7 +570,25 @@ th:first-child div{
      
      <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
      <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+
+      <!-----------------------------boton modal de consolidacion---------1010221650------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold">
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+     
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #fb2606"  id="{{$co->NR}}FAC">{{$co->NR}} </button>
+
+</form>
+   
+   </td>
+  @endif
+   
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
      @if ($co->estadoNR ==9)
@@ -550,7 +641,7 @@ th:first-child div{
     <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
     @endif
      </td>
-     <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
+     <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-success "><span><i class="fa fa-search"></i></span></a></td> 
  </td>
   
  </tr>
@@ -559,7 +650,7 @@ th:first-child div{
 @endif
 @endforeach
 @if ($co->NR!=$item->id)
-   
+ <!---->  
 <tbody>
  <tr>
      <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
@@ -571,7 +662,24 @@ th:first-child div{
      
      <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
      <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+     <!-----------------------------boton modal de consolidacion 1010221650----------------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold" id="divResplador" >
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #bf230b"  id="{{$co->NR}}FAC">{{$co->NR}}<span><i class="fas fa-file-export"></i></span></button>
+
+</form>
+   
+   </td>
+  @endif
+     
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
      @if ($co->estadoNR ==9)
@@ -663,6 +771,150 @@ th:first-child div{
         </div>
       </div>
 
+
+<!-- ventana modal para facturas consolidadas -->
+<div class="modal fade" id="exampleModalConsol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CONSOLIDACION DE FACTURAS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <table id="miTablaConsol"  style="width:100%">
+          <thead>
+          
+            <tr >
+              <th  style="color: #222; background: #ffffff;">Nro Transaccion</th> <br>
+              <th   style="color: #222; background: #ffffff ">estado</th>
+              <th   style="color: #222; background: #ffffff ">Cliente</th>
+              <th   style="color: #222; background: #ffffff ">Fecha</th>
+              <th  style="color: #222; background: #ffffff ">Loca</th>
+              <th  style="color: #222; background: #ffffff ">Nro Factura</th>
+              <th   style="color: #222; background: #ffffff ">importe</th>
+          </tr>  
+         
+             
+          </thead>
+            <tbody>
+              @foreach ($BDfacConsol as $key=> $valorX )
+           
+              <tr>
+                <td>{{$valorX->Notrans}}</td>
+                <td>{{$valorX->estado}}</td>
+                <td>{{$valorX->Cliente}}</td>
+                <td>{{$valorX->Fecha}}</td>
+                <td>{{$valorX->Local}}</td>
+                <td>{{$valorX->Factura}}</td>
+                <td>{{$valorX->Importe}}</td>
+              </tr>
+              @endforeach
+           
+            </tbody>
+           
+        </table>     
+       
+      </div>
+      <div class="divLiena">
+    
+
+
+        <div style="padding: 10px">  
+           <form class="form-inline" action="" method="GET">
+          <input style="align-items: flex-start"  id="busTrans" name="busTrans" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Nro Transaccion(Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+     </form>
+     </div>
+        <div style="padding: 10px">
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busCliente" name="busCliente" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Cliente" value ="" aria-label="Search" >
+        </form>
+        </div>
+        
+        <div style="padding: 10px"> 
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busLocal" name="busLocal" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Local" value ="" aria-label="Search" >
+        </form>
+        </div>
+        <div style="padding: 10px">
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busFactura" name="busFactura" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Nro Factura(Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+          </form>
+        </div>
+          <div style="padding: 10px">
+            <button type="button" class="btn btn-outline-success" id="exportarX2">Exportar</button>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+
+        
+       
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      
+      </div>
+    </div>
+  </div>
+</div>     
+
+
+
+<!----- ventana modal para facturas consolidadas por "NR" ----->
+
+
+<div class="modal fade" id="exampleModalFAC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CONSOLIDACION DE FACTURAS</h5>
+        <input type="" id="nameFAC" name="id_cotizacion" required minlength="4" maxlength="8" size="20" value="132132132">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <table id="miTablaConsol"  style="width:100%">
+          <thead>
+          
+            <tr >
+              <th  style="color: #222; background: #ffffff">Nro Transaccion</th> <br>
+              <th   style="color: #222; background: #ffffff ">estado</th>
+              <th   style="color: #222; background: #ffffff ">Cliente</th>
+              <th   style="color: #222; background: #ffffff ">Fecha</th>
+              <th  style="color: #222; background: #ffffff ">Loca</th>
+              <th  style="color: #222; background: #ffffff ">Nro Factura</th>
+              <th   style="color: #222; background: #ffffff ">importe</th>
+          </tr>  
+         
+             
+          </thead>
+            <tbody>
+            
+           
+              <tr>
+                <td>-----</td>
+               
+              </tr>
+           
+           
+            </tbody>
+           
+        </table>     
+       
+      </div>
+      
+      <div class="modal-footer">
+
+        
+       
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      
+      </div>
+    </div>
+  </div>
+</div>     
+
+
+
+
+
 @endsection
 @section('mis_scripts')
 
@@ -675,15 +927,31 @@ th:first-child div{
     $("#exportar").click(function(){
   $("#miTabla").table2excel({
     // exclude CSS class
-    exclude: ".noExl",
-    name: "Worksheet Name",
-    filename: "SomeFile", //do not include extension
-    fileext: ".xls" // file extension
+    exclude: ".excludeThisClass",
+    name: "Documento",
+    filename: ".xlsx", //do not include extension
+  //  fileext: ".xls" // file extension
+  }); 
+});
+  });
+
+
+  $(document).ready(()=>{
+    $("#exportarX2").click(function(){
+  $("#miTablaConsol").table2excel({
+    // exclude CSS class
+    exclude: ".excludeThisClass",
+    name: "Documento",
+    filename: ".xlsx", //do not include extension
+  //  fileext: ".xls" // file extension
   }); 
 });
   });
 
 </script>
+
+
+
 <script>
 
 //buscador en general
@@ -745,6 +1013,25 @@ $(document).on("click",".btnHT", function(){
 
   //alert(id);
 }
+
+//////////////PARA OBTENER EL ID  y mostrar la ventana //////////////////////////
+function obtenerIdFAC(id){
+  idx="#"+id;
+  $(idx).click(function(){
+    
+  $("#exampleModalFAC").modal("show");
+});
+var fila;
+$(document).on("click",".btnHTFAC", function(){
+  fila=$(this).closest("tr");
+  ids=parseInt(fila.find('td:eq(4)').text());
+  $("#nameFAC").val(id);
+}); 
+
+  
+}
+////////////////////////////////////////
+
 
 
 //función que realiza la busqueda
@@ -1670,5 +1957,113 @@ $(function () {
                      $('#parrafo').text(nFilas2);
 
                      $('#suma').text(sumador.toFixed(2));
+</script>
+<script>
+    // busca por transaccion 
+    $(document).ready(function(){
+$("#busTrans").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(0);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+ // busca por cliente
+ $(document).ready(function(){
+$("#busCliente").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(2);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+//busca por local
+
+ $(document).ready(function(){
+$("#busLocal").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(4);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+// busca por factura
+  
+ $(document).ready(function(){
+$("#busFactura").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(5);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+//buscador en general
+$(document).ready(function(){
+
+$("#busG").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+
+    if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
 </script>
 @endsection

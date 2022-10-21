@@ -125,6 +125,7 @@ class ReportePrecioController extends Controller
             )
         ) as lista
         ";
+        return dd($query);
         $preciocosto = DB::connection('sqlsrv')->select(DB::raw($query));
         $titulos = $request->lis_options;
         if($request->gen =="export")

@@ -10,6 +10,9 @@ class ResumenVentasTotal implements FromArray, WithHeadings,ShouldAutoSize
     public function __construct(array $resum, $fini, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen)
     {
         $this->resum = $resum;
+        $this->adminQ=$adminQ;
+        $this->regionales1=$regionales1;
+        $this->regionales2=$regionales2;
         $this->fini = $fini;
         $this->ffin = $ffin;
         

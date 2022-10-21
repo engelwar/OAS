@@ -742,7 +742,7 @@ class ResumenVentasTotalController extends Controller
         }
         elseif($request->gen =="excel")
         {
-            $export = new ResumenVentasTotal($resum, $ffin, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen);    
+            $export = new ResumenVentasTotal($resum, $fini, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen);    
             return Excel::download($export, 'Resumen de Ventas.xlsx');
         }
         else if($request->gen =="ver")

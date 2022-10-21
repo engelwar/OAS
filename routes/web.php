@@ -277,14 +277,27 @@ Route::get('/CotizacionReporte/vistaTotal/v/{cotizacion_report}/edit','Cotizacio
 
 Route::get('/CotizacionReporte/vistaTotal/bS','CotizacionReportController@buscar')->name('Cotizacion.buscar');
 
-///////////////////////////////
+Route::post('/CotizacionReporte/vistaTotal/fac','CotizacionReportController@facturaConsol')->name('CotizacionReporte.facturaConsol');
+//Route::get('/CotizacionReporte/vistaTotal/f/{cotizacion_report}/facturaConsol','CotizacionReportController@facturaConsol')->name('CotizacionReporte.facturaConsol');
+
+//////////////////cartas/////////////
+Route::resource('GeneradorCartas', 'GeneradorCartaController');
+Route::get('GeneradorCartas/perfiles/{perfil}','GeneradorCartaController@vista')->name('GeneradorCartas.vista');
+Route::get('GeneradorCartas/perfiles/data/pdf','GeneradorCartaController@store')->name('GeneradorCartas.store');
+//Route::get('GeneradorCartas/carta/pdf','GeneradorCartaController@pdf')->name('carta.pdf');
+
+
+
+
 // Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
 //Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 
 
 
-Route::get('/', 'CuentasXCController@index')->name('inicio');  
-Route::get('/home', 'CuentasXCController@index')->name('inicio');  
+//Route::get('/', 'CuentasXCController@index')->name('iniCxc');  
+//Route::get('/home', 'CuentasXCController@index')->name('iniCxc');  
+
+
 
 
 //Route::any('stock/store/almxu', 'Reports\StockController@store_almxu')->name('stock.store_almxu');

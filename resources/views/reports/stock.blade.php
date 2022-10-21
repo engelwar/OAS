@@ -27,8 +27,6 @@
             <div class="col-md-4">
 
 
-               
-
 
                 <div class="container border rounded">
                     <div class="row text-center my-3">
@@ -66,11 +64,14 @@
                         <div class="col-12">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="codBarras" name="codBarras"> 
+
                                 <label class="form-check-label" for="codBarras">Mostrar Codigos de Barra</label>
                             </div>
                         </div>
                     </div>
-                    <div class="row text-start my-3">
+
+                   <!--
+                <div class="row text-start my-3">
                         <h6 class="text-primary">DATOS ADICIONALES</h6>
                     </div>
 
@@ -84,6 +85,8 @@
                         </div>
                     </div>
                     <br>
+                --> 
+                    
 
                     <div class="mb-3 row">
                         <div class="col-md-12 text-center d-block gap-2">
@@ -226,7 +229,7 @@
 </div>
 </div>
 </div>
-
+<!--------------------------------->
     <div class="row row-cols-1 row-cols-lg-5 g-2 g-lg-3">
       <div class="col">
         <div class="p-3 border bg-light">
@@ -235,12 +238,20 @@
                   <h2 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                       SUCURSALES
-    
+                   
                     </button>
                   </h2>
                   <div id="flush-collapseOne" class="accordion-collapse collapse " aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
+                          <!-- boton para activar todo -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input selectallS" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label select-textS"   >DESACTIVAR</label>
+                                <hr style="align-items: center" />  
+                            </div>
+                           
+
                             @foreach($almacen_grupo as $k => $alm)
                             @if ($k=="SanMiguel" || $k=="AC1" || $k=="AC1"
                             || $k=="AC2"|| $k=="Ballivian"|| $k=="Calacoto" || $k=="Feria"|| $k=="Handal"
@@ -253,12 +264,12 @@
                                      
                                             <li class="list-group-item" id="{{$k}}">
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" 
+                                                    <input class="optionS justone form-check-input " 
                                                    
                                                     type="checkbox" id="{{$a->inalmCalm}}" value ="{{$a->inalmCalm}}" name="almacen[]"
                                                     @if($a->estado == 1)
                                                     checked @endif>
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                    <label class="form-check-label">
                                                         {{$a->inalmNomb}}
                                                     </label>   
                                                 </div>                                                     
@@ -291,31 +302,51 @@
                     </h2>
                     <div id="flush-collapseTwo22" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo22" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
-                          <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
-                              @foreach($almacen_grupo as $k => $alm  )
+
+                        <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
+
+ <!-- boton para activar todo -->
+ <div class="form-check form-switch">
+    <input class="form-check-input selectallM" type="checkbox" id="flexSwitchCheckChecked" >
+    <label class="form-check-label select-textM"   >ACTIVAR</label>
+    <hr style="align-items: center" />  
+</div>
+
+
+                            @foreach($almacen_grupo as $k => $alm)
+                            @if ($k=="AlmMay1" || $k=="AlmMay2" || $k=="AlmMay3"
+                            || $k=="AlmMay4"|| $k=="AlmMay5")
+                                    <div class="col-8 px-100 py-6 ">
+                          
+                                        <h6 class="mb-1">{{$k}}</h6>
+                                        <ul id="seg" class="list-group list-group-flush">
+                                           
+                                         
+
+
+                                            @foreach($alm as $l => $a)
                                      
-                                          @foreach($alm as $l => $a)
-                                            @if ($a->inalmNomb=="ALMACEN CONTRATOS" ||$a->inalmNomb=="ALMACEN MAYAORISTA 3"||$a->inalmNomb=="ALMACEN MAYORISTA 1"||$a->inalmNomb=="ALMACEN MAYORISTA 2"||$a->inalmNomb=="ALMACEN MAYORISTA 4"||$a->inalmNomb=="ALMACEN MAYORISTA 5")                                          
+                                            <li class="list-group-item" id="{{$k}}">
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" 
+                                                    <input class="optionM form-check-input" 
                                                    
                                                     type="checkbox" id="{{$a->inalmCalm}}" value ="{{$a->inalmCalm}}" name="almacen[]"
                                                     @if($a->estado == 1)
                                                     checked @endif>
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                    <label class="form-check-label">
                                                         {{$a->inalmNomb}}
                                                     </label>   
                                                 </div>                                                     
-                                           
-                                            @endif
-                                             
-                                           @endforeach
-                                          
-                                 
-                              
-                              
-                              @endforeach
-                          </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                            @endif
+                            
+                            @endforeach
+                        </div>
+
+
                   </div>
                   </div>
                 </div>
@@ -332,13 +363,21 @@
                     <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
                           <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
-                              @foreach($almacen_grupo as $k => $alm  )
+                           
+                           <!-- boton para activar todo -->
+ <div class="form-check form-switch">
+    <input class="form-check-input selectallR" type="checkbox" id="flexSwitchCheckChecked" >
+    <label class="form-check-label select-textR"   >DESACTIVAR</label>
+    <hr style="align-items: center" />  
+</div>
+                           
+                            @foreach($almacen_grupo as $k => $alm  )
                                      
                                           @foreach($alm as $l => $a)
                                             @if ($a->inalmNomb=="ALMACEN COCHABAMBA" || $a->inalmNomb=="ALMACEN ORURO"|| $a->inalmNomb=="ALMACEN POTOSI" || $a->inalmNomb=="ALMACEN SUCRE"|| $a->inalmNomb=="ALMACEN TARIJA")
                                             
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" 
+                                                    <input class="optionR form-check-input" 
                                                    
                                                     type="checkbox" id="{{$a->inalmCalm}}" value ="{{$a->inalmCalm}}" name="almacen[]"
                                                     @if($a->estado == 1)
@@ -375,12 +414,20 @@
                     <div id="flush-collapseTwo2" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo2" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
                           <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
+
+ <!-- boton para activar todo -->
+ <div class="form-check form-switch">
+    <input class="form-check-input selectallI" type="checkbox" id="flexSwitchCheckChecked" >
+    <label class="form-check-label select-textI"   >ACTIVAR</label>
+    <hr style="align-items: center" />  
+</div>
+
                               @foreach($almacen_grupo as $k => $alm  )
                                      
                                           @foreach($alm as $l => $a)
-                                            @if ($a->inalmNomb=="ALMACEN INSTITUCIONAL 1"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 2"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 3"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 4"||$a->inalmNomb=="INSTITUCIONAL BLL"||$a->inalmNomb=="INSTITUCIONAL CAL"||$a->inalmNomb=="INSTITUCIONAL HAN"||$a->inalmNomb=="INSTITUCIONAL MSC")                                          
+                                            @if ($a->inalmNomb=="ALMACEN CONTRATOS" ||$a->inalmNomb=="ALMACEN RESERVA CONTRATOS"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 1" ||$a->inalmNomb=="ALMACEN INSTITUCIONAL 2"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 3"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 4"||$a->inalmNomb=="INSTITUCIONAL BLL"||$a->inalmNomb=="INSTITUCIONAL CAL"||$a->inalmCalm==32||$a->inalmNomb=="INSTITUCIONAL MSC")                                          
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" 
+                                                    <input class="optionI form-check-input" 
                                                    
                                                     type="checkbox" id="{{$a->inalmCalm}}" value ="{{$a->inalmCalm}}" name="almacen[]"
                                                     @if($a->estado == 1)
@@ -416,12 +463,19 @@
                     <div id="flush-collapseTwo23" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo23" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">
                           <div class="row p-2" style="height:35vh;overflow:auto; font-size:0.8rem">
-                              @foreach($almacen_grupo as $k => $alm  )
+                            
+                             <!-- boton para activar todo -->
+ <div class="form-check form-switch">
+    <input class="form-check-input selectallSG" type="checkbox" id="flexSwitchCheckChecked" >
+    <label class="form-check-label select-textSG"   >ACTIVAR</label>
+    <hr style="align-items: center" />  
+</div>
+                            @foreach($almacen_grupo as $k => $alm  )
                                      
                                           @foreach($alm as $l => $a)
-                                            @if ($a->inalmNomb=="ALMACEN KETAL"||$a->inalmNomb=="ALMACEN RESERVA CONTRATOS"||$a->inalmNomb=="ALMACEN SICOES"||$a->inalmNomb=="DISTRIBUIDOR 1"||$a->inalmNomb=="INSUMOS"||$a->inalmNomb=="MATERIA PRIMA"||$a->inalmNomb=="PRODUCCION EN PROCESO"||$a->inalmNomb=="PRODUCTO TERMINADO")                                          
+                                            @if ($a->inalmNomb=="ALMACEN KETAL"||$a->inalmNomb=="ALMACEN SICOES"||$a->inalmNomb=="DISTRIBUIDOR 1"||$a->inalmNomb=="INSUMOS"||$a->inalmNomb=="MATERIA PRIMA"||$a->inalmNomb=="PRODUCCION EN PROCESO"||$a->inalmNomb=="PRODUCTO TERMINADO")                                          
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" 
+                                                    <input class="optionSG  form-check-input" 
                                                    
                                                     type="checkbox" id="{{$a->inalmCalm}}" value ="{{$a->inalmCalm}}" name="almacen[]"
                                                     @if($a->estado == 1)
@@ -464,6 +518,99 @@
 </div>
 @endsection
 @section('mis_scripts')
+<script>
+    ///////sucursales 
+$('.selectallS').click(function() {
+  
+   
+  if ($(this).is(':checked')) {
+      $('.optionS').prop('checked', true);
+     var total = $('input[name="options[]"]:checked').length;
+      $(".dropdown-text").html('(' + total + ') Selected');
+      $(".select-textS").html('DESACTIVAR');
+     
+  } else {
+      $('.optionS').prop('checked', false);
+      
+      $(".dropdown-text").html('(0) Selected');
+      $(".select-textS").html('ACTIVAR');
+
+  }
+});
+///////MAYORISTA
+$('.selectallM').click(function() {
+  
+   
+  if ($(this).is(':checked')) {
+      $('.optionM').prop('checked', true);
+     var total = $('input[name="options[]"]:checked').length;
+      $(".dropdown-text").html('(' + total + ') Selected');
+      $(".select-textM").html('DESACTIVAR');
+     
+  } else {
+      $('.optionM').prop('checked', false);
+      
+      $(".dropdown-text").html('(0) Selected');
+      $(".select-textM").html('ACTIVAR');
+
+  }
+});
+///////REGIONALES
+$('.selectallR').click(function() {
+  
+   
+  if ($(this).is(':checked')) {
+      $('.optionR').prop('checked', true);
+     var total = $('input[name="options[]"]:checked').length;
+      $(".dropdown-text").html('(' + total + ') Selected');
+      $(".select-textR").html('DESACTIVAR');
+     
+  } else {
+      $('.optionR').prop('checked', false);
+      
+      $(".dropdown-text").html('(0) Selected');
+      $(".select-textR").html('ACTIVAR');
+
+  }
+});
+///////INSTiITUCIONAL 
+$('.selectallI').click(function() {
+  
+   
+  if ($(this).is(':checked')) {
+      $('.optionI').prop('checked', true);
+     var total = $('input[name="options[]"]:checked').length;
+      $(".dropdown-text").html('(' + total + ') Selected');
+      $(".select-textI").html('DESACTIVAR');
+     
+  } else {
+      $('.optionI').prop('checked', false);
+      
+      $(".dropdown-text").html('(0) Selected');
+      $(".select-textI").html('ACTIVAR');
+
+  }
+});
+///////SIN GRUPO 
+$('.selectallSG').click(function() {
+  
+   
+  if ($(this).is(':checked')) {
+      $('.optionSG').prop('checked', true);
+     var total = $('input[name="options[]"]:checked').length;
+      $(".dropdown-text").html('(' + total + ') Selected');
+      $(".select-textSG").html('DESACTIVAR');
+     
+  } else {
+      $('.optionSG').prop('checked', false);
+      
+      $(".dropdown-text").html('(0) Selected');
+      $(".select-textSG").html('ACTIVAR');
+
+  }
+});
+
+</script>
 <script>
     $(document).ready(function(){
         $(".usuarios_param").click(function(){

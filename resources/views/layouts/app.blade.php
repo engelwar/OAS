@@ -539,20 +539,7 @@
       });
      
     </script>
-<script>
-   Push.create("numero 1",{
-    body: "Mensaje X",
-    //icon "images/algo.extencion",
-    timrout: 4000,
-    onClick:function(){
-      window.location="http://192.168.86.29:8022/oas/public/";  
-      this.close();
-    }
-   });
 
-
-
-</script>
   
     @yield('mis_scripts')
 </body>

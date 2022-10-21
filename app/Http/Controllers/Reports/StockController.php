@@ -9,6 +9,9 @@ use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\StockExport;
 use App\TempStockParam;
+
+use function Complex\add;
+
 class StockController extends Controller
 {
     /**
@@ -39,7 +42,37 @@ class StockController extends Controller
             WHEN inalmCalm IN (55) THEN 'Feria'
             WHEN inalmCalm IN (56) THEN 'Contratos'
             WHEN inalmCalm IN (43) THEN 'Produccion'
-            WHEN inalmCalm IN (54) THEN 'VMovil1'
+            WHEN inalmCalm IN (9) THEN 'AlmMay1'
+            WHEN inalmCalm IN (48) THEN 'AlmMay2'
+            WHEN inalmCalm IN (49) THEN 'AlmMay3'
+            WHEN inalmCalm IN (50) THEN 'AlmMay4'
+            WHEN inalmCalm IN (53) THEN 'AlmMay5'
+            WHEN inalmCalm IN (57) THEN 'AlmSucre'
+            WHEN inalmCalm IN (58) THEN 'AlmPotosi'
+            WHEN inalmCalm IN (59) THEN 'AlmTarija'
+            WHEN inalmCalm IN (60) THEN 'AlmOruro'
+            WHEN inalmCalm IN (61) THEN 'AlmCochaba'
+           WHEN inalmCalm IN (8) THEN 'AlmIns1'
+           WHEN inalmCalm IN (20) THEN 'AlmIns2'
+           WHEN inalmCalm IN (21) THEN 'AlmIns3'
+           WHEN inalmCalm IN (22) THEN 'AlmIns4'
+           WHEN inalmCalm IN (31) THEN 'InsBallian'
+           WHEN inalmCalm IN (32) THEN 'InsHandal'
+            WHEN inalmCalm IN (33) THEN 'InsCalacoto'
+           WHEN inalmCalm IN (34) THEN 'InsMariscal'
+           WHEN inalmCalm IN (23) THEN 'AlmKetal'
+           WHEN inalmCalm IN (62) THEN 'AlmReserContratos'
+           WHEN inalmCalm IN (24) THEN 'AlmSicoes'
+           WHEN inalmCalm IN (27) THEN 'AlmDistribuidor1'
+           WHEN inalmCalm IN (64) THEN 'Insumos'
+           WHEN inalmCalm IN (65) THEN 'MateriaPrima'
+           WHEN inalmCalm IN (63) THEN 'ProdEnProceso'
+           WHEN inalmCalm IN (66) THEN 'ProdTerminado'
+           
+           
+           
+
+
             ELSE 'Sin Grupo'
             END as grupo,
             CASE 
@@ -54,8 +87,16 @@ class StockController extends Controller
             ORDER BY estado DESC, inalmNomb";
           
             $almacen = DB::connection('sqlsrv')->select(DB::raw($alm_q));
+      
+     
             $almacen_grupo = [];
+
+
+          
+
             foreach ($almacen as $key => $value) {
+
+             if ($value->grupo=="AC1") {
                 if(!array_key_exists($value->grupo,$almacen_grupo))
                 {
                     $almacen_grupo[$value->grupo]=[$almacen[$key]];
@@ -63,7 +104,415 @@ class StockController extends Controller
                 else{
                     $almacen_grupo[$value->grupo][]=$almacen[$key];
                 } 
+               }
+               if ($value->grupo=="AC2") {
+                if(!array_key_exists($value->grupo,$almacen_grupo))
+                {
+                    $almacen_grupo[$value->grupo]=[$almacen[$key]];
+                }
+                else{
+                    $almacen_grupo[$value->grupo][]=$almacen[$key];
+                } 
+              
+                
+            }if ($value->grupo=="Ballivian") {
+                if(!array_key_exists($value->grupo,$almacen_grupo))
+                {
+                    $almacen_grupo[$value->grupo]=[$almacen[$key]];
+                }
+                else{
+                    $almacen_grupo[$value->grupo][]=$almacen[$key];
+                } 
+                             
             }
+            if ($value->grupo=="Calacoto") {
+                if(!array_key_exists($value->grupo,$almacen_grupo))
+                {
+                    $almacen_grupo[$value->grupo]=[$almacen[$key]];
+                }
+                else{
+                    $almacen_grupo[$value->grupo][]=$almacen[$key];
+                } 
+              
+                
+            }
+            if ($value->grupo=="Handal") {
+                if(!array_key_exists($value->grupo,$almacen_grupo))
+                {
+                    $almacen_grupo[$value->grupo]=[$almacen[$key]];
+                }
+                else{
+                    $almacen_grupo[$value->grupo][]=$almacen[$key];
+                } 
+                
+            }
+            if ($value->grupo=="Mariscal") {
+                if(!array_key_exists($value->grupo,$almacen_grupo))
+                {
+                    $almacen_grupo[$value->grupo]=[$almacen[$key]];
+                }
+                else{
+                    $almacen_grupo[$value->grupo][]=$almacen[$key];
+                } 
+               
+            }
+        }
+
+
+
+        foreach ($almacen as $key => $value) {
+
+            if ($value->grupo=="SanMiguel") {
+               if(!array_key_exists($value->grupo,$almacen_grupo))
+               {
+                   $almacen_grupo[$value->grupo]=[$almacen[$key]];
+               }
+               else{
+                   $almacen_grupo[$value->grupo][]=$almacen[$key];
+               } 
+              }
+              if ($value->grupo=="SantaCruz") {
+               if(!array_key_exists($value->grupo,$almacen_grupo))
+               {
+                   $almacen_grupo[$value->grupo]=[$almacen[$key]];
+               }
+               else{
+                   $almacen_grupo[$value->grupo][]=$almacen[$key];
+               } 
+             
+               
+           }if ($value->grupo=="Planta") {
+               if(!array_key_exists($value->grupo,$almacen_grupo))
+               {
+                   $almacen_grupo[$value->grupo]=[$almacen[$key]];
+               }
+               else{
+                   $almacen_grupo[$value->grupo][]=$almacen[$key];
+               } 
+                            
+           }
+           if ($value->grupo=="VMovil1") {
+               if(!array_key_exists($value->grupo,$almacen_grupo))
+               {
+                   $almacen_grupo[$value->grupo]=[$almacen[$key]];
+               }
+               else{
+                   $almacen_grupo[$value->grupo][]=$almacen[$key];
+               } 
+             
+               
+           }
+           if ($value->grupo=="Contratos") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+           }
+           if ($value->grupo=="Produccion") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+          
+            
+        }
+        
+        if ($value->grupo=="Sin Grupo") {
+         if(!array_key_exists($value->grupo,$almacen_grupo))
+         {
+             $almacen_grupo[$value->grupo]=[$almacen[$key]];
+         }
+         else{
+             $almacen_grupo[$value->grupo][]=$almacen[$key];
+         } 
+       
+         
+     }
+        if ($value->grupo=="Feria") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+                         
+        }
+
+        
+        if ($value->grupo=="AlmMay1") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+           }
+           if ($value->grupo=="AlmMay2") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+          
+            
+        }if ($value->grupo=="AlmMay3") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+                         
+        }
+        if ($value->grupo=="AlmMay4") {
+            if(!array_key_exists($value->grupo,$almacen_grupo))
+            {
+                $almacen_grupo[$value->grupo]=[$almacen[$key]];
+            }
+            else{
+                $almacen_grupo[$value->grupo][]=$almacen[$key];
+            } 
+          
+            
+        }
+        if ($value->grupo=="AlmMay5") {
+         if(!array_key_exists($value->grupo,$almacen_grupo))
+         {
+             $almacen_grupo[$value->grupo]=[$almacen[$key]];
+         }
+         else{
+             $almacen_grupo[$value->grupo][]=$almacen[$key];
+         } 
+      }
+      if ($value->grupo=="AlmSucre") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+
+     if ($value->grupo=="AlmPotosi") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+
+     if ($value->grupo=="AlmTarija") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmOruro") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmCochaba") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmIns1") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmIns2") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmIns3") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmIns4") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="InsBallian") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="InsCalacoto") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="InsMariscal") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="InsHandal") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+  
+     if ($value->grupo=="AlmKetal") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmReserContratos") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="AlmSicoes") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+
+     if ($value->grupo=="AlmDistribuidor1") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="Insumos") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="MateriaPrima") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="ProdEnProceso") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+     if ($value->grupo=="ProdTerminado") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+  
+     
+     if ($value->grupo=="Sin Grupo") {
+        if(!array_key_exists($value->grupo,$almacen_grupo))
+        {
+            $almacen_grupo[$value->grupo]=[$almacen[$key]];
+        }
+        else{
+            $almacen_grupo[$value->grupo][]=$almacen[$key];
+        } 
+     }
+
+     
+       }
+
+    
+
+     
+//////////////
+
+    
+          
+      
+
+          
             return view('reports.stock', compact('almacen', 'almacen_grupo'));
         }
         return redirect()->back();
@@ -104,7 +553,7 @@ class StockController extends Controller
             $almacenes = $request->almacen;
         }
 
-        //return dd(implode("+",$alma_total));
+       // return dd(implode("+",$alma_total));
         $pvp_sql = "";
         $pvp = false;
         $titulos=
@@ -189,7 +638,7 @@ class StockController extends Controller
                 } 
             }
         }
-        //return dd($request->all());
+       // return dd($request->all());
         $alma = [];
         $alma_total = [];
         foreach ($almacenes as $value) {
@@ -261,7 +710,7 @@ class StockController extends Controller
         ".$prod."
         ".$stock."
         ORDER BY inpro.inproCpro";
-        //return dd($query);
+    //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
         $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
         
