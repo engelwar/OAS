@@ -238,6 +238,7 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,     
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'NumConvert' => HnhDigital\LaravelNumberConverter\Facade::class,
     ],
 
 ];

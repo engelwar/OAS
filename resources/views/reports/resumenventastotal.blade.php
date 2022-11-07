@@ -33,9 +33,9 @@
                     <button type="submit" class="btn btn-primary mx-2" name="gen" value="ver">
                         {{ __('Ver') }}
                     </button>
-                    <!--<button type="submit" class="btn btn-primary mx-2" name="gen" value="excel">
+                    <button type="submit" class="btn btn-primary mx-2" name="gen" value="excel">
                         {{ __('Exportar EXCEL') }}
-                    </button>-->
+                    </button>
                     
                 </div>
             </div>

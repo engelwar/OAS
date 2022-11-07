@@ -712,6 +712,7 @@ class StockController extends Controller
         ORDER BY inpro.inproCpro";
     //return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($query));
+      
         $titulos[] = ['name'=>'Total', 'data'=>'Total', 'title'=>'Total', 'tip'=>'decimal'];
         
         $titulos_excel[] = 'Total';

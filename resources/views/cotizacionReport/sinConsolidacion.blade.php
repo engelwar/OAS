@@ -57,23 +57,13 @@ table{
                            
                              <input class="btn btn-outline-secondary" type = "button"  value = "Cerrar pagina" onClick = window.close(); />   
                               <hr>
-                              
-                        
-               
+                
                             </div>
-                       
                           
                         </div>
                       </div>
 
-                      
-
-                
-                  
-                    
-
-                        
-                 </div>
+               </div>
                 <!--------------------->
              </div>
          </div>

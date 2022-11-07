@@ -286,9 +286,6 @@ Route::get('GeneradorCartas/perfiles/{perfil}','GeneradorCartaController@vista')
 Route::get('GeneradorCartas/perfiles/data/pdf','GeneradorCartaController@store')->name('GeneradorCartas.store');
 //Route::get('GeneradorCartas/carta/pdf','GeneradorCartaController@pdf')->name('carta.pdf');
 
-
-
-
 // Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
 //Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a41dcaeeb183862dffcc4bd12535e1a4",
+    "content-hash": "a15bb0ebea95c6f368c3232754ac923e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1231,6 +1231,123 @@
             "time": "2018-01-15T06:57:33+00:00"
         },
         {
+            "name": "hnhdigital-os/laravel-number-converter",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hnhdigital-os/laravel-number-converter.git",
+                "reference": "488ffdac3136ab813790ec3042b42bc9de725b2e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hnhdigital-os/laravel-number-converter/zipball/488ffdac3136ab813790ec3042b42bc9de725b2e",
+                "reference": "488ffdac3136ab813790ec3042b42bc9de725b2e",
+                "shasum": ""
+            },
+            "require": {
+                "hnhdigital-os/php-number-converter": "1.*",
+                "illuminate/support": "^5.8|^6.0|^7.0|^8.0|^9.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "~2.0",
+                "squizlabs/php_codesniffer": "~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "HnhDigital\\LaravelNumberConverter\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HnhDigital\\LaravelNumberConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rocco Howard",
+                    "email": "rocco@bluora.com.au"
+                }
+            ],
+            "description": "Number to word, roman, ordinal converter",
+            "keywords": [
+                "converter",
+                "laravel",
+                "number",
+                "ordinal",
+                "roman",
+                "word"
+            ],
+            "support": {
+                "issues": "https://github.com/hnhdigital-os/laravel-number-converter/issues",
+                "source": "https://github.com/hnhdigital-os/laravel-number-converter/tree/1.5.0"
+            },
+            "time": "2022-04-12T00:02:37+00:00"
+        },
+        {
+            "name": "hnhdigital-os/php-number-converter",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hnhdigital-os/php-number-converter.git",
+                "reference": "1e1828056da7a10775ffe26a7e818fcf0f5a3e14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hnhdigital-os/php-number-converter/zipball/1e1828056da7a10775ffe26a7e818fcf0f5a3e14",
+                "reference": "1e1828056da7a10775ffe26a7e818fcf0f5a3e14",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "~2.0",
+                "phpunit/phpunit": "^7.0",
+                "squizlabs/php_codesniffer": "~3.0",
+                "symfony/thanks": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "HnhDigital\\PhpNumberConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Riasad Tasha",
+                    "email": "saintkabyo@gmail.com"
+                },
+                {
+                    "name": "Rocco Howard",
+                    "email": "rocco@hnh.digital"
+                }
+            ],
+            "description": "Number to word, roman, ordinal converter",
+            "keywords": [
+                "converter",
+                "number",
+                "ordinal",
+                "roman",
+                "word"
+            ],
+            "support": {
+                "source": "https://github.com/hnhdigital-os/php-number-converter/tree/1.2.0"
+            },
+            "time": "2021-02-27T03:13:12+00:00"
+        },
+        {
             "name": "knplabs/knp-snappy",
             "version": "v1.4.1",
             "source": {
@@ -1971,6 +2088,57 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "luecano/numero-a-letras",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lecano/php-numero-a-letras.git",
+                "reference": "bab51e3e81545e38d6a11efccb3e6d568765ba7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lecano/php-numero-a-letras/zipball/bab51e3e81545e38d6a11efccb3e6d568765ba7c",
+                "reference": "bab51e3e81545e38d6a11efccb3e6d568765ba7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Luecano\\NumeroALetras\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luis Cano",
+                    "homepage": "https://github.com/luecano/numero-a-letras"
+                }
+            ],
+            "description": "Convierte un número a letras.",
+            "homepage": "https://github.com/luecano/numero-a-letras",
+            "keywords": [
+                "convertir",
+                "facturacion",
+                "letras",
+                "numero",
+                "sunat"
+            ],
+            "support": {
+                "issues": "https://github.com/lecano/php-numero-a-letras/issues",
+                "source": "https://github.com/lecano/php-numero-a-letras/tree/v3.0.0"
+            },
+            "time": "2021-03-05T15:13:07+00:00"
         },
         {
             "name": "maatwebsite/excel",

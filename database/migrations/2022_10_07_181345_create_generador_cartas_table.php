@@ -24,6 +24,7 @@ class CreateGeneradorCartasTable extends Migration
             $table->foreignId('perfil_id')->references('id')->on('perfils')->unique()->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**

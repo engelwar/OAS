@@ -33,18 +33,22 @@
         <thead class="thead-light">
 
             <tr>
-                <th>Fecha Cotizacion</th>
-                <th>Nro Cotizacion</th>
-                <th style="text-align: center">Cliente</th>
-                <th>Fecha NR</th>
-                <th>Nota de remision</th>
-                <th>Total ventas</th>
-                <th>Moneda</th>
-                <th>Usuario vendedor</th>
-                <th>Local</th>
-                <th>Fecha facturacion</th>
-                <th>Nro facturacion</th>
-                <th>Estado</th>
+                <th style="width: 140px; " class="header" scope="col">Fecha Cot</th>
+                <th style="width: 100px; "class="header" scope="col">Nro Cot</th>
+                <th style="width: 600px; "class="header" scope="col">Cliente</th> 
+                <th style="width: 300px; "class="header" scope="col">Fecha NR</th> 
+                <th style="width: 160px; "class="header" scope="col">NR</th>
+                <th style="width: 190px; "class="header" scope="col">Total Ventas</th>
+                
+                <th style="width: 10px; "class="header" scope="col">Moneda</th>
+                <th style="width: 70px; "class="header" scope="col">Estado NR</th>
+                <th style="width: 130px; "class="header" scope="col">Usuario vendedor</th>
+                <th style="width: 130px; "class="header" scope="col">Local</th>
+                <th style="width: 130px; "class="header" scope="col">Fecha fac</th>
+                <th style="width: 130px; "class="header" scope="col">Nro Fac</th>
+                <th style="width: 70px; "class="header" scope="col">Estado Fac</th>
+    
+      
                 
             </tr>
         </thead>
@@ -53,6 +57,8 @@
                 @foreach ($consutas as $item)
                                    
                <tr>
+
+                
                     <td style="text-align:center" class="bold">{{$item->Fecha}}</td> 
                     @if(strval($item->NroCotizacion)==="0")
                     <td style="text-align:center" class="bold">-</td>
@@ -65,6 +71,11 @@
                     <td style="text-align:center" class="bold">{{$item->NR}}</td>
                     <td style="text-align:center" class="bold">{{$item->Totalventas}}</td>
                     <td style="text-align:center" class="bold">{{$item->Moneda}}</td>
+                    @if ($item->estadoNR ==9)
+                    <td style="text-align:center" class="bold">a</td>  
+                    @else
+                    <td style="text-align:center" class="bold">v</td>    
+                    @endif
                     <td style="text-align:center" class="bold">{{$item->Usuario}}</td>
                     <td style="text-align:center" class="bold">{{$item->Local}}</td>
                     @if (is_null($item->FechaFac))

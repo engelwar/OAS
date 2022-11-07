@@ -67,19 +67,23 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             
-            CASE         
-            WHEN adusrCusr IN (22,23,24,49) THEN 'RETAIL BALLIVIAN'
+            CASE    
+       
+            WHEN adusrCusr IN (22,23,24,49,68) THEN 'RETAIL BALLIVIAN'
          --   WHEN adusrCusr IN (56) THEN 'MAGDY VILLARROEL'
             WHEN adusrCusr IN (41) THEN 'LIBROS BALLIVIAN'
+            WHEN adusrCusr IN (28) THEN 'INS HANDAL'
+            WHEN adusrCusr IN (42) THEN 'LIBROS HANDAL'
             WHEN adusrCusr IN (25,26,27,50) THEN 'RETAIL HANDAL'
-            WHEN adusrCusr IN (42) THEN 'LIBROS HANDAL' 
+            WHEN adusrCusr IN (42) THEN 'LIBROS HANDAL'
+            WHEN adusrCusr IN (74) THEN 'INS CALACOTO' 
             WHEN adusrCusr IN (32,33,34,52) THEN 'RETAIL CALACOTO'
             WHEN adusrCusr IN (43) THEN 'LIBROS CALACOTO'      
-            
+            WHEN adusrCusr IN (44) THEN 'LIBROS MARISCAL'
             WHEN adusrCusr IN (35,36,38,51,67) THEN 'RETAIL MARISCAL'
             WHEN adusrCusr IN (63) THEN 'REGIONAL 1'   
             WHEN adusrCusr IN (64) THEN 'REGIONAL 2' 
-
+        
             WHEN adusrCusr IN (76,77) THEN 'RETAIL SAN MIGUEL'  
             WHEN adusrCusr IN (78) THEN 'LIBROS SAN MIGUEL' 
             
@@ -103,7 +107,7 @@ class ResumenVentasTotalController extends Controller
             WHERE 
             cptraMdel = 0 AND cptraTtra = 21
             --AND adusrCusr NOT IN (9,65,63,64)--NO VENDEN
-            AND adusrCusr NOT IN (9,65,63,64)--NO VENDEN
+            AND adusrCusr NOT IN (9,65,63,64,80,61)--NO VENDEN
         ) as venta
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY loc, tip, mon
@@ -170,7 +174,7 @@ class ResumenVentasTotalController extends Controller
         
         $adminQ = DB::connection('sqlsrv')->select(DB::raw($vari . $admin));   
         ////////////////////////////////////////////
-
+        
         //------------total administrativos-------------------------//
         $totalQ=
         "SELECT 
@@ -213,6 +217,112 @@ class ResumenVentasTotalController extends Controller
         GROUP BY loc, mon
         ORDER BY loc, mon";
         $totalQ = DB::connection('sqlsrv')->select(DB::raw($vari . $totalQ));  
+
+//----------CAJERO FERIA--------------
+$queryFeria="SELECT 
+loc as 'Local', 
+tip as 'Tipo', 
+CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total', 
+
+mon as 'Moneda', 
+CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
+CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
+CONVERT(VARCHAR, cast(SUM(cxc) as money),1) as 'CXC', 
+CONVERT(VARCHAR, cast(SUM(tar) as money),1) as 'Tarjeta', 
+CONVERT(VARCHAR, cast(SUM(mot) as money),1) as 'MotCont',
+CONVERT(VARCHAR, cast(SUM(otr) as money),1) as 'Otros'
+FROM
+(
+    SELECT 
+    cptraFtra as 'Fec', 
+    adusrNomb as 'Usr',
+    inlocNomb as 'Loc',
+    vtvtaCalm as 'alma',
+    CASE         
+   
+    WHEN vtvtaCalm IN (61) THEN 'CAJERO 1'
+    WHEN vtvtaCalm IN (80) THEN 'CAJERO 2'   
+
+    --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
+    ELSE adusrNomb             
+    END as Tip,
+    vtvtaTotT as 'tot', 
+    vtvtaImpT	as 'imp',
+vtvtaDesT  as 'dest',
+    admonAbrv as 'mon', 
+    cptraCajS as 'efe', 
+    cptraBanS as 'ban', 
+    cptraCxcS as 'cxc',
+    cptraTarS as 'tar', 
+    cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+    FROM cptra
+    JOIN vtVta ON vtvtaNtra = cptraNtrI
+    JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+    JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+    
+    join inloc ON inlocCloc = vtvtaCloc
+    WHERE 
+ (cptraMdel = 0 AND cptraTtra = 21) AND
+     
+ (adusrCusr=61 or adusrCusr=80)
+--	or  adusrCusr = 4
+
+ --   or  adusrCusr = 3
+
+) as venta
+WHERE (fec BETWEEN @fini AND @ffin)
+GROUP BY loc, tip, mon
+ORDER BY loc, tip, mon";
+            $feria  = DB::connection('sqlsrv')->select(DB::raw($vari . $queryFeria)); 
+
+            $totalFeria=
+            "SELECT 
+            loc as 'Local', 
+            CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',
+            mon as 'Moneda', 
+            CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
+            CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
+            CONVERT(VARCHAR, cast(SUM(cxc) as money),1) as 'CXC', 
+            CONVERT(VARCHAR, cast(SUM(tar) as money),1) as 'Tarjeta', 
+            CONVERT(VARCHAR, cast(SUM(mot) as money),1) as 'MotCont',
+            CONVERT(VARCHAR, cast(SUM(otr) as money),1) as 'Otros'
+            FROM
+            (
+                SELECT 
+                cptraFtra as 'Fec',
+                vtvtaCalm as 'alma', 
+                adusrNomb as 'Usr',
+                inlocNomb as 'Loc',
+                vtvtaTotT as 'tot', 
+                vtvtaImpT	as 'imp',
+                vtvtaDesT  as 'dest',
+                admonAbrv as 'mon', 
+                cptraCajS as 'efe', 
+                cptraBanS as 'ban', 
+                cptraCxcS as 'cxc',
+                cptraTarS as 'tar', 
+                cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+                FROM cptra
+                JOIN vtVta ON vtvtaNtra = cptraNtrI
+                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+                join inloc ON inlocCloc = vtvtaCloc
+                WHERE 
+               
+               cptraMdel = 0 AND cptraTtra = 21  and
+               (adusrCusr=61 or adusrCusr=80)
+             
+            ) as venta
+            WHERE (fec BETWEEN @fini AND @ffin)
+            GROUP BY loc, mon
+            ORDER BY loc, mon";
+            $totalF = DB::connection('sqlsrv')->select(DB::raw($vari . $totalFeria));
+    
+
+
+
+
+
        
         ////////////////////////////////////
             //--------REGIONALES1-------------
@@ -566,7 +676,7 @@ class ResumenVentasTotalController extends Controller
             join inloc ON inlocCloc = vtvtaCloc
             WHERE 
             cptraMdel = 0 AND cptraTtra = 21
-           AND adusrCusr NOT IN (9,65)--NO VENDEN
+           AND adusrCusr NOT IN (9,65,61,80)--NO VENDEN
         ) as venta
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY loc, mon
@@ -616,6 +726,7 @@ class ResumenVentasTotalController extends Controller
         $resumenAdmin=[];
         $region1=[];
         $region2=[];
+        $feriaArray=[];
         $sanmiguelArray=[];
         foreach ($resum as $key => $value) {
             if (!array_key_exists($value->Local, $resumen)) 
@@ -657,16 +768,21 @@ class ResumenVentasTotalController extends Controller
                 array_push($region2[$value->Local], $regionales2[$key]);
             }
         }
-        foreach ($totalSanMi as $key => $value) {
-            if (!array_key_exists($value->Local, $sanmiguelArray)) 
+        
+        foreach ($totalF as $key => $value) {
+            if (!array_key_exists($value->Local, $totalF)) 
             {
-                $sanmiguelArray[$value->Local] = [$totalSanMi[$key]];
+                $totalF[$value->Local] = [$totalF[$key]];
+                unset($totalF[$key]);
             }
             else
             {
-                array_push($sanmiguelArray[$value->Local], $totalSanMi[$key]);
+                array_push($totalF[$value->Local], $totalF[$key]);
+                unset($totalF[$key]);
             }
         }
+
+       
         foreach ($total as $key => $value) {
             if (!array_key_exists($value->Local, $total)) 
             {
@@ -729,11 +845,22 @@ class ResumenVentasTotalController extends Controller
                 unset($totalSanMi[$key]);
             }
         }
+        foreach ($feria as $key => $value) {
+            if (!array_key_exists($value->Local, $feriaArray)) 
+            {
+                $feriaArray[$value->Local] = [$feria[$key]];
+            }
+            else
+            {
+                array_push($feriaArray[$value->Local], $feria[$key]);
+            }
+        }
+      
         if($request->gen =="export")
         {
            // $pdf = \PDF::loadView('reports.pdf.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ'))
             //->setOrientation('landscape')
-            $pdf = \PDF::loadView('reports.pdf.resumenventastotal',  compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2'))
+            $pdf = \PDF::loadView('reports.pdf.resumenventastotal',  compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2','sanmiguelArray','totalSanMi','totalF','sanmiguelArray','feriaArray'))
             
             ->setPaper('letter')
             ->setOption('footer-right','Pag [page] de [toPage]')
@@ -747,7 +874,7 @@ class ResumenVentasTotalController extends Controller
         }
         else if($request->gen =="ver")
         {
-            return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2','sanmiguelArray','totalSanMi'));
+            return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2','sanmiguelArray','totalSanMi','totalF','sanmiguelArray','feriaArray'));
         }
     }
     
