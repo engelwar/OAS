@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte Ventas Inst/May</title>
+    <title>Cuentas Por Cobrar</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <style>
 body{
@@ -22,8 +22,13 @@ body{
                         height: auto;"/>      
                     </td>
                     <td style="width: 60%; text-align: center;">
-                        <h3 class="text-center">RESUMEN DE VENTAS </h3>
-                        <h6 class="text-center">DEL AL {{$fecha}}</h6>               
+                      @if ($requestFecha == 2)
+                      <h3 class="text-center">RESUMEN DE CUENTAS POR COBRAR</h3>
+                      <h6 class="text-center">ENTRE {{$fecha1}} - {{$fecha2}}</h6>               
+                      @elseif ($requestFecha == 1)
+                      <h3 class="text-center">RESUMEN DE CUENTAS POR COBRAR</h3>
+                      <h6 class="text-center">AL {{$fecha}}</h6>               
+                      @endif
                     </td>
                     <td style="width: 20%; text-align: right;">                
                     </td>
@@ -34,6 +39,8 @@ body{
             <tr>
                 <th>Codigo</th>
                 <th>Cliente</th>
+                <th>RazonSocial</th>
+                <th>Nit</th>
                 <th>Fecha</th>
                 <th>FechaVenc</th>
                 <th>ImporteCXC</th>
@@ -55,6 +62,8 @@ body{
             </tr>
             <th>{{$c->Cod}} </th>
             <th>{{$c->Cliente}}</th>
+            <th>{{$c->Rsocial}}</th>
+            <th>{{$c->Nit}}</th>
             <th>{{$c->Fecha}}</th>
             <th>{{$c->FechaVenc}}</th>
             <th>{{$c->ImporteCXC}}</th>
