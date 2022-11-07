@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{asset('imagenes/logo.png')}}"  height="40" class="d-inline-block align-top" alt="">
@@ -13,11 +14,7 @@
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @else
-                        @if(Auth::user()->perfiles->foto != NULL)      
-                            <img alt="foto" class="img-fluid border mr-1 " width="40" height="40" src="{{ asset(Auth::user()->perfiles->foto) }}"/>
-                        @else
-                            <img alt="foto" class="img-fluid border mr-1" width="40" height="40" src="{{asset('imagenes/log.jpg')}}"/>
-                        @endif
+                     
                         <li class="nav-item dropdown">                                
                             <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{  Auth::user()->perfiles->nombre}}<span class="caret"></span>
@@ -36,8 +33,8 @@
 
                         <!--NOTIFICAIONES-->    
                         <div class="btn-group" id="not">
-                            <li class="nav-item dropdown"  >
-                                <a id="navbarDropdown1" class="nav-link @if(Auth::user()->unreadNotifications->count()==0) disabled @endif" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell"></i>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown1" class="nav-link @if(Auth::user()->unreadNotifications->count()==0) @endif" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell"></i>
                                     @if($count=Auth::user()->unreadNotifications->count())
                                         <span class="badge badge-pill badge-primary parpadea" id="contant">
                                             {{$count}}

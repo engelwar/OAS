@@ -72,6 +72,85 @@
 
   <thead>
 
+<<<<<<< HEAD
+    <thead>
+                      
+        <tr class="text-right table-bordered derecha">
+            <th></th>
+            @foreach ($fxmes as $fx)
+            <th>2021</th>
+            <th>2022</th>
+            @endforeach
+            <th style="color: red">2021</th>
+                        <th style="color: red">2022</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:solid #000 1px">
+            <td style="text-align:left" class="bold">SUMA GENERAL</td>
+        <!--enero-->
+          @if (is_null($tarray1))
+              
+          @else
+          @foreach ($tarray1 as $key=>$val)
+          @if (is_null($val))
+              <td class="bold">0</td>
+          @else
+              <td class="bold">{{$val}}</td>
+          @endif
+        
+          @endforeach
+          @endif
+        <!--febrero-->
+        @if (is_null($tarray2))
+              
+          @else
+          @foreach ($tarray2 as $key=>$val)
+          @if (is_null($val))
+              <td class="bold">0</td>
+          @else
+              <td class="bold">{{$val}}</td>
+          @endif
+          @endforeach
+          @endif
+          <!--marzo-->
+          @if (is_null($tarray3))
+              
+          @else
+          @foreach ($tarray3 as $key=>$val)
+          @if (is_null($val))
+              <td class="bold">0</td>
+          @else
+              <td class="bold">{{$val}}</td>
+          @endif
+          @endforeach
+          @endif
+          <!--abril-->
+          @if (is_null($tarray4))
+              
+          @else
+          @foreach ($tarray4 as $key=>$val)
+          @if (is_null($val))
+              <td class="bold">0</td>
+          @else
+              <td class="bold">{{$val}}</td>
+          @endif
+          @endforeach
+          @endif
+            <!--mayo-->
+            @if (is_null($tarray5))
+              
+          @else
+          @foreach ($tarray5 as $key=>$val)
+          @if (is_null($val))
+              <td class="bold">0</td>
+          @else
+              <td class="bold">{{$val}}</td>
+          @endif
+          @endforeach
+          @endif
+=======
     <tr class="text-right table-bordered derecha">
       <th></th>
       @foreach ($fxmes as $fx)
@@ -83,6 +162,7 @@
     </tr>
   </thead> -->
   <tbody>
+>>>>>>> 643e8981c630da182b5f2619cb5528a00986af04
 
     <tr class="text-right table-bordered font-weight-bold derecha" style="background:#e6ecff;border-top:solid #000 1px">
       <td style="text-align:left" class="bold">SUMA GENERAL</td>
@@ -170,6 +250,82 @@
       @endif
       @endforeach
 
+<<<<<<< HEAD
+            @foreach ($tarray11 as $key=>$val)
+            @if (is_null($val))
+                <td class="bold">0</td>
+            @else
+                <td class="bold">{{$val}}</td>
+            @endif
+            @endforeach
+
+            @foreach ($tarray12 as $key=>$val)
+            @if (is_null($val))
+                <td class="bold">0</td>
+            @else
+                <td class="bold">{{$val}}</td>
+            @endif
+            @endforeach
+            @foreach ($tarrayAnual as $key=>$val)
+            @if (is_null($val))
+                <td class="bold">0</td>
+            @else
+                <td class="bold">{{$val}}</td>
+            @endif
+            @endforeach
+            
+        </tr>  
+
+    </tbody>
+    <!--totales por sucursales-->
+   
+    
+  
+    @foreach ($compa as $key=>$val)
+    <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:solid #000 1px">
+       
+        @if (is_null($val)  || $val=="0")
+        
+       @else
+       @if ($val!="0")
+       <td style="text-align:left " class="bold">SUCURSAL {{$val}}</td>
+        @endif
+   
+        @endif
+   
+             @if (!empty($totalSt1)&&!empty($totalSt11))
+             @if (empty($totalSt1[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt1[$key]}}</td>
+             @endif
+             
+             @if (empty($totalSt11[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt11[$key]}}</td>
+            @endif
+            
+        @endif
+
+       
+    
+          
+    
+
+             @if (!empty($totalSt2)&&!empty($totalSt22))
+             @if (empty($totalSt2[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt2[$key]}}</td>
+             @endif
+             @if (empty($totalSt22[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt22[$key]}}</td>
+            @endif
+             @endif
+=======
       @foreach ($tarray8 as $key=>$val)
       @if (is_null($val))
       <td class="bold">0</td>
@@ -177,6 +333,7 @@
       <td class="bold">{{$val}}</td>
       @endif
       @endforeach
+>>>>>>> 643e8981c630da182b5f2619cb5528a00986af04
 
 
       @foreach ($tarray9 as $key=>$val)
@@ -405,6 +562,50 @@
 
 
 
+<<<<<<< HEAD
+             @if (!empty($totalSt12)&&!empty($totalSt120))
+             @if (empty($totalSt12[$key]))
+             <td>0</td>
+              @else
+              <td>{{$totalSt12[$key]}}</td>
+             @endif
+             @if (empty($totalSt120[$key]))
+            <td>0</td>
+             @else
+            <td>{{$totalSt120[$key]}}</td>
+            @endif
+             @endif
+         
+      <tr>
+        
+      </tr>
+    </tr>
+       
+    <!------------------DATOS TIPO SUCURSAL---------------------------->
+    @foreach ($clonL as $mu=>$im)
+       
+    @if ($im==$val)
+        @if ($otroArray[$mu]!="0")
+        <tr class="text-right table-bordered derecha">
+            <td style="text-align:left" >{{$otroArray[$mu]}}</td> 
+            <!--aqui los td-->
+            
+            <td >{{$otroArrayT[$mu]}}</td>
+            <td >{{$otroArrayT2[$mu]}}</td>
+        
+            
+           </tr>
+          
+        @endif
+        
+    
+    @endif
+    @endforeach
+
+    @endforeach
+
+   
+=======
 
 
 
@@ -442,6 +643,7 @@
 
     </tbody>
     @endforeach
+>>>>>>> 643e8981c630da182b5f2619cb5528a00986af04
 
 
 

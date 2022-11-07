@@ -11,8 +11,11 @@
 @section('content')
 @include('layouts.sidebar', ['hide'=>'0']) 
 <div class="container-fluid">
+
+
     <div class="row justify-content-center mt-4">
         <div class="col">
+         
             <table id="example" class="cell-border compact hover" style="width:100%"></table>         
         </div>
     </div>
@@ -24,7 +27,7 @@
 var json_data = {!! json_encode($preciocosto) !!};
 var titles = {!! json_encode($titles) !!};
 $(document).ready(function() 
-{  
+{   
     var columns = [
     { data: 'codProd', title: 'Codigo' },
     ];

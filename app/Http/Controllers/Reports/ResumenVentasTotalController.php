@@ -52,7 +52,7 @@ class ResumenVentasTotalController extends Controller
         "SELECT 
         loc as 'Local', 
         tip as 'Tipo', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',  
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',  
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -75,14 +75,20 @@ class ResumenVentasTotalController extends Controller
             WHEN adusrCusr IN (42) THEN 'LIBROS HANDAL' 
             WHEN adusrCusr IN (32,33,34,52) THEN 'RETAIL CALACOTO'
             WHEN adusrCusr IN (43) THEN 'LIBROS CALACOTO'      
+            
             WHEN adusrCusr IN (35,36,38,51,67) THEN 'RETAIL MARISCAL'
             WHEN adusrCusr IN (63) THEN 'REGIONAL 1'   
-            WHEN adusrCusr IN (64) THEN 'REGIONAL 2'   
+            WHEN adusrCusr IN (64) THEN 'REGIONAL 2' 
+
+            WHEN adusrCusr IN (76,77) THEN 'RETAIL SAN MIGUEL'  
+            WHEN adusrCusr IN (78) THEN 'LIBROS SAN MIGUEL' 
             
             --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
             ELSE adusrNomb             
             END as Tip,
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -107,7 +113,7 @@ class ResumenVentasTotalController extends Controller
         $admin="SELECT 
         loc as 'Local', 
         tip as 'Tipo', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',  
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',    
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -121,7 +127,8 @@ class ResumenVentasTotalController extends Controller
             cptraFtra as 'Fec', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            CASE         
+            CASE
+
             WHEN adusrCusr IN (22,23,24,49) THEN 'RETAIL BALLIVIAN'
             WHEN adusrCusr IN (41) THEN 'LIBROS BALLIVIAN'
             WHEN adusrCusr IN (25,26,27,50) THEN 'RETAIL HANDAL'
@@ -134,6 +141,8 @@ class ResumenVentasTotalController extends Controller
             ELSE adusrNomb             
             END as Tip,
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -166,7 +175,7 @@ class ResumenVentasTotalController extends Controller
         $totalQ=
         "SELECT 
         loc as 'Local', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total', 
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total', 
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -181,6 +190,8 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -208,7 +219,8 @@ class ResumenVentasTotalController extends Controller
             $regi1="SELECT 
             loc as 'Local', 
             tip as 'Tipo', 
-            CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',  
+            CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total', 
+
             mon as 'Moneda', 
             CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
             CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -232,6 +244,8 @@ class ResumenVentasTotalController extends Controller
                 ELSE adusrNomb             
                 END as Tip,
                 vtvtaTotT as 'tot', 
+                vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -263,7 +277,7 @@ class ResumenVentasTotalController extends Controller
             $totalG=
         "SELECT 
         loc as 'Local', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total', 
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -279,6 +293,8 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -309,7 +325,7 @@ class ResumenVentasTotalController extends Controller
             $regi2="SELECT 
             loc as 'Local', 
             tip as 'Tipo', 
-            CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',  
+            CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',   
             mon as 'Moneda', 
             CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
             CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -335,6 +351,8 @@ class ResumenVentasTotalController extends Controller
                 ELSE adusrNomb             
                 END as Tip,
                 vtvtaTotT as 'tot', 
+                vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -366,7 +384,7 @@ class ResumenVentasTotalController extends Controller
             $totalG2=
         "SELECT 
         loc as 'Local', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total', 
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',  
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -382,6 +400,8 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -404,6 +424,111 @@ class ResumenVentasTotalController extends Controller
         ORDER BY loc, mon";
         $totalG2 = DB::connection('sqlsrv')->select(DB::raw($vari . $totalG2));  
 
+       
+        ////////////////////////////////////
+            //--------SUCURSAL SAN MIGUEL-------------
+            $sanMi="SELECT 
+            loc as 'Local', 
+            tip as 'Tipo', 
+            CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',   
+            mon as 'Moneda', 
+            CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
+            CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
+            CONVERT(VARCHAR, cast(SUM(cxc) as money),1) as 'CXC', 
+            CONVERT(VARCHAR, cast(SUM(tar) as money),1) as 'Tarjeta', 
+            CONVERT(VARCHAR, cast(SUM(mot) as money),1) as 'MotCont',
+            CONVERT(VARCHAR, cast(SUM(otr) as money),1) as 'Otros'
+            FROM
+            (
+                SELECT 
+                cptraFtra as 'Fec', 
+                adusrNomb as 'Usr',
+                inlocNomb as 'Loc',
+                vtvtaCalm as 'alma',
+                CASE         
+               
+                WHEN vtvtaCalm IN (76,77) THEN 'RETAIL SAN MIGUEL'
+                
+                  
+
+                --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
+                ELSE adusrNomb             
+                END as Tip,
+                vtvtaTotT as 'tot', 
+                vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
+                admonAbrv as 'mon', 
+                cptraCajS as 'efe', 
+                cptraBanS as 'ban', 
+                cptraCxcS as 'cxc',
+                cptraTarS as 'tar', 
+                cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+                FROM cptra
+                JOIN vtVta ON vtvtaNtra = cptraNtrI
+                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+                
+                join inloc ON inlocCloc = vtvtaCloc
+                WHERE 
+             (cptraMdel = 0 AND cptraTtra = 21) AND
+                 
+              (vtvtaCalm = 67) 
+            --	or  adusrCusr = 4
+           
+             --   or  adusrCusr = 3
+            
+            ) as venta
+            WHERE (fec BETWEEN @fini AND @ffin)
+            GROUP BY loc, tip, mon
+            ORDER BY loc, tip, mon";
+            
+            $sanMiguel  = DB::connection('sqlsrv')->select(DB::raw($vari . $sanMi));   
+
+
+            $totalSanMi=
+        "SELECT 
+        loc as 'Local', 
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',  
+        mon as 'Moneda', 
+        CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
+        CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
+        CONVERT(VARCHAR, cast(SUM(cxc) as money),1) as 'CXC', 
+        CONVERT(VARCHAR, cast(SUM(tar) as money),1) as 'Tarjeta', 
+        CONVERT(VARCHAR, cast(SUM(mot) as money),1) as 'MotCont',
+        CONVERT(VARCHAR, cast(SUM(otr) as money),1) as 'Otros'
+        FROM
+        (
+            SELECT 
+            cptraFtra as 'Fec',
+            vtvtaCalm as 'alma', 
+            adusrNomb as 'Usr',
+            inlocNomb as 'Loc',
+            vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
+            admonAbrv as 'mon', 
+            cptraCajS as 'efe', 
+            cptraBanS as 'ban', 
+            cptraCxcS as 'cxc',
+            cptraTarS as 'tar', 
+            cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
+            FROM cptra
+            JOIN vtVta ON vtvtaNtra = cptraNtrI
+            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
+            join inloc ON inlocCloc = vtvtaCloc
+            WHERE 
+            (cptraMdel = 0 AND cptraTtra = 21)and 
+            (vtvtaCalm = 67) 
+           
+
+        ) as venta
+        WHERE (fec BETWEEN @fini AND @ffin)
+        GROUP BY loc, mon
+        ORDER BY loc, mon";
+        $totalSanMi = DB::connection('sqlsrv')->select(DB::raw($vari . $totalSanMi));  
+
+
 
 
 
@@ -411,7 +536,7 @@ class ResumenVentasTotalController extends Controller
         $total=
         "SELECT 
         loc as 'Local', 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total', 
+        CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total', 
         mon as 'Moneda', 
         CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
         CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
@@ -426,6 +551,8 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -447,7 +574,7 @@ class ResumenVentasTotalController extends Controller
         $total = DB::connection('sqlsrv')->select(DB::raw($vari . $total)); 
         $totalgen=
         "SELECT 
-        CONVERT(VARCHAR, cast(SUM(tot) as money),1) as 'Total',   
+     CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',  
         mon as 'Moneda', 
         REPLACE(cast(SUM(efe) as decimal(10,2)),',', '.') as 'Efectivo', 
         REPLACE(cast(SUM(ban) as decimal(10,2)),',', '.') as 'Banco', 
@@ -462,6 +589,8 @@ class ResumenVentasTotalController extends Controller
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
             vtvtaTotT as 'tot', 
+            vtvtaImpT	as 'imp',
+			vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -487,6 +616,7 @@ class ResumenVentasTotalController extends Controller
         $resumenAdmin=[];
         $region1=[];
         $region2=[];
+        $sanmiguelArray=[];
         foreach ($resum as $key => $value) {
             if (!array_key_exists($value->Local, $resumen)) 
             {
@@ -525,6 +655,16 @@ class ResumenVentasTotalController extends Controller
             else
             {
                 array_push($region2[$value->Local], $regionales2[$key]);
+            }
+        }
+        foreach ($totalSanMi as $key => $value) {
+            if (!array_key_exists($value->Local, $sanmiguelArray)) 
+            {
+                $sanmiguelArray[$value->Local] = [$totalSanMi[$key]];
+            }
+            else
+            {
+                array_push($sanmiguelArray[$value->Local], $totalSanMi[$key]);
             }
         }
         foreach ($total as $key => $value) {
@@ -576,6 +716,19 @@ class ResumenVentasTotalController extends Controller
                 unset($totalG2[$key]);
             }
         }
+      
+        foreach ($totalSanMi as $key => $value) {
+            if (!array_key_exists($value->Local, $totalSanMi)) 
+            {
+                $totalSanMi[$value->Local] = [$totalSanMi[$key]];
+                unset($totalSanMi[$key]);
+            }
+            else
+            {
+                array_push($totalSanMi[$value->Local], $totalSanMi[$key]);
+                unset($totalSanMi[$key]);
+            }
+        }
         if($request->gen =="export")
         {
            // $pdf = \PDF::loadView('reports.pdf.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ'))
@@ -589,12 +742,12 @@ class ResumenVentasTotalController extends Controller
         }
         elseif($request->gen =="excel")
         {
-            $export = new ResumenVentasTotal($resum, $ffin, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen);    
+            $export = new ResumenVentasTotal($resum, $fini, $ffin,$adminQ, $totalQ ,$regionales1 ,$totalG ,$regionales2  ,$totalG2 , $total, $totalgen);    
             return Excel::download($export, 'Resumen de Ventas.xlsx');
         }
         else if($request->gen =="ver")
         {
-            return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2'));
+            return view('reports.vista.resumenventastotal', compact('resumen', 'ffin', 'fini', 'total', 'totalgen','resumenAdmin','totalQ','region1','totalG','region2','totalG2','sanmiguelArray','totalSanMi'));
         }
     }
     

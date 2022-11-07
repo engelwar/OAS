@@ -99,6 +99,7 @@ class ComprasLocalesMovimientosController extends Controller
         REPLACE(ISNULL(Ballivian,0),',', '.') as stockBALL,
         REPLACE(ISNULL(Mariscal,0),',', '.') as stockMARIS,
         REPLACE(ISNULL(Calacoto,0),',', '.') as stockCALA,
+        REPLACE(ISNULL(SanMiguel,0),',', '.') as stockSanM,
         REPLACE(ISNULL(SantaCruz,0),',', '.') as stockSCZ,     
         CONVERT(varchar, ultv.intraFtra,103) as fechaultventa
         
@@ -225,10 +226,12 @@ class ComprasLocalesMovimientosController extends Controller
 			ISNULL([7],0)+ISNULL([10],0) as 'Ballivian',
 			ISNULL([6],0)+ISNULL([30],0)  as 'Mariscal',
 			ISNULL([5],0)+ISNULL([29],0) as 'Calacoto',
+            ISNULL([67],0)+ISNULL([68],0) as 'SanMiguel',
 			ISNULL([45],0) as 'SantaCruz',
 			ISNULL([47],0)+ISNULL([40],0)+ISNULL([39],0)+ISNULL([46],0)+
 			ISNULL([43],0)+ISNULL([4],0)+ISNULL([13],0)+ISNULL([7],0)+
 			ISNULL([10],0)+ISNULL([6],0)+ISNULL([30],0)+ISNULL([5],0)+
+            ISNULL([67],0)+ISNULL([68],0) +
 			ISNULL([29],0)+ISNULL([45],0) as 'Total'
 			FROM
 			(
@@ -243,7 +246,7 @@ class ComprasLocalesMovimientosController extends Controller
 			(
 			  SUM(cant)
 			  for intraCalm IN ([4],[5],[6],[7],[10],[13],
-			  [29],[30],[39],[40],[43],[45],[46],[47])
+			  [29],[30],[39],[40],[43],[45],[46],[47],[67],[68])
 			) as ptv
 		) as stocks
 		ON stocks.intrdCpro = inpro.inproCpro	

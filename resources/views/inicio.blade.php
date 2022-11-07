@@ -492,6 +492,178 @@
   <!------para la parte superior------>
 </div>
 @endsection
+@section('content') 
+
+  <!-- nuevo menu  -->
+
+  
+  <div class="contenedorX">
+
+    <section class="header">
+      <!--<h1 class="cabezah1">OAS 2.0 MENU</h1>-->
+    </section>
+
+    <div class="envoltura">
+      <div class="envolver">
+        <!--|
+        <p class="descripcion">
+         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam repellendus veniam, pariatur delectus ratione expedita quas possimus, labore error laboriosam placeat. Natus iste, velit expedita ea dicta quam iure quos.
+        </p>--->
+        <h1 class="inicio">Inicio</h1>
+
+      <!--partes de menu  iconos y mas-->
+      @foreach(App\Modulo::get() as $mod)
+        @if (Auth::user()->tieneModulo($mod->id))
+
+
+             @foreach($mod->programs as $prog)
+             @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+              @if ($mod->nombre=="Configuracion")
+                      <a href="{{route($prog->route)}}">
+                      <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+                     </a>
+              @endif
+               @if ($mod->nombre=="Contabilidad")
+                       <a href="{{route($prog->route)}}">
+                      <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+                     </a>
+              @endif
+              @if ($mod->nombre=="RRHH")
+              <a href="{{route($prog->route)}}">
+             <div class="btn-big orange"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+            </a>
+              @endif
+              @if ($mod->nombre=="Sistemas")
+              <a href="{{route($prog->route)}}">
+             <div class="btn-big green animacion3"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+            </a>
+              @endif
+              @if ($mod->nombre=="Reportes Dualbiz")
+              <a href="{{route($prog->route)}}">
+              <div class="btn-big purple"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              </a>
+              @endif
+              @if ($mod->nombre=="Inventarios")
+              <a href="{{route($prog->route)}}">
+              <div class="btn-big blue2"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              </a>
+              @endif
+              @if ($mod->nombre=="Compras")
+              <a href="{{route($prog->route)}}">
+              <div class="btn-big stima"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              </a>
+              @endif
+
+              
+            @endif         
+              
+             @endforeach 
+        @endif
+      @endforeach
+   
+          <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>
+          <div class="btn-big blue"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item2</span> </div>
+          <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>
+          <div class="btn-big blue"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item2</span> </div>
+          <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>
+          <div class="btn-big blue"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item2</span> </div>
+          <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>
+          <div class="btn-big blue"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item2</span> </div>
+          
+ 
+          
+          
+          
+          <div class="btn-big gray"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item3</span> </div>
+
+
+      
+  
+      </div>
+    </div>
+
+  <!------para la parte superior------>
+  
+</div>
+  
+
+
+
+  <div class="container-fluid px-5"> 
+    @foreach(App\Modulo::get() as $mod)
+    <div class="my-4">
+      @if(Auth::user()->tieneModulo($mod->id))
+          <h4>
+            @if($mod->icon)
+           
+            <i class="{{$mod->icon}}"></i>
+            @else
+            <i class="fab fa-ethereum"></i>
+            @endif
+            <span>{{$mod->nombre}}</span>
+          </h4>
+          <div class="row">
+          @foreach($mod->programs as $prog)
+            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 p-3">
+              <a href="{{route($prog->route)}}">
+                <div class="card">
+                  <div class="card-body text-center">
+  
+                    <h5 class="card-title"><i class="{{$prog->icon}}" id="iconX"></i></h5>           
+                    {{$prog->nombre}} 
+                    
+  
+                  </div>
+                </div> 
+               
+              </a>         
+            </div>
+            @endif
+          @endforeach 
+          </div>
+          @foreach($mod->submodulos as $submod)
+          @if(Auth::user()->tieneSubModulo($submod->id))
+            <div class="row col my-2">
+              <h5>
+                <span>{{$submod->nombre}}</span>
+              </h5>
+            </div>
+            <div class="row ">
+              @foreach($submod->programs as $prog)
+                @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && $prog->sub_modulo_id)
+                  <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 p-3">
+                    <a href="{{route($prog->route)}}">
+                      <div class="card" style="height:100%;">
+                        <div class="card-body text-center">
+                          <h5 class="card-title"><i class="{{$prog->icon}}"></i></h5>   
+                          {{$prog->nombre}}        
+                        </div>                        
+                      </div>
+                    </a>         
+                  </div>
+                @endif
+              @endforeach 
+            </div>
+          @endif
+          @endforeach                                                
+      @endif
+    </div>
+    @endforeach
+    </div>
+  
+  
+
+  
+
+
+  
+
+ 
+
+@endsection
+
+
 @section('mis_scripts')
 @if (!Auth::user()->tienePermiso(31,17))
 @disabled(true)

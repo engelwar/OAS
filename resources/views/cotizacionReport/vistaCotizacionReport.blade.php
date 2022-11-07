@@ -123,9 +123,16 @@
                                         <label>
                                             @if ($u->nombreX=="BENIGNA TINTA"||$u->nombreX=="ADRIANA CHAVEZ"||$u->nombreX=="AUDINI CARRILLO"||
                                             $u->nombreX=="INS MARISCAL"||$u->nombreX=="INS BALLIVIAN"||$u->nombreX=="CONTRATOS INSTITUCIONALES"||
-                                            $u->nombreX=="INES VELASQUEZ"||$u->nombreX=="GUADALUPE AMBA")
+                                            $u->nombreX=="INES VELASQUEZ"||$u->nombreX=="GUADALUPE AMBA"||$u->nombreX=="CAJERO 21 CALACOTO" ||$u->nombreX=="PATRICIA ROJAS")
+                                             
+                                                 @if ($u->nombreX=="CAJERO 21 CALACOTO")
                                                  <input name='options[]' checked type="checkbox" class="optionI justone" value='{{$u->nombreX}}'/> 
+                                                21 DE SAN MIGUEL
+                                                 @else
+                                                 <input name='options[]' checked type="checkbox" class="optionI justone" value='{{$u->nombreX}}'/>
                                                  {{$u->nombreX}}
+                                                 @endif
+                                                 
                                             @else
                                             <input name='options[]' checked type="checkbox" class="optionM justone" value='{{$u->nombreX}}'/> 
                                             {{$u->nombreX}}

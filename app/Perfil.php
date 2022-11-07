@@ -13,6 +13,11 @@ class Perfil extends Model
         'corp_email', 'corp_telf', 'corp_int', 'corp_celu',
         'user_id', 'unidad_id'
     ];
+
+    public function cartaPerfil()
+    {
+        return $this->belongsTo(generadorCarta::class,'perfil_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

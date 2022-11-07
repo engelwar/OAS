@@ -491,8 +491,8 @@ class VentasInsMayoController extends Controller
                 $t1[$tt->Tipoc]= $tt->ImptC+$t1[$tt->Tipoc];
             }
         }
-        dd($tt);
-        echo $q2;
+       // dd($tt);
+      //  echo $q2;
         //return dd($t1);
         $q3 = DB::connection('sqlsrv')->select(DB::raw($vari . $fac_anu));
         $q4 = DB::connection('sqlsrv')->select(DB::raw($vari . $cobro_caja));

@@ -4,6 +4,36 @@
 @section('mi_estilo')
 <style>
 
+#divResplador {
+    padding: 20px;
+   
+    color: #ddd;
+    width: 300px;
+    font-size: 1.2em;
+    box-shadow: 0 0 40px rgb(248, 62, 5);
+    border-radius: 16px;
+  }
+
+.ipx{
+  width: 75%;
+  height: 34px;
+  
+}
+
+.divLiena{
+display: flex;
+justify-content: flex-start;
+padding-top: 15px;
+padding-left: 12px
+
+}
+.hihoDiv{
+  display: inline-block;
+  padding: 5px;
+}
+
+
+
 .switch {
   position: relative;
   display: inline-block;
@@ -86,6 +116,18 @@ input:checked + .slider:before {
          width:600px;  
          text-align:center;  
          }  
+         thead tr th { 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+      
+            color: rgb(255, 255, 255)
+        }
+    
+        .table-responsive { 
+            height:100%;
+            overflow:scroll;
+        }
      table tr th,td{  
          height:30px;  
          line-height:30px;  
@@ -107,7 +149,7 @@ input:checked + .slider:before {
           background-color:#CCC;  
           }  
       #pageStyle .active{  
-          background-color:#0CF;  
+          background-color:#ffffff;  
           color:#ffffff;  
           } 
 .file-upload {
@@ -234,6 +276,9 @@ th:first-child div{
 .tablecontainer tbody  tr:nth-child(even){
      background-color: #ddd;
 }
+.parrafo{
+  font-size: 10px;
+}
 
 
 </style>
@@ -259,103 +304,182 @@ th:first-child div{
                 - Parcial <span class="text-warning"><i class="fas fa-star-half text-success fa-lg"></i></span>
                 - Completa <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
               </p>
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col d-flex justify-content-center">
+          
+              <p style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 20px">
+                Factura consolidada <span class="text-danger">
+                  <span><i class="fas fa-file-export"></i></span>
+                
+              </p>
             </div>
           </div>
 
+<br><br>
 
-        
-           
-            <div class="row">
-                <div class="col">
-                   
-                        <form class="form-inline" action="" method="GET">
-                          <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
-                          <input id="b1" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto" /><br><br>
-                        </form>
-                       
-                   
-                </div>
-                <div class="col">
-                    <form class="form-inline" action="" method="GET">
-                        <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
-                        <input id="b2" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto "  />
-                        
-                        <br><br>
-                      </form>
-                </div>
-                <div class="col">
-                    <form class="form-inline" action="" method="GET">
-                        <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
-                        <input id="b3" type="button" value="Buscar" class="btn btn-primary form-control col-4 col-sm-auto ml-auto"  /><br><br>
-                      </form>
-                </div>
-                <div class="col">
-                    <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/> 
-                    <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
-                   
-                </div>
-                <div class="col">
-                  <input type="button" value="Actualizar" class="btn btn-primary"  onclick="location.reload()"/> 
-                  
-                 
+          <div class="container">
+            <div class="row justify-content-md-center">
+              <div class="col" style="padding-bottom: 10px" >
+              <!-- Button trigger modal  de consolidacion de facturas -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalConsol">
+                  Ver facturas consolidadas 
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+                </button>
               </div>
+              <div class="col">
+                <p class="text-primary" hidden>importe total: <span id="suma" > 0000</span></p>
+              </div>
+            </div>
+          
+
+
+            <div class="container">
+         
+              <div class="row">
+                <div class="col-auto me-auto">  <input type="button" value="Ver sin contizar" class="btn btn-outline-primary"  id="d22"/> <input type="button" value="Ver sin facturar" class="btn btn-outline-primary"  id="d23"/>
+                  <input type="button" value="Ver anulados" class="btn btn-outline-primary"  id="d2"/> 
+                  <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/>
+                  <input type="button" value="Renovar vista" class="btn btn-outline-primary"  id="d1"/>
+                  <input type="button" value="Actualizar" class="btn btn-outline-primary" onclick="location.reload()"/> 
+                  <button type="button" class="btn btn-outline-success" id="exportar">Exportar</button>
+
+                </div>
                 
+                <div class="col-auto">
+                  <span>Buscar:</span>
+                </div>
+                <div class="col-auto">  
+                 
+                  <form class="form-inline" action="" method="GET">
+                  <input id="busG" name="busG" class="form-control col-4 col-sm-auto ml-auto ipx" data-type="search" placeholder="" value ="" aria-label="Search" >
+                            </form></div>
               </div>
+            </div>
+            
+
+
+
+          </div>
+         
               
             </div>
          
        
           
      <br>
-            
+ 
+
+ 
     <div class="container">
       <div class="row">
-        <div class="col-sm-11">  
+        <div class="col">
           
-      </div>
-        <div class="col-sm-1"> 
+        </div>
+        <div class="col">
+          
+        </div>
+        <div class="col">
+       
+        </div>
+        <div class="col">
+        
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col col-lg-2">
+          
+        </div>
+       
+        <div class="col">
           <select name="menu" id="op"  class="btn btn-primary dropdown-toggle">
-          <span>paginas a visualizar</span>
-          <option value="1000000" id="a0">-</option>
-          <option value="10" id="a1">10</option>
-          <option value="20" id="a2">20</option>
-          <option value="50" id="a3">50</option>
-          <option value="100" id="a4">100</option>
-            
-        </select>
-      </div>
+            <span>paginas a visualizar</span>
+          
+            <option value="1000000" id="a0">-</option>
+            <option value="10" id="a1">10</option>
+            <option value="20" id="a2">20</option>
+            <option value="50" id="a3">50</option>
+            <option value="100" id="a4">100</option>
+              
+          </select>
+        </div>
       </div>
     </div>
- 
-    
+  
     <div class="table-responsive text-center" >
 
       <div class="headercontainer">
         <div class="tablecontainer">
 
         <table class="table table-bordered table-sm" id="miTabla">
+          <thead >
+            <th style="width: 180px; border-style: hidden;  position: static" scope="col">  <p class="text-primary" >Encontrados: <span id="parrafo"> 0</span></p></th>
+            <th style="width:100px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda1" name="busqueda1" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Nro Cot (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)' >
+      </form>
+            </th>
+            <th style="width: 600px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda2" name="busqueda2" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar Cliente" value ="" aria-label="Search">
+                  
+              </form></th> 
+            <th style="width: 300px; border-style: hidden" scope="col"></th> 
+            <th style="width: 160px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda3" name="busqueda3" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Buscar NR (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+           </form></th>
+            <th style="width: 190px; border-style: hidden" scope="col"></th>
             
+            <th style="width: 10px; border-style: hidden" scope="col"></th>
+            <th style="width: 30px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col">
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda5" name="busqueda5" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Busqueda por vendedor" value ="" aria-label="Search" >
+              </form>
+            </th>
+            <th style="width: 130px; border-style: hidden" scope="col">     <form class="form-inline" action="" method="GET">
+              <input id="busqueda6" name="busqueda6" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Local" value ="" aria-label="Search" >
+            </form></th>
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col">
+              
+              <form class="form-inline" action="" method="GET">
+                <input id="busqueda4" name="busqueda4" class="form-control col-4 col-sm-auto ml-auto" data-type="search" placeholder="Buscar #fac (Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+              </form>
+            </th>
+            <th style="width: 70px; border-style: hidden" scope="col">
+  
+            </th>
+            <th style="width: 30px; border-style: hidden" scope="col"></th>
+           
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
+            <th style="width: 130px; border-style: hidden" scope="col"></th>
+        </thead>
         
          <thead class="bg-primary text-light">
-            <th style="width: 130px; ">Fecha Cot</th>
-            <th style="width: 100px;">Nro Cot</th>
-            <th style="width: 600px;">Cliente</th> 
-            <th style="width: 300px;">Fecha NR</th> 
-            <th style="width: 160px;">NR</th>
-            <th style="width: 190px;" >Total Ventas</th>
+            <th style="width: 140px; background-color: rgb(37, 49, 104)" class="header" scope="col">Fecha Cot</th>
+            <th style="width: 100px; background-color: rgb(37, 49, 104)"class="header" scope="col">Nro Cot</th>
+            <th style="width: 600px; background-color: rgb(37, 49, 104)"class="header" scope="col">Cliente</th> 
+            <th style="width: 300px; background-color: rgb(37, 49, 104)"class="header" scope="col">Fecha NR</th> 
+            <th style="width: 160px; background-color: rgb(37, 49, 104)"class="header" scope="col">NR</th>
+            <th style="width: 190px; background-color: rgb(37, 49, 104)"class="header" scope="col">Total Ventas</th>
             
-            <th style="width: 10px;">Moneda</th>
-            <th style="width: 130px;">Usuario vendedor</th>
-            <th style="width: 130px;">Local</th>
-            <th style="width: 130px;">Fecha fac</th>
-            <th style="width: 130px;">Nro Fac</th>
-            <th style="width: 70px;">Estado</th>
-            <th style="width: 30px;">S</th>
-            <th style="width: 30px;">E</th>
-            <th style="width: 130px;">OBS</th>
-           
+            <th style="width: 10px; background-color: rgb(37, 49, 104)"class="header" scope="col">Moneda</th>
+            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado NR</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Usuario vendedor</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Local</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Fecha fac</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">Nro Fac</th>
+            <th style="width: 70px; background-color: rgb(37, 49, 104)"class="header" scope="col">Estado Fac</th>
 
-         </thead>
+            <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">S</th>
+            <th style="width: 30px; background-color: rgb(37, 49, 104)"class="header" scope="col">E</th>
+            <th style="width: 130px; background-color: rgb(37, 49, 104)"class="header" scope="col">OBS</th>
+        </thead>
 
          @if ($observacionBD->isEmpty())
            
@@ -371,9 +495,34 @@ th:first-child div{
                   
                   <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
                   <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-                  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+                
+                      <!-----------------------------boton modal de consolidacion---------1010221650------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold" id="divResplador">
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+     
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #fb2606"  id="{{$co->NR}}FAC">{{$co->NR}} </button>
+
+</form>
+   
+   </td>
+  @endif
+
+              
                   <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
                   <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+                  @if ($co->estadoNR ==9)
+                  <td style="text-align:center" class="bold">a</td>  
+                  @else
+                  <td style="text-align:center" class="bold">v</td>    
+                  @endif
+               
                   <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
                   <td style="text-align:center" class="bold">{{$co->Local}}</td>
                   @if (is_null($co->FechaFac))
@@ -394,11 +543,12 @@ th:first-child div{
                   @else
                   <td style="text-align:center" class="bold">{{$co->estado}}</td> 
                   @endif
+               
                   <td style="text-align:center" class="bold"></td> 
                   <td style="text-align:center" class="bold"></td> 
                   <td style="text-align:center" class="bold"> 
                      
-                  <button type="button"  id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
+                  <button type="button" id="{{$co->NR}}" onclick="obtenerId(this.id)" class="btn btn-outline-primary btnHT"  data-bs-toggle="modal" data-bs-target="#exampleModal99"  data-bs-whatever="@mdo"><span><i class="fa fa-plus" aria-hidden="true"></i></span></button></td> 
                   
                 
               </tr>
@@ -420,9 +570,32 @@ th:first-child div{
      
      <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
      <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+
+      <!-----------------------------boton modal de consolidacion---------1010221650------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold">
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+     
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #fb2606"  id="{{$co->NR}}FAC">{{$co->NR}} </button>
+
+</form>
+   
+   </td>
+  @endif
+   
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     @if ($co->estadoNR ==9)
+     <td style="text-align:center" class="bold">a</td>  
+     @else
+     <td style="text-align:center" class="bold">v</td>    
+     @endif
      <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
      <td style="text-align:center" class="bold">{{$co->Local}}</td>
      @if (is_null($co->FechaFac))
@@ -468,7 +641,7 @@ th:first-child div{
     <span class="text-success"><i class="fas fa-star text-success fa-lg"></i></span>
     @endif
      </td>
-     <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-primary "><span><i class="fa fa-search"></i></span></a></td> 
+     <td style="text-align:center" class="bold">    <a type="button" href="v/{{$co->NR}}/edit" id="" target="_blank" class="btn btn-outline-success "><span><i class="fa fa-search"></i></span></a></td> 
  </td>
   
  </tr>
@@ -477,7 +650,7 @@ th:first-child div{
 @endif
 @endforeach
 @if ($co->NR!=$item->id)
-   
+ <!---->  
 <tbody>
  <tr>
      <td style="text-align:center" class="bold">{{$co->Fecha}}</td> 
@@ -489,9 +662,31 @@ th:first-child div{
      
      <td style="text-align:center" class="bold">{{$co->Cliente}}</td>
      <td style="text-align:center" class="bold">{{$co->FechaNR}}</td>
-     <td style="text-align:center" class="bold">{{$co->NR}}</td>
+     <!-----------------------------boton modal de consolidacion 1010221650----------------------------------->
+  @if (is_null($co->FC))
+  <td style="text-align:center" class="bold">{{$co->NR}}</td>
+  @else
+  <td style="text-align:center" class="bold" id="divResplador" >
+             
+
+    <form method="POST" action="{{route('CotizacionReporte.facturaConsol')}}" target="_blank">
+      @csrf
+      <input type="hidden" id="{{$co->NR}}FAC" name="FAC" maxlength="8" size="10" value="{{$co->NR}}">
+
+<button type="sumit" class="btn btn-primary "  style="border:none;background: none;color: #bf230b"  id="{{$co->NR}}FAC">{{$co->NR}}<span><i class="fas fa-file-export"></i></span></button>
+
+</form>
+   
+   </td>
+  @endif
+     
      <td style="text-align:center" class="bold">{{$co->Totalventas}}</td>
      <td style="text-align:center" class="bold">{{$co->Moneda}}</td>
+     @if ($co->estadoNR ==9)
+     <td style="text-align:center" class="bold">a</td>  
+     @else
+     <td style="text-align:center" class="bold">v</td>    
+     @endif
      <td style="text-align:center" class="bold">{{$co->Usuario}}</td>
      <td style="text-align:center" class="bold">{{$co->Local}}</td>
      @if (is_null($co->FechaFac))
@@ -512,6 +707,8 @@ th:first-child div{
      @else
      <td style="text-align:center" class="bold">{{$co->estado}}</td> 
      @endif
+   
+     
      <td style="text-align:center" class="bold"></td> 
      <td style="text-align:center" class="bold"></td> 
      <td style="text-align:center" class="bold"> 
@@ -574,10 +771,212 @@ th:first-child div{
         </div>
       </div>
 
+
+<!-- ventana modal para facturas consolidadas -->
+<div class="modal fade" id="exampleModalConsol" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CONSOLIDACION DE FACTURAS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <table id="miTablaConsol"  style="width:100%">
+          <thead>
+          
+            <tr >
+              <th  style="color: #222; background: #ffffff;">Nro Transaccion</th> <br>
+              <th   style="color: #222; background: #ffffff ">estado</th>
+              <th   style="color: #222; background: #ffffff ">Cliente</th>
+              <th   style="color: #222; background: #ffffff ">Fecha</th>
+              <th  style="color: #222; background: #ffffff ">Loca</th>
+              <th  style="color: #222; background: #ffffff ">Nro Factura</th>
+              <th   style="color: #222; background: #ffffff ">importe</th>
+          </tr>  
+         
+             
+          </thead>
+            <tbody>
+              @foreach ($BDfacConsol as $key=> $valorX )
+           
+              <tr>
+                <td>{{$valorX->Notrans}}</td>
+                <td>{{$valorX->estado}}</td>
+                <td>{{$valorX->Cliente}}</td>
+                <td>{{$valorX->Fecha}}</td>
+                <td>{{$valorX->Local}}</td>
+                <td>{{$valorX->Factura}}</td>
+                <td>{{$valorX->Importe}}</td>
+              </tr>
+              @endforeach
+           
+            </tbody>
+           
+        </table>     
+       
+      </div>
+      <div class="divLiena">
+    
+
+
+        <div style="padding: 10px">  
+           <form class="form-inline" action="" method="GET">
+          <input style="align-items: flex-start"  id="busTrans" name="busTrans" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Nro Transaccion(Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+     </form>
+     </div>
+        <div style="padding: 10px">
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busCliente" name="busCliente" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Cliente" value ="" aria-label="Search" >
+        </form>
+        </div>
+        
+        <div style="padding: 10px"> 
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busLocal" name="busLocal" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Local" value ="" aria-label="Search" >
+        </form>
+        </div>
+        <div style="padding: 10px">
+          <form class="form-inline" action="" method="GET">
+            <input style="align-items: flex-start"  id="busFactura" name="busFactura" class="form-control col-4 col-sm-auto ml-auto" type="search" placeholder="Nro Factura(Solo numeros)" value ="" aria-label="Search" onkeypress='return validaNumericos(event)'>
+          </form>
+        </div>
+          <div style="padding: 10px">
+            <button type="button" class="btn btn-outline-success" id="exportarX2">Exportar</button>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+
+        
+       
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      
+      </div>
+    </div>
+  </div>
+</div>     
+
+
+
+<!----- ventana modal para facturas consolidadas por "NR" ----->
+
+
+<div class="modal fade" id="exampleModalFAC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CONSOLIDACION DE FACTURAS</h5>
+        <input type="" id="nameFAC" name="id_cotizacion" required minlength="4" maxlength="8" size="20" value="132132132">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body" style="padding-top: 0">
+        <table id="miTablaConsol"  style="width:100%">
+          <thead>
+          
+            <tr >
+              <th  style="color: #222; background: #ffffff">Nro Transaccion</th> <br>
+              <th   style="color: #222; background: #ffffff ">estado</th>
+              <th   style="color: #222; background: #ffffff ">Cliente</th>
+              <th   style="color: #222; background: #ffffff ">Fecha</th>
+              <th  style="color: #222; background: #ffffff ">Loca</th>
+              <th  style="color: #222; background: #ffffff ">Nro Factura</th>
+              <th   style="color: #222; background: #ffffff ">importe</th>
+          </tr>  
+         
+             
+          </thead>
+            <tbody>
+            
+           
+              <tr>
+                <td>-----</td>
+               
+              </tr>
+           
+           
+            </tbody>
+           
+        </table>     
+       
+      </div>
+      
+      <div class="modal-footer">
+
+        
+       
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      
+      </div>
+    </div>
+  </div>
+</div>     
+
+
+
+
+
 @endsection
 @section('mis_scripts')
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
 <script>
+  $(document).ready(()=>{
+    $("#exportar").click(function(){
+  $("#miTabla").table2excel({
+    // exclude CSS class
+    exclude: ".excludeThisClass",
+    name: "Documento",
+    filename: ".xlsx", //do not include extension
+  //  fileext: ".xls" // file extension
+  }); 
+});
+  });
+
+
+  $(document).ready(()=>{
+    $("#exportarX2").click(function(){
+  $("#miTablaConsol").table2excel({
+    // exclude CSS class
+    exclude: ".excludeThisClass",
+    name: "Documento",
+    filename: ".xlsx", //do not include extension
+  //  fileext: ".xls" // file extension
+  }); 
+});
+  });
+
+</script>
+
+
+
+<script>
+
+//buscador en general
+$(document).ready(function(){
+
+$("#busG").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+
+    if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+///////
 function readURL(input) {
   if (input.files && input.files[0]) {
 
@@ -614,6 +1013,25 @@ $(document).on("click",".btnHT", function(){
 
   //alert(id);
 }
+
+//////////////PARA OBTENER EL ID  y mostrar la ventana //////////////////////////
+function obtenerIdFAC(id){
+  idx="#"+id;
+  $(idx).click(function(){
+    
+  $("#exampleModalFAC").modal("show");
+});
+var fila;
+$(document).on("click",".btnHTFAC", function(){
+  fila=$(this).closest("tr");
+  ids=parseInt(fila.find('td:eq(4)').text());
+  $("#nameFAC").val(id);
+}); 
+
+  
+}
+////////////////////////////////////////
+
 
 
 //función que realiza la busqueda
@@ -995,8 +1413,7 @@ $(function(){
                
              // El efecto predeterminado de una etiqueta en la primera página  
              var $pagess = $('#pageStyle');  
-             //$pagess[0].style.backgroundColor="#006B00";  
-             //$pagess[0].style.color="#ffffff";  
+         
           } 
           if (val==100) {
          $('#page').text("");
@@ -1081,18 +1498,372 @@ $(function(){
      return false;        
 }
 
-// otro buscador 1
+// mejora del buscador nro cotizacion
+$(document).ready(function(){
+$("#busqueda1").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(1);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+//mejora del buscador, cliente
+$(document).ready(function(){
+$("#busqueda2").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(2);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+
+// otro buscador3 busca segun la table se mejora del primer buscador
+$(document).ready(function(){
+$("#busqueda3").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(4);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+
+// otro buscador6 segun local
+$(document).ready(function(){
+$("#busqueda6").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(9);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+      
+  // busca por numero de factura 
+$(document).ready(function(){
+$("#busqueda4").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(11);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+
+  // busca por vendedor
+  $(document).ready(function(){
+$("#busqueda5").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+      let nombres = $(this).children().eq(8);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+// buscar anualciom Nota de remicion
 $(document).ready(() => {
   
-            $('#b1').click(function(evento) {
+  var Nanulados=0;
+            $('#x02').click(function(evento) {
+              $('#page').text("");
                 evento.preventDefault();
-                $('#page').text("");
-                $('#o1').text("-");
 
-                let clave = $('#busqueda1').val().trim();
+                let clave = "v";
+                let clave2 ="a";
+
+                if (clave2) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(12);
+                
+                        if (nombres.text().toUpperCase().includes(clave2.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+
+// busca estados sin anular de nro de cotizacion 
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#x01').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
+                let clave2 ="a";
+
+                if (clave || clave2) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(1);
+                        let nombres2 = $(this).children().eq(12);
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())&&nombres2.text().toUpperCase().includes(clave2.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+
+
+// busca estados sin anular
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#d23').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
+                let clave2 = "v";
 
                 if (clave) {
-                    $('table').find('tbody tr').hide();
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(11);
+                        let nombres2 = $(this).children().eq(7);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())&&nombres2.text().toUpperCase().includes(clave2.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+
+
+
+
+
+
+// busca estados anulados
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#d2').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "a";
+
+                if (clave) {
+        
+                   
+                  $('table').find('tbody tr').hide();
+
+                    $('table tbody tr').each(function() {
+                        let nombres = $(this).children().eq(12);
+
+                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
+                            $(this).show();
+                        }
+                    });
+
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(11)').each(function () {
+ 
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='a') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
+            });
+        
+            
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+        
+
+
+// busca estados Nro cot -
+$(document).ready(() => {
+  
+  var Nanulados=0;
+            $('#d22').click(function(evento) {
+              $('#page').text("");
+                evento.preventDefault();
+
+                let clave = "-";
+
+                if (clave) {
+        
+                   
+                  $('table').find('tbody tr').hide();
 
                     $('table tbody tr').each(function() {
                         let nombres = $(this).children().eq(1);
@@ -1101,91 +1872,55 @@ $(document).ready(() => {
                             $(this).show();
                         }
                     });
-                }
-            });
-        });
 
-// otro buscador 2
-$(document).ready(() => {
+                 //contador de anuladas 
+                 var nFilas = $("#miTabla tr").length;
+                 var sumaAnulados=0;
+                 var contador=0;
+               //  var valo3=0;
+                 $("#miTabla tr").find('td:eq(1)').each(function () {
  
-            $('#b2').click(function(evento) {
-                evento.preventDefault();
-                $('#page').text("");
-                let clave = $('#busqueda2').val().trim();
-
-                if (clave) {
-                    $('table').find('tbody tr').hide();
-
-                    $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(2);
-
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                            $(this).show();
-                        }
-                    });
-                }
+                  //obtenemos el valor de la celda
+                    valor = $(this).html();
+                  if (valor=='-') {
+                    contador=contador+1;
+                
+                  
+                  }
+                 
+              
             });
-        });
-
-
-// otro buscador3 busca segun la table se mejora del primer buscador
-$(document).ready(() => {
- 
-            $('#b3').click(function(evento) {
-              $('#page').text(""); 
-              evento.preventDefault();
-
-                let clave = $('#busqueda3').val().trim();
-
-                if (clave) {
-                    $('table').find('tbody tr').hide();
-
-                    $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(4);
-
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                            $(this).show();
-                        }
-                    });
-                }
-            });
-        });
-
-// busca estados anulados
-$(document).ready(() => {
-  
-            $('#d2').click(function(evento) {
-              $('#page').text("");
-                evento.preventDefault();
-
-                let clave = "a";
-
-                if (clave) {
-                    $('table').find('tbody tr').hide();
-
-                    $('table tbody tr').each(function() {
-                        let nombres = $(this).children().eq(11);
-
-                        if (nombres.text().toUpperCase().includes(clave.toUpperCase())) {
-                            $(this).show();
-                        }
-                    });
-                }
-            });
-        });
-        
-
-        $(document).ready(() => {
+            // renovar vista.....
+            $(document).ready(() => {
+              var contador=0;
             $('#d1').click(function(evento) {
               $('#page').text("");
                 evento.preventDefault();
 
                     $('table').find('tbody tr').show();
 
-                   
-                
+                    var nFilas = $("#miTabla tr").length;
+                    $('#parrafo').text(nFilas);
             });
         });
+
+            //mostramos el total
+              
+                  $('#parrafo').text(contador); 
+               //   $('#suma').text(sumaAnulados.toFixed(2));
+
+                }
+            });
+        });
+          
+     
+  
+
+        
+        
+          
+    
+       
        
 //recarga segun el movimiento o pulsacion del tecledo contador en milisegundos  se mejoro 
         var time = new Date().getTime(); 
@@ -1199,7 +1934,136 @@ $(document).ready(() => {
             } 
             setTimeout(refresh, 10000);
 
+//contador de filas y columnas 
+$(function () {
+  $("#mi-boton").click(function () {
+      var nFilas = $("#mi-tabla tr").length;
+      var nColumnas = $("#mi-tabla tr:last td").length;
+      var msg = "Filas: "+nFilas+" - Columnas: "+nColumnas;
+      alert(msg);
+    });
+});
 
+ //sumaTotal de ventas
+                    var sumador=0;
+                     $("#miTabla tr").find('td:eq(5)').each(function() {
+                      //obtner el valor de la celda
+                      valo2=$(this).html();
+                      sumador=sumador+parseFloat(valo2);
+                    
+                     });
+
+                     var nFilas2 = $("#miTabla tr").length;
+                     $('#parrafo').text(nFilas2);
+
+                     $('#suma').text(sumador.toFixed(2));
+</script>
+<script>
+    // busca por transaccion 
+    $(document).ready(function(){
+$("#busTrans").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(0);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+ // busca por cliente
+ $(document).ready(function(){
+$("#busCliente").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(2);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+//busca por local
+
+ $(document).ready(function(){
+$("#busLocal").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(4);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+// busca por factura
+  
+ $(document).ready(function(){
+$("#busFactura").keyup(function(){
+_this = this;
+
+    $.each($("#miTablaConsol tbody tr"), function() {
+      let nombres = $(this).children().eq(5);
+    if($(nombres).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
+
+//buscador en general
+$(document).ready(function(){
+
+$("#busG").keyup(function(){
+_this = this;
+
+    $.each($("#miTabla tbody tr"), function() {
+
+    if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+
+    $(this).hide();
+
+    else
+
+    $(this).show();
+
+    });
+
+});
+
+});
 
 </script>
 @endsection

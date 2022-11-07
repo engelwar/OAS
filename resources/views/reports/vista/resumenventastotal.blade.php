@@ -29,8 +29,15 @@ body{
                         </td>
                     </tr>                       
                 </table>
+
+                <div class="col-md-auto">
+                   <button type="button" class="btn btn-outline-success" id="exportar">Exportar a excel
+   
+                   </button>
+    
+                  </div>
                 
-                <table class = "table table-sm">
+                <table class = "table table-sm" id="miTabla">
                 @if($resumen)
                 
                  
@@ -135,7 +142,6 @@ body{
                         </tbody>
                     @endforeach
 
-                 
                     <thead>
                        
                         @foreach($region1 as $f => $g)                                   
@@ -187,6 +193,9 @@ body{
                         </tbody>
                     @endforeach
                     </thead>
+
+
+                    
                     <thead>
                        
                         @foreach($region2 as $f => $g)                                   
@@ -281,8 +290,33 @@ body{
 </div>
 @endsection
 
+
 @section('mis_scripts')
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+
+<script>
+  $(document).ready(()=>{
+    $("#exportar").click(function(){
+  $("#miTabla").table2excel({
+    // exclude CSS class
+    exclude: ".noExl",
+    name: "Worksheet Name",
+    filename: "resumendeventastotal", //do not include extension
+    fileext: ".xls" // file extension
+  }); 
+});
+  });
+
+</script>
 <script>
 $(".page-wrapper").removeClass("toggled"); 
 </script>
+
+
+
+
+
 @endsection

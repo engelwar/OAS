@@ -96,7 +96,17 @@ class PerfilController extends Controller
      */
     public function show($id)
     {
-        //
+       
+    }
+ /**
+     * Display the specified resource.
+     *
+     * @param  \App\generadorCarta  $generadorCarta
+     * @return \Illuminate\Http\Response
+     */
+    public function vista(Perfil $perfil)
+    {
+        return $perfil;
     }
 
     /**

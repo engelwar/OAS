@@ -82,6 +82,10 @@ class CotizacionReportController extends Controller
         OR adusrNomb ='INES VELASQUEZ'
         OR adusrNomb ='GUADALUPE AMBA'
         OR adusrNomb ='PATRICIA ROJAS'
+        OR adusrNomb = 'CAJERO 21 CALACOTO'
+        
+        
+
         order by adusrNomb
 
        ";
@@ -180,6 +184,70 @@ class CotizacionReportController extends Controller
       //  return redirect()->action('CotizacionReport');
     }
 
+    public function facturaConsol(Request $request)
+    {  // dd($request->all());
+           $data=request(); 
+          
+           $NR=$data['FAC'];
+   
+      
+  
+     
+         
+      
+    
+        $varQ1="	select vtVxFLvta as 'NroTrans',
+         CONVERT(varchar,vtVxFFtra,103) as 'fecha', vtvtaNomC as 'RazonSocial', 
+         REPLACE(cast (round(vtVxFTot,2) as decimal(10,2)),',', '.') 		 as 'total' ,
+        inlocNomb Local, 
+		imLvtEsfc as 'estado' ,
+        imLvtNrfc Factura
+		from   vtVxF
+		join vtVta on vtvtaNtra= vtVxFNvta
+		join imLvt on (imLvtNlvt = vtVxFLvta)
+		join inloc on (inlocCloc = vtVxFCloc and inlocMdel=0) 		
+		where vtvtaNtra = ".$NR." 
+          ";
+
+    
+          
+     
+          $paso1= DB::connection('sqlsrv')->select(DB::raw($varQ1));   
+          
+            if (!empty($paso1)) {
+                $varFAC ="";
+
+                foreach ($paso1 as $key => $value) {
+                  $varFAC =$value->NroTrans;
+                
+
+                }
+                $varQ2="
+                SELECT vtvtaNtra NoTrans,CONVERT(varchar,vtvtaFtra,103)   Fecha, 
+                REPLACE(cast (round(vtvtaImpT,2) as decimal(10,2)),',', '.')  Importe,
+                REPLACE(cast (round(vtvtaDesT,2) as decimal(10,2)),',', '.') 	as  'Descuento',vtvtaTotT Total,
+                 admonAbrv Mon, inlocNomb Localv, adusrNomb Vendedor
+                FROM vtVta 
+                JOIN inloc on (inlocCloc = vtvtaCloc and inlocMdel=0)
+                JOIN bd_admOlimpia.dbo.admon on (vtvtaMtra = admonCmon and admonMdel=0)
+                JOIN bd_admOlimpia.dbo.adusr on (vtvtaCusr = adusrCusr and adusrMdel=0)
+                JOIN vtVxF on (vtVxFNvta = vtvtaNtra)
+                WHERE vtvtaMdel = 0 and vtvtaTipo=1 and vtVxFLvta=".$varFAC."
+                ";
+                $paso2= DB::connection('sqlsrv')->select(DB::raw($varQ2));  
+                
+                
+             
+               return view('cotizacionReport.consolidacionFAC',compact('NR','paso1','paso2') );
+            }else {
+                return view('cotizacionReport.sinConsolidacion',compact('NR') );
+          
+            }
+         
+       
+  
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -198,7 +266,7 @@ class CotizacionReportController extends Controller
        // $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."') AND ";
        $fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."' OR imLvtFech BETWEEN '".$fini."' AND '".$ffin."')";
        //$fecha = "(vtvtaFent BETWEEN '".$fini."' AND '".$ffin."')";
-       
+       $fechaFConsol ="(vtVxFFtra BETWEEN '".$fini."' AND '".$ffin."')";
       // imLvtFech BETWEEN
       //vtvtaFent 
        // $otroUsuario="";  
@@ -253,19 +321,22 @@ class CotizacionReportController extends Controller
             vtvtaNomC as 'Cliente',
             CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
             vtvtaNtra as 'NR',
+            vtVxFNvta as 'FC',
             REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
             admonAbrv 'Moneda',
             adusrNomb as 'Usuario',
             inlocNomb as 'Local',
               CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
               imlvtNrfc as 'numerofactura',
-              imLvtEsfc as  'estado' 
+              imLvtEsfc as  'estado',
+              vtvtaMdel as 'estadoNR'  
                    
         from vtVta 
-        LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
-        LEFT JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
+      left  JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
+      left  JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
         JOIN inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
-        left join imlvt on vtvtaNtra=imlvtNvta
+    full join imlvt on vtvtaNtra=imlvtNvta
+    full join vtVxF on vtvtaNtra= vtVxFNvta
         
         where 
         ".$fecha."
@@ -274,7 +345,37 @@ class CotizacionReportController extends Controller
       order by vtvtaFent desc
 
         ";
+        
+      // consolidacion de facturas 
+
+        $facturaConsolidada=
+        "
+        select distinct 
+        vtVxFLvta Notrans,
+        imlvtNvta as 'nrotras2',
+        imLvtEsfc as 'estado' ,crentNomb Cliente,
+        convert(varchar, vtVxFFtra,103) as'Fecha',
+       
+         inlocNomb Local, 
+        imLvtNrfc Factura, 
+    
+        REPLACE(cast (round(imLvtImpE,2) as decimal(10,2)),',', '.') as 'Importe'
       
+        from vtVxF join crEnt on (vtVxFCent = crentCent and crentMdel=0) 
+        full join imLvt on (imLvtNlvt = vtVxFLvta)
+         join inloc on (inlocCloc = vtVxFCloc and inlocMdel=0) 
+        where ".$fechaFConsol."
+        order by 1
+
+        ";
+
+       $BDfacConsol= DB::connection('sqlsrv')->select(DB::raw($facturaConsolidada));     
+           // return dd($BDfacConsol);
+
+
+
+           
+
         //$observacionBD=DB::table('observacion_cotizacion')->get()->pluck('idObs','textObs','user_id','modifUno','modifiDos','nroMod','fechaC');          
         $observacionBD=Cotizacion_report::all(['id','idObs','textObs','user_id','nroMod','nro','nroA','nroP','nroT','fechaC']);
         $cr=observacion_estados::all(['id']);
@@ -306,7 +407,7 @@ class CotizacionReportController extends Controller
         }
         else if($request->gen =="ver")
         {
-            return view('cotizacionReport.vistaForm' ,compact('consutas','observacionBD','estadoF'));
+            return view('cotizacionReport.vistaForm' ,compact('consutas','observacionBD','estadoF','BDfacConsol'));
             
            /* 
            // return view('cotizacionReport.vistaFormularioTotal')
@@ -411,19 +512,21 @@ class CotizacionReportController extends Controller
                 vtvtaNomC as 'Cliente',
                 CONVERT(varchar, vtvtaFtra, 103)	 as 'FechaNR',
                 vtvtaNtra as 'NR',
-                REPLACE(cast (round(vtvtaTotT,2) as decimal(10,2)),',', '.') as 'Totalventas',
+                
+               
                 admonAbrv 'Moneda',
                  adusrNomb as 'Usuario',
                  inlocNomb as 'Local',
                      CONVERT(varchar,imlvtFech,103) as 'FechaFac',--facturacion,
                     imlvtNrfc as 'numerofactura',
-                   imLvtEsfc as  'estado' 
+                   imLvtEsfc as  'estado',
+                   vtvtaMdel as 'estadoNR' 
                    
         from vtVta 
-        LEFT JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
-        LEFT JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
-        JOIN inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
-        left join imlvt on vtvtaNtra=imlvtNvta
+         JOIN bd_admOlimpia.dbo.admon ON (admonCmon=vtvtaMtra AND admonMdel=0) 
+        JOIN bd_admOlimpia.dbo.adusr ON (adusrCusr=vtvtaCusr AND adusrMdel=0)
+       join  inloc ON (inlocCloc=vtvtaCloc AND inlocMdel=0) 
+         join imlvt on vtvtaNtra=imlvtNvta
         
             where (
                 $fecha
