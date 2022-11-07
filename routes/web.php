@@ -126,10 +126,14 @@ Route::prefix('reports')->group(function(){
 
     Route::resource('ventasinsmayo', 'Reports\VentasInsMayoController');
     Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
+
+    Route::resource('reporteventas', 'Reports\ReporteVentasController');
+    Route::resource('reporteventasdetalle', 'Reports\ReporteVentasDetalleController');
+
     Route::resource('resumenventastotal', 'Reports\ResumenVentasTotalController');
     Route::resource('notasremision', 'Reports\NotasRemisionController');
 
-    
+    Route::resource('listaPrecio', 'Reports\PrecioListaController');
   
 
     Route::resource('traspasos', 'Reports\TraspasosController');
@@ -162,7 +166,15 @@ Route::prefix('reports')->group(function(){
     Route::resource('difereciacosto', 'Reports\DiferenciaCostoController');
     Route::any('ventamarcauser/table/products','Reports\DiferenciaCostoController@products')->name('difereciacosto.products');  
 
+    // ***********************
+    Route::resource('kardexreport', 'Reports\KardexController');
+    Route::resource('LV', 'Reports\LVController');
+    Route::resource('resumenxmes', 'Reports\resumenxmesController');
+    Route::resource('cuentasporpagar', 'Reports\cuentasporpagarController');
+    Route::resource('ventacobranza', 'Reports\ventacobranzaController');
+
     Route::resource('kardex', 'Reports\KardexController');
+    // *****************************
 });
 
 Route::prefix('dev')->group(function(){

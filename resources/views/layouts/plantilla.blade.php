@@ -19,7 +19,7 @@
 
   <body>
     <header>
-      @include('layouts.navbar')
+      @include('layouts.navbarinf')
     </header>
     <main>
         @yield('content')
