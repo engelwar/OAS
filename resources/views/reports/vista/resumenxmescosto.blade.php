@@ -49,10 +49,10 @@
       <h3 class="text-center">COMPARATIVO DE COSTOS/VENTAS 2022</h3>
     </div>
   </div>
-  <div style="overflow: scroll; height: 450px; font-size: 12px;">
-    <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
+  <div style="overflow: scroll; height: 85vh; font-size: 12px; width: 100%;">
+    <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px; width: 100%;">
       <thead class="text-white" style="background-color: #283056;">
-        <TR>
+        <TR class="text-uppercase" style="letter-spacing: 4px; font-size: 1rem;">
           <TH colspan="1" class="text-center"></TH>
   
           @foreach ($options as $k => $value)
@@ -61,7 +61,7 @@
           @endforeach
           <TH colspan="2" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
         </TR>
-        <TR>
+        <TR style="letter-spacing: 3px; font-size: 0.8rem;">
           <TH colspan="1" class="text-center"></TH>
           @foreach ($options as $k => $value)
           <TH colspan="1" class="text-center">COSTO TOTAL</TH>
@@ -262,10 +262,8 @@
           $val2 = $value."2";
           @endphp
   
-          @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>{{ $val->$val1 }}</td>
-          <td>{{ $val->$val2 }} </td>
-          @endif
+          <td>{{ $val->$val2 }}</td>
   
           @endforeach
           <td>{{ $val->TotC2 }}</td>
@@ -313,6 +311,21 @@
           <td>{{ $total[4]['SAN MIGUEL'][0]->TotC2 }}</td>
           <td>{{ $total[4]['SAN MIGUEL'][0]->Tot2 }}</td>
         </tr>
+        @foreach ($total_seg[4]['SAN MIGUEL'] as $val)
+        <tr class="text-end">
+          <td class="text-start">{{ $val->adusrNomb }}</td>
+          @foreach ($options as $k => $value)
+          @php
+          $val1 = $value."C2";
+          $val2 = $value."2";
+          @endphp
+          <td>{{ $val->$val1 }}</td>
+          <td>{{ $val->$val2 }} </td>
+          @endforeach
+          <td>{{ $val->TotC2 }}</td>
+          <td>{{ $val->Tot2 }}</td>
+        </tr>
+        @endforeach
         <tr class="text-end">
           <td class="text-start">RETAIL</td>
           @foreach ($options as $k => $value)
@@ -502,7 +515,7 @@
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
           excelStyles: {                      
-                cells: [2,4,5,12,16,20,,24,26,34,40,43,46],                     
+                cells: [2,4,5,13,17,21,,25,28,36,42,45,48],                     
                 style: {                      
                     font: {                     
                         name: "Arial",         

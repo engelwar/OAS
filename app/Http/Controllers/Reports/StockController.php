@@ -206,45 +206,45 @@ class StockController extends Controller
         ".$codBarras."
         ".$pvp_sql."       
         ".implode(",",$grup_t).",
-		CAST(ISNULL(Total,0) as varchar) as Total
-        FROM (
-            SELECT * FROM inpro
-        ) as inpro 
-        
-        LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb
+        CAST(ISNULL(Total,0) as varchar) as Total
+            FROM (
+                SELECT * FROM inpro
+            ) as inpro 
+            
+            LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb
 
-        LEFT JOIN 
+            LEFT JOIN 
+            (
+                SELECT 
+                convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, 
+                maconNomb 
+                FROM macon 
+                WHERE maconCcon = 113
+            ) as marc
+            ON inpro.inproMarc = marc.maconMarc
+            LEFT JOIN
         (
+          SELECT
+          intrdCpro,
+                ".implode(",",$grup_tit).",
+          ".implode("+",$alma_total)." as 'Total'
+          FROM
+          (
             SELECT 
-            convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, 
-            maconNomb 
-            FROM macon 
-            WHERE maconCcon = 113
-        ) as marc
-        ON inpro.inproMarc = marc.maconMarc
-        LEFT JOIN
-		(
-			SELECT
-			intrdCpro,
-            ".implode(",",$grup_tit).",
-			".implode("+",$alma_total)." as 'Total'
-			FROM
-			(
-				SELECT 
-				intrdCpro, intraCalm, SUM(intrdCanb) as cant
-				FROM intra
-				JOIN intrd ON intraNtra = intrdNtra
-				WHERE intraMdel = 0 AND intrdMdel = 0
-                AND intraFtra <= '".$ffin."'
-				GROUP BY intrdCpro, intraCalm
-			) as sotck
-			pivot
-			(
-			  SUM(cant)
-			  for intraCalm IN (".implode(",",$alma).")
-			) as ptv
-		) as stocks
-		ON stocks.intrdCpro = inpro.inproCpro  ".$stocki."
+            intrdCpro, intraCalm, SUM(intrdCanb) as cant
+            FROM intra
+            JOIN intrd ON intraNtra = intrdNtra
+            WHERE intraMdel = 0 AND intrdMdel = 0
+                    AND intraFtra <= '".$ffin."'
+            GROUP BY intrdCpro, intraCalm
+          ) as sotck
+          pivot
+          (
+            SUM(cant)
+            for intraCalm IN (".implode(",",$alma).")
+          ) as ptv
+        ) as stocks
+        ON stocks.intrdCpro = inpro.inproCpro  ".$stocki."
         --PVP
         LEFT JOIN 
         (

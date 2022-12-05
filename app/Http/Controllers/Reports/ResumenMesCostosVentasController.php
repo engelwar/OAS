@@ -40,24 +40,22 @@ class ResumenMesCostosVentasController extends Controller
   public function store(Request $request)
   {
     $segmento = [
-      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68, 69,65,9]],
-      ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68,65,9,80]],
+      ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
-      ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77]],
+      ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77,78]],
       ['name' => 'INSTITUCIONALES', 'abrv' => 'INSTITUCIONALES', 'users' => [16, 17, 62, 56, 3, 58, 4]],
       ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20]],
       ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
     ];
     $retail = [
-      ['name'  => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 49, 68]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 49, 68]],
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 50, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 51, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 52]],
       ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77]],
       ['name' => 'INS CALACOTO', 'abrv' => 'INS CALACOTO', 'users' => [29,57,74]],
-      ['name' => 'CAJERO LIBRO CALACOTO', 'abrv' => 'CAJERO LIBRO CALACOTO', 'users' => [43]],
-
     ];
      
     $regional = [
@@ -68,7 +66,7 @@ class ResumenMesCostosVentasController extends Controller
       ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'alm' => [57, 58]],
       ['name' => 'REGIONAL2', 'abrv' => 'REGIONAL2', 'alm' => [59, 60, 61]],
     ];
-    $general = [22, 41, 49, 46, 26, 42, 50, 28, 38, 44, 51, 37, 32, 43, 52, 29, 57, 16, 17, 18, 19, 55, 21, 40, 39, 62, 74, 20, 56, 3, 58, 4, 61, 63, 64, 67, 68, 69,65,9];
+    $general = [22, 41, 49, 46,61, 68,65,9,26, 42, 50, 28, 69,38, 44, 51, 37, 67,29,57,74,32,43,52,76,77,78,16, 17, 62, 56, 3, 58, 4,18, 19, 55, 21, 20,40, 39,63,64,80];
 
     // $fini = date("d/m/Y", strtotime($request->fini));
     // $ffin = date("d/m/Y", strtotime($request->ffin));
@@ -175,11 +173,11 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM((-1)*cntrdImCo + cntrdImDc) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
-        AND cntrdNcta = '4.10.10.10.01'
+        AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
         AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
@@ -209,7 +207,7 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImCo) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
@@ -233,7 +231,7 @@ class ResumenMesCostosVentasController extends Controller
     $total = [];
     foreach ($segmento as $key) {
       $usr_total = "adusrCusr IN (" . implode(",", $key['users']) . ")";
-      $usr = "adusrCusr IN (" . implode(",", $key['users']) . ") AND adusrCusr NOT IN (22,49,68,26,50,69,38,51,67,32,52)";
+      $usr = "adusrCusr IN (" . implode(",", $key['users']) . ") AND adusrCusr NOT IN (22,49,68,26,50,69,38,51,67,32,52,76,77)";
       $sql_total = "
       SELECT 
       " . implode($group_mes_sum) . "
@@ -262,11 +260,11 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM((-1)*cntrdImCo + cntrdImDc) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
-        AND cntrdNcta = '4.10.10.10.01'
+        AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
         AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
@@ -296,7 +294,7 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImCo) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
@@ -344,11 +342,11 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM((-1)*cntrdImCo + cntrdImDc) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
-        AND cntrdNcta = '4.10.10.10.01'
+        AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
         AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
@@ -378,7 +376,7 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImCo) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
@@ -432,12 +430,16 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
-        FROM vtVta
-        WHERE vtvtaMdel = 0
-        AND vtvtaFtra IS NOT NULL
-        AND YEAR(vtvtaFtra) = 2022
-        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        SELECT vtvtaCalm, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
+        FROM cntrd
+        LEFT JOIN cntra ON cntraNtra = cntrdNtra
+        JOIN vtVta ON vtvtaNtra = cntraNtrI
+        WHERE cntraStat = 1
+        AND cntrdNcta = '4.10.10.50.01'
+        AND cntrdMdel = 0
+        AND CAST (cntrdFtra AS DATE) IS NOT NULL
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
         (
@@ -463,14 +465,16 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(intraImpt) AS total
-        FROM vtVta
-		    JOIN intra ON intraNtrI = vtvtaNtra
-        WHERE intraTmov = 90
-        AND vtvtaMdel = 0
-        AND vtvtaFtra IS NOT NULL
-        AND YEAR(vtvtaFtra) = 2022
-        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        SELECT vtvtaCalm, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
+        FROM cntrd
+        LEFT JOIN cntra ON cntraNtra = cntrdNtra  
+        JOIN vtVta ON vtvtaNtra = cntraNtrI
+        WHERE cntraStat = 1
+        AND cntrdNcta = '5.10.10.10.01'
+        AND cntrdMdel = 0
+        AND CAST (cntrdFtra AS DATE) IS NOT NULL
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
         (
@@ -509,12 +513,16 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
-        FROM vtVta
-        WHERE vtvtaMdel = 0
-        AND vtvtaFtra IS NOT NULL
-        AND YEAR(vtvtaFtra) = 2022
-        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        SELECT vtvtaCalm, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
+        FROM cntrd
+        LEFT JOIN cntra ON cntraNtra = cntrdNtra
+        JOIN vtVta ON vtvtaNtra = cntraNtrI
+        WHERE cntraStat = 1
+        AND cntrdNcta = '4.10.10.50.01'
+        AND cntrdMdel = 0
+        AND CAST (cntrdFtra AS DATE) IS NOT NULL
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
         (
@@ -540,14 +548,16 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(intraImpt) AS total
-        FROM vtVta
-		    JOIN intra ON intraNtrI = vtvtaNtra
-        WHERE intraTmov = 90
-        AND vtvtaMdel = 0
-        AND vtvtaFtra IS NOT NULL
-        AND YEAR(vtvtaFtra) = 2022
-        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        SELECT vtvtaCalm, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
+        FROM cntrd
+        LEFT JOIN cntra ON cntraNtra = cntrdNtra  
+        JOIN vtVta ON vtvtaNtra = cntraNtrI
+        WHERE cntraStat = 1
+        AND cntrdNcta = '5.10.10.10.01'
+        AND cntrdMdel = 0
+        AND CAST (cntrdFtra AS DATE) IS NOT NULL
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
         (
@@ -591,11 +601,11 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM((-1)*cntrdImCo + cntrdImDc) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
-        AND cntrdNcta = '4.10.10.10.01'
+        AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
         AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
@@ -625,7 +635,7 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImCo) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
@@ -673,11 +683,11 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM((-1)*cntrdImCo + cntrdImDc) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
-        AND cntrdNcta = '4.10.10.10.01'
+        AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
         AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
@@ -707,7 +717,7 @@ class ResumenMesCostosVentasController extends Controller
       " . implode($group_sum_tot) . " AS [TotC2]
       FROM
         (
-        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImCo) AS total
+        SELECT cntraCusr, MONTH(cntrdFtra) [mes], SUM(cntrdImDc) AS total
         FROM cntrd
         LEFT JOIN cntra ON cntraNtra = cntrdNtra  
         WHERE cntraStat = 1
