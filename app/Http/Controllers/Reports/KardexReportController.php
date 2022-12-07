@@ -140,18 +140,18 @@ class KardexReportController extends Controller
       "DECLARE @Cpro nvarchar(9),@Calm int
         SELECT @Cpro = '" . $prod . "', @Calm = '" . $alm . "'
         SELECT intrdNtra, intrdClot, intrdCpro, intrdItem, 
-        case when intrdCanT > 0 then intrdCanT else 0 end as positivo,
-        case when intrdCanT > 0 then Case 
+        case when intrdCanb > 0 then intrdCanb else 0 end as positivo,
+        case when intrdCanb > 0 then Case 
             When intrdCanb = 0 Then 0 
             Else intrdCTmi/intrdCanb 
             End else 0 end as CostPos,
-        case when intrdCanT > 0 then intrdCTmi else 0 end as TotPos,
-        case when intrdCanT < 0 then intrdCanT else 0 end as negativo,
-        case when intrdCanT < 0 then Case 
+        case when intrdCanb > 0 then intrdCTmi else 0 end as TotPos,
+        case when intrdCanb < 0 then intrdCanb else 0 end as negativo,
+        case when intrdCanb < 0 then Case 
             When intrdCanb = 0 Then 0 
             Else intrdCTmi/intrdCanb 
             End else 0 end as CostNeg,
-        case when intrdCanT < 0 then intrdCTmi else 0 end as TotNeg,
+        case when intrdCanb < 0 then intrdCTmi else 0 end as TotNeg,
         intrdUmtr, intrdCanb, intrdUmbs,         
         intrdCTmi, intrdMtra, intrdMinv, intrdTipo, intrdMdel,intraNtrI as _Ntri, intraTtra as _Ttra, 
         intraTmov as _Tmov,          
@@ -257,7 +257,7 @@ class KardexReportController extends Controller
         CONVERT(varchar, CAST(intrdCTmi as decimal(10,4)),1) as _CTmi,
         CONVERT(varchar, CAST(_CostAcum as decimal(10,4)),1) as _CostAcum,
         --CONVERT(varchar, CAST(intrdCTmi as money),1) as _CTmt,        
-        --intrdCant as _Cant,
+        --intrdCanb as _Cant,
         --intrdClot as _Clot,        
         --intrdItem as _Item,
         --intrdMdel as _Mdel,
@@ -318,7 +318,7 @@ class KardexReportController extends Controller
         CONVERT(varchar, CAST(intrdCTmi as decimal(10,4)),1) as _CTmi,
         CONVERT(varchar, CAST(_CostAcum as decimal(10,4)),1) as _CostAcum,
         --CONVERT(varchar, CAST(intrdCTmi as money),1) as _CTmt,        
-        --intrdCant as _Cant,
+        --intrdCanb as _Cant,
         --intrdClot as _Clot,        
         --intrdItem as _Item,
         --intrdMdel as _Mdel,

@@ -401,7 +401,8 @@
                     var titulos =
                     [
                         {title:'PRODUCTOS', data:'marca',name:'PRODUCTOS'},
-                        {title:'DESC', data:'descr',name:'descr'}
+                        {title:'DESC', data:'descr',name:'descr'},
+                        {title:'U.M.', data:'unidad',name:'unidad'}
                     ];
                 }
                 else if(xmp == "xCliente"){

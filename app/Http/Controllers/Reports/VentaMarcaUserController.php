@@ -257,12 +257,13 @@ class VentaMarcaUserController extends Controller
     //PRODUCTOS
     $des_gru = "";
     if ($request->xmp == 'xProducto') {
-      $xmp = "vtvtdCpro,inproNomb,";
-      $xmp_order = "vtvtdCpro,inproNomb,";
+      $xmp = "vtvtdCpro,inproNomb,inumeAbre,";
+      $xmp_order = "vtvtdCpro,inproNomb,inumeAbre,";
       $xmp_t = "vtvtdCpro as idmarca,
             vtvtdCpro as marca, 
-            inproNomb as descr,";
-      $des_gru = "descr,";
+            inproNomb as descr,
+            inumeAbre as unidad,";
+      $des_gru = "descr,unidad,";
       $marguti = "";
     } else if ($request->xmp == 'xCliente') {
       $xmp = "vtvtaCent,crentNomb,";
@@ -326,6 +327,7 @@ class VentaMarcaUserController extends Controller
                     FROM vtVtd 
                     LEFT JOIN inpro ON inproCpro = vtvtdCpro 
                     LEFT JOIN macon ON inproMarc = CAST(MaconCcon as varchar)+ '|' + CAST(MaconItem as varchar)
+                    LEFT JOIN inume ON inumeCume = inproCumb
                     JOIN vtVta ON vtvtaNtra = vtvtdNtra AND vtvtaMdel = 0
                     " . $join_client . "
                     LEFT JOIN
