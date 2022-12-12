@@ -114,6 +114,7 @@ Route::prefix('reports')->group(function () {
   Route::resource('compraslocmov', 'Reports\ComprasLocalesMovimientosController');
 
   Route::resource('segmentoproducto', 'Reports\SegmentoProductoController');
+  Route::resource('paretoxmes', 'Reports\ParetoXMesController');
 
   Route::resource('stock', 'Reports\StockController');
   Route::any('stock/store/almxu', 'Reports\StockController@store_almxu')->name('stock.store_almxu');
