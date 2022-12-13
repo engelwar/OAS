@@ -37,6 +37,7 @@ class VentaMarcaUserController extends Controller
         ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
         ['name' => 'FERIA', 'abrv' => 'FERIA', 'users' => [61,68]],
         ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 43, 52, 29, 57, 74]],
+        ['name' => 'SAN MIGUEL', 'abrv' => 'CALACOTO', 'users' => [76,77,78]],
         ['name' => 'CASA MATRIZ', 'abrv' => 'CASA MATRIZ', 'users' => [16, 17, 18, 19, 55, 21, 20, 58, 3, 4, 9, 62,56,65]],
         ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
         // ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'users' => [63]],
@@ -44,7 +45,7 @@ class VentaMarcaUserController extends Controller
       ];
     } else {
       $segmento = [
-        ['name' => 'RETAIL', 'abrv' => 'RETAIL', 'users' => [42, 50, 26, 52, 32, 43, 51, 44, 38, 49, 22, 41, 67]],
+        ['name' => 'RETAIL', 'abrv' => 'RETAIL', 'users' => [42, 50, 26, 52, 32, 43, 51, 44, 38, 49, 22, 41, 67,76,77,78]],
         ['name' => 'INSTITUCIONAL', 'abrv' => 'INST', 'users' => [16, 17, 28, 29, 57, 37, 46, 74]],
         ['name' => 'MAYORISTAS', 'abrv' => 'MAYO', 'users' => [18, 19, 55, 21, 20, 39, 40, 58,56]],
         ['name' => 'ADMINISTRATIVO', 'abrv' => 'RETAIL', 'users' => [3, 4, 9, 65]],
@@ -57,6 +58,7 @@ class VentaMarcaUserController extends Controller
       ['name' => 'RETAIL CALACOTO', 'abrv' => 'RETAIL CAL', 'users' => [52, 32, 43]],
       ['name' => 'RETAIL HANDAL', 'abrv' => 'RETAIL HAN', 'users' => [25, 27, 42, 50, 26, 69]],
       ['name' => 'RETAIL MARISCAL', 'abrv' => 'RETAIL MCAL', 'users' => [51, 44, 38, 67]],
+      ['name' => 'RETAIL SAN MIGUEL', 'abrv' => 'CALACOTO', 'users' => [76,77,78]],
     ];
     $usuario = [
       ['name' => 'ADRIANA CHAVEZ', 'abrv' => 'ADRIANA CHAVEZ', 'users' => [57, 29]]
@@ -80,6 +82,7 @@ class VentaMarcaUserController extends Controller
         ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
         ['name' => 'FERIA', 'abrv' => 'FERIA', 'users' => [61,68]],
         ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [32, 43, 52, 29, 57, 74]],
+        ['name' => 'SAN MIGUEL', 'abrv' => 'CALACOTO', 'users' => [76,77,78]],
         ['name' => 'CASA MATRIZ', 'abrv' => 'CASA MATRIZ', 'users' => [16, 17, 18, 19, 55, 21, 20, 58, 3, 4, 9, 62,56,65]],
         ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
         // ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'users' => [63]],
@@ -87,7 +90,7 @@ class VentaMarcaUserController extends Controller
       ];
     } else {
       $segmento = [
-        ['name' => 'RETAIL', 'abrv' => 'RETAIL', 'users' => [42, 50, 26, 52, 32, 43, 51, 44, 38, 49, 22, 41, 67]],
+        ['name' => 'RETAIL', 'abrv' => 'RETAIL', 'users' => [42, 50, 26, 52, 32, 43, 51, 44, 38, 49, 22, 41, 67,76,77,78]],
         ['name' => 'INSTITUCIONAL', 'abrv' => 'INST', 'users' => [16, 17, 28, 29, 57, 37, 46, 74]],
         ['name' => 'MAYORISTAS', 'abrv' => 'MAYO', 'users' => [18, 19, 55, 21, 20, 39, 40, 58,56]],
         ['name' => 'ADMINISTRATIVO', 'abrv' => 'RETAIL', 'users' => [3, 4, 9, 65]],
@@ -100,6 +103,7 @@ class VentaMarcaUserController extends Controller
       ['name' => 'RETAIL CALACOTO', 'abrv' => 'RETAIL CAL', 'users' => [52, 32, 43]],
       ['name' => 'RETAIL HANDAL', 'abrv' => 'RETAIL HAN', 'users' => [25, 27, 42, 50, 26, 69]],
       ['name' => 'RETAIL MARISCAL', 'abrv' => 'RETAIL MCAL', 'users' => [51, 44, 38, 67]],
+      ['name' => 'RETAIL SAN MIGUEL', 'abrv' => 'CALACOTO', 'users' => [76,77,78]],
     ];
     $usuario = [
       ['name' => 'ADRIANA CHAVEZ', 'abrv' => 'ADRIANA CHAVEZ', 'users' => [57, 29]]

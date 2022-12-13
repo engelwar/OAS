@@ -473,7 +473,7 @@
                     });        
                 }
                 if(xmp == "xProducto"){
-                    $('#tableex').append('<tfoot id="footer" class="text-end"><tr><td></td><td></td>'+piepag+'<td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td></tr></tfoot>');
+                    $('#tableex').append('<tfoot id="footer" class="text-end"><tr><td></td><td></td><td></td>'+piepag+'<td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td><td style="font-weight: bold;" class="cellborders"></td></tr></tfoot>');
                 }
                 else if(xmp == "xCliente"){
                     $('#tableex').append('<tfoot id="footer" class="text-end"><tr><td></td>'+piepag+'<td></td></td><td style="font-weight: bold;" class="cellborders"></tr></tfoot>');
@@ -501,9 +501,9 @@
                     {
                         titulos.push({title:'M.UTIL', data:'margutil', name:'M.UTIL', className: 'dt-body-right'});
                         titulos.push({title:'PORC.M.UTIL', data:'margutil_porc', name:'PORC.M.UTIL', className: 'dt-body-right',
-                          render: function (data) {
-                            return data+' %';
-                          }
+                            render: function (data) {
+                              return data+' %';
+                            }
                         });
                     }
                     titulos.push({title:'PARTI', data:'part', name:'partic', className: 'dt-body-right',
@@ -681,6 +681,7 @@
                                 &&columnas.column(i).title()!='COST'
                                 &&columnas.column(i).title()!='PRODUCTOS'
                                 &&columnas.column(i).title()!='DESC'
+                                &&columnas.column(i).title()!='U.M.'
                                 &&columnas.column(i).title()!='CLIENTES'
                                 &&columnas.column(i).title()!='CANT'
                                 &&columnas.column(i).title()!='PARTI'
@@ -762,7 +763,7 @@
                                     $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="2" style="cursor: pointer;"></td>'+cabeza+'<th class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;">TOTALES</th><th colspan=2 class="text-center">MARGEN UTIL</th><th colspan=3 class="text-center">PARETO</th></tr>');
                                 }
                                 else{
-                                    $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="2" style="cursor: pointer;"></td>'+cabeza+'<td class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;"></td></tr>');
+                                    $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="3" style="cursor: pointer;"></td>'+cabeza+'<td class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;"></td></tr>');
                                 }
                                 $('#tableex_wrapper thead .subcab').on( 'click','th', function () 
                                 {
