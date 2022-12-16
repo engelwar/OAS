@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\generadorCarta;
 use App\Perfil;
 use DB;
+use Modelo;
 use Luecano\NumeroALetras\NumeroALetras;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function PHPUnit\Framework\isNull;
 
 class GeneradorCartaController extends Controller
 {
@@ -19,6 +22,13 @@ class GeneradorCartaController extends Controller
      */
     public function index()
     {
+
+
+
+
+        
+        return view('carta.index');    
+
 
         if(Auth::user())
         {
@@ -72,24 +82,321 @@ class GeneradorCartaController extends Controller
      
         return view('carta.show', compact('perfil','carta','arrayCarta'));
     }
+
+public function contador(Request $request){
+
+
+
+}
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function carta(Request $request, generadorCarta $generadorCarta){
+        //$pkeyid = openssl_pkey_get_private("file://src/openssl-0.9.6/demos/sign/key.pem");
+        
+
+
+       $cc=explode("&nbsp;",$request->cli);
+     
+        if($request->verC =="verC")
+                   {
+                    $carta = DB::table('contador_p_d_f')->get();
+           
+                    if (count($carta)==0) {
+                      DB::table('contador_p_d_f')->insert([
+            
+                        'contador'=>1,
+                        'link'=>"link",
+                                       
+                        'created_at'=>date('Y-m-d H:i:s'),  
+                        'updated_at'=>date('Y-m-d H:i:s'),  
+                        ]);
+                       // $cotizacion_report->nro=1;
+                      //  $generadorCarta->save();
+                  
+                    }
+                    else
+                    {
+                    
+                      $cc1=count($carta)+1;
+                      DB::table('contador_p_d_f')->insert([
+            
+                        'contador'=>$cc1,
+                        'link'=>"link",
+                                       
+                        'created_at'=>date('Y-m-d H:i:s'),  
+                        'updated_at'=>date('Y-m-d H:i:s'),  
+                        ]);
+                       // $cotizacion_report->nro=1;
+                     //   $generadorCarta->save();
+                     // return dd($carta);
+                    
+                    }
+                   // $verificar=array_pop($carta);
+                  //  return dd($verificar);
+                    $contador2=intval($carta[0]->contador);
+                    $contador2=$contador2+1;
+                    
+                  
+                   
+                    
+        //quita los espacios
+            $clienteC=utf8_decode($request->cli);
+            $clienteC=str_replace("&nbsp;", "",$clienteC);
+            $clienteC=preg_replace('/\s+/', ' ',$clienteC);
+            $clienteC=trim($clienteC);
+            $fecha=$request->fecha;
+            $fechaCarta=$request->fechaCarta;
+            $fechaC=$request->fechaC;
+            $fechaH=$request->fechaH;
+            $option=$request->radio;
+            $clienteC=$cc[0];
+                  /////////contenido de tabla////////////
+     $query="
+     DECLARE @fechaA DATE    
+     SELECT @fechaA = '".$fecha."'
+     SELECT 
+  
+  cxcTrNcto as 'Cliente',   
+  imlvt.imLvtNrfc as 'NroFac',  
+  CONVERT(varchar,cxcTrFtra,103) as 'Fecha',   
+  CONVERT(varchar,DATEADD(day, 30/*DiasPlazo*/, cxcTrFtra), 103) as 'FechaVenc',  
+    --DiasPlazo, 
+  CASE      
+  WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= 30/*DiasPlazo*/ THEN 'VIGENTE'   
+  WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= (30/*DiasPlazo*/ + 15) THEN 'VENCIDO'  
+  WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) > (30/*DiasPlazo*/ + 15) THEN 'MORA'   
+  END as estado,
+  cast(cxcTrImpt as decimal(10,2))as 'ImporteCXCBS',   
+  REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuentaBS', 
+  REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'SaldoBS',    
+   cast(cxcTrImpt * 6.96 as decimal(10,2))as 'ImporteCXCDolar',   
+  REPLACE(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2)),',', '.') as 'ACuentaDolar', 
+  REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2)),',', '.') as 'SaldoDolar' 
+  
+  
+  FROM cxcTr       
+  JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0    
+  JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0   
+  JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0     
+  JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0     
+  --//CXC generadas por VENTAS     
+  /*JOIN        
+  (          SELECT *       
+  FROM cptra      
+  JOIN cptrd ON cptrdNtra = cptraNtra AND cptrdTtra = 11    
+  WHERE cptraTtra = 21 AND cptraMdel = 0      
+  ) cptra    
+  ON cptrdNtrD = cxcTrNtra*/  
+  --//CXC generadas por VENTAS    
+  LEFT JOIN    
+  (       
+  SELECT   
+  imLvtNlvt, imLvtNNit,     
+  imLvtRsoc, imLvtNrfc,     
+  imlvtNvta, imLvtEsfc,  
+  imLvtMdel, imLvtFech  
+  FROM imlvt WHERE imlvtNvta <> 0  
+  UNION     
+  (     
+  SELECT       
+  imLvtNlvt, imLvtNNit,        
+  imLvtRsoc, imLvtNrfc,      
+  vtVxFNvta as imlvtNvta,    
+  imLvtEsfc, imLvtMdel,         
+  imLvtFech            
+  FROM imlvt         
+  JOIN vtVxF ON imLvtNlvt = vtVxFLvta 
+  )     
+  )as imlvt      
+  ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0    
+  LEFT JOIN    
+  (        
+  SELECT       
+  crentCent,      
+  maprfDplz as 'DiasPlazo'   
+  FROM crEnt       
+  LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0   
+  WHERE crentMdel = 0 AND crentStat = 0   
+  ) as crent     
+  ON crentCent = cxcTrCcto   
+  --COBROS DE CXC        
+  LEFT JOIN 
+  (       
+  SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF    
+  FROM liqdC   
+  JOIN liqXC ON liqdCNtra = liqXCNtra       
+  WHERE liqXCMdel = 0       
+  AND liqXCFtra <= '".$fechaCarta."'    
+      
+  GROUP BY liqdCNtcc 
+  )as cobros    
+  ON cobros.liqdCNtcc = cxcTrNtra      
+  WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
+  AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
+  AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+
+  
+  and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+-- and cxcTrNcto ='ANA CLAVIJO'        
+and cxcTrNcto like '$clienteC%'   
+AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
+,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL')
+
+order by Cliente
+";
+              
+               
+                  $cxcCarta=DB::connection('sqlsrv')->select(DB::raw($query));
+               
+             //totales----------------------
+        $total="
+        DECLARE @fechaA DATE    
+        SELECT @fechaA = '".$fecha."'
+        SELECT
+        cxcTrNcto as 'Cliente' ,
+        sum(cast(cxcTrImpt as decimal(10,2)))as 'ImporteCXCBS',   
+        REPLACE(sum(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2))),',', '.') as 'ACuentaBS', 
+        REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))),',', '.') as 'SaldoBS',    
+         sum(cast(cxcTrImpt * 6.96 as decimal(10,2)))as 'ImporteCXCDolar',   
+        REPLACE(sum(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2))),',', '.') as 'ACuentaDolar', 
+        REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2))),',', '.') as 'SaldoDolar' 
+        
+        FROM cxcTr       
+        JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0    
+        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0   
+        JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0     
+        JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0     
+        
+        LEFT JOIN    
+        (       
+        SELECT   
+        imLvtNlvt, imLvtNNit,     
+        imLvtRsoc, imLvtNrfc,     
+        imlvtNvta, imLvtEsfc,  
+        imLvtMdel, imLvtFech  
+        FROM imlvt WHERE imlvtNvta <> 0  
+        UNION     
+        (     
+        SELECT       
+        imLvtNlvt, imLvtNNit,        
+        imLvtRsoc, imLvtNrfc,      
+        vtVxFNvta as imlvtNvta,    
+        imLvtEsfc, imLvtMdel,         
+        imLvtFech            
+        FROM imlvt         
+        JOIN vtVxF ON imLvtNlvt = vtVxFLvta 
+        )     
+        )as imlvt      
+        ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0    
+        LEFT JOIN    
+        (        
+        SELECT       
+        crentCent,      
+        maprfDplz as 'DiasPlazo'   
+        FROM crEnt       
+        LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0   
+        WHERE crentMdel = 0 AND crentStat = 0   
+        ) as crent     
+        ON crentCent = cxcTrCcto   
+        --COBROS DE CXC        
+        LEFT JOIN 
+        (       
+        SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF    
+        FROM liqdC   
+        JOIN liqXC ON liqdCNtra = liqXCNtra       
+        WHERE liqXCMdel = 0         
+        AND liqXCFtra <= '".$fechaCarta."'  
+      --  AND liqXCFtra <= '07/10/2022'       
+        GROUP BY liqdCNtcc 
+        )as cobros    
+        ON cobros.liqdCNtcc = cxcTrNtra      
+        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
+        AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
+        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+      
+        and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+       and cxcTrNcto like '$clienteC%'
+      AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
+,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL')
+       GROUP BY cxcTr.cxcTrNcto
+       order by Cliente
+   ---   and cxcTrNcto ='ANA CLAVIJO'  
+      "; 
+      
+        $cadenaBS="";
+        $cadenaDL="";
+            $bs="";
+            $dolar="";
+
+        $totalS=DB::connection('sqlsrv')->select(DB::raw($total));   
+     
+        $formatter = new NumeroALetras(); 
+
+
+
+                 
+           
+        $arrayMoney=[];       
+        $arraycxcCarta= [];  
+        $bsNu="";
+
+        foreach ($totalS as $key => $value) {
+          $cadenaBS=strtolower($formatter->toMoney($value->SaldoBS));
+        $cadenaDL=strtolower($formatter->toMoney($value->SaldoDolar));
+           $bs= $value->SaldoBS;
+           $dolar=$value->SaldoDolar;
+           $bsNu=$value->SaldoBS;
+           $dolarNu=$value->SaldoDolar;
+      }  
+  
+//bolivianos
+
+    $bsNu=explode(".", $bsNu);
+    
+    $bsNu[0]=mb_strtolower($formatter->toMoney($bsNu[0]));
+   
+    $bsNu[1]=$bsNu[1]."/100";
+      
+      //dolares
+      $dolarNu=explode(".", $dolarNu);
+
+      $dolarNu[0]=mb_strtolower($formatter->toMoney($dolarNu[0]));
+      
+    
+      $dolarNu[1]=$dolarNu[1]."/100";
+      
+           $conta=count($carta); 
+                       $pdf = \PDF::loadView('reports.pdf.carta2',compact('conta','dolarNu','bsNu','bs','dolar','cadenaDL','cadenaBS','totalS','cxcCarta','fechaH','clienteC','fecha','fechaCarta','fechaC','option'))
+                        ->setPaper('letter')
+                        ->setOption('margin-top',39)
+                        ->setOption('margin-left', 15)
+                        ->setOption('margin-right', 15)
+                        ->setOption('margin-bottom', 33)
+                        //->setOption('footer-right','Pag [page] de [toPage]')
+                         ->setOption('footer-font-size',8);
+                         return $pdf->inline('carta_pdf');
+      
+                        //  return $pdf->inline('Reportecotizacion_'.$fecha2.'.pdf');
+                      }  
+    }
+    
     public function store(Request $request)
     {
 
-    
+    //return dd($request);
         $fecha = date("d/m/Y", strtotime($request->ffin));
-        $fechaCarta   = date("d/m/Y", strtotime($request->ffinf));
+        $fechaCarta   = date("d/m/Y", strtotime($request->fini));
         $array=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
       
        // fecha de hoy 
-        $day=date("d", strtotime($request->ffinf));
-        $mes=date("m", strtotime($request->ffinf));
-        $año=date("Y", strtotime($request->ffinf));
+        $day=date("d", strtotime($request->ffin));
+        $mes=date("m", strtotime($request->ffin));
+        $año=date("Y", strtotime($request->ffin));
         for ($i=0; $i <=sizeof($array) ; $i++) { 
             if ($i==($mes-1)) {
                 $mes=$array[$i];
@@ -99,9 +406,9 @@ class GeneradorCartaController extends Controller
         $fechaH=$day.' de '.$mes.' de '.$año;
       
         //fecha---- de consulta
-        $dayC=date("d", strtotime($request->ffinf));
-        $mesC=date("m", strtotime($request->ffinf));
-        $añoC=date("Y", strtotime($request->ffinf));
+        $dayC=date("d", strtotime($request->fini));
+        $mesC=date("m", strtotime($request->fini));
+        $añoC=date("Y", strtotime($request->fini));
         for ($i=0; $i <=sizeof($array) ; $i++) { 
             if ($i==($mesC-1)) {
                 $mesC=$array[$i];
@@ -172,9 +479,14 @@ class GeneradorCartaController extends Controller
      ON cobros.liqdCNtcc = cxcTrNtra      
      WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
      AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-     AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') > (30)  
-     -- and cxcTrNcto ='ANA CLAVIJO'
+     AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+     --AND DATEDIFF(DAY, cxcTrFtra, '".$fechaCarta."') <= (30 + 15) 
+     and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+     AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
+,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL','CAJERO LIBRO HANDAL','CAJERO BALLIVIAN .','CAJERO 2 MARISCAL .','CAJERO 2 HANDAL .')
+    
      ";
+     
      $nameCxc=DB::connection('sqlsrv')->select(DB::raw($queryNameCxc));
      
      $ciclo=sizeof($nameCxc);
@@ -274,14 +586,16 @@ class GeneradorCartaController extends Controller
   ON cobros.liqdCNtcc = cxcTrNtra      
   WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
   AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-  AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') > (30)  
+  AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+  --AND DATEDIFF(DAY, cxcTrFtra, '".$fechaCarta."') <= (30 + 15) 
+  and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
 -- and cxcTrNcto ='ANA CLAVIJO'        
 --and cxcTrNcto ='$value->Cliente'   
 AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
-,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL')
-
+,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL','CAJERO LIBRO HANDAL','CAJERO BALLIVIAN .','CAJERO 2 MARISCAL .','CAJERO 2 HANDAL .')
 order by Cliente
 ";
+
    $cxcCarta=DB::connection('sqlsrv')->select(DB::raw($query));
   
    
@@ -349,11 +663,12 @@ order by Cliente
         ON cobros.liqdCNtcc = cxcTrNtra      
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
         AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-        AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '27/10/2022') > (30)  
+        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+
+        and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
       -- and cxcTrNcto ='$value->Cliente'
       AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
-,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL')
-       GROUP BY cxcTr.cxcTrNcto
+      ,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL','CAJERO LIBRO HANDAL','CAJERO BALLIVIAN .','CAJERO 2 MARISCAL .','CAJERO 2 HANDAL .')   GROUP BY cxcTr.cxcTrNcto
        order by Cliente
    ---   and cxcTrNcto ='ANA CLAVIJO'  
       "; 
@@ -366,12 +681,14 @@ order by Cliente
            
      $arrayMoney=[];       
      $arraycxcCarta= [];  
+ 
    //  foreach ($totalS as $key => $value) {
-       // $cadenaBS=$formatter->toMoney($value->SaldoBS);
-      //  $cadenaDL=$formatter->toMoney($value->SaldoDolar);
+   //     $cadenaBS=$formatter->toMoney($value->SaldoBS);
+   //    $cadenaDL=$formatter->toMoney($value->SaldoDolar);
    
-   // }  
-
+  //  }  
+$cadenaBS1=[];
+$cadenaDL1=[];
      foreach ($cxcCarta as $key => $value) {
          if (!array_key_exists($value->Cliente, $arraycxcCarta)) 
          {
@@ -384,39 +701,123 @@ order by Cliente
      }
  
      foreach ($totalS as $key => $value) {
+ 
         if (!array_key_exists($value->Cliente, $totalS)) 
         {
             $totalS[$value->Cliente] = [$totalS[$key]];
             unset($totalS[$key]);
+            
+           
         }
         else
         {
             array_push($totalS[$value->Cliente], $totalS[$key]);
             unset($totalS[$key]);
+
         }
+   
+        array_push($cadenaBS1,strtolower($formatter->toMoney($value->SaldoBS)));
+        array_push($cadenaDL1,strtolower($formatter->toMoney($value->SaldoDolar)));
+          
     }
 
-  
-    //return dd($totalS);
+  //  return dd($totalS);
 
-        
-   
+
                       if($request->genPDF =="export")
                       {
-                        $pdf = \PDF::loadView('reports.pdf.carta',compact('fechaC','fechaH','nameCxc','cxcCarta','totalS','cadenaDL','cadenaBS','arraycxcCarta','formatter'))
+                        $pdf = \PDF::loadView('reports.pdf.carta',compact('cadenaDL1','cadenaBS1','fechaC','fechaH','nameCxc','cxcCarta','totalS','cadenaDL','cadenaBS','arraycxcCarta','formatter'))
                         ->setPaper('letter')
                         ->setOption('margin-top',35)
                         ->setOption('margin-left', 15)
                         ->setOption('margin-right', 15)
                         ->setOption('margin-bottom', 35)
-                      //  ->setOption('footer-right','Pag [page] de [toPage]')
+                        //->setOption('footer-right','Pag [page] de [toPage]')
+              
                         ->setOption('footer-font-size',8);
+                        
                     
                   
                         return $pdf->inline('cxc_pdf', compact('fecha','fechaCarta'));
                     
                         //  return $pdf->inline('Reportecotizacion_'.$fecha2.'.pdf');
                       }  
+                      if($request->genVer =="ver")
+                      {
+                        ///lista de clientes 
+                        $queryNameCxc2 =" 
+                        DECLARE @fechaA DATE    
+                        SELECT @fechaA = '".$fecha."'
+                       
+                   
+                        SELECT 
+                        DISTINCT
+                        cxcTrNcto as 'Cliente' 
+                        
+                        FROM cxcTr       
+                        JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0    
+                        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0   
+                        JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0     
+                        JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0     
+                        
+                        LEFT JOIN    
+                        (       
+                        SELECT   
+                        imLvtNlvt, imLvtNNit,     
+                        imLvtRsoc, imLvtNrfc,     
+                        imlvtNvta, imLvtEsfc,  
+                        imLvtMdel, imLvtFech  
+                        FROM imlvt WHERE imlvtNvta <> 0  
+                        UNION     
+                        (     
+                        SELECT       
+                        imLvtNlvt, imLvtNNit,        
+                        imLvtRsoc, imLvtNrfc,      
+                        vtVxFNvta as imlvtNvta,    
+                        imLvtEsfc, imLvtMdel,         
+                        imLvtFech            
+                        FROM imlvt         
+                        JOIN vtVxF ON imLvtNlvt = vtVxFLvta 
+                        )     
+                        )as imlvt      
+                        ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0    
+                        LEFT JOIN    
+                        (        
+                        SELECT       
+                        crentCent,      
+                        maprfDplz as 'DiasPlazo'   
+                        FROM crEnt       
+                        LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0   
+                        WHERE crentMdel = 0 AND crentStat = 0   
+                        ) as crent     
+                        ON crentCent = cxcTrCcto   
+                        --COBROS DE CXC        
+                        LEFT JOIN 
+                        (       
+                        SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF    
+                        FROM liqdC   
+                        JOIN liqXC ON liqdCNtra = liqXCNtra       
+                        WHERE liqXCMdel = 0         
+                        AND liqXCFtra <= '".$fechaCarta."'      
+                        GROUP BY liqdCNtcc 
+                        )as cobros    
+                        ON cobros.liqdCNtcc = cxcTrNtra      
+                        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
+                        AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
+                        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+                
+                        and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+                        -- and cxcTrNcto ='ANA CLAVIJO'
+                        ";
+                            
+                       $nameCxc2=DB::connection('sqlsrv')->select(DB::raw($queryNameCxc2));
+                     //  return dd($nameCxc2);
+
+     
+                        return view('carta.admin', compact('nameCxc2','fechaC','fechaH','fecha','fechaCarta'));
+                      }
+
+                      
                       return dd("error..");
                      
    

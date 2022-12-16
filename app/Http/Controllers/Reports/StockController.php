@@ -68,7 +68,7 @@ class StockController extends Controller
            WHEN inalmCalm IN (65) THEN 'MateriaPrima'
            WHEN inalmCalm IN (63) THEN 'ProdEnProceso'
            WHEN inalmCalm IN (66) THEN 'ProdTerminado'
-           
+           WHEN inalmCalm IN (71) THEN 'AlmConsignacion'
            
            
 
@@ -77,7 +77,7 @@ class StockController extends Controller
             END as grupo,
             CASE 
             WHEN inalmCalm IN (4,5,6,7,10,13,
-                29,30,39,40,43,45,46,47, 55,54,67,68) THEN 1
+                29,30,39,40,43,45,46,47, 55,54,67,68,71) THEN 1
             ELSE 0
             END as estado,
             inalmCalm, 
@@ -479,7 +479,7 @@ class StockController extends Controller
             $almacen_grupo[$value->grupo][]=$almacen[$key];
         } 
      }
-     if ($value->grupo=="ProdTerminado") {
+     if ($value->grupo=="AlmConsignacion") {
         if(!array_key_exists($value->grupo,$almacen_grupo))
         {
             $almacen_grupo[$value->grupo]=[$almacen[$key]];
@@ -489,7 +489,7 @@ class StockController extends Controller
         } 
      }
   
-     
+ 
      if ($value->grupo=="Sin Grupo") {
         if(!array_key_exists($value->grupo,$almacen_grupo))
         {
@@ -499,7 +499,6 @@ class StockController extends Controller
             $almacen_grupo[$value->grupo][]=$almacen[$key];
         } 
      }
-
      
        }
 

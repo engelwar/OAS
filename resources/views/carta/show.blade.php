@@ -2,14 +2,31 @@
 @section('static', 'statick-side')
 @section('content') 
 @include('layouts.sidebar', ['hide'=>'1']) 
+
+
+<div class="row" style="padding-top: 30px">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">DATOS PARA GENERAR LISTA DE CUENTAS POR COBRAR</h5>
+        
+        
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+ 
+
     <div class="container">    
           <div class="row my-3">
             <div class="col">
-                <p>PERFIL = {{$perfil}}</p>
+      
+              <p>PERFIL = {{$perfil}}</p>
                 <H4>USUARIO:{{$perfil->nombre}} {{$perfil->paterno}} {{$perfil->materno}}</H4>
                 <p>USUARIO AUTENTICADO = {{Auth::user()}}</p>
                 <p>{{$carta}}</p>
               
+     
             </div>
             <div class="col">
               <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalRED">REDACTAR</button>
@@ -20,7 +37,7 @@
               <div class="mb-2 row d-flex justify-content-center">
                 <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Al:</label>
                 <div class="col-sm-6">
-                <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value ="{{date('Y-m-d')}}">
+                <input id="ffin" type="date" class="form-control form-control-sm " name="ffin2" value ="{{date('Y-m-d')}}">
                 </div>
 
                 <div class="col-sm-6">

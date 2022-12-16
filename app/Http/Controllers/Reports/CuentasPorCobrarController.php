@@ -247,7 +247,7 @@ class CuentasPorCobrarController extends Controller
         FROM (". $query. ") as cxc 
         GROUP BY estado")); 
 
-       return dd($query);
+       
         if($request->gen =="export")
         {
             $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2'))

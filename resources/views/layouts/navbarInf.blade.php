@@ -5,30 +5,14 @@
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
         <!--configuraciones-->
         @foreach(App\Modulo::orderBy('nombre')->get() as $mod)
         @if(Auth::user()->tieneModulo($mod->id))
-        @if ($mod->id==7)
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="{{$mod->icon}}"></i>
-            <span>{{$mod->nombre}}</span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            @foreach($mod->programs as $prog)
-            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
-            <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
-              <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
-              </a>
-            </li>
-            @endif
-            @endforeach
-          </ul>
-        </li>
-        @endif
+      
         @if ($mod->id==1)
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +31,25 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==6)
+        @if ($mod->id==2)
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="{{$mod->icon}}"></i>
+            <span>{{$mod->nombre}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            @foreach($mod->programs as $prog)
+            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+            <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
+              <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
+              </a>
+            </li>
+            @endif
+            @endforeach
+          </ul>
+        </li>
+        @endif
+        @if ($mod->id==3)
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -101,8 +103,54 @@
           </ul>
         </li>
         @endif
+        @if ($mod->id==6)
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="{{$mod->icon}}"></i>
+            <span>{{$mod->nombre}} </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            @foreach($mod->programs as $prog)
+            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+            <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
+              
+              <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
+              </a>
+            </li>
+            @endif
+            
+            @endforeach
+          
+     
+
+          </ul>
+        
+
+        </li>
+        @endif
+        @if ($mod->id==7)
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="{{$mod->icon}}"></i>
+            <span>{{$mod->nombre}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            @foreach($mod->programs as $prog)
+            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+            <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
+              <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
+              </a>
+            </li>
+            @endif
+            @endforeach
+          </ul>
+        </li>
+        @endif
+
         @endif
         @endforeach
+     
+        
         <div class="
             @if(!Auth::user()->tienePermiso(31,17))
                 d-none

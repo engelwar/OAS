@@ -296,9 +296,10 @@ Route::post('/CotizacionReporte/vistaTotal/fac','CotizacionReportController@fact
 Route::resource('GeneradorCartas', 'GeneradorCartaController');
 Route::get('GeneradorCartas/perfiles/{perfil}','GeneradorCartaController@vista')->name('GeneradorCartas.vista');
 Route::get('GeneradorCartas/perfiles/data/pdf','GeneradorCartaController@store')->name('GeneradorCartas.store');
+Route::post('GeneradorCartas/carta/date/1/pdf','GeneradorCartaController@carta')->name('GeneradorCartas.carta');
 //Route::get('GeneradorCartas/carta/pdf','GeneradorCartaController@pdf')->name('carta.pdf');
 
-// Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
+//Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
 //Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 
 

@@ -315,7 +315,7 @@
 
                             @foreach($almacen_grupo as $k => $alm)
                             @if ($k=="AlmMay1" || $k=="AlmMay2" || $k=="AlmMay3"
-                            || $k=="AlmMay4"|| $k=="AlmMay5")
+                            || $k=="AlmMay4"|| $k=="AlmMay5"|| $k=="AlmDistribuidor1")
                                     <div class="col-8 px-100 py-6 ">
                           
                                         <h6 class="mb-1">{{$k}}</h6>
@@ -425,7 +425,7 @@
                               @foreach($almacen_grupo as $k => $alm  )
                                      
                                           @foreach($alm as $l => $a)
-                                            @if ($a->inalmNomb=="ALMACEN CONTRATOS" ||$a->inalmNomb=="ALMACEN RESERVA CONTRATOS"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 1" ||$a->inalmNomb=="ALMACEN INSTITUCIONAL 2"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 3"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 4"||$a->inalmNomb=="INSTITUCIONAL BLL"||$a->inalmNomb=="INSTITUCIONAL CAL"||$a->inalmCalm==32||$a->inalmNomb=="INSTITUCIONAL MSC")                                          
+                                            @if ($a->inalmNomb=="ALMACEN KETAL"||$a->inalmNomb=="ALMACEN SICOES"||$a->inalmNomb=="ALMACEN CONTRATOS" ||$a->inalmNomb=="ALMACEN RESERVA CONTRATOS"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 1" ||$a->inalmNomb=="ALMACEN INSTITUCIONAL 2"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 3"||$a->inalmNomb=="ALMACEN INSTITUCIONAL 4"||$a->inalmNomb=="INSTITUCIONAL BLL"||$a->inalmNomb=="INSTITUCIONAL CAL"||$a->inalmCalm==32||$a->inalmNomb=="INSTITUCIONAL MSC")                                          
                                                 <div class="form-check form-switch">
                                                     <input class="optionI form-check-input" 
                                                    
@@ -457,7 +457,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwo23">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo23" aria-expanded="false" aria-controls="flush-collapseTwo23">
-                        SIN GRUPO                    
+                        PLANTA                    
                       </button>
                     </h2>
                     <div id="flush-collapseTwo23" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo23" data-bs-parent="#accordionFlushExample">
@@ -473,7 +473,7 @@
                             @foreach($almacen_grupo as $k => $alm  )
                                      
                                           @foreach($alm as $l => $a)
-                                            @if ($a->inalmNomb=="ALMACEN KETAL"||$a->inalmNomb=="ALMACEN SICOES"||$a->inalmNomb=="DISTRIBUIDOR 1"||$a->inalmNomb=="INSUMOS"||$a->inalmNomb=="MATERIA PRIMA"||$a->inalmNomb=="PRODUCCION EN PROCESO"||$a->inalmNomb=="PRODUCTO TERMINADO")                                          
+                                            @if ($a->inalmNomb=="INSUMOS"||$a->inalmNomb=="MATERIA PRIMA"||$a->inalmNomb=="PRODUCCION EN PROCESO"||$a->inalmNomb=="PRODUCTO TERMINADO"||$a->inalmNomb=="ALMACEN CONSIGNACION")                                          
                                                 <div class="form-check form-switch">
                                                     <input class="optionSG  form-check-input" 
                                                    

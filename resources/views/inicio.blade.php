@@ -402,6 +402,21 @@
     <div class="envolver row">
       <div class="col-8 d-flex flex-wrap" style="gap: 15px;">
         @foreach(App\Modulo::get() as $mod)
+           @foreach($mod->programs as $prog)
+        @if (Auth::user()->tieneModulo($mod->id))
+        <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white">
+          <div style="width: 142px; text-align: center;">
+            <h1 class="" style="margin-top: -14px; margin-left: 8px; background: #404040; font-size: 18px;">{{$mod->nombre}}</h1>
+          </div>
+        </div>
+        @endif
+            @endforeach
+
+        @endforeach
+
+<!---modelo nuevo--->
+        @foreach(App\Modulo::get() as $mod)
+
         @if (Auth::user()->tieneModulo($mod->id))
         <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white">
           <div style="width: 142px; text-align: center;">
@@ -409,6 +424,7 @@
           </div>
           <div class="d-flex flex-wrap" style="gap: 10px;">
             @foreach($mod->programs as $prog)
+       
             @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
             @if ($mod->nombre=="Configuracion")
             <a href="{{route($prog->route)}}">
@@ -419,6 +435,7 @@
             <a href="{{route($prog->route)}}">
               <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
             </a>
+            
             @endif
             @if ($mod->nombre=="RRHH")
             <a href="{{route($prog->route)}}">
@@ -447,11 +464,19 @@
             @endif
             @endif
             @endforeach
+               @foreach($mod->submodulos as $submod)
+               <a href="{{route($prog->route)}}">
+                <div class="btn-big stima"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              </a>
+               @endforeach
           </div>
         </div>
         @endif
         @endforeach
       </div>
+
+
+
       <div class="col-4">
         <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white;">
           <div style="width: 142px; text-align: center;">
@@ -517,6 +542,7 @@
 
 
              @foreach($mod->programs as $prog)
+             <H1>1111111111111</H1>
              @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
               @if ($mod->nombre=="Configuracion")
                       <a href="{{route($prog->route)}}">
