@@ -60,73 +60,73 @@
           @if ($value == 1)
           <th colspan="12" class="text-center color_mes_1">ENERO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 2)
           <th colspan="12" class="text-center color_mes_2">FEBRERO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 3)
           <th colspan="12" class="text-center color_mes_3">MARZO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 4)
           <th colspan="12" class="text-center color_mes_4">ABRIL</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 5)
           <th colspan="12" class="text-center color_mes_5">MAYO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 6)
           <th colspan="12" class="text-center color_mes_6">JUNIO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 7)
           <th colspan="12" class="text-center color_mes_7">JULIO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 8)
           <th colspan="12" class="text-center color_mes_8">AGOSTO</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 9)
           <th colspan="12" class="text-center color_mes_9">SEPTIEMBRE</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 10)
           <th colspan="12" class="text-center color_mes_10">OCTUBRE</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 11)
           <th colspan="12" class="text-center color_mes_11">NOVIEMBRE</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @if ($value == 12)
           <th colspan="12" class="text-center color_mes_12">DICIEMBRE</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16"></th>
+          <th colspan="18"></th>
           @endif
           @endif
           @endforeach
@@ -138,7 +138,7 @@
           <th colspan="4" class="text-center color_mes_{{$value}}" style="border-left: 1px solid black;">INSTITUCIONAL</th>
           <th colspan="4" class="text-center color_mes_{{$value}}" style="border-left: 1px solid black;">MAYORISTA</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="16" class="text-center color_mes_pareto" style="border-left: 1px solid black;">PARETO</th>
+          <th colspan="18" class="text-center color_mes_pareto" style="border-left: 1px solid black;">PARETO</th>
           @endif
           @endforeach
         </tr>
@@ -152,8 +152,8 @@
           <th colspan="2" class="text-center color_mes_{{$value}}" style="border-left: 1px solid black;">2021</th>
           <th colspan="2" class="text-center color_mes_{{$value}}" style="border-left: 1px solid black;">2022</th>
           @if (Auth::user()->tienePermiso(42, 10))
-          <th colspan="8" class="text-center color_mes_pareto" style="border-left: 1px solid black;">2021</th>
-          <th colspan="8" class="text-center color_mes_pareto" style="border-left: 1px solid black;">2022</th>
+          <th colspan="9" class="text-center color_mes_pareto" style="border-left: 1px solid black;">2021</th>
+          <th colspan="9" class="text-center color_mes_pareto" style="border-left: 1px solid black;">2022</th>
           @endif
           @endforeach
         </tr>

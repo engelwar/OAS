@@ -77,23 +77,25 @@ class ParetoXMesController extends Controller
       $titulo_mes_venta[] = ['name' => 'mayImp2022' . $key . '', 'data' => 'mayImp2022' . $key . '', 'title' => 'Total', 'className' => 'color_mes_' . $value . ' dt-right'];
 
       if (Auth::user()->tienePermiso(42, 10)) {
-        $titulo_mes_venta[] = ['name' => 'PCant2021' . $key . '', 'data' => 'PCant2021' . $key . '', 'title' => 'Cantidad'];
-        $titulo_mes_venta[] = ['name' => 'PTotal2021' . $key . '', 'data' => 'PTotal2021' . $key . '', 'title' => 'Total'];
-        $titulo_mes_venta[] = ['name' => 'PTotalNeto2021' . $key . '', 'data' => 'PTotalNeto2021' . $key . '', 'title' => 'TotalNeto'];
-        $titulo_mes_venta[] = ['name' => 'MU2021' . $key . '', 'data' => 'MU2021' . $key . '', 'title' => 'MU'];
-        $titulo_mes_venta[] = ['name' => 'PorcMU2021' . $key . '', 'data' => 'PorcMU2021' . $key . '', 'title' => '%MU'];
-        $titulo_mes_venta[] = ['name' => 'ParTotal2021' . $key . '', 'data' => 'ParTotal2021' . $key . '', 'title' => 'Pareto'];
-        $titulo_mes_venta[] = ['name' => 'ParetoAcum2021' . $key . '', 'data' => 'ParetoAcum2021' . $key . '', 'title' => 'ParetoAcum'];
-        $titulo_mes_venta[] = ['name' => 'clas2021' . $key . '', 'data' => 'clas2021' . $key . '', 'title' => 'Clase'];
+        $titulo_mes_venta[] = ['name' => 'PCant2021' . $key . '', 'data' => 'PCant2021' . $key . '', 'title' => 'Cantidad', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PTotal2021' . $key . '', 'data' => 'PTotal2021' . $key . '', 'title' => 'Total', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PTotalNeto2021' . $key . '', 'data' => 'PTotalNeto2021' . $key . '', 'title' => 'TotalNeto', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'costoTotal2021' . $key . '', 'data' => 'costoTotal2021' . $key . '', 'title' => 'CostoTotal', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'MU2021' . $key . '', 'data' => 'MU2021' . $key . '', 'title' => 'MU', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PorcMU2021' . $key . '', 'data' => 'PorcMU2021' . $key . '', 'title' => '%MU', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'ParTotal2021' . $key . '', 'data' => 'ParTotal2021' . $key . '', 'title' => 'Pareto', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'ParetoAcum2021' . $key . '', 'data' => 'ParetoAcum2021' . $key . '', 'title' => 'ParetoAcum', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'clas2021' . $key . '', 'data' => 'clas2021' . $key . '', 'title' => 'Clase', 'className' => 'dt-right'];
   
-        $titulo_mes_venta[] = ['name' => 'PCant2022' . $key . '', 'data' => 'PCant2022' . $key . '', 'title' => 'Cantidad'];
-        $titulo_mes_venta[] = ['name' => 'PTotal2022' . $key . '', 'data' => 'PTotal2022' . $key . '', 'title' => 'Total'];
-        $titulo_mes_venta[] = ['name' => 'PTotalNeto2022' . $key . '', 'data' => 'PTotalNeto2022' . $key . '', 'title' => 'TotalNeto'];
-        $titulo_mes_venta[] = ['name' => 'MU2022' . $key . '', 'data' => 'MU2022' . $key . '', 'title' => 'MU'];
-        $titulo_mes_venta[] = ['name' => 'PorcMU2022' . $key . '', 'data' => 'PorcMU2022' . $key . '', 'title' => '%MU'];
-        $titulo_mes_venta[] = ['name' => 'ParTotal2022' . $key . '', 'data' => 'ParTotal2022' . $key . '', 'title' => 'Pareto'];
-        $titulo_mes_venta[] = ['name' => 'ParetoAcum2022' . $key . '', 'data' => 'ParetoAcum2022' . $key . '', 'title' => 'ParetoAcum'];
-        $titulo_mes_venta[] = ['name' => 'clas2022' . $key . '', 'data' => 'clas2022' . $key . '', 'title' => 'Clase'];
+        $titulo_mes_venta[] = ['name' => 'PCant2022' . $key . '', 'data' => 'PCant2022' . $key . '', 'title' => 'Cantidad', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PTotal2022' . $key . '', 'data' => 'PTotal2022' . $key . '', 'title' => 'Total', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PTotalNeto2022' . $key . '', 'data' => 'PTotalNeto2022' . $key . '', 'title' => 'TotalNeto', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'costoTotal2022' . $key . '', 'data' => 'costoTotal2022' . $key . '', 'title' => 'CostoTotal', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'MU2022' . $key . '', 'data' => 'MU2022' . $key . '', 'title' => 'MU', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'PorcMU2022' . $key . '', 'data' => 'PorcMU2022' . $key . '', 'title' => '%MU', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'ParTotal2022' . $key . '', 'data' => 'ParTotal2022' . $key . '', 'title' => 'Pareto', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'ParetoAcum2022' . $key . '', 'data' => 'ParetoAcum2022' . $key . '', 'title' => 'ParetoAcum', 'className' => 'dt-right'];
+        $titulo_mes_venta[] = ['name' => 'clas2022' . $key . '', 'data' => 'clas2022' . $key . '', 'title' => 'Clase', 'className' => 'dt-right'];
       }
 
       $sql_mes_select = $sql_mes_select . "
@@ -108,21 +110,19 @@ class ParetoXMesController extends Controller
       ISNULL(mayCan2021" . $key . ",0) AS mayCan2021" . $key . ",
       CONVERT(varchar, CAST(ISNULL(mayImp2021" . $key . ",0) AS MONEY),1) AS mayImp2021" . $key . ",
       ISNULL(mayCan2022" . $key . ",0) AS mayCan2022" . $key . ",
-      CONVERT(varchar, CAST(ISNULL(mayImp2022" . $key . ",0) AS MONEY),1) AS mayImp2022" . $key . ",";
-      
-      if (Auth::user()->tienePermiso(42, 10)) {
-        $sql_mes_select_pareto = $sql_mes_select_pareto."
-        ------------- PARETO 2021 -------------
+      CONVERT(varchar, CAST(ISNULL(mayImp2022" . $key . ",0) AS MONEY),1) AS mayImp2022" . $key . ",
+      ------------- PARETO 2021 -------------
         ISNULL(ventas_imp_2021" . $key . ".venta_cant_total_2021,0) AS PCant2021" . $key . ",
         CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0),0) AS MONEY),1) AS PTotal2021" . $key . ",
         CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0) * 0.87,0) AS MONEY),1) AS PTotalNeto2021" . $key . ",
-        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0) - ISNULL(ventas_imp_2021" . $key . ".venta_total_costo_2021,0),0) AS MONEY),1) AS MU2021" . $key . ",
+        CONVERT(varchar, CAST(ISNULL(ventas_imp_2021" . $key . ".venta_total_costo_2021,0) AS MONEY),1) AS costoTotal2021" . $key . ",
+        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021*0.87,0) - ISNULL(ventas_imp_2021" . $key . ".venta_total_costo_2021,0),0) AS MONEY),1) AS MU2021" . $key . ",
         CONVERT(varchar, CAST(
         CASE 
-        WHEN ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0) = 0 THEN 0
-        ELSE ISNULL((ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0) - ISNULL(ventas_imp_2021" . $key . ".venta_total_costo_2021,0))/ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0) * 100,0)
+        WHEN ISNULL(ventas_imp_2021" . $key . ".venta_total_2021*0.87,0) = 0 THEN 0
+        ELSE ISNULL((ISNULL(ventas_imp_2021" . $key . ".venta_total_2021*0.87,0) - ISNULL(ventas_imp_2021" . $key . ".venta_total_costo_2021,0))/ISNULL(ventas_imp_2021" . $key . ".venta_total_2021*0.87,0) * 100,0)
         END  AS MONEY),1) AS PorcMU2021" . $key . ",
-        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021,0)/(SELECT SUM(vtvtdImpT - vtvtdDesT) FROM vtVta JOIN vtVtd ON vtvtdNtra = vtvtaNtra WHERE vtvtaMdel = 0 AND YEAR(vtvtaFtra) = 2021
+        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2021" . $key . ".venta_total_2021*0.87,0)/(SELECT SUM(vtvtdImpT - vtvtdDesT) FROM vtVta JOIN vtVtd ON vtvtdNtra = vtvtaNtra WHERE vtvtaMdel = 0 AND YEAR(vtvtaFtra) = 2021
             AND MONTH(vtvtaFtra) = " . $value . " AND vtvtaCusr IN (" . implode(",", $usr) . ")) * 100,0) AS MONEY),1) AS ParTotal2021" . $key . ",
         CONVERT(varchar, CAST(ISNULL(pareto_acum_2021" . $key . ".paretoAcum_2021,0) AS MONEY),1) AS ParetoAcum2021" . $key . ",
         CASE 
@@ -135,13 +135,14 @@ class ParetoXMesController extends Controller
         ISNULL(ventas_imp_2022" . $key . ".venta_cant_total_2022,0) AS PCant2022" . $key . ",
         CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0),0) AS MONEY),1) AS PTotal2022" . $key . ",
         CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0) * 0.87,0) AS MONEY),1) AS PTotalNeto2022" . $key . ",
-        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0) - ISNULL(ventas_imp_2022" . $key . ".venta_total_costo_2022,0),0) AS MONEY),1) AS MU2022" . $key . ",
+        CONVERT(varchar, CAST(ISNULL(ventas_imp_2022" . $key . ".venta_total_costo_2022,0) AS MONEY),1) AS costoTotal2022" . $key . ",
+        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022*0.87,0) - ISNULL(ventas_imp_2022" . $key . ".venta_total_costo_2022,0),0) AS MONEY),1) AS MU2022" . $key . ",
         CONVERT(varchar, CAST(
         CASE 
-        WHEN ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0) = 0 THEN 0
-        ELSE ISNULL((ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0) - ISNULL(ventas_imp_2022" . $key . ".venta_total_costo_2022,0))/ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0) * 100,0)
+        WHEN ISNULL(ventas_imp_2022" . $key . ".venta_total_2022*0.87,0) = 0 THEN 0
+        ELSE ISNULL((ISNULL(ventas_imp_2022" . $key . ".venta_total_2022*0.87,0) - ISNULL(ventas_imp_2022" . $key . ".venta_total_costo_2022,0))/ISNULL(ventas_imp_2022" . $key . ".venta_total_2022*0.87,0) * 100,0)
         END  AS MONEY),1) AS PorcMU2022" . $key . ",
-        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022,0)/(SELECT SUM(vtvtdImpT - vtvtdDesT) FROM vtVta JOIN vtVtd ON vtvtdNtra = vtvtaNtra WHERE vtvtaMdel = 0 AND YEAR(vtvtaFtra) = 2022
+        CONVERT(varchar, CAST(ISNULL(ISNULL(ventas_imp_2022" . $key . ".venta_total_2022*0.87,0)/(SELECT SUM(vtvtdImpT - vtvtdDesT) FROM vtVta JOIN vtVtd ON vtvtdNtra = vtvtaNtra WHERE vtvtaMdel = 0 AND YEAR(vtvtaFtra) = 2022
             AND MONTH(vtvtaFtra) = " . $value . " AND vtvtaCusr IN (" . implode(",", $usr) . ")) * 100,0) AS MONEY),1) AS ParTotal2022" . $key . ",
         CONVERT(varchar, CAST(ISNULL(pareto_acum_2022" . $key . ".paretoAcum_2022,0) AS MONEY),1) AS ParetoAcum2022" . $key . ",
         CASE 
@@ -149,9 +150,7 @@ class ParetoXMesController extends Controller
             WHEN pareto_acum_2022" . $key . ".paretoAcum_2022 > 80 AND pareto_acum_2022" . $key . ".paretoAcum_2022 <=95 THEN 'B' 
             WHEN pareto_acum_2022" . $key . ".paretoAcum_2022 > 95 THEN 'C' 
         END as clas2022" . $key . ",
-        ";
-      }
-
+      ";
       $sql_mes = $sql_mes . "
       ------------- VENTA TOTAL 2021 -------------
       LEFT JOIN (
@@ -312,7 +311,6 @@ class ParetoXMesController extends Controller
       inumeAbre AS umpro,
       maconNomb AS categoria,
       " . $sql_mes_select . "
-      " . $sql_mes_select_pareto . "
       maconCmod
       FROM (
         SELECT *
@@ -370,6 +368,7 @@ class ParetoXMesController extends Controller
         $titulos_excel[] = 'Cantidad';
         $titulos_excel[] = 'Total';
         $titulos_excel[] = 'TotalNeto';
+        $titulos_excel[] = 'CostoTotal';
         $titulos_excel[] = 'MU';
         $titulos_excel[] = '%MU';
         $titulos_excel[] = 'Pareto';
@@ -378,6 +377,7 @@ class ParetoXMesController extends Controller
         $titulos_excel[] = 'Cantidad';
         $titulos_excel[] = 'Total';
         $titulos_excel[] = 'TotalNeto';
+        $titulos_excel[] = 'CostoTotal';
         $titulos_excel[] = 'MU';
         $titulos_excel[] = '%MU';
         $titulos_excel[] = 'Pareto';
@@ -416,7 +416,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -448,7 +450,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -480,7 +484,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -512,7 +518,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -544,7 +552,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -576,7 +586,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -608,7 +620,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -640,7 +654,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -672,7 +688,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -704,7 +722,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -736,7 +756,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -768,7 +790,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '2022';
+          $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
           $titulos_excel_2[] = '';
@@ -811,7 +835,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -843,7 +869,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -875,7 +903,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -907,7 +937,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -939,7 +971,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -971,7 +1005,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1003,7 +1039,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1035,7 +1073,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1067,7 +1107,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1099,7 +1141,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1131,7 +1175,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1163,7 +1209,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = 'PARETO';
+          $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
           $titulos_excel_1[] = '';
@@ -1205,7 +1253,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'ENERO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1237,7 +1287,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'FEBRERO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1269,7 +1321,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'MARZO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1301,7 +1355,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'ABRIL';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1333,7 +1389,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'MAYO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1365,7 +1423,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'JUNIO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1397,7 +1457,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'JULIO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1429,7 +1491,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'AGOSTO';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1461,7 +1525,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'SEPTIEMBRE';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1493,7 +1559,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'OCTUBRE';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1525,7 +1593,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'NOVIEMBRE';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1557,7 +1627,9 @@ class ParetoXMesController extends Controller
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = 'DICIEMBRE';
+          $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
           $titulos_excel_mes[] = '';
@@ -1570,6 +1642,48 @@ class ParetoXMesController extends Controller
     }
 
     if ($request->gen == "excel") {
+      if (!Auth::user()->tienePermiso(42, 10)) {
+        foreach ($mes_num as $key => $value) {
+          foreach ($test as $i => $j) {
+            $var = "PCant2021"."$key";
+            unset($j->$var);
+            $var = "PTotal2021"."$key";
+            unset($j->$var);
+            $var = "PTotalNeto2021"."$key";
+            unset($j->$var);
+            $var = "costoTotal2021"."$key";
+            unset($j->$var);
+            $var = "MU2021"."$key";
+            unset($j->$var);
+            $var = "PorcMU2021"."$key";
+            unset($j->$var);
+            $var = "ParTotal2021"."$key";
+            unset($j->$var);
+            $var = "ParetoAcum2021"."$key";
+            unset($j->$var);
+            $var = "clas2021"."$key";
+            unset($j->$var);
+            $var = "PCant2022"."$key";
+            unset($j->$var);
+            $var = "PTotal2022"."$key";
+            unset($j->$var);
+            $var = "PTotalNeto2022"."$key";
+            unset($j->$var);
+            $var = "costoTotal2022"."$key";
+            unset($j->$var);
+            $var = "MU2022"."$key";
+            unset($j->$var);
+            $var = "PorcMU2022"."$key";
+            unset($j->$var);
+            $var = "ParTotal2022"."$key";
+            unset($j->$var);
+            $var = "ParetoAcum2022"."$key";
+            unset($j->$var);
+            $var = "clas2022"."$key";
+            unset($j->$var);
+          }
+        }
+      }
       $export = new ParetoXMesExport($test, $titulos_excel,  $titulos_excel_2, $titulos_excel_1, $titulos_excel_mes);
       return Excel::download($export, 'Pareto X Mes.xlsx');
     } else {

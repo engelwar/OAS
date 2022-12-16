@@ -13,7 +13,45 @@
 <div class="container-fluid">
   <div class="row justify-content-center mt-4">
     <div class="col">
-      <table id="example" class="cell-border compact hover" style="width:100%">
+      <table id="example" class="table" style="width:100%">
+        <thead>
+          <tr>
+            <th>NTran</th>
+            <th>Fecha</th>
+            <th>Usuario</th>
+            <th>Almacen</th>
+            <th>Factura</th>
+            <th>ImpTotal</th>
+            <th>DesTotal</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($query as $key => $value)
+          <tr class="text-white" style="background-color: black;">
+            <td>{{$value->vtvtaNtra}}</td>
+            <td>{{$value->fecha}}</td>
+            <td>{{$value->adusrNomb}}</td>
+            <td>{{$value->inalmNomb}}</td>
+            <td>{{$value->factura}}</td>
+            <td>{{$value->imptotal}}</td>
+            <td>{{$value->destotal}}</td>
+            <td>{{$value->total}}</td>
+          </tr>
+          
+          @endforeach
+          @foreach ($array[1010246361] as $i => $j)
+          <tr>
+            <td colspan="2"></td>
+            <td scope="row">{{$j['codigo']}}</td>
+            <td>{{$j['descripcion']}}</td>
+            <td>{{$j['unidad']}}</td>
+            <td>{{$j['importe']}}</td>
+            <td>{{$j['descuento']}}</td>
+            <td>{{$j['total']}}</td>
+          </tr>
+          @endforeach
+        </tbody>
       </table>
     </div>
   </div>
@@ -32,41 +70,41 @@
     });
     $('#example').DataTable({
       paging: false,
-      data: json_data,
-      columns: [
-        {
-          data: 'vtvtaNtra',
-          title: 'NTran'
-        },
-        {
-          data: 'fecha',
-          title: 'Fecha'
-        },
-        {
-          data: 'adusrNomb',
-          title: 'Usuario'
-        },
-        {
-          data: 'inalmNomb',
-          title: 'Almacen'
-        },
-        {
-          data: 'imptotal',
-          title: 'ImpTotal'
-        },
-        {
-          data: 'destotal',
-          title: 'DesTotal'
-        },
-        {
-          data: 'total',
-          title: 'Total'
-        },
-        {
-          data: 'factura',
-          title: 'factura'
-        }
-      ],
+      // data: json_data,
+      // columns: [
+      //   {
+      //     data: 'vtvtaNtra',
+      //     title: 'NTran'
+      //   },
+      //   {
+      //     data: 'fecha',
+      //     title: 'Fecha'
+      //   },
+      //   {
+      //     data: 'adusrNomb',
+      //     title: 'Usuario'
+      //   },
+      //   {
+      //     data: 'inalmNomb',
+      //     title: 'Almacen'
+      //   },
+      //   {
+      //     data: 'imptotal',
+      //     title: 'ImpTotal'
+      //   },
+      //   {
+      //     data: 'destotal',
+      //     title: 'DesTotal'
+      //   },
+      //   {
+      //     data: 'total',
+      //     title: 'Total'
+      //   },
+      //   {
+      //     data: 'factura',
+      //     title: 'Factura'
+      //   }
+      // ],
       "language": {
         "emptyTable": "Tabla Vacia",
         "info": "Se muestran del _START_ al _END_ de _TOTAL_ registros",

@@ -70,7 +70,39 @@ class DetalleVentasController extends Controller
       ORDER BY vtvtaFtra
     ";
     $query = DB::connection('sqlsrv')->select(DB::raw($sql_query));
-    return view('reports.vista.detalleventas', compact('query'));
+    $sql_query_data = "
+      SELECT
+      vtvtdNtra,
+      inproCpro,
+      inproNomb,
+      inumeAbre,
+      CONVERT(varchar, CAST(vtvtdImpT as decimal(10,2)),1) as imptotal,
+      CONVERT(varchar, CAST(vtvtdDesT as decimal(10,2)),1) as destotal,
+      CONVERT(varchar, CAST(vtvtdImpT - vtvtdDesT as decimal(10,2)),1) as total
+      FROM vtVta
+      JOIN vtVtd ON vtvtdNtra = vtvtaNtra
+      JOIN inpro ON inproCpro = vtvtdCpro
+      LEFT JOIN inume ON inumeCume = inpro.inproCumb
+      WHERE vtvtaMdel = 0
+      AND vtvtaFtra BETWEEN '01/12/2022' AND '04/12/2022'
+      AND vtvtaNtra IN ('1010246360','1010246361')
+      ORDER BY vtvtaFtra
+    ";
+    $query_data = DB::connection('sqlsrv')->select(DB::raw($sql_query_data));
+    $array_data = [];
+    foreach ($query as $key => $value) {
+      foreach ($query_data as $i => $j) {
+        // dd($j);
+        if ($value->vtvtaNtra == $j->vtvtdNtra) {
+          $array_data[] = ['codigo' => $j->inproCpro, 'descripcion' => $j->inproNomb, 'unidad' => $j->inumeAbre, 'importe' => $j->imptotal, 'descuento' => $j->destotal, 'total' => $j->total];
+          // array_push($array_data,['codigo' => $j->inproCpro, 'descripcion' => $j->inproNomb]);
+        } else {
+          $array[$value->vtvtaNtra] = $array_data;
+        }
+      }
+    }
+    dd($array_data);
+    return view('reports.vista.detalleventas', compact('query','array'));
   }
 
   /**
