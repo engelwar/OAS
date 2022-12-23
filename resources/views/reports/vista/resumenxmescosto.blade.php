@@ -46,7 +46,7 @@
                               height: auto;" />
     </div>
     <div>
-      <h3 class="text-center">COMPARATIVO DE COSTOS/VENTAS 2022</h3>
+      <h3 class="text-center">ESTADO DE RESULTADO 2022</h3>
     </div>
   </div>
   <div style="overflow: scroll; height: 85vh; font-size: 12px; width: 100%;">
@@ -57,25 +57,33 @@
   
           @foreach ($options as $k => $value)
   
-          <TH colspan="2" class="text-center">{{$value}}</TH>
+          <TH colspan="4" class="text-center">{{$value}}</TH>
           @endforeach
-          <TH colspan="2" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
+          <TH colspan="4" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
         </TR>
         <TR style="letter-spacing: 3px; font-size: 0.8rem;">
           <TH colspan="1" class="text-center"></TH>
           @foreach ($options as $k => $value)
           <TH colspan="1" class="text-center">COSTO TOTAL</TH>
           <TH colspan="1" class="text-center">VENTA TOTAL</TH>
+          <TH colspan="1" class="text-center">DESC. Y DEVOL.</TH>
+          <TH colspan="1" class="text-center">IMPUESTO</TH>
           @endforeach
           <TH colspan="1" class="text-center" style="background-color: #284556;">COSTO TOTAL</TH>
           <TH colspan="1" class="text-center" style="background-color: #284556;">VENTA TOTAL</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">DESC. Y DEVOL.</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">IMPUESTO</TH>
         </TR>
         <TR class="d-none">
           <Td colspan="1" class="text-center"></Td>
           @foreach ($options as $k => $value)
           <Td colspan="1" class="text-center">{{$value}}</Td>
           <Td colspan="1" class="text-center">{{$value}}</Td>
+          <Td colspan="1" class="text-center">{{$value}}</Td>
+          <Td colspan="1" class="text-center">{{$value}}</Td>
           @endforeach
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
+          <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
           <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
           <Td colspan="1" class="text-center" style="background-color: #284556;">Comparativo Anual</Td>
         </TR>
@@ -86,9 +94,13 @@
           @foreach ($options as $k => $value)
           <TH colspan="1" class="text-center">COSTO</TH>
           <TH colspan="1" class="text-center">VENTA</TH>
+          <TH colspan="1" class="text-center">DESC. Y DEVOL.</TH>
+          <TH colspan="1" class="text-center">IMPUESTO</TH>
           @endforeach
           <TH colspan="1" class="text-center" style="background-color: #284556;">COSTO</TH>
           <TH colspan="1" class="text-center" style="background-color: #284556;">VENTA</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">DESC. Y DEVOL.</TH>
+          <TH colspan="1" class="text-center" style="background-color: #284556;">IMPUESTO</TH>
         </TR>
         <tr class="bg-primary text-end text-white" style="font-weight: bold;">
           <td class="text-start" style="width: 14%;">SUMA GENERAL</td>
@@ -96,13 +108,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           
           <td>{{ $total_general[0]->$val1}}</td>
           <td>{{ $total_general[0]->$val2}}</td>
+          <td>{{ $total_general[0]->$val3}}</td>
+          <td>{{ $total_general[0]->$val4}}</td>
           @endforeach
           <td>{{ $total_general[0]->TotC2}}</td>
           <td>{{ $total_general[0]->Tot2}}</td>
+          <td>{{ $total_general[0]->TotVDesc}}</td>
+          <td>{{ $total_general[0]->TotImp}}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">SUCURSAL BALLIVIAN</td>
@@ -110,14 +128,20 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
+          <td>{{ $total[0]['BALLIVIAN'][0]->$val3 }}</td>
+          <td>{{ $total[0]['BALLIVIAN'][0]->$val4 }}</td>
           @endforeach
   
           <td>{{ $total[0]['BALLIVIAN'][0]->TotC2 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+          <td>{{ $total[0]['BALLIVIAN'][0]->TotVDesc }}</td>
+          <td>{{ $total[0]['BALLIVIAN'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[0]['BALLIVIAN'] as $val)
         <tr class="text-end">
@@ -126,14 +150,20 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end">
@@ -142,13 +172,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
+          <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val3 }}</td>
+          <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->TotC2 }}</td>
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+          <td>{{ $total_retail[0]['BALLIVIAN'][0]->TotVDesc }}</td>
+          <td>{{ $total_retail[0]['BALLIVIAN'][0]->TotImp }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">SUCURSAL HANDAL</td>
@@ -156,13 +192,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[1]['HANDAL'][0]->$val1 }}</td>
           <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
+          <td>{{ $total[1]['HANDAL'][0]->$val3 }}</td>
+          <td>{{ $total[1]['HANDAL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[1]['HANDAL'][0]->TotC2 }}</td>
           <td>{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
+          <td>{{ $total[1]['HANDAL'][0]->TotVDesc }}</td>
+          <td>{{ $total[1]['HANDAL'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[1]['HANDAL'] as $val)
         <tr class="text-end">
@@ -171,14 +213,20 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <!--datp-->
 
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end">
@@ -187,13 +235,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total_retail[1]['HANDAL'][0]->$val1 }}</td>
           <td>{{ $total_retail[1]['HANDAL'][0]->$val2 }}</td>
+          <td>{{ $total_retail[1]['HANDAL'][0]->$val3 }}</td>
+          <td>{{ $total_retail[1]['HANDAL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_retail[1]['HANDAL'][0]->TotC2 }}</td>
           <td>{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
+          <td>{{ $total_retail[1]['HANDAL'][0]->TotVDesc }}</td>
+          <td>{{ $total_retail[1]['HANDAL'][0]->TotImp }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">SUCURSAL MARISCAL</td>
@@ -201,13 +255,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[2]['MARISCAL'][0]->$val1 }}</td>
           <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
+          <td>{{ $total[2]['MARISCAL'][0]->$val3 }}</td>
+          <td>{{ $total[2]['MARISCAL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[2]['MARISCAL'][0]->TotC2 }}</td>
           <td>{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
+          <td>{{ $total[2]['MARISCAL'][0]->TotVDesc }}</td>
+          <td>{{ $total[2]['MARISCAL'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[2]['MARISCAL'] as $val)
         <tr class="text-end">
@@ -216,13 +276,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
 
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end">
@@ -231,13 +297,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val1 }}</td>
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val2 }}</td>
+          <td>{{ $total_retail[2]['MARISCAL'][0]->$val3 }}</td>
+          <td>{{ $total_retail[2]['MARISCAL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_retail[2]['MARISCAL'][0]->TotC2 }}</td>
           <td>{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
+          <td>{{ $total_retail[2]['MARISCAL'][0]->TotVDesc }}</td>
+          <td>{{ $total_retail[2]['MARISCAL'][0]->TotImp }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">SUCURSAL CALACOTO</td>
@@ -245,13 +317,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[3]['CALACOTO'][0]->$val1 }}</td>
           <td>{{ $total[3]['CALACOTO'][0]->$val2 }}</td>
+          <td>{{ $total[3]['CALACOTO'][0]->$val3 }}</td>
+          <td>{{ $total[3]['CALACOTO'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[3]['CALACOTO'][0]->TotC2 }}</td>
           <td>{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
+          <td>{{ $total[3]['CALACOTO'][0]->TotVDesc }}</td>
+          <td>{{ $total[3]['CALACOTO'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[3]['CALACOTO'] as $val)
         <tr class="text-end">
@@ -260,14 +338,20 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
   
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end">
@@ -276,13 +360,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           
           <td>{{ $total_retail_calacoto[0]->$val1 }}</td>
           <td>{{ $total_retail_calacoto[0]->$val2}}</td>
+          <td>{{ $total_retail_calacoto[0]->$val3}}</td>
+          <td>{{ $total_retail_calacoto[0]->$val4}}</td>
           @endforeach
           <td>{{ $total_retail_calacoto[0]->TotC2 }}</td>
           <td>{{ $total_retail_calacoto[0]->Tot2 }}</td>
+          <td>{{ $total_retail_calacoto[0]->TotVDesc }}</td>
+          <td>{{ $total_retail_calacoto[0]->TotImp }}</td>
         </tr>
         <tr class="text-end">
           <td class="text-start">RETAIL</td>
@@ -290,13 +380,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val1 }}</td>
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val2 }}</td>
+          <td>{{ $total_retail[3]['CALACOTO'][0]->$val3 }}</td>
+          <td>{{ $total_retail[3]['CALACOTO'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_retail[3]['CALACOTO'][0]->TotC2 }}</td>
           <td>{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
+          <td>{{ $total_retail[3]['CALACOTO'][0]->TotVDesc }}</td>
+          <td>{{ $total_retail[3]['CALACOTO'][0]->TotImp }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">SUCURSAL SAN MIGUEL</td>
@@ -304,12 +400,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $total[4]['SAN MIGUEL'][0]->$val1 }}</td>
           <td>{{ $total[4]['SAN MIGUEL'][0]->$val2 }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->$val3 }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[4]['SAN MIGUEL'][0]->TotC2 }}</td>
           <td>{{ $total[4]['SAN MIGUEL'][0]->Tot2 }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->TotVDesc }}</td>
+          <td>{{ $total[4]['SAN MIGUEL'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[4]['SAN MIGUEL'] as $val)
         <tr class="text-end">
@@ -318,12 +420,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }} </td>
+          <td>{{ $val->$val3 }} </td>
+          <td>{{ $val->$val4 }} </td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end">
@@ -332,12 +440,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val1 }}</td>
           <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val2 }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val3 }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_retail[4]['SAN MIGUEL'][0]->TotC2 }}</td>
           <td>{{ $total_retail[4]['SAN MIGUEL'][0]->Tot2 }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->TotVDesc }}</td>
+          <td>{{ $total_retail[4]['SAN MIGUEL'][0]->TotImp }}</td>
         </tr>
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">INSTITUCIONALES</td>
@@ -345,13 +459,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val1 }}</td>
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val2 }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->$val3 }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[5]['INSTITUCIONALES'][0]->TotC2 }}</td>
           <td>{{ $total[5]['INSTITUCIONALES'][0]->Tot2 }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->TotVDesc }}</td>
+          <td>{{ $total[5]['INSTITUCIONALES'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[5]['INSTITUCIONALES'] as $val)
         <tr class="text-end">
@@ -360,13 +480,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -375,13 +501,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $total[6]['MAYORISTAS'][0]->$val1 }}</td>
           <td>{{ $total[6]['MAYORISTAS'][0]->$val2 }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->$val3 }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[6]['MAYORISTAS'][0]->TotC2 }}</td>
           <td>{{ $total[6]['MAYORISTAS'][0]->Tot2 }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->TotVDesc }}</td>
+          <td>{{ $total[6]['MAYORISTAS'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[6]['MAYORISTAS'] as $val)
         <tr class="text-end">
@@ -390,13 +522,19 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
   
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -405,12 +543,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $total[7]['SANTA CRUZ'][0]->$val1 }}</td>
           <td>{{ $total[7]['SANTA CRUZ'][0]->$val2 }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->$val3 }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total[7]['SANTA CRUZ'][0]->TotC2 }}</td>
           <td>{{ $total[7]['SANTA CRUZ'][0]->Tot2 }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->TotVDesc }}</td>
+          <td>{{ $total[7]['SANTA CRUZ'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg[7]['SANTA CRUZ'] as $val)
         <tr class="text-end">
@@ -419,12 +563,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
   
@@ -434,12 +584,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $total_regional[0]['REGIONAL1'][0]->$val1 }}</td>
           <td>{{ $total_regional[0]['REGIONAL1'][0]->$val2 }}</td>
+          <td>{{ $total_regional[0]['REGIONAL1'][0]->$val3 }}</td>
+          <td>{{ $total_regional[0]['REGIONAL1'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_regional[0]['REGIONAL1'][0]->TotC2 }}</td>
           <td>{{ $total_regional[0]['REGIONAL1'][0]->Tot2 }}</td>
+          <td>{{ $total_regional[0]['REGIONAL1'][0]->TotVDesc }}</td>
+          <td>{{ $total_regional[0]['REGIONAL1'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg_regional[0]['REGIONAL1'] as $val)
         <tr class="text-end">
@@ -448,12 +604,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
@@ -462,12 +624,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $total_regional[1]['REGIONAL2'][0]->$val1 }}</td>
           <td>{{ $total_regional[1]['REGIONAL2'][0]->$val2 }}</td>
+          <td>{{ $total_regional[1]['REGIONAL2'][0]->$val3 }}</td>
+          <td>{{ $total_regional[1]['REGIONAL2'][0]->$val4 }}</td>
           @endforeach
           <td>{{ $total_regional[1]['REGIONAL2'][0]->TotC2 }}</td>
           <td>{{ $total_regional[1]['REGIONAL2'][0]->Tot2 }}</td>
+          <td>{{ $total_regional[1]['REGIONAL2'][0]->TotVDesc }}</td>
+          <td>{{ $total_regional[1]['REGIONAL2'][0]->TotImp }}</td>
         </tr>
         @foreach ($total_seg_regional[1]['REGIONAL2'] as $val)
         <tr class="text-end">
@@ -476,12 +644,18 @@
           @php
           $val1 = $value."C2";
           $val2 = $value."2";
+          $val3 = $value."VDesc";
+          $val4 = $value."Imp";
           @endphp
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
+          <td>{{ $val->$val3 }}</td>
+          <td>{{ $val->$val4 }}</td>
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
+          <td>{{ $val->TotVDesc }}</td>
+          <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
       </tbody>
@@ -515,7 +689,7 @@
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
           excelStyles: {                      
-                cells: [2,4,5,13,17,21,,25,28,36,42,45,48],                     
+                cells: [2,4,5,15,19,23,27,30,38,44,47,50],                     
                 style: {                      
                     font: {                     
                         name: "Arial",         
