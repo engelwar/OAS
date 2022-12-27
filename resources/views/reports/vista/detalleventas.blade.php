@@ -28,7 +28,7 @@
         </thead>
         <tbody>
           @foreach ($query as $key => $value)
-          <tr class="text-white" style="background-color: black;">
+          <tr class="text-white" style="background-color: #355296;">
             <td>{{$value->vtvtaNtra}}</td>
             <td>{{$value->fecha}}</td>
             <td>{{$value->adusrNomb}}</td>
@@ -38,18 +38,19 @@
             <td>{{$value->destotal}}</td>
             <td>{{$value->total}}</td>
           </tr>
-          
-          @endforeach
-          @foreach ($array[1010246361] as $i => $j)
+          @foreach ($array_data[$value->vtvtaNtra] as $i => $j)
           <tr>
-            <td colspan="2"></td>
-            <td scope="row">{{$j['codigo']}}</td>
-            <td>{{$j['descripcion']}}</td>
-            <td>{{$j['unidad']}}</td>
-            <td>{{$j['importe']}}</td>
-            <td>{{$j['descuento']}}</td>
-            <td>{{$j['total']}}</td>
+            <!-- <td colspan="2"></td> -->
+            <td></td>
+            <td></td>
+            <td>{{$j->vtvtdCpro}}</td>
+            <td>{{$j->descripcion}}</td>
+            <td>{{$j->inumeAbre}}</td>
+            <td>{{$j->imptotal}}</td>
+            <td>{{$j->destotal}}</td>
+            <td>{{$j->total}}</td>
           </tr>
+          @endforeach
           @endforeach
         </tbody>
       </table>
@@ -59,8 +60,10 @@
 @endsection
 
 @section('mis_scripts')
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 <script>
-  var json_data = {!!json_encode($query) !!};
+  // var json_data = {!!json_encode($query) !!};
   $(document).ready(function() {
     $('#example tfoot th').each(function() {
       if ($(this).hasClass('filtro')) {
@@ -70,6 +73,20 @@
     });
     $('#example').DataTable({
       paging: false,
+      order: false,
+      dom: 'Bfrtip',
+      buttons: {
+        dom: {
+          button: {
+            className: 'btn'
+          }
+        },
+        buttons: [{
+          extend: "excel",
+          text: 'Exportar a Excel',
+          className: 'btn btn-outline-primary mb-4',
+        }]
+      },
       // data: json_data,
       // columns: [
       //   {

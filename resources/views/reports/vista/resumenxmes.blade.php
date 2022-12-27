@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('estilo')
 <style>
-
   body {
     font-size: 1.0rem;
   }
+
   .derecha td,
   .derecha th {
     text-align: end;
@@ -15,12 +15,14 @@
     top: 0;
     z-index: 10;
   }
+
   #table_ventas_filter {
     margin-right: 30px;
     position: sticky;
     top: 0;
     z-index: 10;
   }
+
   #encabezado {
     position: sticky;
     list-style-type: none;
@@ -37,7 +39,7 @@
 @endsection
 @section('content')
 <div id="encabezado">
-  @include('layouts.sidebar2', ['hide'=>'0']) 
+  @include('layouts.sidebar2', ['hide'=>'0'])
 </div>
 
 <div class="mt-4 mb-3" style="width: 90%; height: 670px; margin: auto;">
@@ -46,21 +48,21 @@
       <img alt="foto" src="{{asset('imagenes/logo.png')}}" style="width: 120%;
                               height: auto;" />
     </div>
-    
+
     <div>
       <h3 class="text-center">COMPARATIVO DE VENTAS</h3>
     </div>
-    
-    
+
+
   </div>
   <div style="overflow: scroll; height: 450px; font-size: 12px;">
     <table id="table_ventas" class="table table-striped table-bordered table-sm table-responsive" style="font-size: 12px;">
       <thead class="text-white" style="background-color: #283056;">
         <TR>
           <TH colspan="1" class="text-center"></TH>
-  
+
           @foreach ($options as $k => $value)
-  
+
           <TH colspan="4" class="text-center">{{$value}}</TH>
           @endforeach
           <TH colspan="4" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
@@ -113,69 +115,69 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-          
+
           @if ($value=="Enero")
           <td>2,753,203.51</td>
           <td>3,501,978.87</td>
           <td>1,661,741.90</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>3,690,534.65</td>
           <td>3,339,620.77</td>
           <td>2,938,376.85</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>1,929,459.84</td>
           <td>1,269,142.77</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>1,581,310.05</td>
           <td>111,057.54</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>1,958,141.59</td>
           <td>289,676.01</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>1,563,195.93</td>
           <td>1,504,953.56</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>1,575,554.74</td>
           <td>1,168,345.80</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>1,590,542.15</td>
           <td>929,566.97</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>2,025,149.27</td>
           <td>1,392,327.09</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>1,425,608.71</td>
           <td>1,482,422.55</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>1,317,562.52</td>
           <td>2,212,951.67</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>1,803,605.94</td>
           <td>1,695,077.25</td>
           @endif
-          
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_general[0]->$val1}}</td>
           @endif
@@ -193,78 +195,78 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>407,460.98</td>
           <td>231,746.39</td>
           <td>142,423.02</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>588,532.16</td>
           <td>507,731.51</td>
           <td>306,473.91</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>190,795.80</td>
           <td>128,066.42 </td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>161,199.49</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>130,247.12</td>
           <td>723.02</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>150,236.76</td>
           <td>113,389.69</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>141,357.51</td>
           <td>92,619.62</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>159,763.92</td>
           <td>76,494.68</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>209,057.39</td>
           <td>116,231.47</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>132,808.72</td>
           <td>95,066.21</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>128,258.66</td>
           <td>195,058.58</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>169,932.69</td>
           <td>137,845.04</td>
           @endif
-   
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td>
           @endif
           <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
           @endforeach
-  
+
           <td>{{ number_format($sumBall19, 2) }}</td>
           <td>{{ number_format($sumBall20, 2) }}</td>
-  
+
           <td>{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
         </tr>
@@ -276,7 +278,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="CAJERO FERIA")
           <td>176,193.96</td>
@@ -495,14 +497,14 @@
           </td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
-  
+
           <td>{{ $val->$val2 }}</td>
           @endforeach
-  
+
           @if ($val->adusrNomb=="CAJERO FERIA")
           <td>{{ number_format($arrayball19['feria'], 2) }}</td>
           <td>{{ number_format($arrayball20['feria'], 2) }}</td>
@@ -518,8 +520,8 @@
           <td>{{ number_format($arrayball20['instit'], 2) }}</td>
           <td>{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
           @endif
-  
-          
+
+
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
@@ -580,11 +582,11 @@
           <td>143,692.43</td>
           <td>116,644.91</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($arrayball19['retail'], 2) }}</td>
@@ -599,73 +601,73 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>365,871.20</td>
           <td>446,943.12</td>
           <td>251,026.85</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>750,550.51</td>
           <td>540,448.50</td>
           <td>475.077,05</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>391,014.96</td>
           <td>163,066.58</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>312,358.73</td>
           <td>91,052.94</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>230,742.98</td>
           <td>91,253.36</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>261,394.47</td>
           <td>205,317.17</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>337,662.17</td>
           <td>192,982.81</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>292,224.92</td>
           <td>236,323.71</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>461,092.81</td>
           <td>326,442.01</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>262,614.06</td>
           <td>229,725.70</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>323,432.98</td>
           <td>353,419.29</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>334,012.23</td>
           <td>346,684.02</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[1]['HANDAL'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumHandal19, 2) }}</td>
@@ -682,7 +684,7 @@
           $val2 = $value."2";
           @endphp
           <!--datp-->
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>73,374.55</td>
@@ -695,7 +697,7 @@
           <td>3,183.52</td>
           @endif
           @endif
-  
+
           @if ($value=="Febrero")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>270,253.50</td>
@@ -708,7 +710,7 @@
           <td>3,038.60</td>
           @endif
           @endif
-  
+
           @if ($value=="Marzo")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>216,752.61</td>
@@ -719,7 +721,7 @@
           <td>5,770.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Abril")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>129,993.47</td>
@@ -730,7 +732,7 @@
           <td>0.00</td>
           @endif
           @endif
-          
+
           @if ($value=="Mayo")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>91,146.81</td>
@@ -741,7 +743,7 @@
           <td>90.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Junio")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>136,632.02</td>
@@ -752,7 +754,7 @@
           <td>3,616.65</td>
           @endif
           @endif
-  
+
           @if ($value=="Julio")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>159,797.08</td>
@@ -763,7 +765,7 @@
           <td>10,415.88</td>
           @endif
           @endif
-  
+
           @if ($value=="Agosto")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>124,563.32</td>
@@ -774,7 +776,7 @@
           <td>4,053.50</td>
           @endif
           @endif
-  
+
           @if ($value=="Septiembre")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>299,600.39</td>
@@ -785,7 +787,7 @@
           <td>4,324.60</td>
           @endif
           @endif
-          
+
           @if ($value=="Octubre")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>144,152.54</td>
@@ -796,7 +798,7 @@
           <td>4,062.69</td>
           @endif
           @endif
-  
+
           @if ($value=="Noviembre")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>164,127.86</td>
@@ -807,7 +809,7 @@
           <td>3,023.73</td>
           @endif
           @endif
-  
+
           @if ($value=="Diciembre")
           @if ($val->adusrNomb=="BENIGNA TINTA")
           <td>143,224.22</td>
@@ -818,11 +820,11 @@
           <td>8,234.82</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
-  
+
           <td>{{ $val->$val2 }}</td>
           @endforeach
           @if ($val->adusrNomb=="CAJERO LIBRO HANDAL")
@@ -845,7 +847,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>274,144.45</td>
           <td>267,218.90</td>
@@ -856,61 +858,61 @@
           <td>306,195.73</td>
           <td>232,684.22</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>167,023.05</td>
           <td>91,813.56</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>179,004.95</td>
           <td>91,052.94</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>136,155.37</td>
           <td>86,063.26</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>123,860.85</td>
           <td>94,748.40</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>176,196.99</td>
           <td>91,624.98</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>163,614.60</td>
           <td>81,704.04</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>157,165.02</td>
           <td>150,834.58</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>115,504.47</td>
           <td>128,420.92</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>156,444.62</td>
           <td>176,059.77</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>186,676.54</td>
           <td>177,705.89</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_retail[1]['HANDAL'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total_retail[1]['HANDAL'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($arrayHandal19['retail'], 2) }}</td>
@@ -925,73 +927,73 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>174,490.36</td>
           <td>262,379.54</td>
           <td>233,336.14</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>447,578.47</td>
           <td>430,920.20</td>
           <td>345,331.05</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>270,316.53</td>
           <td>221,743.66</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>274,469.37</td>
           <td>19,580.20</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>435,706.08</td>
           <td>32,775.03</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>380,626.32</td>
           <td>242,005.93</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>257,768.41</td>
           <td>271,506.99</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>288,075.86</td>
           <td>232,889.40</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>305,573.93</td>
           <td>263,863.58</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>283,797.88</td>
           <td>303,518.34</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>282,362.07</td>
           <td>398,042.85</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>435,544.63</td>
           <td>341,017.44</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[2]['MARISCAL'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumMariscal19, 2) }}</td>
@@ -1007,7 +1009,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
           <td>415.80</td>
@@ -1132,11 +1134,11 @@
           <td>145,605.58</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
-  
+
           <td>{{ $val->$val2 }}</td>
           @endforeach
           @if ($val->adusrNomb=="CAJERO LIBRO MARISCAL")
@@ -1209,11 +1211,11 @@
           <td>173,699.74</td>
           <td>195,237.06</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($arrayMariscal19['retail'], 2) }}</td>
@@ -1228,73 +1230,73 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>431,002.91</td>
           <td>367,932.12</td>
           <td>277,216.22</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>321,350.67</td>
           <td>251,731.07</td>
           <td>210,242.86</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>152,780.51</td>
           <td>120,489.82</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>171,044.31</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>144,657.75</td>
           <td>22,310.85</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>154,966.25</td>
           <td>190,837.66</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>160,657.85</td>
           <td>114,993.14</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>179,289.79</td>
           <td>93,971.41</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>182,272.83</td>
           <td>174,341.20</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>164,866.44</td>
           <td>169,909.82</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>169,845.02</td>
           <td>503,427.90</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>213,576.56</td>
           <td>226,486.50</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[3]['CALACOTO'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total[3]['CALACOTO'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($sumCalacoto19, 2) }}</td>
@@ -1310,7 +1312,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>49,711.20</td>
@@ -1318,7 +1320,7 @@
           <td>3,167.52</td>
           @endif
           @endif
-  
+
           @if ($value=="Febrero")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>33,861.30</td>
@@ -1326,84 +1328,84 @@
           <td>2,191.83</td>
           @endif
           @endif
-  
+
           @if ($value=="Marzo")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,289.25</td>
           <td>2,860.40</td>
           @endif
           @endif
-  
+
           @if ($value=="Abril")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,398.98</td>
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Mayo")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,322.10</td>
           <td>388.34</td>
           @endif
           @endif
-  
+
           @if ($value=="Junio")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,719.30</td>
           <td>3,084.50</td>
           @endif
           @endif
-  
+
           @if ($value=="Julio")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,316.40</td>
           <td>2,842.30</td>
           @endif
           @endif
-  
+
           @if ($value=="Agosto")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>4,454.60</td>
           <td>2,346.40</td>
           @endif
           @endif
-  
+
           @if ($value=="Septiembre")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>4,347.50</td>
           <td>2,806.10</td>
           @endif
           @endif
-  
+
           @if ($value=="Octubre")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>3,448.80</td>
           <td>4,499.08</td>
           @endif
           @endif
-  
+
           @if ($value=="Noviembre")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>2,425.60</td>
           <td>4,263.41</td>
           @endif
           @endif
-  
+
           @if ($value=="Diciembre")
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>4,893.07</td>
           <td>4,401.70</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero"&&$val->adusrNomb="CAJERO LIBRO CALACOTO")
           <td>{{ $val->$val1 }}</td>
           @endif
           @if ($val->adusrNomb=="CAJERO LIBRO CALACOTO")
           <td>{{ $val->$val2 }} </td>
           @endif
-  
+
           @endforeach
           <td>{{ number_format($arrayCalacoto19['libros'], 2) }}</td>
           <td>{{ number_format($arrayCalacoto20['libros'], 2) }}</td>
@@ -1475,7 +1477,7 @@
           <td>66,394.85</td>
           <td>64,804.62</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_retail_calacoto[0]->$val1 }}</td>
           @endif
@@ -1493,73 +1495,73 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>322,633.68</td>
           <td>303,527.40</td>
           <td>239,079.09</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>250,973.59</td>
           <td>196,544.81</td>
           <td>173,843.24</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>100,386.14</td>
           <td>77,526.19</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>110,301.08</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>96,695.56</td>
           <td>10,704.97</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>80,235.27</td>
           <td>73,498.19</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>109,747.11</td>
           <td>76,525.02</td>
           @endif
-          
+
           @if ($value=="Agosto")
           <td>119,887.80</td>
           <td>65,777.11</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>109,141.26</td>
           <td>92,312.48</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>111,221.38</td>
           <td>115,002.42</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>108,726.54</td>
           <td>130,162.52</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>142,288.64</td>
           <td>157,280.18</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val1 }}</td>
           @endif
-  
+
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val2 }}</td>
           @endforeach
           <td>{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
@@ -1608,69 +1610,69 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>106,973.76</td>
           <td>737,633.37</td>
           <td>135,904.77</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>362,241.11</td>
           <td>161,443.21</td>
           <td>598,482.91</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>426,600.08</td>
           <td>303,031.53</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>319,573.34</td>
           <td>424.40</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>746,222.24</td>
           <td>142,613.75</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>200,365.44</td>
           <td>383,195.24</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>247,754.08</td>
           <td>358,715.37</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>190,111.89</td>
           <td>166,726.07</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>411,384.46</td>
           <td>189,648.22</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>373,622.32</td>
           <td>410,201.86</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>197,243.59</td>
           <td>481,983.61</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>217,437.55</td>
           <td>435,495.75</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val1 }}</td>
           @endif
@@ -1689,7 +1691,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>51,983.30</td>
@@ -1727,7 +1729,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Febrero")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>163,569.13</td>
@@ -1765,7 +1767,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Marzo")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>242,920.12</td>
@@ -1796,7 +1798,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Abril")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>100,498.15</td>
@@ -1827,7 +1829,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Mayo")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>218,356.84</td>
@@ -1858,7 +1860,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Junio")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>101,918.35</td>
@@ -1889,7 +1891,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Julio")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>139,081.04</td>
@@ -1920,7 +1922,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Agosto")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>110,767.28</td>
@@ -1951,7 +1953,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Septiembre")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>156,364.41</td>
@@ -1982,7 +1984,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Octubre")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>168,512.94</td>
@@ -2013,7 +2015,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Noviembre")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>67,193.29</td>
@@ -2044,7 +2046,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Diciembre")
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>165,125.38</td>
@@ -2075,13 +2077,13 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
           <td>{{ $val->$val2 }}</td>
           @endforeach
-  
+
           @if ($val->adusrNomb=="CONTRATOS INSTITUCIONALES")
           <td>{{ number_format($arrayInstitucional19['contra'], 2) }}</td>
           <td>{{ number_format($arrayInstitucional20['contra'], 2) }}</td>
@@ -2127,69 +2129,69 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>872,951.20</td>
           <td>958,431.29</td>
           <td>464,965.60</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>1,107,627.53</td>
           <td>1,115,366.34</td>
           <td>810,403.87</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>453,364.12</td>
           <td>290,832.78</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>294,276.21</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>245,674.08</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>382,916.79</td>
           <td>324,971.27</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>386,164.72</td>
           <td>100,837.07</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>395,024.87</td>
           <td>80,678.10</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>404,356.15</td>
           <td>239,272.61</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>171,837.61</td>
           <td>230,244.92</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>186,285.16</td>
           <td>197,517.54</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>402,186.98</td>
           <td>155,063.40</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[6]['MAYORISTAS'][0]->$val1 }}</td>
           @endif
@@ -2208,7 +2210,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2236,7 +2238,7 @@
           <td>233,271.20</td>
           @endif
           @endif
-  
+
           @if ($value=="Febrero")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2264,7 +2266,7 @@
           <td>592,159.80</td>
           @endif
           @endif
-  
+
           @if ($value=="Marzo")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2287,7 +2289,7 @@
           <td>217,131.50</td>
           @endif
           @endif
-  
+
           @if ($value=="Abril")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2310,7 +2312,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Mayo")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2333,7 +2335,7 @@
           <td>0.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Junio")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2356,7 +2358,7 @@
           <td>238,801.70</td>
           @endif
           @endif
-  
+
           @if ($value=="Julio")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2379,7 +2381,7 @@
           <td>25,146.72</td>
           @endif
           @endif
-  
+
           @if ($value=="Agosto")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2402,7 +2404,7 @@
           <td>41,466.10</td>
           @endif
           @endif
-  
+
           @if ($value=="Septiembre")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2425,7 +2427,7 @@
           <td>96,174.00</td>
           @endif
           @endif
-  
+
           @if ($value=="Octubre")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2448,7 +2450,7 @@
           <td>82,459.50</td>
           @endif
           @endif
-  
+
           @if ($value=="Noviembre")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2471,7 +2473,7 @@
           <td>73,258.70</td>
           @endif
           @endif
-  
+
           @if ($value=="Diciembre")
           @if ($val->adusrNomb=="DAVID CUTIPA")
           <td>0.00</td>
@@ -2494,7 +2496,7 @@
           <td>63,462.40</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
@@ -2535,69 +2537,69 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           <td>394,453.10</td>
           <td>496,913.04</td>
           <td>156,869.30</td>
           @endif
-  
+
           @if ($value=="Febrero")
           <td>112,654.20</td>
           <td>331,979.94</td>
           <td>192,365.20</td>
           @endif
-  
+
           @if ($value=="Marzo")
           <td>44,587.84</td>
           <td>41,911.98</td>
           @endif
-  
+
           @if ($value=="Abril")
           <td>48,388.60</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Mayo")
           <td>24,891.34</td>
           <td>0.00</td>
           @endif
-  
+
           @if ($value=="Junio")
           <td>32,689.90</td>
           <td>45,236.60</td>
           @endif
-  
+
           @if ($value=="Julio")
           <td>44,190.00</td>
           <td>36,690.80</td>
           @endif
-  
+
           @if ($value=="Agosto")
           <td>86,050.90</td>
           <td>42,483.60</td>
           @endif
-  
+
           @if ($value=="Septiembre")
           <td>51,411.70</td>
           <td>82,528.00</td>
           @endif
-  
+
           @if ($value=="Octubre")
           <td>36,061.68</td>
           <td>43,755.70</td>
           @endif
-  
+
           @if ($value=="Noviembre")
           <td>30,135.04</td>
           <td>83,501.90</td>
           @endif
-  
+
           @if ($value=="Diciembre")
           <td>30,915.30</td>
           <td>52,485.10</td>
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $total[7]['SANTA CRUZ'][0]->$val1 }}</td>
           @endif
@@ -2616,7 +2618,7 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-  
+
           @if ($value=="Enero")
           @if ($val->adusrNomb=="CARMELA ESCOBAR")
           <td>80,553.50</td>
@@ -2629,7 +2631,7 @@
           <td>79,235.80</td>
           @endif
           @endif
-  
+
           @if ($value=="Febrero")
           @if ($val->adusrNomb=="CARMELA ESCOBAR")
           <td>28,458.00</td>
@@ -2742,7 +2744,7 @@
           <td>36,449.70</td>
           @endif
           @endif
-  
+
           @if ($value!="Enero"&&$value!="Febrero")
           <td>{{ $val->$val1 }}</td>
           @endif
@@ -2761,7 +2763,7 @@
           <td>{{ $val->Tot2 }}</td>
         </tr>
         @endforeach
-  
+
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">REGIONAL 1</td>
           @foreach ($options as $k => $value)
@@ -2787,10 +2789,10 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-          
+
           <td>0.00</td>
           <td>0.00</td>
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           @endforeach
@@ -2825,10 +2827,10 @@
           $val1 = $value."1";
           $val2 = $value."2";
           @endphp
-          
+
           <td>0.00</td>
           <td>0.00</td>
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           @endforeach
@@ -2846,10 +2848,10 @@
   <div class="container">
     <div class="row row-cols-auto">
       <div class="col">
-       
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Ver total
-</button>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Ver total
+        </button>
 
       </div>
       <div class="col">
@@ -2873,7 +2875,7 @@
         </button>
 
       </div>
-      
+
       <div class="col">
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
@@ -2914,87 +2916,87 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td class="text-center">2019</td>
-        <td class="text-center">2020</td>
-        <td class="text-center">2021</td>
-        <td class="text-center">2022</td>
-            
-          </tr>
-        
-          <tr>
-            <td  class="text-start" style="background-color: #284556;">SUMA GENERAL</td>
-            <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral19, 2) }}</td>
-            <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral20, 2) }}</td>
-            <td class="text-end" style="background-color: #284556;">{{ number_format($total_general[0]->Tot1 + $sumGeneral21, 2) }}</td>
-            <td class="text-end" style="background-color: #284556;">{{ $total_general[0]->Tot2}}</td>
-                
-        
-          </tr>
-          <tr>
-            <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL BALLIVIAN</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall19, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall20, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL HANDAL</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal19, 2) }}</td>
-          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal20, 2) }}</td>
-          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
-          <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-            <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL MARISCAL</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal19, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal20, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
-          </tr>
-          <TR>
-            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL CALACOTO</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto19, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto20, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
-          </TR>
-          <TR>
-            <td class="text-start" style="background: #f8f8f8; color: black">INTITUCIONALES</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional19, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional20, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[4]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
-          </TR>
-          <TR>
-            <TD class="text-start" style="background: hsl(217, 23%, 89%); color: black">MAYORISTAS</TD>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas19, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas20, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[5]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
-          </TR>
-          <tr>
-            <td class="text-start" style="background: #f8f8f8; color: black">SANTA CRUZ</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC19, 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC20, 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-            <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">REGIONAL 1</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot1 }}</td>
-            <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-            <td class="text-start" style="background: #f8f8f8; color: black">REGIONAL 2</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot1 }}</td>
-            <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot2 }}</td>
-          </tr>
+              <td class="text-center">2019</td>
+              <td class="text-center">2020</td>
+              <td class="text-center">2021</td>
+              <td class="text-center">2022</td>
+
+            </tr>
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">SUMA GENERAL</td>
+              <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral19, 2) }}</td>
+              <td class="text-end" style="background-color: #284556;">{{ number_format($sumGeneral20, 2) }}</td>
+              <td class="text-end" style="background-color: #284556;">{{ number_format($total_general[0]->Tot1 + $sumGeneral21, 2) }}</td>
+              <td class="text-end" style="background-color: #284556;">{{ $total_general[0]->Tot2}}</td>
+
+
+            </tr>
+            <tr>
+              <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL BALLIVIAN</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall19, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumBall20, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL HANDAL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal19, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumHandal20, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+              <td class="text-start" style="background: #f8f8f8; color: black">SUCURSAL MARISCAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal19, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumMariscal20, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
+            </tr>
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">SUCURSAL CALACOTO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto19, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumCalacoto20, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INTITUCIONALES</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional19, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumInstitucional20, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[4]['INSTITUCIONALES'][0]->Tot1 + $sumInstitucional21, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[4]['INSTITUCIONALES'][0]->Tot2 }}</td>
+            </TR>
+            <TR>
+              <TD class="text-start" style="background: hsl(217, 23%, 89%); color: black">MAYORISTAS</TD>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas19, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($sumMayoristas20, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total[5]['MAYORISTAS'][0]->Tot1 + $sumMayoristas21, 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total[5]['MAYORISTAS'][0]->Tot2 }}</td>
+            </TR>
+            <tr>
+              <td class="text-start" style="background: #f8f8f8; color: black">SANTA CRUZ</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC19, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($sumSC20, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total[6]['SANTA CRUZ'][0]->Tot1 + $sumSC21, 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total[6]['SANTA CRUZ'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">REGIONAL 1</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">0.00</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot1 }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_regional[0]['REGIONAL1'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+              <td class="text-start" style="background: #f8f8f8; color: black">REGIONAL 2</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">0.00</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot1 }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_regional[1]['REGIONAL2'][0]->Tot2 }}</td>
+            </tr>
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3017,23 +3019,23 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td>2019</td>
-        <td>2020</td>
-        <td>2021</td>
-        <td>2022</td>
-            
-          </tr>
-        
-               <tr>
-            <td class="text-start" style="background-color: #284556;">SUCURSAL BALLIVIAN</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
-    
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-          
+              <td>2019</td>
+              <td>2020</td>
+              <td>2021</td>
+              <td>2022</td>
+
+            </tr>
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">SUCURSAL BALLIVIAN</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
+
+              <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+
             <TR>
               <td class="text-start" style="background: #f8f8f8; color: black">CAJERO FERIA</td>
               <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['feria'], 2) }}</td>
@@ -3041,31 +3043,31 @@
               <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['feria'], 2) }}</td>
               <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][0]->Tot2}}</td>
             </TR>
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
-              </TR>
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
-              </TR>
-            
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </TR>
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3089,52 +3091,52 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td>2019</td>
-        <td>2020</td>
-        <td>2021</td>
-        <td>2022</td>
-            
-          </tr>
-         
-               <tr>
-            <td class="text-start" style="background-color: #284556;">SUCURSAL HANDAL</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal20, 2) }}</td>
-    
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
-        
-          </tr>
-          <tr>
-          
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[1]['HANDAL'][0]->Tot1 + $arrayHandal21['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[1]['HANDAL'][1]->Tot2}}</td>
-              </TR>
+              <td>2019</td>
+              <td>2020</td>
+              <td>2021</td>
+              <td>2022</td>
 
-                 <TR>
-                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayHandal19['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayHandal20['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[1]['HANDAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[1]['HANDAL'][0]->Tot2}}</td>
-              </TR>
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
-             
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[1]['HANDAL'][0]->Tot1 + $arrayHandal21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
-              </TR>
-            
+            </tr>
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">SUCURSAL HANDAL</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal19, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumHandal20, 2) }}</td>
+
+              <td class="text-start" style="background-color: #284556;">{{ number_format($total[1]['HANDAL'][0]->Tot1 + $sumHandal21, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ $total[1]['HANDAL'][0]->Tot2 }}</td>
+
+            </tr>
+            <tr>
+
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[1]['HANDAL'][0]->Tot1 + $arrayHandal21['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[1]['HANDAL'][1]->Tot2}}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayHandal19['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayHandal20['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[1]['HANDAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[1]['HANDAL'][0]->Tot2}}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[1]['HANDAL'][0]->Tot1 + $arrayHandal21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
+            </TR>
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3157,51 +3159,51 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td>2019</td>
-        <td>2020</td>
-        <td>2021</td>
-        <td>2022</td>
-            
-          </tr>
-         
-               <tr>
-            <td class="text-start" style="background-color: #284556;">SUCURSAL MARISCAL</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumMariscal19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumMariscal20, 2) }}</td>
-    
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-          
-   
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[2]['MARISCAL'][0]->Tot1 + $arrayMariscal21['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[2]['MARISCAL'][0]->Tot2}}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayMariscal19['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayMariscal20['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayMariscal21['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[2]['MARISCAL'][1]->Tot2}}</td>
-              </TR>
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['retail'], 2) }}</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
-              
-           
-              </TR>
-            
+              <td>2019</td>
+              <td>2020</td>
+              <td>2021</td>
+              <td>2022</td>
+
+            </tr>
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">SUCURSAL MARISCAL</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumMariscal19, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumMariscal20, 2) }}</td>
+
+              <td class="text-start" style="background-color: #284556;">{{ number_format($total[2]['MARISCAL'][0]->Tot1 + $sumMariscal21, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ $total[2]['MARISCAL'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[2]['MARISCAL'][0]->Tot1 + $arrayMariscal21['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[2]['MARISCAL'][0]->Tot2}}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayMariscal19['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayMariscal20['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayMariscal21['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[2]['MARISCAL'][1]->Tot2}}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['retail'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
+
+
+            </TR>
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3222,50 +3224,50 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td>2019</td>
-        <td>2020</td>
-        <td>2021</td>
-        <td>2022</td>
-            
-          </tr>
-         
-               <tr>
-            <td class="text-start" style="background-color: #284556;">SUCURSAL CALACOTO</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumCalacoto19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumCalacoto20, 2) }}</td>
-    
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-          
-   
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[3]['CALACOTO'][0]->Tot2}}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayCalacoto19['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayCalacoto20['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_retail_calacoto[0]->Tot1 + $arrayCalacoto21['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_retail_calacoto[0]->Tot2 }}</td>
-              </TR>
-             
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
-              </TR>
-              
-            
+              <td>2019</td>
+              <td>2020</td>
+              <td>2021</td>
+              <td>2022</td>
+
+            </tr>
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">SUCURSAL CALACOTO</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumCalacoto19, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumCalacoto20, 2) }}</td>
+
+              <td class="text-start" style="background-color: #284556;">{{ number_format($total[3]['CALACOTO'][0]->Tot1 + $sumCalacoto21, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ $total[3]['CALACOTO'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[3]['CALACOTO'][0]->Tot2}}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayCalacoto19['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayCalacoto20['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_retail_calacoto[0]->Tot1 + $arrayCalacoto21['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ $total_retail_calacoto[0]->Tot2 }}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
+            </TR>
+
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3288,46 +3290,46 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
               <td></td>
-        <td>2019</td>
-        <td>2020</td>
-        <td>2021</td>
-        <td>2022</td>
-            
-          </tr>
-        
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL BALLIVIAN</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL HANDAL</td>
-             
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[1]['HANDAL'][0]->Tot1 + $arrayHandal21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL MARISCAL</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['retail'], 2) }}</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL CALACOTO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
-              </TR>
-            
+              <td>2019</td>
+              <td>2020</td>
+              <td>2021</td>
+              <td>2022</td>
+
+            </tr>
+
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL BALLIVIAN</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL HANDAL</td>
+
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayHandal20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[1]['HANDAL'][0]->Tot1 + $arrayHandal21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[1]['HANDAL'][0]->Tot2 }}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL MARISCAL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayMariscal20['retail'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[2]['MARISCAL'][1]->Tot1 + $arrayHandal21['instit'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[2]['MARISCAL'][0]->Tot2 }}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL CALACOTO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayCalacoto20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[3]['CALACOTO'][0]->Tot1 + $arrayCalacoto21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[3]['CALACOTO'][0]->Tot2 }}</td>
+            </TR>
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3349,28 +3351,28 @@
           <thead class="text-white" style="background-color: #283056;">
             <tr>
 
-          
-              <TR>
-                <td></td>
-        
-                @foreach ($options as $k => $value)
-        
-                <TH class="text-center">{{$value}}</TH>
-                @endforeach
- 
-              </TR>
-          
-        
-               <tr>
-            <td class="text-start" style="background-color: #284556;">TOTAL GENERAL</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
-    
-            <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
-            <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
-          </tr>
-          <tr>
-          
+
+            <TR>
+              <td></td>
+
+              @foreach ($options as $k => $value)
+
+              <TH class="text-center">{{$value}}</TH>
+              @endforeach
+
+            </TR>
+
+
+            <tr>
+              <td class="text-start" style="background-color: #284556;">TOTAL GENERAL</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall19, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ number_format($sumBall20, 2) }}</td>
+
+              <td class="text-start" style="background-color: #284556;">{{ number_format($total[0]['BALLIVIAN'][0]->Tot1 + $sumBall21, 2) }}</td>
+              <td class="text-start" style="background-color: #284556;">{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </tr>
+            <tr>
+
             <TR>
               <td class="text-start" style="background: #f8f8f8; color: black">CAJERO FERIA</td>
               <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['feria'], 2) }}</td>
@@ -3378,31 +3380,31 @@
               <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['feria'], 2) }}</td>
               <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][0]->Tot2}}</td>
             </TR>
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
-              </TR>
-              <TR>
-                <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
-                <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
-          <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
-              </TR>
-         
-              <TR>
-                <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
-                <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
-              </TR>
-            
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">CAJERO LIBRO</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_seg[0]['BALLIVIAN'][1]->Tot1 + $arrayball21['libros'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{$total_seg[0]['BALLIVIAN'][1]->Tot2}}</td>
+            </TR>
+            <TR>
+              <td class="text-start" style="background: #f8f8f8; color: black">INSTITUCIONAL</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball19['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($arrayball20['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{ number_format($total_seg[0]['BALLIVIAN'][2]->Tot1 + $arrayball21['instit'], 2) }}</td>
+              <td class="text-end" style="background: #f8f8f8; color: black">{{$total_seg[0]['BALLIVIAN'][2]->Tot2}}</td>
+            </TR>
+
+            <TR>
+              <td class="text-start" style="background: hsl(217, 23%, 89%); color: black">RETAIL</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball19['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($arrayball20['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ number_format($total_retail[0]['BALLIVIAN'][0]->Tot1 + $arrayball21['retail'], 2) }}</td>
+              <td class="text-end" style="background: hsl(217, 23%, 89%); color: black">{{ $total_retail[0]['BALLIVIAN'][0]->Tot2 }}</td>
+            </TR>
+
         </table>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -3419,10 +3421,9 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 
 <script>
-    
   $(document).ready(function() {
     $('#table_ventas').DataTable({
       "ordering": false,
@@ -3437,23 +3438,23 @@
           extend: "excel",
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
-          excelStyles: {                      
-                cells: [2,4,5,10,14,18,,22,30,36,39,42],                     
-                style: {                      
-                    font: {                     
-                        name: "Arial",         
-                        size: "12",         
-                        color: "FFFFFF",       
-                        b: false,             
-                    },
-                    fill: {                     
-                        pattern: {              
-                            color: "548236",   
-                        }
-                    }
+          excelStyles: {
+            cells: [2, 4, 5, 10, 14, 18, , 22, 30, 36, 39, 42],
+            style: {
+              font: {
+                name: "Arial",
+                size: "12",
+                color: "FFFFFF",
+                b: false,
+              },
+              fill: {
+                pattern: {
+                  color: "548236",
                 }
-            },
-      
+              }
+            }
+          },
+
         }]
       },
       "aLengthMenu": [100],
@@ -3469,8 +3470,6 @@
     sum += parseFloat($(this).text().replace(/,/g, ''), 10);
   });
   $("#t").val(sum.toFixed(2));
-
-  
 </script>
 
 @endsection

@@ -4,6 +4,7 @@
   body {
     font-size: 1.0rem;
   }
+
   .derecha td,
   .derecha th {
     text-align: end;
@@ -14,12 +15,14 @@
     top: 0;
     z-index: 10;
   }
+
   #table_ventas_filter {
     margin-right: 30px;
     position: sticky;
     top: 0;
     z-index: 10;
   }
+
   #encabezado {
     position: sticky;
     list-style-type: none;
@@ -36,7 +39,7 @@
 @endsection
 @section('content')
 <div id="encabezado">
-  @include('layouts.sidebar2', ['hide'=>'0']) 
+  @include('layouts.sidebar2', ['hide'=>'0'])
 </div>
 
 <div class="mt-4 mb-3" style="width: 90%; height: 670px; margin: auto;">
@@ -54,9 +57,9 @@
       <thead class="text-white" style="background-color: #283056;">
         <TR class="text-uppercase" style="letter-spacing: 4px; font-size: 1rem;">
           <TH colspan="1" class="text-center"></TH>
-  
+
           @foreach ($options as $k => $value)
-  
+
           <TH colspan="4" class="text-center">{{$value}}</TH>
           @endforeach
           <TH colspan="4" class="text-center" style="background-color: #284556;">COMPARATIVO ANUAL</TH>
@@ -111,7 +114,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-          
+
           <td>{{ $total_general[0]->$val1}}</td>
           <td>{{ $total_general[0]->$val2}}</td>
           <td>{{ $total_general[0]->$val3}}</td>
@@ -131,13 +134,13 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[0]['BALLIVIAN'][0]->$val1 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->$val2 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->$val3 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->$val4 }}</td>
           @endforeach
-  
+
           <td>{{ $total[0]['BALLIVIAN'][0]->TotC2 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->Tot2 }}</td>
           <td>{{ $total[0]['BALLIVIAN'][0]->TotVDesc }}</td>
@@ -153,13 +156,13 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           <td>{{ $val->$val3 }}</td>
           <td>{{ $val->$val4 }}</td>
           @endforeach
-          
+
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
           <td>{{ $val->TotVDesc }}</td>
@@ -175,7 +178,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-          
+
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val1 }}</td>
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val2 }}</td>
           <td>{{ $total_retail[0]['BALLIVIAN'][0]->$val3 }}</td>
@@ -195,7 +198,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[1]['HANDAL'][0]->$val1 }}</td>
           <td>{{ $total[1]['HANDAL'][0]->$val2 }}</td>
           <td>{{ $total[1]['HANDAL'][0]->$val3 }}</td>
@@ -238,7 +241,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total_retail[1]['HANDAL'][0]->$val1 }}</td>
           <td>{{ $total_retail[1]['HANDAL'][0]->$val2 }}</td>
           <td>{{ $total_retail[1]['HANDAL'][0]->$val3 }}</td>
@@ -258,7 +261,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[2]['MARISCAL'][0]->$val1 }}</td>
           <td>{{ $total[2]['MARISCAL'][0]->$val2 }}</td>
           <td>{{ $total[2]['MARISCAL'][0]->$val3 }}</td>
@@ -300,7 +303,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-          
+
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val1 }}</td>
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val2 }}</td>
           <td>{{ $total_retail[2]['MARISCAL'][0]->$val3 }}</td>
@@ -320,7 +323,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[3]['CALACOTO'][0]->$val1 }}</td>
           <td>{{ $total[3]['CALACOTO'][0]->$val2 }}</td>
           <td>{{ $total[3]['CALACOTO'][0]->$val3 }}</td>
@@ -341,12 +344,12 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           <td>{{ $val->$val3 }}</td>
           <td>{{ $val->$val4 }}</td>
-  
+
           @endforeach
           <td>{{ $val->TotC2 }}</td>
           <td>{{ $val->Tot2 }}</td>
@@ -363,7 +366,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-          
+
           <td>{{ $total_retail_calacoto[0]->$val1 }}</td>
           <td>{{ $total_retail_calacoto[0]->$val2}}</td>
           <td>{{ $total_retail_calacoto[0]->$val3}}</td>
@@ -383,7 +386,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val1 }}</td>
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val2 }}</td>
           <td>{{ $total_retail[3]['CALACOTO'][0]->$val3 }}</td>
@@ -462,7 +465,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val1 }}</td>
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val2 }}</td>
           <td>{{ $total[5]['INSTITUCIONALES'][0]->$val3 }}</td>
@@ -483,7 +486,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           <td>{{ $val->$val3 }}</td>
@@ -504,7 +507,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $total[6]['MAYORISTAS'][0]->$val1 }}</td>
           <td>{{ $total[6]['MAYORISTAS'][0]->$val2 }}</td>
           <td>{{ $total[6]['MAYORISTAS'][0]->$val3 }}</td>
@@ -525,7 +528,7 @@
           $val3 = $value."VDesc";
           $val4 = $value."Imp";
           @endphp
-  
+
           <td>{{ $val->$val1 }}</td>
           <td>{{ $val->$val2 }}</td>
           <td>{{ $val->$val3 }}</td>
@@ -577,7 +580,7 @@
           <td>{{ $val->TotImp }}</td>
         </tr>
         @endforeach
-  
+
         <tr class="text-end" style="font-weight: bold; background-color: rgb(190 205 251);">
           <td class="text-start">REGIONAL 1</td>
           @foreach ($options as $k => $value)
@@ -668,10 +671,9 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.2/js/buttons.html5.styles.templates.min.js"></script>
 
 <script>
-    
   $(document).ready(function() {
     $('#table_ventas').DataTable({
       "ordering": false,
@@ -683,28 +685,26 @@
           }
         },
         buttons: [{
-         
-            
           extend: "excel",
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',
-          excelStyles: {                      
-                cells: [2,4,5,15,19,23,27,30,38,44,47,50],                     
-                style: {                      
-                    font: {                     
-                        name: "Arial",         
-                        size: "12",         
-                        color: "FFFFFF",       
-                        b: false,             
-                    },
-                    fill: {                     
-                        pattern: {              
-                            color: "548236",   
-                        }
-                    }
+          excelStyles: {
+            cells: [2, 4, 5, 15, 19, 23, 27, 30, 38, 44, 47, 50],
+            style: {
+              font: {
+                name: "Arial",
+                size: "12",
+                color: "FFFFFF",
+                b: false,
+              },
+              fill: {
+                pattern: {
+                  color: "548236",
                 }
-            },
-      
+              }
+            }
+          },
+
         }]
       },
       "aLengthMenu": [100],
@@ -720,8 +720,6 @@
     sum += parseFloat($(this).text().replace(/,/g, ''), 10);
   });
   $("#t").val(sum.toFixed(2));
-
-  
 </script>
 
 @endsection
