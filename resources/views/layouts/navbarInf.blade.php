@@ -13,7 +13,7 @@
         @foreach(App\Modulo::orderBy('nombre')->get() as $mod)
         @if(Auth::user()->tieneModulo($mod->id))
       
-        @if ($mod->id==1)
+        @if ($mod->nombre=="Configuracion")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -31,7 +31,7 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==2)
+        @if ($mod->nombre=="Contabilidad")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -49,7 +49,7 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==3)
+        @if ($mod->nombre=="RRHH")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -67,7 +67,7 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==4)
+        @if ($mod->nombre=="Sistemas")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -85,7 +85,7 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==5)
+        @if ($mod->nombre=="Ventas")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -103,7 +103,7 @@
           </ul>
         </li>
         @endif
-        @if ($mod->id==6)
+        @if ($mod->nombre=="Reportes Dualbiz")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -128,7 +128,7 @@
 
         </li>
         @endif
-        @if ($mod->id==7)
+        @if ($mod->nombre=="Inventarios")
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="{{$mod->icon}}"></i>
@@ -146,6 +146,26 @@
           </ul>
         </li>
         @endif
+        @if ($mod->nombre=="Cobranzas")
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="{{$mod->icon}}"></i>
+            <span>{{$mod->nombre}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            @foreach($mod->programs as $prog)
+            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
+            <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
+              <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
+              </a>
+            </li>
+            @endif
+            @endforeach
+          </ul>
+        </li>
+        @endif
+        
+
 
         @endif
         @endforeach
