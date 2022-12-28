@@ -29,6 +29,7 @@
             @endif
             @endforeach
           </ul>
+          
         </li>
         @endif
         @if ($mod->nombre=="Contabilidad")
@@ -120,10 +121,7 @@
             @endif
             
             @endforeach
-          
-     
-
-          </ul>
+        </ul>
         
 
         </li>
@@ -226,5 +224,4 @@
     </div>
   </div>
 </div>
-@section('mis_scripts')
-@endsection
+

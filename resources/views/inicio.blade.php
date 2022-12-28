@@ -214,9 +214,12 @@ transform: scale(1.3);
   }
 
   .label {
-    position: absolute;
+    position: initial;
+    padding-top: 17px;
+    
     color: white;
-    font: 500 13px sans-serif;
+    
+    font: 500 14px sans-serif;
     /* left: 10px; */
     user-select: none;
   }
@@ -429,7 +432,7 @@ transform: scale(1.3);
   </section>
   <div class="envoltura">
     <div class="envolver row">
-      <div class="col-12 d-flex flex-wrap" style="gap: 15px;">
+      <div class="col-18 d-flex flex-wrap" style="gap: 15px;">
     
 
 <!---modelo nuevo--->
@@ -450,7 +453,7 @@ transform: scale(1.3);
               <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="Contabilidad")
-              <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"style="text-align: center"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="RRHH")
               <div class="btn-big morado"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
@@ -512,7 +515,7 @@ transform: scale(1.3);
               
     @if ($submod->nombre=="Toma de inventarios")
    <a href="{{route($prog->route)}}">
-    <div class="btn-big subMenu4"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+    <div class="btn-big subMenu4"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"style="text-align: center"> {{$prog->nombre}} </span> </div>
    </a>
     @endif
                
@@ -544,27 +547,6 @@ transform: scale(1.3);
       </div>
 
 
-
-      <div class="col-4">
-        <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white;">
-          <div style="width: 142px; text-align: center;">
-            <h1 style="margin-top: -14px; margin-left: 8px; background: rgb(64, 64, 64); font-size: 18px;">CONT 1</h1>
-          </div>
-          <div></div>
-        </div>
-        <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white;">
-          <div style="width: 142px; text-align: center;">
-            <h1 style="margin-top: -14px; margin-left: 8px; background: rgb(64, 64, 64); font-size: 18px;">CONT 2</h1>
-          </div>
-          <div></div>
-        </div>
-        <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white;">
-          <div style="width: 142px; text-align: center;">
-            <h1 style="margin-top: -14px; margin-left: 8px; background: rgb(64, 64, 64); font-size: 18px;">CONT 3</h1>
-          </div>
-          <div></div>
-        </div>
-      </div>
       <!--|
         <p class="descripcion">
          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam repellendus veniam, pariatur delectus ratione expedita quas possimus, labore error laboriosam placeat. Natus iste, velit expedita ea dicta quam iure quos.
@@ -614,22 +596,22 @@ transform: scale(1.3);
              @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
               @if ($mod->nombre=="Configuracion")
                       <a href="{{route($prog->route)}}">
-                      <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+                      <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom" style="text-align: center"> {{$prog->nombre}} </span> </div>
                      </a>
               @endif
                @if ($mod->nombre=="Contabilidad")
                        <a href="{{route($prog->route)}}">
-                      <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+                      <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom " style="text-align: center"> {{$prog->nombre}} </span> </div>
                      </a>
               @endif
               @if ($mod->nombre=="RRHH")
               <a href="{{route($prog->route)}}">
-             <div class="btn-big orange"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+             <div class="btn-big orange"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom" style="text-align: center"> {{$prog->nombre}} </span> </div>
             </a>
               @endif
               @if ($mod->nombre=="Sistemas")
               <a href="{{route($prog->route)}}">
-             <div class="btn-big green animacion3"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+             <div class="btn-big green animacion3"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom" style="text-align: center"> {{$prog->nombre}} </span> </div>
             </a>
               @endif
               @if ($mod->nombre=="Reportes Dualbiz")
