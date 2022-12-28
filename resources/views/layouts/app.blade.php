@@ -366,10 +366,6 @@
     .page-wrapper .page-content {
       overflow-x: hidden;
     }
-
-
-
-
     /*-----------------------------chiller-theme-------------------------------------------------*/
 
     .chiller-theme .sidebar-wrapper {
