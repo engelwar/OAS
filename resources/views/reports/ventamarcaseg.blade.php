@@ -760,7 +760,7 @@
                             if(xmp == "xProducto"){
                                 if($("#pareto").is(':checked'))
                                 {
-                                    $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="2" style="cursor: pointer;"></td>'+cabeza+'<th class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;">TOTALES</th><th colspan=2 class="text-center">MARGEN UTIL</th><th colspan=3 class="text-center">PARETO</th></tr>');
+                                    $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="3" style="cursor: pointer;"></td>'+cabeza+'<th class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;">TOTALES</th><th colspan=2 class="text-center">MARGEN UTIL</th><th colspan=3 class="text-center">PARETO</th></tr>');
                                 }
                                 else{
                                     $(this.api().table().header()).prepend('<tr class="subcab" role="row"><td class="sorting_disabled cabeza" rowspan="1" colspan="3" style="cursor: pointer;"></td>'+cabeza+'<td class="sorting_disabled cabeza" rowspan="1" colspan="4" style="cursor: pointer;"></td></tr>');

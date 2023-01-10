@@ -64,6 +64,9 @@ Route::prefix('ventas')->group(function () {
   Route::patch('cotizacion/upload/{id}', 'CotizacionController@upload')->name('cotizacion.upload');
   Route::post('cotizacion/download/{id}', 'CotizacionController@download')->name('cotizacion.download');
 
+  Route::resource('solicitudanuladas', 'SolicitudAnuladasController');
+  Route::get('solicitudanuladas/estado/{id}', 'SolicitudAnuladasController@estado')->name('solicitudanuladas.estado');
+
   Route::resource('planificacion', 'PlanificacionController');
   Route::post('planificacion/next/{id}', 'PlanificacionController@nextDay')->name('planificacion.nextDay');
   Route::post('planificacion/finalizar/', 'PlanificacionController@finalizar')->name('planificacion.finalizar');
