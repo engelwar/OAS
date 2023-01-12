@@ -8,7 +8,7 @@ use App\User;
 use DB;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\CuentasPorCobrarExport;
+use App\Exports\CuentasPorCobrarTotalExport;
 
 class CuentasPorCobrarTotalController extends Controller
 {
@@ -45,11 +45,12 @@ class CuentasPorCobrarTotalController extends Controller
         (
             SELECT cxcTrCcbr
             FROM cxcTr
+            WHERE cxcTrCcbr IN (2,18,19,21,39,40,55,63,64)
             GROUP BY cxcTrCcbr
         ))
         ORDER BY adusrNomb";
     $user = DB::connection('sqlsrv')->select(DB::raw($query));
-    return view('reports.cuentasporcobrar', compact('user'));
+    return view('reports.cuentasporcobrartotal', compact('user'));
   }
 
   /**
@@ -78,182 +79,169 @@ class CuentasPorCobrarTotalController extends Controller
     if ($request->options) {
       $user = "AND cxcTrCcbr IN (" . implode(",", $request->options) . ")";
     }
-    $estado2 = "";
-    if ($request->estado2 == 1) {
-      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= 30";
-    } elseif ($request->estado2 == 2) {
-      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30)";
-    } elseif ($request->estado2 == 3) {
-      $estado2 = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30 + 15)";
-    }
-    $fechaA = date("d/m/Y");
-    $fil = "";
     $fecha = date("d/m/Y", strtotime($request->ffin));
-    $fecha1 = date("d/m/Y", strtotime($request->ffin1));
-    $fecha2 = date("d/m/Y", strtotime($request->ffin2));
-    if ($request->checkfecha == 1) {
-      $fil = "AND liqXCFtra <= '" . $fecha . "'";
-    } elseif ($request->checkfecha == 2) {
-      $fil = "AND liqXCFtra BETWEEN '" . $fecha1 . "' AND '" . $fecha2 . "'";
-    }
-    $saldo0 = "";
-    if ($request->saldo0 != "on") {
-      $saldo0 = "AND cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)) >= 1";
-    }
-
-    $fil2 = "DECLARE @fechaA DATE
-        SELECT @fechaA = '" . date("d/m/Y") . "'";
-    $query =
-      "SELECT
-        cxcTrNtra as 'Cod',
-        cxcTrNcto as 'Cliente',
-        isnull(imLvtRsoc,'-') as Rsocial,
-        isnull(imLvtNNit,'-') as Nit,
-        CONVERT(varchar,cxcTrFtra,103) as 'Fecha',
-        CONVERT(varchar,DATEADD(day, 30/*DiasPlazo*/, cxcTrFtra), 103) as 'FechaVenc',
-        --CONVERT(varchar,cxcTrFppg,103) as 'FPrimP',
-        cast(cxcTrImpt as decimal(10,2))as 'ImporteCXC',
-        REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuenta',
-        REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'Saldo',
-        --isnull(CONVERT(varchar,cobros.FechaCuenta),'-') AS FechaCobro,
-        --REPLACE(cast(cxcTrAcmt as decimal(10,2)),',', '.') as 'ACuenta',
-        cxcTrGlos as 'Glosa',
-        adusrNomb as 'Usuario',
-        admonAbrv as 'Moneda',
-        --cutcuDesc as 'TipodeCuenta',
-        --cxcTrNtrI as 'TransIni',
-        cxcTrNtrI as 'NroVenta',
-        imlvt.imLvtNrfc as 'NroFac',
-        inlocNomb as 'Local',
-        --DiasPlazo,
-        CASE 
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= 30/*DiasPlazo*/ THEN 'VIGENTE'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= (30/*DiasPlazo*/ + 15) THEN 'VENCIDO'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) > (30/*DiasPlazo*/ + 15) THEN 'MORA'
-        END as estado
-        FROM cxcTr 
-        JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
-        JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0
-        JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0      
-        --//CXC generadas por VENTAS
-        /*JOIN
-        (
-        SELECT *
-        FROM cptra 
-        JOIN cptrd ON cptrdNtra = cptraNtra AND cptrdTtra = 11
-        WHERE cptraTtra = 21 AND cptraMdel = 0
-        ) cptra
-        ON cptrdNtrD = cxcTrNtra*/
-        --//CXC generadas por VENTAS 
-        LEFT JOIN
-        (
-            SELECT 
-            imLvtNlvt, imLvtNNit,
-            imLvtRsoc, imLvtNrfc,
-            imlvtNvta, imLvtEsfc,
-            imLvtMdel, imLvtFech
-            FROM imlvt WHERE imlvtNvta <> 0
-            UNION
-            (
-                SELECT 
-                    imLvtNlvt, imLvtNNit,
-                    imLvtRsoc, imLvtNrfc,				
-                    vtVxFNvta as imlvtNvta,
-                    imLvtEsfc, imLvtMdel,
-                    imLvtFech
-                FROM imlvt 
-                JOIN vtVxF ON imLvtNlvt = vtVxFLvta
-            )
-        )as imlvt 
-        ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
-        LEFT JOIN 
-        (
-            SELECT 
-            crentCent,
-            maprfDplz as 'DiasPlazo'
-            FROM crEnt
-            LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0
-            WHERE crentMdel = 0 AND crentStat = 0
-        ) as crent
-        ON crentCent = cxcTrCcto
-        --COBROS DE CXC
-        
-        LEFT JOIN
-        (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
-            FROM liqdC
-            JOIN liqXC ON liqdCNtra = liqXCNtra
-            WHERE liqXCMdel = 0 
-            " . $fil . "
-            GROUP BY liqdCNtcc
-        )as cobros
-        ON cobros.liqdCNtcc = cxcTrNtra
-        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
-        " . $saldo0 . "
-        " . $user . "
-        " . $cliente . "
-        " . $estado2 . "
-        ";
-
-        // dd($query);
-    $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
-    $sum = DB::connection('sqlsrv')
+    $query = "
+      SELECT
+      cxcTrCcto,
+      LTRIM(RTRIM(cxcTrNcto)) as 'Cliente',
+      venta.imLvtFech,
+      venta.imLvtNrfc,
+      cobros.liqXCGlos AS 'Glosa',
+      isnull(imLvtRsoc,'-') as Rsocial,
+      isnull(imLvtNNit,'-') as Nit,
+      CASE
+      WHEN cobros.liqXCFtra <= DATEADD(DAY,10,venta.vtvtaFtra) then 'cont'
+      else 'cred'
+      END as Estado,
+      CONVERT(date, cobros.liqXCFtra) as Fecha,
+      ISNULL(cobros.AcuentaF,0) as 'ACuenta',
+      adusrNomb,
+      inlocNomb
+      INTO #cxc
+      FROM cxcTr
+      LEFT JOIN cptra ON cptraNtrI = cxcTrNtrI
+      LEFT JOIN inloc ON inlocCloc = cxcTrCloc
+      JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
+      LEFT JOIN
+      (
+          SELECT *
+        FROM vtVta
+        LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+      )as venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
+      LEFT JOIN
+      (
+          SELECT liqdCNtcc, liqdCAcmt as AcuentaF, liqXCFtra, liqXCGlos--,SUM(liqdCAcmt) as AcuentaF
+          FROM liqdC
+          JOIN liqXC ON liqdCNtra = liqXCNtra
+          WHERE liqXCMdel = 0 
+          AND liqXCFtra <= '" . $fecha . "'
+      )as cobros ON cobros.liqdCNtcc = cxcTrNtra
+      WHERE cxcTrMdel = 0
+      " . $user . "
+      " . $cliente . "
+      order by imlvtNvta
+    ";
+    $insert = DB::connection('sqlsrv')->unprepared(DB::raw($query));
+    $movimientos = DB::connection('sqlsrv')
       ->select(DB::raw(
-          $fil2 .
-            "SELECT 
-        REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
-        REPLACE(sumACuenta,',', '.') as sumACuenta, 
-        REPLACE(sumSaldo,',', '.') as sumSaldo        
+        "SELECT
+        cxcTrCcto,
+        Cliente,
+        Rsocial,
+        Nit,
+        adusrNomb,
+        inlocNomb,
+        REPLACE(cast(ISNULL(cont,0) as decimal(10,2)),',', '.') AS cont,
+        REPLACE(cast(ISNULL(cred,0) as decimal(10,2)),',', '.') AS cred
         FROM (
-        SELECT 
-        SUM(cast(ImporteCXC as decimal(10,2))) over() as sumImporteCXC, 
-        SUM(cast(ACuenta as decimal(10,2))) over() as sumACuenta, 
-        SUM(cast(Saldo as decimal(10,2))) over() as sumSaldo
-        FROM (" . $query . ") as cxc
-        ) 
-        as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        ));
-    $sum_estado = DB::connection('sqlsrv')
-      ->select(DB::raw($fil2 . "SELECT 
-        REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
-        REPLACE(SUM(cast(ACuenta as decimal(10,2))),',', '.') as ACuenta, 
-        REPLACE(SUM(cast(Saldo as decimal(10,2))),',', '.') as Saldo,
-        estado
-        FROM (" . $query . ") as cxc 
-        GROUP BY estado"));
-    $requestFecha = $request->checkfecha;
+          SELECT
+          cxcTrCcto,
+          Cliente,
+          Estado,
+          ACuenta,
+          adusrNomb,
+          inlocNomb,
+          Rsocial,
+          Nit
+          FROM #cxc
+          --GROUP BY cxcTrCcto,Cliente,Estado
+        ) AS sumcxc
+        PIVOT
+        (
+          SUM(ACuenta)
+          FOR Estado IN ([cred],[cont])
+        ) AS pivotable
+        --GROUP BY cxcTrCcto,Cliente
+        ORDER BY Cliente
+        "
+      ));
+    // dd($movimientos);
     $titulos =
       [
-        ['name' => 'codigo', 'data' => 'codigo', 'title' => 'Codigo', 'tip' => 'filtro'],
-        ['name' => 'cliente', 'data' => 'cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
+        ['name' => 'Cliente', 'data' => 'Cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
         [],
-        ['name' => 'nit', 'data' => 'nit', 'title' => 'NIT', 'tip' => 'filtro'],
-        [],
-        [],
-        [],
+        ['name' => 'Nit', 'data' => 'Nit', 'title' => 'NIT', 'tip' => 'filtro'],
+        ['name' => 'adusrNomb', 'data' => 'adusrNomb', 'title' => 'Usuario', 'tip' => 'filtro'],
+        ['name' => 'inlocNomb', 'data' => 'inlocNomb', 'title' => 'Local', 'tip' => 'filtro_select'],
         [],
         [],
-        [],
-        ['name' => 'usuario', 'data' => 'usuario', 'title' => 'Usuario', 'tip' => 'filtro'],
-        [],
-        ['name' => 'nventa', 'data' => 'nventa', 'title' => 'NVenta', 'tip' => 'filtro'],
-        ['name' => 'nrofac', 'data' => 'nrofac', 'title' => 'NroFac', 'tip' => 'filtro'],
-        ['name' => 'local', 'data' => 'local', 'title' => 'Local', 'tip' => 'filtro'],
-        ['name' => 'estado', 'data' => 'estado', 'title' => 'Estado', 'tip' => 'filtro'],
       ];
     if ($request->gen == "export") {
-      $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2', 'fecha', 'requestFecha'))
+      $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('movimiento'))
         ->setOrientation('landscape')
         ->setPaper('letter')
         ->setOption('footer-right', 'Pag [page] de [toPage]')
         ->setOption('footer-font-size', 8);
       return $pdf->inline('Cuentas Por Cobrar Entre_' . $fecha1 . ' - ' . $fecha2 . '.pdf');
     } elseif ($request->gen == "excel") {
-      $export = new CuentasPorCobrarExport($cxc, $request->checkfecha, $fecha, $fecha1, $fecha2);
-      return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
+      $query_excel = "
+      SELECT
+      fechaNR,
+      vtvtaNtra,
+      Cliente,
+      fechaFC,
+      imLvtNrfc,
+      Glosa,
+      Rsocial,
+      Nit,
+      ImporteCXC,
+      fechaAC,
+      REPLACE(cast(ISNULL(cont,0) as decimal(10,2)),',', '.') AS cont,
+      REPLACE(cast(ISNULL(cred,0) as decimal(10,2)),',', '.') AS cred,
+      adusrNomb
+      FROM (
+        SELECT
+        CONVERT(varchar,venta.vtvtaFtra,103) AS fechaNR,
+        venta.vtvtaNtra,
+        cxcTrCcto,
+        cxcTrNcto AS 'Cliente',
+        CONVERT(varchar,venta.imLvtFech,103) AS fechaFC,
+        venta.imLvtNrfc,
+        cobros.liqXCGlos AS 'Glosa',
+        isnull(imLvtRsoc,'-') AS Rsocial,
+        isnull(imLvtNNit,'-') AS Nit,
+        cast(cxcTrImpt AS decimal(10,2))AS 'ImporteCXC',
+        CASE
+        WHEN cobros.liqXCFtra <= DATEADD(DAY,10,venta.vtvtaFtra) THEN 'cont'
+        ELSE 'cred'
+        END AS Estado,
+        CONVERT(varchar,cobros.liqXCFtra,103) AS fechaAC,
+        ISNULL(cobros.AcuentaF,0) AS 'ACuenta',
+        adusrNomb
+        FROM cxcTr
+        LEFT JOIN cptra ON cptraNtrI = cxcTrNtrI
+        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
+        LEFT JOIN
+        (
+          SELECT *
+          FROM vtVta
+          LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+        )AS venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
+        LEFT JOIN
+        (
+          SELECT liqdCNtcc, liqdCAcmt AS AcuentaF, liqXCFtra, liqXCGlos--,SUM(liqdCAcmt) as AcuentaF
+          FROM liqdC
+          JOIN liqXC ON liqdCNtra = liqXCNtra
+          WHERE liqXCMdel = 0 
+          AND liqXCFtra <= '" . $fecha . "'
+          --GROUP BY liqdCNtcc
+        )AS cobros ON cobros.liqdCNtcc = cxcTrNtra
+        WHERE cxcTrMdel = 0
+        " . $user . "
+        " . $cliente . "
+      ) AS pivotdetalle
+      PIVOT
+      (
+        SUM(ACuenta)
+        FOR Estado IN ([cont],[cred])
+      ) AS pivotable
+      ORDER BY fechaNR
+      ";
+      $sql_excel = DB::connection('sqlsrv')->select(DB::raw($query_excel));
+      $export = new CuentasPorCobrarTotalExport($sql_excel,$fecha);
+      return Excel::download($export, 'Cuentas Por Cobrar Total.xlsx');
     } else if ($request->gen == "ver") {
-      return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'titulos'));
+      return view('reports.vista.cuentasporcobrartotal', compact('movimientos', 'titulos'));
     }
   }
 
@@ -300,162 +288,5 @@ class CuentasPorCobrarTotalController extends Controller
   public function destroy($id)
   {
     //
-  }
-
-  public function cobranzas(Request $request)
-  {
-    $user = "AND adusrCusr = ".$request->options."";
-    $fecha = date("d/m/Y", strtotime($request->ffin));
-    $fil = "AND liqXCFtra <= '" . $fecha . "'";
-    if ($request->estado == "Vigente") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= 30";
-    } 
-    if ($request->estado == "Vencido") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30)";
-    } elseif ($request->estado == "Mora") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30 + 15)";
-    }
-
-    $fil2 = "DECLARE @fechaA DATE
-        SELECT @fechaA = '" . date("d/m/Y") . "'";
-    $query =
-      "SELECT
-        cxcTrNtra as 'Cod',
-        cxcTrNcto as 'Cliente',
-        isnull(imLvtRsoc,'-') as Rsocial,
-        isnull(imLvtNNit,'-') as Nit,
-        CONVERT(varchar,cxcTrFtra,103) as 'Fecha',
-        CONVERT(varchar,DATEADD(day, 30/*DiasPlazo*/, cxcTrFtra), 103) as 'FechaVenc',
-        --CONVERT(varchar,cxcTrFppg,103) as 'FPrimP',
-        cast(cxcTrImpt as decimal(10,2))as 'ImporteCXC',
-        REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuenta',
-        REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'Saldo',
-        --isnull(CONVERT(varchar,cobros.FechaCuenta),'-') AS FechaCobro,
-        --REPLACE(cast(cxcTrAcmt as decimal(10,2)),',', '.') as 'ACuenta',
-        cxcTrGlos as 'Glosa',
-        adusrNomb as 'Usuario',
-        admonAbrv as 'Moneda',
-        --cutcuDesc as 'TipodeCuenta',
-        --cxcTrNtrI as 'TransIni',
-        cxcTrNtrI as 'NroVenta',
-        imlvt.imLvtNrfc as 'NroFac',
-        inlocNomb as 'Local',
-        --DiasPlazo,
-        CASE 
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= 30/*DiasPlazo*/ THEN 'VIGENTE'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= (30/*DiasPlazo*/ + 15) THEN 'VENCIDO'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) > (30/*DiasPlazo*/ + 15) THEN 'MORA'
-        END as estado
-        FROM cxcTr 
-        JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
-        JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0
-        JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0      
-        --//CXC generadas por VENTAS
-        /*JOIN
-        (
-        SELECT *
-        FROM cptra 
-        JOIN cptrd ON cptrdNtra = cptraNtra AND cptrdTtra = 11
-        WHERE cptraTtra = 21 AND cptraMdel = 0
-        ) cptra
-        ON cptrdNtrD = cxcTrNtra*/
-        --//CXC generadas por VENTAS 
-        LEFT JOIN
-        (
-            SELECT 
-            imLvtNlvt, imLvtNNit,
-            imLvtRsoc, imLvtNrfc,
-            imlvtNvta, imLvtEsfc,
-            imLvtMdel, imLvtFech
-            FROM imlvt WHERE imlvtNvta <> 0
-            UNION
-            (
-                SELECT 
-                    imLvtNlvt, imLvtNNit,
-                    imLvtRsoc, imLvtNrfc,				
-                    vtVxFNvta as imlvtNvta,
-                    imLvtEsfc, imLvtMdel,
-                    imLvtFech
-                FROM imlvt 
-                JOIN vtVxF ON imLvtNlvt = vtVxFLvta
-            )
-        )as imlvt 
-        ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
-        LEFT JOIN 
-        (
-            SELECT 
-            crentCent,
-            maprfDplz as 'DiasPlazo'
-            FROM crEnt
-            LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0
-            WHERE crentMdel = 0 AND crentStat = 0
-        ) as crent
-        ON crentCent = cxcTrCcto
-        --COBROS DE CXC
-        
-        LEFT JOIN
-        (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
-            FROM liqdC
-            JOIN liqXC ON liqdCNtra = liqXCNtra
-            WHERE liqXCMdel = 0 
-            " . $fil . "
-            GROUP BY liqdCNtcc
-        )as cobros
-        ON cobros.liqdCNtcc = cxcTrNtra
-        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
-        AND cobros.AcuentaF >= 1
-        " . $user . "
-        ".$estado."
-        ";
-
-        // dd($query);
-    $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
-    $sum = DB::connection('sqlsrv')
-      ->select(DB::raw(
-          $fil2 .
-            "SELECT 
-        REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
-        REPLACE(sumACuenta,',', '.') as sumACuenta, 
-        REPLACE(sumSaldo,',', '.') as sumSaldo        
-        FROM (
-        SELECT 
-        SUM(cast(ImporteCXC as decimal(10,2))) over() as sumImporteCXC, 
-        SUM(cast(ACuenta as decimal(10,2))) over() as sumACuenta, 
-        SUM(cast(Saldo as decimal(10,2))) over() as sumSaldo
-        FROM (" . $query . ") as cxc
-        ) 
-        as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        ));
-    $sum_estado = DB::connection('sqlsrv')
-      ->select(DB::raw($fil2 . "SELECT 
-        REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
-        REPLACE(SUM(cast(ACuenta as decimal(10,2))),',', '.') as ACuenta, 
-        REPLACE(SUM(cast(Saldo as decimal(10,2))),',', '.') as Saldo,
-        estado
-        FROM (" . $query . ") as cxc 
-        GROUP BY estado"));
-    $requestFecha = $request->checkfecha;
-    $titulos =
-      [
-        ['name' => 'codigo', 'data' => 'codigo', 'title' => 'Codigo', 'tip' => 'filtro'],
-        ['name' => 'cliente', 'data' => 'cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
-        [],
-        ['name' => 'nit', 'data' => 'nit', 'title' => 'NIT', 'tip' => 'filtro'],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        ['name' => 'usuario', 'data' => 'usuario', 'title' => 'Usuario', 'tip' => 'filtro'],
-        [],
-        ['name' => 'nventa', 'data' => 'nventa', 'title' => 'NVenta', 'tip' => 'filtro'],
-        ['name' => 'nrofac', 'data' => 'nrofac', 'title' => 'NroFac', 'tip' => 'filtro'],
-        ['name' => 'local', 'data' => 'local', 'title' => 'Local', 'tip' => 'filtro'],
-        ['name' => 'estado', 'data' => 'estado', 'title' => 'Estado', 'tip' => 'filtro'],
-      ];
-    return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'titulos'));
   }
 }

@@ -139,6 +139,9 @@ Route::prefix('reports')->group(function () {
   Route::resource('cuentasporcobrar', 'Reports\CuentasPorCobrarController');
   Route::resource('cuentasporcobrardetalle', 'Reports\CuentasPorCobrarDetalleController');
 
+  Route::resource('cuentasporcobrartotal', 'Reports\CuentasPorCobrarTotalController');
+  Route::resource('cuentasporcobrardetalletotal', 'Reports\CuentasPorCobrarDetalleTotalController');
+
   Route::resource('cuentasporpagar', 'Reports\CuentasPorPagarController');
   Route::resource('cuentasporpagardetalle', 'Reports\CuentasPorPagarDetalleController');
 
