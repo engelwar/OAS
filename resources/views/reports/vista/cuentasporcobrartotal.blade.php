@@ -110,12 +110,20 @@
           title: 'Local'
         },
         {
+          data: 'importeCXC',
+          title: 'ImporteCxC'
+        },
+        {
           data: 'cont',
           title: 'Contado'
         },
         {
           data: 'cred',
           title: 'Credito'
+        },
+        {
+          data: 'saldo',
+          title: 'Saldo'
         },
       ],
       "pageLength": 100,
@@ -128,7 +136,7 @@
         },
         {
           className: "dt-right",
-          "targets": [5, 6]
+          "targets": [5, 6, 7, 8]
         },
         // {
         //   className: "sum_total",
