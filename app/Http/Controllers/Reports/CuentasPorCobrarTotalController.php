@@ -238,7 +238,7 @@ class CuentasPorCobrarTotalController extends Controller
       ORDER BY fechaNR
       ";
       $sql_excel = DB::connection('sqlsrv')->select(DB::raw($query_excel));
-      $export = new CuentasPorCobrarTotalExport($sql_excel,$fecha);
+      $export = new CuentasPorCobrarTotalExport($sql_excel, $fecha);
       return Excel::download($export, 'Cuentas Por Cobrar Total.xlsx');
     } else if ($request->gen == "ver") {
       return view('reports.vista.cuentasporcobrartotal', compact('movimientos', 'titulos'));

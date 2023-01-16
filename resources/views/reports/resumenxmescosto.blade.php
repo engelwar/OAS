@@ -60,7 +60,7 @@
         @csrf
         <div class=" row d-flex justify-content-center my-3">
           <div class="d-flex align-items-center justify-content-center">
-            <h3 class="text-primary">COMPARATIVO COSTOS/VENTAS 2022</h3>
+            <h3 class="text-primary">ESTADO DE RESULTADO</h3>
           </div>
         </div>
         <div class="row d-flex justify-content-center">

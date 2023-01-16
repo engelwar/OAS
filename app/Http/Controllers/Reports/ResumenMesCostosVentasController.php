@@ -40,7 +40,7 @@ class ResumenMesCostosVentasController extends Controller
   public function store(Request $request)
   {
     $segmento = [
-      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68,65,9,7,75,80,5]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [5,22, 41, 49, 46,61, 68,65,9,7,80]],
       ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28, 69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
@@ -66,7 +66,7 @@ class ResumenMesCostosVentasController extends Controller
       ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'alm' => [57, 58]],
       ['name' => 'REGIONAL2', 'abrv' => 'REGIONAL2', 'alm' => [59, 60, 61]],
     ];
-    $general = [5,22, 41, 49, 46,61, 68,65,9,26, 42, 50, 28, 69,38, 44, 51, 37, 67,29,57,74,32,43,52,76,77,78,16, 17, 62, 56, 3, 58, 4,18, 19, 55, 21, 20,40, 39,63,64,7,75,80];
+    $general = [5,22, 41, 49, 46,61, 68,65,9,26, 42, 50, 28, 69,38, 44, 51, 37, 67,29,57,74,32,43,52,76,77,78,16, 17, 62, 56, 3, 58, 4,18, 19, 55, 21, 20,40, 39,63,64,7,80];
 
     // $fini = date("d/m/Y", strtotime($request->fini));
     // $ffin = date("d/m/Y", strtotime($request->ffin));
