@@ -6,7 +6,15 @@
     <title>Carta</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+        .contenedorBottom{
+    position: absolute;
+    display:block;
 
+}
+table {
+	width: 10%;
+	height: 100%;
+}
 
 img.redimension {
   padding-top: 1px;
@@ -46,8 +54,8 @@ border-width: 0;
 }
 .text-justify {
   text-align: justify;
-  text-indent: 60px;
-  font-size: 17px;
+
+  font-size: 0.4cm
 }
         body{
             font-size:0.8rem;
@@ -87,78 +95,89 @@ padding-left: 170px;
     
    
 <div id="margen">
-    <h5 class="letra">La Paz {{$fechaH}}</h5>       
-    <h5 class="letra">LYPO/ADM//COB/[0{{$conta}} - 2022]</h5>
-        <H3 class="letra; mt-5">{{$option}}</H3>
-        <H3 class="letra">{{$clienteC}}</H3>
-
-        <H3 class="letra">Presente.-</H3>
-        <H3 style="text-align: right" class="letra"><strong> Ref.: <span class="raya;letra">CONFIRMACION DE SALDO CLIENTES</strong> </span> </H3>
+    <span class="letra" style="font-size: 0.4cm">La Paz {{$fechaH}}</span> 
+    <br>      
+    <span class="letra" style="font-size: 0.3cm">LYPO /ADM /COB /0{{$conta}} - 2023</span>
+    
+        <p class="letra" style="font-size: 0.4cm;padding-top: 1.50cm;padding-bottom: 0.1cm;line-height: 140%"
+        
+        >{{$option}} <br>
+        {{$clienteC}}<br>
+        <span style="text-decoration: underline">Presente.-</span>
+    </p>
+       
+     
+        <H3 style="text-align: right;font-size: 0.4cm" class="letra"> <b>Ref.: <span class="raya;letra" style="text-decoration: underline">ESTADO DE CUENTA CLIENTE</span></b> </H3>
         @if ($option=="Señor")
-        <span class="letra;mt-5" style="font-size: 18px;">Distinguido {{$option}}:</span>  
+        <span class="letra;mt-5" style="font-size: 0.4cm;">Distinguido {{$option}}:</span>  
         @endif
         @if ($option=="Señora")
-        <span class="letra;mt-5" style="font-size: 18px;">Distinguida {{$option}}:</span>  
+        <span class="letra;mt-5" style="font-size: 0.4cm;">Distinguida {{$option}}:</span>  
         @endif
         @if ($option=="Señores")
-        <span class="letra;mt-5" style="font-size: 18px;">Distinguidos {{$option}}:</span>  
+        <span class="letra;mt-5" style="font-size: 0.4cm;">Distinguidos {{$option}}:</span>  
         @endif
-        <p style="padding-top: 20px;" class="text-justify"> Como resultado de la Auditoria Interna realizada al {{$fechaC}}, nuestros libros contables registran un saldo por cobrar de $us. {{$dolar}} ({{$dolarNu[0]}} {{$dolarNu[1]}} Dolares), 
-            su equivalente al tipo de cambio actual de Bs. {{$bs}} ({{$bsNu[0]}} {{$bsNu[1]}} Bolivianos), detallado de la siguiente manera:
-       </p> 
+        <p style="padding-top: 20px; " class="text-justify">
+            Por intermedio de la presente, hacemos conocer el estado de cuenta conciliado al {{$fechaC}}. El importe pendiente de pago según nuestros libros contables 
+            asciende a USD {{$dolar}} ({{$dolarNu[0]}} {{$dolarNu[1]}}) dólares
+            americanos, equivalente a Bs. {{$bs}} ({{$bsNu[0]}} {{$bsNu[1]}}) bolivianos,
+             cuya composición es el siguiente:
+          
+        </p> 
      
 </div>
-<h4 style="text-align: center; padding-top: 4px;"> <strong class="letra">ESTADO DE CUENTA CLIENTE</strong></h4>
-       <h4 style="text-align: center; font-size: 12px"> <strong class="letra" >Al: {{$fechaC}}</strong></h4>
-    <div style="padding-top: 10px">
-        <table class = "table table-bordered table-sm" > 
+<h4 style="text-align: center; padding-top: 3px;font-size: 0.4cm;"> <strong class="letra">ESTADO DE CUENTA CLIENTE</strong></h4>
+       <h4 style="text-align: center; font-size: 14px"> <strong class="letra" >Al {{$fechaC}}</strong></h4>
+    <div style="padding-top: 10px;margin-left: 40px"> 
+        <table class = "table table-bordered table-sm"> 
             <thead class="thead-light">
           <tr>
-              <td colspan="3" style="text-align: center;background: #d8d8e4; font-size: 17px" class="letra">FECHA</td>
+              <td colspan="3" style="text-align: center;background: #d8d8e4; fon
+              t-size: 17px" class="letra">FECHA</td>
               <td style="background: #c8c8ea;"></td>
               <td colspan="3"  style="border-inline-color: initial   text-align: center;background: #c8c8ea; font-size: 17px" class="letra">IMPORTE EN DOLARES</td>
               <td colspan="3" style="text-align: center;background: #d8d8e4; font-size: 17px" class="letra">IMPORTE EN BOLIVIANOS</td>
           </tr>
           <tr>
      
-              <td style="text-align: center;background: #d8d8e4;" class="letra">FACTURADO</td>
-              <TD style="text-align: center;background: #d8d8e4;" class="letra">NRO. FACTURA</TD>
-              <td style="text-align: center;background: #d8d8e4;" class="letra">VENCIMIENTO</td>
-              <td style="text-align: center;background: #c8c8ea;" class="letra">ESTADO</td>
-              <td style="text-align: center;background: #c8c8ea;" class="letra">IMPORTE</td>
-              <td style="text-align: center;background: #c8c8ea;" class="letra">A CUENTA</td>
-              <td style="text-align: center;background: #c8c8ea;" class="letra" >SALDO</td>
-              <td style="text-align: center;background: #d8d8e4;" class="letra">IMPORTE</td>
-              <td style="text-align: center;background: #d8d8e4;" class="letra">A CUENTA</td>
-              <td style="text-align: center;background: #d8d8e4;" class="letra">SALDO</td>
+              <td style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">FACTURADO</td>
+              <TD style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">Nro. FACTURA</TD>
+              <td style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">VENCIMIENTO</td>
+              <td style="text-align: center;background: #c8c8ea;font-size: 0.4cm " class="letra">ESTADO</td>
+              <td style="text-align: center;background: #c8c8ea;font-size: 0.4cm" class="letra">IMPORTE</td>
+              <td style="text-align: center;background: #c8c8ea;font-size: 0.4cm" class="letra">A CUENTA</td>
+              <td style="text-align: center;background: #c8c8ea;font-size: 0.4cm" class="letra" >SALDO</td>
+              <td style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">IMPORTE</td>
+              <td style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">A CUENTA</td>
+              <td style="text-align: center;background: #d8d8e4;font-size: 0.4cm" class="letra">SALDO</td>
               </tr>
           </thead>
           <tbody>
               @foreach ($cxcCarta as $i)
               <tr>
-                  <td style="text-align: center" class="letra">{{$i->Fecha}}</td>
-                  <td style="text-align: center" class="letra">{{$i->NroFac}}</td>
-                  <td style="text-align: center" class="letra">{{$i->FechaVenc}}</td>
-                  <td style="text-align: center" class="letra">{{$i->estado}}</td>
-                  <td style="text-align: center" class="letra">{{$i->ImporteCXCDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$i->ACuentaDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$i->SaldoDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$i->ImporteCXCBS}}</td>
-                  <td style="text-align: center" class="letra">{{$i->ACuentaBS}}</td>
-                  <td style="text-align: center" class="letra">{{$i->SaldoBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->Fecha}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->NroFac}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->FechaVenc}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->estado}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->ImporteCXCDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->ACuentaDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->SaldoDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->ImporteCXCBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->ACuentaBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$i->SaldoBS}}</td>
               </tr>
               @endforeach
               @foreach ($totalS as $t)
               <tr>
                   <td style="text-align: center;border: none;" colspan="3"></td>
                   
-                  <td style="text-align: center;" class="letra">TOTALES</td>
-                  <td style="text-align: center" class="letra">{{$t->ImporteCXCDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$t->ACuentaDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$t->SaldoDolar}}</td>
-                  <td style="text-align: center" class="letra">{{$t->ImporteCXCBS}}</td>
-                  <td style="text-align: center" class="letra">{{$t->ACuentaBS}}</td>
-                  <td style="text-align: center" class="letra">{{$t->SaldoBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">TOTALES</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->ImporteCXCDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->ACuentaDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->SaldoDolar}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->ImporteCXCBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->ACuentaBS}}</td>
+                  <td style="text-align: center;font-size: 0.4cm" class="letra">{{$t->SaldoBS}}</td>
                  
               </tr>  
               @endforeach
@@ -168,16 +187,32 @@ padding-left: 170px;
     </div>     
    
     <div id="margenBottom" >
-        <p style="padding-top: 0px;font-size: 17px"class="text-justify" >Agradecemos comunicar cualquier observación, adjuntando el debido respaldo, caso contrario daremos por confimado el saldo mencionado.</p>
+        <p style="padding-top: 0px;"class="text-justify " >Agradecemos hacernos conocer a la brevedad posible su conformidad, caso contrario adjuntar el respaldo de pagos efectuados y no considerados en el presente estado.</p>
        
+    </div>
+    <div id="margenBottom" style="position: absolute;margin-top: 10px;word-wrap: break-word">
+        <div style="position: relative;" class="contenedorBottom">
+            
+            <p style="padding-top: 0px;"class="text-justify;">Sin otro en particular, enviamos un cordial saludo.</p>
+           <p style="padding-top: 0px;"class="text-justify"> Atentamente,</p>
+            <div style="padding-top: 80px;padding-bottom: 0px">
+                <p class="text-justify;line-height: 120%">
+                    Ernesto Weiberg Jáuregui<br>
+                    GERENTE DE ADMINISTRACION Y LOGISTICA <br>
+                 
+                </p>
+                <p style="font-size: 8px;margin-top: 1px;margin-bottom: 0px "class="text-justify line-height: 100%">
+                    CC /ARCH <br>
+                    ADM/CONT
+                </p>
+            </div>
+        </div>
+        
     </div>
   
 
 
  
-   <div style="position: absolute">
-
-   <img style="position: relative;" alt="foto" class="redimension" src="{{asset('imagenes/IMAGEN1.png')}}"/> 
-    </div>
+   
     </body> 
     </html>

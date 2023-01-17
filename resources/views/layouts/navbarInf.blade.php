@@ -169,18 +169,7 @@
         @endforeach
      
         
-        <div class="
-            @if(!Auth::user()->tienePermiso(31,17))
-                d-none
-            @endif">
-          <button type="button" class="btn btn-primary position-relative" style="background: none; border: none;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fa fa-bell" aria-hidden="true" style="color: rgb(83, 83, 83); padding-top: 10px;"></i>
-            <span id="R" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              0
-              <span class="visually-hidden">unread messages</span>
-            </span>
-          </button>
-        </div>
+        
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="user-name">{{ Auth::user()->perfiles->nombre}} </span>

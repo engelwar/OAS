@@ -171,12 +171,20 @@ public function contador(Request $request){
   WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= (30/*DiasPlazo*/ + 15) THEN 'VENCIDO'  
   WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) > (30/*DiasPlazo*/ + 15) THEN 'MORA'   
   END as estado,
-  cast(cxcTrImpt as decimal(10,2))as 'ImporteCXCBS',   
-  REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuentaBS', 
-  REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'SaldoBS',    
-   cast(cxcTrImpt * 6.96 as decimal(10,2))as 'ImporteCXCDolar',   
-  REPLACE(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2)),',', '.') as 'ACuentaDolar', 
-  REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2)),',', '.') as 'SaldoDolar' 
+
+  CONVERT(VARCHAR, cast((cxcTrImpt) as money),1) as 'ImporteCXCBS',
+  CONVERT(VARCHAR, cast(ISNULL(cobros.AcuentaF,0) as money),1) as 'ACuentaBS',
+  CONVERT(VARCHAR, cast(((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))) as money),1) as 'SaldoBS',
+  CONVERT(VARCHAR, cast(((cxcTrImpt *6.96)) as money),1) as 'ImporteCXCDolar',
+  CONVERT(VARCHAR, cast(ISNULL(cobros.AcuentaF,0)*6.96 as money),1) as 'ACuentaDolar',
+  CONVERT(VARCHAR, cast((((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96)) as money),1) as 'SaldoDolar'
+
+  --cast(cxcTrImpt as decimal(10,2))as 'ImporteCXCBS',   
+  --REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuentaBS', 
+ -- REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'SaldoBS',    
+  -- cast(cxcTrImpt * 6.96 as decimal(10,2))as 'ImporteCXCDolar',   
+  --REPLACE(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2)),',', '.') as 'ACuentaDolar', 
+  --REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2)),',', '.') as 'SaldoDolar' 
   
   
   FROM cxcTr       
@@ -259,12 +267,19 @@ order by Cliente
         SELECT @fechaA = '".$fecha."'
         SELECT
         cxcTrNcto as 'Cliente' ,
-        sum(cast(cxcTrImpt as decimal(10,2)))as 'ImporteCXCBS',   
-        REPLACE(sum(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2))),',', '.') as 'ACuentaBS', 
-        REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))),',', '.') as 'SaldoBS',    
-         sum(cast(cxcTrImpt * 6.96 as decimal(10,2)))as 'ImporteCXCDolar',   
-        REPLACE(sum(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2))),',', '.') as 'ACuentaDolar', 
-        REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2))),',', '.') as 'SaldoDolar' 
+        CONVERT(VARCHAR, cast(SUM(cxcTrImpt) as money),1) as 'ImporteCXCBS',
+        CONVERT(VARCHAR, cast(SUM(ISNULL(cobros.AcuentaF,0)) as money),1) as 'ACuentaBS',
+        CONVERT(VARCHAR, cast(SUM((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))) as money),1) as 'SaldoBS',
+        CONVERT(VARCHAR, cast(SUM((cxcTrImpt * 6.96)) as money),1) as 'ImporteCXCDolar',
+        CONVERT(VARCHAR, cast(SUM((ISNULL(cobros.AcuentaF,0)*6.96)) as money),1) as 'ACuentaDolar', 
+        CONVERT(VARCHAR, cast(SUM(((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)))*6.96) as money),1) as 'SaldoDolar'
+
+       --sum(cast(cxcTrImpt as decimal(10,2)))as 'ImporteCXCBS',   
+       --REPLACE(sum(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2))),',', '.') as 'ACuentaBS', 
+       --REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))),',', '.') as 'SaldoBS',    
+       --sum(cast(cxcTrImpt * 6.96 as decimal(10,2)))as 'ImporteCXCDolar',   
+       --REPLACE(sum(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2))),',', '.') as 'ACuentaDolar', 
+       --REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2))),',', '.') as 'SaldoDolar' 
         
         FROM cxcTr       
         JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0    
@@ -327,12 +342,92 @@ order by Cliente
        order by Cliente
    ---   and cxcTrNcto ='ANA CLAVIJO'  
       "; 
+
+           //totales---texto------------------
+           $totalTexto="
+           DECLARE @fechaA DATE    
+           SELECT @fechaA = '".$fecha."'
+           SELECT
+           cxcTrNcto as 'Cliente' ,
+           CONVERT(VARCHAR, cast(SUM(cxcTrImpt) as money),1) as 'ImporteCXCBS',
+           CONVERT(VARCHAR, cast(SUM(cobros.AcuentaF) as money),1) as 'ACuentaBS',
+          -- sum(cast(cxcTrImpt as decimal(10,2)))as 'ImporteCXCBS',   
+          --  REPLACE(sum(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2))),',', '.') as 'ACuentaBS', 
+       
+           
+         REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))),',', '.') as 'SaldoBS',    
+         
+           sum(cast(cxcTrImpt * 6.96 as decimal(10,2)))as 'ImporteCXCDolar',   
+           REPLACE(sum(cast(ISNULL(cobros.AcuentaF*6.96,0) as decimal(10,2))),',', '.') as 'ACuentaDolar', 
+           REPLACE(sum(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0))*6.96 as decimal(10,2))),',', '.') as 'SaldoDolar' 
+           
+           FROM cxcTr       
+           JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0    
+           JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0   
+           JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0     
+           JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0     
+           
+           LEFT JOIN    
+           (       
+           SELECT   
+           imLvtNlvt, imLvtNNit,     
+           imLvtRsoc, imLvtNrfc,     
+           imlvtNvta, imLvtEsfc,  
+           imLvtMdel, imLvtFech  
+           FROM imlvt WHERE imlvtNvta <> 0  
+           UNION     
+           (     
+           SELECT       
+           imLvtNlvt, imLvtNNit,        
+           imLvtRsoc, imLvtNrfc,      
+           vtVxFNvta as imlvtNvta,    
+           imLvtEsfc, imLvtMdel,         
+           imLvtFech            
+           FROM imlvt         
+           JOIN vtVxF ON imLvtNlvt = vtVxFLvta 
+           )     
+           )as imlvt      
+           ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0    
+           LEFT JOIN    
+           (        
+           SELECT       
+           crentCent,      
+           maprfDplz as 'DiasPlazo'   
+           FROM crEnt       
+           LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0   
+           WHERE crentMdel = 0 AND crentStat = 0   
+           ) as crent     
+           ON crentCent = cxcTrCcto   
+           --COBROS DE CXC        
+           LEFT JOIN 
+           (       
+           SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF    
+           FROM liqdC   
+           JOIN liqXC ON liqdCNtra = liqXCNtra       
+           WHERE liqXCMdel = 0         
+           AND liqXCFtra <= '".$fechaCarta."'  
+         --  AND liqXCFtra <= '07/10/2022'       
+           GROUP BY liqdCNtcc 
+           )as cobros    
+           ON cobros.liqdCNtcc = cxcTrNtra      
+           WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
+           AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
+           AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+         
+           and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+          and cxcTrNcto like '$clienteC%'
+         AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
+   ,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL')
+          GROUP BY cxcTr.cxcTrNcto
+          order by Cliente
+      ---   and cxcTrNcto ='ANA CLAVIJO'  
+         "; 
       
         $cadenaBS="";
         $cadenaDL="";
             $bs="";
             $dolar="";
-
+            $totalStTx=DB::connection('sqlsrv')->select(DB::raw($totalTexto));  
         $totalS=DB::connection('sqlsrv')->select(DB::raw($total));   
      
         $formatter = new NumeroALetras(); 
@@ -345,7 +440,7 @@ order by Cliente
         $arraycxcCarta= [];  
         $bsNu="";
 
-        foreach ($totalS as $key => $value) {
+        foreach ($totalStTx as $key => $value) {
           $cadenaBS=strtolower($formatter->toMoney($value->SaldoBS));
         $cadenaDL=strtolower($formatter->toMoney($value->SaldoDolar));
            $bs= $value->SaldoBS;
@@ -371,7 +466,7 @@ order by Cliente
       $dolarNu[1]=$dolarNu[1]."/100";
       
            $conta=count($carta); 
-                       $pdf = \PDF::loadView('reports.pdf.carta2',compact('conta','dolarNu','bsNu','bs','dolar','cadenaDL','cadenaBS','totalS','cxcCarta','fechaH','clienteC','fecha','fechaCarta','fechaC','option'))
+                       $pdf = \PDF::loadView('reports.pdf.carta2',compact('totalStTx','conta','dolarNu','bsNu','bs','dolar','cadenaDL','cadenaBS','totalS','cxcCarta','fechaH','clienteC','fecha','fechaCarta','fechaC','option'))
                         ->setPaper('letter')
                         ->setOption('margin-top',39)
                         ->setOption('margin-left', 15)

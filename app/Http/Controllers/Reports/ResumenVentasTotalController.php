@@ -686,12 +686,12 @@ ORDER BY loc, tip, mon";
         "SELECT 
      CONVERT(VARCHAR, cast(SUM(imp-dest) as money),1) as 'Total',  
         mon as 'Moneda', 
-        REPLACE(cast(SUM(efe) as decimal(10,2)),',', '.') as 'Efectivo', 
-        REPLACE(cast(SUM(ban) as decimal(10,2)),',', '.') as 'Banco', 
-        REPLACE(cast(SUM(cxc) as decimal(10,2)),',', '.') as 'CXC', 
-        REPLACE(cast(SUM(tar) as decimal(10,2)),',', '.') as 'Tarjeta', 
-        REPLACE(cast(SUM(mot) as decimal(10,2)),',', '.') as 'MotCont',
-        REPLACE(cast(SUM(otr) as decimal(10,2)),',', '.') as 'Otros'
+        CONVERT(VARCHAR, cast(SUM(efe) as money),1) as 'Efectivo', 
+        CONVERT(VARCHAR, cast(SUM(ban) as money),1) as 'Banco', 
+        CONVERT(VARCHAR, cast(SUM(cxc) as money),1) as 'CXC', 
+        CONVERT(VARCHAR, cast(SUM(tar) as money),1) as 'Tarjeta', 
+        CONVERT(VARCHAR, cast(SUM(mot) as money),1) as 'MotCont',
+        CONVERT(VARCHAR, cast(SUM(otr) as money),1) as 'Otros'
         FROM
         (
             SELECT 

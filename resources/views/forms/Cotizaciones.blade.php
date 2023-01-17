@@ -158,7 +158,7 @@
                         </span>
                       @enderror
                     </td>
-
+                    
                     <td class="align-middle">{{Auth::user()->perfiles->nombre}} {{Auth::user()->perfiles->paterno}} {{Auth::user()->perfiles->materno}}</td>
                     <td class="align-middle">
                       <button type="submit" class="btn btn-danger">
@@ -240,142 +240,145 @@
              </thead>
               @foreach($cot as $co)
               <tbody>
-              <tr >
-                <td class="align-middle">{{date('d-M-Y',strtotime($co->created_at))}}</td>
-                <td class="align-middle">{{date('h:s a',strtotime($co->created_at))}}</td>
-                <td class="align-middle">{{$co->nit}}</td>
-                <td class="align-middle">{{$co->empresa}}</td>
-                <td class="align-middle">{{$co->unid}}</td>
-                <td class="align-middle" style="max-width: 330px;overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;">
-                   {{$co->descrip}}
-                </td>                     
-                <td class="align-middle">{{$co->user->perfiles->nombre}}</td>  
-                <td class="align-middle">
-                  @if($co->estados->where('estado', 'Seguimiento')->first())
-                    <i class="fa-lg text-info  fas fa-check"></i> 
-                  @endif
-                </td>
-                <td class="align-middle">
-                  @if($co->estados->where('estado', 'Adjudicado')->first())
-                    @if($co->estados->where('estado', 'Parcial')->first())
-                      @if($co->estados->where('estado', 'Total')->first())
-                        <i class="fas fa-star text-success fa-lg"></i>
-                      @else 
-                        <i class="fa-lg fas fa-star-half text-success"></i>
-                      @endif
-                    @elseif($co->estados->where('estado', 'Total')->first())
-                      <i class="fas fa-star text-success fa-lg"></i>
-                    @else
-                      <i class="fa-lg text-adjud fas fa-handshake"></i>
-                    @endif
-                  @elseif($co->estados->where('estado', 'Rechazado')->first())
-                    <i class="fa-lg text-danger fas fa-times"></i>
-                  @else
-
-                  @endif
-                </td>
-                <td class="align-middle" style="min-width: 20px; max-width: 20px;" >
-                  <a href="{{action('CotizacionController@edit', $co->id)}}" >
-                    <span><i class="fas fa-search"></i></span>
-                  </a>
-                </td>
-              
-                <td class="align-middle" style="min-width: 40px; max-width: 40px;">
-                @if(Auth::user()->id==$co->user_id)
-                <button type="button" class="btn" data-toggle="modal" data-target="#no_{{$co->id}}">
-                <i class="fas fa-upload"></i>
-                </button>
+             @if (Auth::user()->id==$co->user_id)
+             <tr >
+              <td class="align-middle">{{date('d-M-Y',strtotime($co->created_at))}}</td>
+              <td class="align-middle">{{date('h:s a',strtotime($co->created_at))}}</td>
+              <td class="align-middle">{{$co->nit}}</td>
+              <td class="align-middle">{{$co->empresa}}</td>
+              <td class="align-middle">{{$co->unid}}</td>
+              <td class="align-middle" style="max-width: 330px;overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;">
+                 {{$co->descrip}}
+              </td>                     
+              <td class="align-middle">{{$co->user->perfiles->nombre}}</td>  
+              <td class="align-middle">
+                @if($co->estados->where('estado', 'Seguimiento')->first())
+                  <i class="fa-lg text-info  fas fa-check"></i> 
                 @endif
+              </td>
+              <td class="align-middle">
+                @if($co->estados->where('estado', 'Adjudicado')->first())
+                  @if($co->estados->where('estado', 'Parcial')->first())
+                    @if($co->estados->where('estado', 'Total')->first())
+                      <i class="fas fa-star text-success fa-lg"></i>
+                    @else 
+                      <i class="fa-lg fas fa-star-half text-success"></i>
+                    @endif
+                  @elseif($co->estados->where('estado', 'Total')->first())
+                    <i class="fas fa-star text-success fa-lg"></i>
+                  @else
+                    <i class="fa-lg text-adjud fas fa-handshake"></i>
+                  @endif
+                @elseif($co->estados->where('estado', 'Rechazado')->first())
+                  <i class="fa-lg text-danger fas fa-times"></i>
+                @else
+
+                @endif
+              </td>
+              <td class="align-middle" style="min-width: 20px; max-width: 20px;" >
+                <a href="{{action('CotizacionController@edit', $co->id)}}" >
+                  <span><i class="fas fa-search"></i></span>
+                </a>
+              </td>
+            
+              <td class="align-middle" style="min-width: 40px; max-width: 40px;">
+              @if(Auth::user()->id==$co->user_id)
+              <button type="button" class="btn" data-toggle="modal" data-target="#no_{{$co->id}}">
+              <i class="fas fa-upload"></i>
+              </button>
+              @endif
+
+              <!-- Modal NO COMPLETADO-->
+              <div class="modal fade" id="no_{{$co->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Subir Archivo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('cotizacion.upload' , $co->id) }}">
+                              @csrf
+                              <input name="_method" type="hidden" value="PATCH">
+                    <div class="modal-body">
+
+                        <div class="row">
+                        <div class="file-upload col">
+                          <div class="image-upload-wrap">
+                            <input class="file-upload-input" type='file' onchange="readURL(this);" accept=".pdf" id="coti" name="coti"/>
+                            <div class="drag-text">
+                              <h3>Click para agregar archivo</h3>
+                            </div>
+                          </div>
+                          <div class="file-upload-content">
+                            <span class="image-title">Uploaded Image</span>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">Aceptar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              </td>
+
+                <td class="align-middle" style="min-width: 40px; max-width: 40px;">
+                  
+                <button type="button" class="btn @if(count($scans = $co->scans()->get())) text-success @endif" data-toggle="modal" data-target="#down_{{$co->id}}">
+                <i class="fas fa-download"></i>
+                </button>
 
                 <!-- Modal NO COMPLETADO-->
-                <div class="modal fade" id="no_{{$co->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade" id="down_{{$co->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Subir Archivo</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Descargar Archivo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <form method="POST" enctype="multipart/form-data" action="{{ route('cotizacion.upload' , $co->id) }}">
-                                @csrf
-                                <input name="_method" type="hidden" value="PATCH">
                       <div class="modal-body">
 
-                          <div class="row">
-                          <div class="file-upload col">
-                            <div class="image-upload-wrap">
-                              <input class="file-upload-input" type='file' onchange="readURL(this);" accept=".pdf" id="coti" name="coti"/>
-                              <div class="drag-text">
-                                <h3>Click para agregar archivo</h3>
+                          
+                            @if(count($scans = $co->scans()->get()))
+                              @foreach($scans as $s)
+                              <div class="row">
+                              <div class="col-6">
+                              <form method="POST" action="{{ route('cotizacion.download' , $s->id) }}">
+                                      @csrf
+                                    <button type="submit" class="btn">
+                                      {{$s->name}}<i class="fas fa-download"></i>
+                                    </button>
+                                  </form>
                               </div>
-                            </div>
-                            <div class="file-upload-content">
-                              <span class="image-title">Uploaded Image</span>
-                            </div>
-                          </div>
-                          </div>
+                              </div>
+                              @endforeach
+                            @else
+                                <div class="row">
+                                  <div class="col p-5">
+                                  Aun no se subio ningun archivo
+                                  </div>
+                                </div>
+                            @endif
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Aceptar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                       </div>
-                      </form>
                     </div>
                   </div>
                 </div>
-                </td>
-
-                  <td class="align-middle" style="min-width: 40px; max-width: 40px;">
-                    
-                  <button type="button" class="btn @if(count($scans = $co->scans()->get())) text-success @endif" data-toggle="modal" data-target="#down_{{$co->id}}">
-                  <i class="fas fa-download"></i>
-                  </button>
-
-                  <!-- Modal NO COMPLETADO-->
-                  <div class="modal fade" id="down_{{$co->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Descargar Archivo</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-
-                            
-                              @if(count($scans = $co->scans()->get()))
-                                @foreach($scans as $s)
-                                <div class="row">
-                                <div class="col-6">
-                                <form method="POST" action="{{ route('cotizacion.download' , $s->id) }}">
-                                        @csrf
-                                      <button type="submit" class="btn">
-                                        {{$s->name}}<i class="fas fa-download"></i>
-                                      </button>
-                                    </form>
-                                </div>
-                                </div>
-                                @endforeach
-                              @else
-                                  <div class="row">
-                                    <div class="col p-5">
-                                    Aun no se subio ningun archivo
-                                    </div>
-                                  </div>
-                              @endif
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-               </tr>
+              </td>
+             </tr>
+             @endif   
+              
               </tbody>
                @endforeach
                 

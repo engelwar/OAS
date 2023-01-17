@@ -46,7 +46,7 @@
               @csrf
               <div class=" row d-flex justify-content-center my-3">
                   <div class="d-flex align-items-center justify-content-center">
-                      <h3 class="text-primary">GENERADOR DE CARTAS DE CXC</h3>
+                      <h3 class="text-primary">GENERADOR DE ESTADOS DE CXC</h3>
                   </div>
               </div>
 

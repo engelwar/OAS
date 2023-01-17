@@ -31,7 +31,7 @@
 
    
        <div class="row pt-1 border-primary" style="margin-top:2px; border-top: solid;">
-         <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h3>GENERADOR DE CARTAS</h3></div>
+         <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h3>GENERADOR DE ESTADOS CXC</h3></div>
        </div>
       
     <div class="contenido">

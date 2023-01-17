@@ -9,11 +9,19 @@
 
   /*movimiento de iconos */
   /*estilos para el menu*/
+  .tooltip{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  .tooltip:hover .tiptext
+
   .grow:hover
 {
 -webkit-transform: scale(1.3);
 -ms-transform: scale(1.3);
 transform: scale(1.3);
+data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
 }
   body {
     background: #404040;
@@ -250,7 +258,7 @@ transform: scale(1.3);
   }
 
   .green {
-    background: #3ed019;
+    background: #257710;
   }
 
   .blue2 {
@@ -432,7 +440,7 @@ transform: scale(1.3);
   </section>
   <div class="envoltura">
     <div class="envolver row">
-      <div class="col-18 d-flex flex-wrap" style="gap: 15px;">
+      <div class="col-14 d-flex flex-wrap" style="gap: 15px;">
     
 
 <!---modelo nuevo--->
@@ -450,19 +458,57 @@ transform: scale(1.3);
             <a href="{{route($prog->route)}}">
               <!--colores-->
               @if ($mod->nombre=="Configuracion")
-              <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+               <div class="btn-big red" 
+              @if ($prog->nombre=="Usuarios")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Lista los usuarios y añade usuarios"
+              @endif
+              @if ($prog->nombre=="Funcionarios")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Gestiona usuarios ya registrados y añade permisos"
+              @endif> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom "> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="Contabilidad")
-              <div class="btn-big blue"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"style="text-align: center"> {{$prog->nombre}} </span> </div>
+              <div class="btn-big blue" 
+              @if ($prog->nombre=="Resumen Comparativo de Ventas")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Resumen total de ventas con y sin facturacion"
+              @endif
+              @if ($prog->nombre=="Comparativo Costos/Ventas 2022")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Estado de resustados de la gestion 2022"
+              @endif
+              @if ($prog->nombre=="Dosificacion")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra el estado, con su respectiva informacion"
+              @endif
+              >
+               <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"style="text-align: center"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="RRHH")
-              <div class="btn-big morado"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              <div class="btn-big morado"
+              @if ($prog->nombre=="Permisos")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Permisos registrados con sus respectivo estado"
+              @endif
+              @if ($prog->nombre=="Vacaciones")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Registra sus vacaciones"
+              @endif
+              
+              > <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="Sistemas")
-              <div class="btn-big vino animacion3"> <i class="{{$prog->icon}} fa-2x " style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+              <div class="btn-big vino animacion3"
+              
+              > <i class="{{$prog->icon}} fa-2x " style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="Ventas")
-              <div class="btn-big green"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
+
+              <div class="btn-big green"
+              @if ($prog->nombre=="Cuentas Por Cobrar")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra detalle de cxc y su estado"
+              @endif
+              @if ($prog->nombre=="Resumen Total de V")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra detalle de cxc y su estado"
+              @endif
+              @if ($prog->nombre=="Cuentas Por Cobrar")
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Muestra detalle de cxc y su estado"
+              @endif
+              > <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
               @endif
               @if ($mod->nombre=="Reportes Dualbiz")
                 

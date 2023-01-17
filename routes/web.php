@@ -297,8 +297,20 @@ Route::resource('GeneradorCartas', 'GeneradorCartaController');
 Route::get('GeneradorCartas/perfiles/{perfil}','GeneradorCartaController@vista')->name('GeneradorCartas.vista');
 Route::get('GeneradorCartas/perfiles/data/pdf','GeneradorCartaController@store')->name('GeneradorCartas.store');
 Route::post('GeneradorCartas/carta/date/1/pdf','GeneradorCartaController@carta')->name('GeneradorCartas.carta');
+///////////plantilla precios/////
+Route::resource('PlantillaPrecios','PlantillaPreController');
+Route::get('PlantillaPrecios/vista/1','PlantillaPreController@store')->name('PlantillaPrecios.store');
 //Route::get('GeneradorCartas/carta/pdf','GeneradorCartaController@pdf')->name('carta.pdf');
+//////////solicitud de facturas anuladas///////
+Route::resource('SolicitudDeAnulacion','SolicitudFacAnulController');
 
+//cuentas por cobrar detallado
+Route::resource('CxcDetallado','CxcDetalladoController');
+Route::get('CxcDetallado/vista/1','CxcDetalladoController@store')->name('CxcDetallado.store');
+
+//inventarios
+Route::resource('ReguistroPC','RegistroPCController');
+Route::get('ReguistroPC/pc/1','RegistroPCController@store')->name('ReguistroPC.store');
 //Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
 //Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 
