@@ -94,12 +94,12 @@
       height: 100%;
     }
 
-    @media screen and (min-width: 768px) {
+    /* @media screen and (min-width: 768px) {
       .statick-side {
         padding-left: 265px;
         padding-right: 15px;
       }
-    }
+    } */
 
     /*----------------toggeled sidebar----------------*/
 
@@ -366,10 +366,6 @@
     .page-wrapper .page-content {
       overflow-x: hidden;
     }
-
-
-
-
     /*-----------------------------chiller-theme-------------------------------------------------*/
 
     .chiller-theme .sidebar-wrapper {
@@ -445,7 +441,6 @@
   </style>
   @yield('estilo')
 </head>
-
 <body>
   @auth
   <div id="load">

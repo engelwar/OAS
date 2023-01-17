@@ -51,7 +51,7 @@
  </style>
 @endsection
 @section('content')
-@include('layouts.sidebar', ['hide'=>'1']) 
+@include('layouts.navbarInf') 
 
 
 <div class="container">
@@ -126,9 +126,9 @@
 @endsection
 @section('mis_scripts')
 <script>
-$( ".dropdown-menu" ).click(function() {
-    $('.dropdown-menu').parent().is(".open") && e.stopPropagation();
-});
+// $( ".dropdown-menu" ).click(function() {
+//     $('.dropdown-menu').parent().is(".open") && e.stopPropagation();
+// });
 
 $('.selectall').click(function() {
     if ($(this).is(':checked')) {

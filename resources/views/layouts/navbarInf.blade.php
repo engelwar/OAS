@@ -5,7 +5,6 @@
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
@@ -114,16 +113,18 @@
             @foreach($mod->programs as $prog)
             @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
             <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
-              
               <a class="dropdown-item" href="{{route($prog->route)}}">{{$prog->nombre}}
               </a>
             </li>
             @endif
-            
             @endforeach
+<<<<<<< HEAD
         </ul>
         
 
+=======
+          </ul>
+>>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
         </li>
         @endif
         @if ($mod->nombre=="Inventarios")
@@ -191,7 +192,7 @@
 </nav>
 <!-- ventana modal de mensajes -->
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
@@ -212,5 +213,9 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </div>
 
+=======
+</div> -->
+>>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af

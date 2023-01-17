@@ -1,9 +1,7 @@
-
   <div id="control" >
     <a id="show-sidebar" href="#">
       <i class="fas fa-bars"></i>
     </a>
-
     <a href="{{ url('/') }}">
       <i class="fas fa-home"></i>
     </a>
@@ -26,7 +24,7 @@
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="sidebar-controls">    
+        <div class="sidebar-controls">   
           <a href="{{ url('/') }}">
             <i class="fas fa-home"></i>
           </a>
@@ -60,10 +58,8 @@
       <!-- sidebar-header  -->
       <div class="sidebar-menu">
         <ul>
-
         @auth
           @foreach(App\Modulo::orderBy('nombre')->get() as $mod)
-
             @if(Auth::user()->tieneModulo($mod->id))
               <li class="sidebar-dropdown mod @if($mod->programs_activ($mod)) active @endif">
                 <a href="#">
@@ -77,16 +73,14 @@
                 <div class="sidebar-submenu mod" @if($mod->programs_activ($mod))style="display:block;"@endif>
                   <ul>
                     @foreach($mod->submodulos as $submod)
-
                     @if(Auth::user()->tieneSubModulo($submod->id))
                     <li class="sidebar-dropdown sub @if($submod->programs_activ($submod)) active @endif">
                       <a href="#">
-                        <span>{{$submod->nombre}} </span>
+                        <span>{{$submod->nombre}}</span>
                       </a>
                       <div class="sidebar-submenu sub" @if($submod->programs_activ($submod)) style="display:block;" @endif>
                         <ul>
                         @foreach($submod->programs as $prog)
-          
                           @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && $prog->sub_modulo_id)
                             <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
                               <a href="{{route($prog->route)}}" style="font">{{$prog->nombre}}
@@ -100,7 +94,7 @@
                     @endif
                     @endforeach 
                     @foreach($mod->programs as $prog)
-             
+                      
                       @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
                         <li class="route @if(Route::currentRouteName() == $prog->route) texto-luz @endif">
                           <a href="{{route($prog->route)}}">{{$prog->nombre}}

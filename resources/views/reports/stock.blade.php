@@ -12,13 +12,12 @@
     .divAlma
     {
         width:100%;
-       
     }
  
 </style>
 @endsection
 @section('content')
-@include('layouts.sidebar', ['hide'=>'0']) 
+@include('layouts.navbarInf', ['hide'=>'0']) 
 
 <div class="container">  
     <form method="POST" action="{{ route('stock.store') }}">
