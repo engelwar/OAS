@@ -380,12 +380,12 @@
                     data: {client, marc},
                     dataType: 'json',
                     success: function (data) {
-                        let title = '<span class="badge bg-dark">'+(estado ? estado.toUpperCase() : '') +'</span>';
-                        title += ' <span class="badge bg-primary">'+ (filtro ? filtro: 'TODOS') +'</span>';
-                        title += ' <span class="badge bg-primary">'+ (xmp ? xmp.toUpperCase() : 'TODOS') +'</span>';
-                        title += ' <span class="badge bg-primary">'+ (marc ? data.marc.maconNomb : 'TODOS') +'</span>';
-                        title += ' <span class="badge bg-primary">'+ (client ? data.client.crentNomb : 'TODOS') +'</span>';
-                        $("#title").html(title);
+                      let title = '<span class="badge bg-dark">'+(estado ? estado.toUpperCase() : '') +'</span>';
+                      title += ' <span class="badge bg-primary">'+ (filtro ? filtro: 'TODOS') +'</span>';
+                      title += ' <span class="badge bg-primary">'+ (xmp ? xmp.toUpperCase() : 'TODOS') +'</span>';
+                      title += ' <span class="badge bg-primary">'+ (marc ? data.marc.maconNomb : 'TODOS') +'</span>';
+                      title += ' <span class="badge bg-primary">'+ (client ? data.client.crentNomb : 'TODOS') +'</span>';
+                      $("#title").html(title);
                     },
                     error: function (data) {
                         console.log(data);
