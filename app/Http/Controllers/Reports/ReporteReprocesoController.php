@@ -8,7 +8,7 @@ use App\User;
 use DB;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\CuentasPorCobrarExport;
+use App\Exports\ReprocesoExport;
 
 class ReporteReprocesoController extends Controller
 {
@@ -49,7 +49,7 @@ class ReporteReprocesoController extends Controller
         ))
         ORDER BY adusrNomb";
     $user = DB::connection('sqlsrv')->select(DB::raw($query));
-    return view('reports.cuentasporcobrar', compact('user'));
+    return view('reports.reproceso', compact('user'));
   }
 
   /**
@@ -70,17 +70,40 @@ class ReporteReprocesoController extends Controller
    */
   public function store(Request $request)
   {
+    $categ = "";
+    if ($request->categoria) {
+      $categ = "AND maconNomb LIKE '%" . $request->categoria . "%'";
+    }
+    $fini = "";
+    if ($request->fini) {
+      $fini = date("d/m/Y", strtotime($request->fini));
+    }
+    $ffin = "";
+    if ($request->ffin) {
+      $ffin = date("d/m/Y", strtotime($request->ffin));
+    }
+    $user = "AND intraCres IS NULL";
+    if ($request->options) {
+      $user = "AND intraCres IN (" . implode(",", $request->options) . ")";
+    }
+    $prod = "";
+    if ($request->producto) {
+      $prod = "AND (inproCpro LIKE '%" . $request->producto . "%'
+            OR inpro.inproNomb LIKE '%" . $request->producto . "%')";
+    }
+
     $sql_query = "
     SELECT
-    intraHora,
+    CONVERT(varchar,intraHora,113) AS fecha_ori,
     intraNtra,
+    maconNomb,
     inproCpro,
     inproNomb,
     inumeAbre,
     inalmNomb,
     intrdCanb,
-    intrdCTmi/intrdCanb AS Cost_U,
-    intraFtra,
+    CONVERT(varchar, CAST(intrdCTmi/intrdCanb as decimal(10,4)),1) as cost_u,
+    CONVERT(varchar,intraFtra,103) AS fecha_red,
     adusrNomb,
     intraGlos
     FROM intra
@@ -89,23 +112,45 @@ class ReporteReprocesoController extends Controller
     JOIN inalm On (intraCalm = inalmCalm)
     LEFT JOIN inume as umpro ON umpro.inumeCume = inpro.inproCumb
     JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = intraCres AND adusrMdel = 0
+    LEFT JOIN 
+    (
+        SELECT 
+        convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, 
+        maconNomb 
+        FROM macon 
+        WHERE maconCcon = 113
+    ) as marc
+    ON inpro.inproMarc = marc.maconMarc
     WHERE intraMdel = 0
+    AND intraHora BETWEEN '" . $fini . "' AND '" . $ffin . "'
+    " . $categ . "
+    " . $user . "
+    " . $prod . "
     ORDER BY intraHora
     ";
+    // dd($sql_query);
+    $query = DB::connection('sqlsrv')->select(DB::raw($sql_query));
 
-
-    if ($request->gen == "export") {
-      $pdf = \PDF::loadView('reports.pdf.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'fecha1', 'fecha2', 'fecha', 'requestFecha'))
-        ->setOrientation('landscape')
-        ->setPaper('letter')
-        ->setOption('footer-right', 'Pag [page] de [toPage]')
-        ->setOption('footer-font-size', 8);
-      return $pdf->inline('Cuentas Por Cobrar Entre_' . $fecha1 . ' - ' . $fecha2 . '.pdf');
-    } elseif ($request->gen == "excel") {
-      $export = new CuentasPorCobrarExport($cxc, $request->checkfecha, $fecha, $fecha1, $fecha2);
-      return Excel::download($export, 'Cuentas Por Cobrar.xlsx');
+    $titulos =
+      [
+        ['name' => 'fecha_ori', 'data' => 'fecha_ori', 'title' => 'FechaOrigen', 'tip' => 'filtro'],
+        ['name' => 'intraNtra', 'data' => 'intraNtra', 'title' => 'NTrans', 'tip' => 'filtro'],
+        ['name' => 'maconNomb', 'data' => 'maconNomb', 'title' => 'Categoria', 'tip' => 'filtro'],
+        ['name' => 'inproCpro', 'data' => 'inproCpro', 'title' => 'Codigo', 'tip' => 'filtro'],
+        ['name' => 'inproNomb', 'data' => 'inproNomb', 'title' => 'Descripcion', 'tip' => 'filtro'],
+        ['name' => 'inumeAbre', 'data' => 'inumeAbre', 'title' => 'U.M.', 'tip' => 'filtro_select'],
+        ['name' => 'inalmNomb', 'data' => 'inalmNomb', 'title' => 'Almacen', 'tip' => 'filtro_select'],
+        ['name' => 'intrdCanb', 'data' => 'intrdCanb', 'title' => 'Cantidad'],
+        ['name' => 'cost_u', 'data' => 'cost_u', 'title' => 'Cost_U'],
+        ['name' => 'fecha_red', 'data' => 'fecha_red', 'title' => 'FechaRedir'],
+        ['name' => 'adusrNomb', 'data' => 'adusrNomb', 'title' => 'Usuario', 'tip' => 'filtro'],
+        ['name' => 'intraGlos', 'data' => 'intraGlos', 'title' => 'Glosa', 'tip' => 'filtro'],
+      ];
+    if ($request->gen == "excel") {
+      $export = new ReprocesoExport($query,$fini,$ffin);
+      return Excel::download($export, 'Reporte Para Reproceso.xlsx');
     } else if ($request->gen == "ver") {
-      return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'titulos'));
+      return view('reports.vista.reproceso', compact('query', 'titulos'));
     }
   }
 
@@ -152,162 +197,5 @@ class ReporteReprocesoController extends Controller
   public function destroy($id)
   {
     //
-  }
-
-  public function cobranzas(Request $request)
-  {
-    $user = "AND adusrCusr = ".$request->options."";
-    $fecha = date("d/m/Y", strtotime($request->ffin));
-    $fil = "AND liqXCFtra <= '" . $fecha . "'";
-    if ($request->estado == "Vigente") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= 30";
-    } 
-    if ($request->estado == "Vencido") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30)";
-    } elseif ($request->estado == "Mora") {
-      $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30 + 15)";
-    }
-
-    $fil2 = "DECLARE @fechaA DATE
-        SELECT @fechaA = '" . date("d/m/Y") . "'";
-    $query =
-      "SELECT
-        cxcTrNtra as 'Cod',
-        cxcTrNcto as 'Cliente',
-        isnull(imLvtRsoc,'-') as Rsocial,
-        isnull(imLvtNNit,'-') as Nit,
-        CONVERT(varchar,cxcTrFtra,103) as 'Fecha',
-        CONVERT(varchar,DATEADD(day, 30/*DiasPlazo*/, cxcTrFtra), 103) as 'FechaVenc',
-        --CONVERT(varchar,cxcTrFppg,103) as 'FPrimP',
-        cast(cxcTrImpt as decimal(10,2))as 'ImporteCXC',
-        REPLACE(cast(ISNULL(cobros.AcuentaF,0) as decimal(10,2)),',', '.') as 'ACuenta',
-        REPLACE(cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2)),',', '.') as 'Saldo',
-        --isnull(CONVERT(varchar,cobros.FechaCuenta),'-') AS FechaCobro,
-        --REPLACE(cast(cxcTrAcmt as decimal(10,2)),',', '.') as 'ACuenta',
-        cxcTrGlos as 'Glosa',
-        adusrNomb as 'Usuario',
-        admonAbrv as 'Moneda',
-        --cutcuDesc as 'TipodeCuenta',
-        --cxcTrNtrI as 'TransIni',
-        cxcTrNtrI as 'NroVenta',
-        imlvt.imLvtNrfc as 'NroFac',
-        inlocNomb as 'Local',
-        --DiasPlazo,
-        CASE 
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= 30/*DiasPlazo*/ THEN 'VIGENTE'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) <= (30/*DiasPlazo*/ + 15) THEN 'VENCIDO'
-        WHEN DATEDIFF(DAY, cxcTrFtra, @fechaA) > (30/*DiasPlazo*/ + 15) THEN 'MORA'
-        END as estado
-        FROM cxcTr 
-        JOIN bd_admOlimpia.dbo.admon ON admonCmon = cxcTrMtra AND admonMdel = 0
-        JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
-        JOIN inloc ON inlocCloc = cxcTrCloc AND inlocMdel = 0
-        JOIN cutcu ON cutcuCtcu = cxcTrCtcu AND cutcuMdel = 0      
-        --//CXC generadas por VENTAS
-        /*JOIN
-        (
-        SELECT *
-        FROM cptra 
-        JOIN cptrd ON cptrdNtra = cptraNtra AND cptrdTtra = 11
-        WHERE cptraTtra = 21 AND cptraMdel = 0
-        ) cptra
-        ON cptrdNtrD = cxcTrNtra*/
-        --//CXC generadas por VENTAS 
-        LEFT JOIN
-        (
-            SELECT 
-            imLvtNlvt, imLvtNNit,
-            imLvtRsoc, imLvtNrfc,
-            imlvtNvta, imLvtEsfc,
-            imLvtMdel, imLvtFech
-            FROM imlvt WHERE imlvtNvta <> 0
-            UNION
-            (
-                SELECT 
-                    imLvtNlvt, imLvtNNit,
-                    imLvtRsoc, imLvtNrfc,				
-                    vtVxFNvta as imlvtNvta,
-                    imLvtEsfc, imLvtMdel,
-                    imLvtFech
-                FROM imlvt 
-                JOIN vtVxF ON imLvtNlvt = vtVxFLvta
-            )
-        )as imlvt 
-        ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
-        LEFT JOIN 
-        (
-            SELECT 
-            crentCent,
-            maprfDplz as 'DiasPlazo'
-            FROM crEnt
-            LEFT JOIN maprf ON maprfCprf = crentClsf AND maPrfMdel = 0
-            WHERE crentMdel = 0 AND crentStat = 0
-        ) as crent
-        ON crentCent = cxcTrCcto
-        --COBROS DE CXC
-        
-        LEFT JOIN
-        (
-            SELECT liqdCNtcc, SUM(liqdCAcmt) as AcuentaF
-            FROM liqdC
-            JOIN liqXC ON liqdCNtra = liqXCNtra
-            WHERE liqXCMdel = 0 
-            " . $fil . "
-            GROUP BY liqdCNtcc
-        )as cobros
-        ON cobros.liqdCNtcc = cxcTrNtra
-        WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
-        AND cobros.AcuentaF >= 1
-        " . $user . "
-        ".$estado."
-        ";
-
-        // dd($query);
-    $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
-    $sum = DB::connection('sqlsrv')
-      ->select(DB::raw(
-          $fil2 .
-            "SELECT 
-        REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
-        REPLACE(sumACuenta,',', '.') as sumACuenta, 
-        REPLACE(sumSaldo,',', '.') as sumSaldo        
-        FROM (
-        SELECT 
-        SUM(cast(ImporteCXC as decimal(10,2))) over() as sumImporteCXC, 
-        SUM(cast(ACuenta as decimal(10,2))) over() as sumACuenta, 
-        SUM(cast(Saldo as decimal(10,2))) over() as sumSaldo
-        FROM (" . $query . ") as cxc
-        ) 
-        as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        ));
-    $sum_estado = DB::connection('sqlsrv')
-      ->select(DB::raw($fil2 . "SELECT 
-        REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
-        REPLACE(SUM(cast(ACuenta as decimal(10,2))),',', '.') as ACuenta, 
-        REPLACE(SUM(cast(Saldo as decimal(10,2))),',', '.') as Saldo,
-        estado
-        FROM (" . $query . ") as cxc 
-        GROUP BY estado"));
-    $requestFecha = $request->checkfecha;
-    $titulos =
-      [
-        ['name' => 'codigo', 'data' => 'codigo', 'title' => 'Codigo', 'tip' => 'filtro'],
-        ['name' => 'cliente', 'data' => 'cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
-        [],
-        ['name' => 'nit', 'data' => 'nit', 'title' => 'NIT', 'tip' => 'filtro'],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        ['name' => 'usuario', 'data' => 'usuario', 'title' => 'Usuario', 'tip' => 'filtro'],
-        [],
-        ['name' => 'nventa', 'data' => 'nventa', 'title' => 'NVenta', 'tip' => 'filtro'],
-        ['name' => 'nrofac', 'data' => 'nrofac', 'title' => 'NroFac', 'tip' => 'filtro'],
-        ['name' => 'local', 'data' => 'local', 'title' => 'Local', 'tip' => 'filtro'],
-        ['name' => 'estado', 'data' => 'estado', 'title' => 'Estado', 'tip' => 'filtro'],
-      ];
-    return view('reports.vista.cuentasporcobrar', compact('cxc', 'sum', 'sum_estado', 'titulos'));
   }
 }
