@@ -49,7 +49,14 @@ class ReporteReprocesoController extends Controller
         ))
         ORDER BY adusrNomb";
     $user = DB::connection('sqlsrv')->select(DB::raw($query));
-    return view('reports.reproceso', compact('user'));
+    $query2 = "
+      SELECT DISTINCT(intraTmov), maTmoNomb
+      FROM intra
+      LEFT JOIN maTmo ON maTmoItem = intraTmov
+      WHERE intraMdel = 0
+    ";
+    $tmov = DB::connection('sqlsrv')->select(DB::raw($query2));
+    return view('reports.reproceso', compact('user','tmov'));
   }
 
   /**
@@ -82,9 +89,13 @@ class ReporteReprocesoController extends Controller
     if ($request->ffin) {
       $ffin = date("d/m/Y", strtotime($request->ffin));
     }
-    $user = "AND intraCres IS NULL";
+    $tmov = "AND intraTmov IS NULL";
     if ($request->options) {
-      $user = "AND intraCres IN (" . implode(",", $request->options) . ")";
+      $tmov = "AND intraTmov IN (" . implode(",", $request->options) . ")";
+    }
+    $user = "AND intraCres IS NULL";
+    if ($request->options2) {
+      $user = "AND intraCres IN (" . implode(",", $request->options2) . ")";
     }
     $prod = "";
     if ($request->producto) {
@@ -105,7 +116,12 @@ class ReporteReprocesoController extends Controller
     CONVERT(varchar, CAST(intrdCTmi/intrdCanb as decimal(10,4)),1) as cost_u,
     CONVERT(varchar,intraFtra,103) AS fecha_red,
     adusrNomb,
-    intraGlos
+    intraGlos,
+    maTmoNomb,
+    CASE 
+      WHEN intrdCanb > 0 THEN 'Ingreso'
+      ELSE 'Egreso'
+    END AS ing_sal
     FROM intra
     JOIN intrd On (intraNtra = intrdNtra And intrdMdel = 0)
     JOIN inpro On (intrdCpro = inproCpro)
@@ -121,9 +137,11 @@ class ReporteReprocesoController extends Controller
         WHERE maconCcon = 113
     ) as marc
     ON inpro.inproMarc = marc.maconMarc
+    LEFT JOIN maTmo ON intraTmov = maTmoItem
     WHERE intraMdel = 0
     AND intraHora BETWEEN '" . $fini . "' AND '" . $ffin . "'
     " . $categ . "
+    " . $tmov . "
     " . $user . "
     " . $prod . "
     ORDER BY intraHora
@@ -141,10 +159,12 @@ class ReporteReprocesoController extends Controller
         ['name' => 'inumeAbre', 'data' => 'inumeAbre', 'title' => 'U.M.', 'tip' => 'filtro_select'],
         ['name' => 'inalmNomb', 'data' => 'inalmNomb', 'title' => 'Almacen', 'tip' => 'filtro_select'],
         ['name' => 'intrdCanb', 'data' => 'intrdCanb', 'title' => 'Cantidad'],
-        ['name' => 'cost_u', 'data' => 'cost_u', 'title' => 'Cost_U'],
-        ['name' => 'fecha_red', 'data' => 'fecha_red', 'title' => 'FechaRedir'],
-        ['name' => 'adusrNomb', 'data' => 'adusrNomb', 'title' => 'Usuario', 'tip' => 'filtro'],
+        ['name' => 'cost_u', 'data' => 'cost_u', 'title' => 'CostU'],
+        ['name' => 'fecha_red', 'data' => 'fecha_red', 'title' => 'FechaRed'],
+        ['name' => 'adusrNomb', 'data' => 'adusrNomb', 'title' => 'Usuario', 'tip' => 'filtro_select'],
         ['name' => 'intraGlos', 'data' => 'intraGlos', 'title' => 'Glosa', 'tip' => 'filtro'],
+        ['name' => 'maTmoNomb', 'data' => 'maTmoNomb', 'title' => 'TipMov', 'tip' => 'filtro_select'],
+        ['name' => 'ing_sal', 'data' => 'ing_sal', 'title' => 'Ingr/Egre', 'tip' => 'filtro_select'],
       ];
     if ($request->gen == "excel") {
       $export = new ReprocesoExport($query,$fini,$ffin);

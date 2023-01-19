@@ -36,6 +36,8 @@ class ReprocesoExport implements FromArray, WithHeadings
         'FechaRedir',
         'Usuario',
         'Glosa',
+        'TipMov',
+        'Ingr/Egre',
       ],
     ];
   }
