@@ -149,7 +149,7 @@
       </label>
 
       <div class="col-md-1">
-        <input id="dias_tomados" name="dias_tomados" type="text" class="form-control @error('dias') is-invalid @enderror d-none" value="{{ $dias_tomados[0]->suma }}" required autocomplete="dias_tomados">
+        <input id="dias_tomados" name="dias_tomados" type="text" class="form-control @error('dias') is-invalid @enderror d-none" value="@if ($dias_tomados[0]->suma != 0) {{ $dias_tomados[0]->suma }} @else 0 @endif" required autocomplete="dias_tomados">
         <input id="dias_tomados_a" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ $dias_tomados[0]->suma }}" required autocomplete="dias_tomados" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
@@ -237,18 +237,10 @@
   document.getElementById("fecha_ini").addEventListener("blur", function(e) {
     var fecha_ini = moment($("#fecha_ini").val());
     var fecha_fin = moment($("#fecha_fin").val());
-    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
+    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days"));
+    // console.log(dias_cal);
     var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
-    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
-    let count = 0;
-    fechas_dias.forEach(element => {
-      feriados.forEach(element2 => {
-        if (element === element2) {
-          count++;
-        }
-      });
-    });
-    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    let feriados = ['06-08-2022', '02-11-2022', '25-12-2022'];
     $("#dias").val(resul_dias);
     $("#dias_a").val(resul_dias);
   });
@@ -256,18 +248,10 @@
     var fecha_ini = moment($("#fecha_ini").val());
     var fecha_fin = moment($("#fecha_fin").val());
     let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
-    
+    console.log(dias_cal, Math.floor(dias_cal / 7));
     var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
-    let feriados = ['06-08-2022','02-11-2022','25-12-2022'];
-    let count = 0;
-    fechas_dias.forEach(element => {
-      feriados.forEach(element2 => {
-        if (element === element2) {
-          count++;
-        }
-      });
-    });
-    let resul_dias = dias_cal - Math.floor(dias_cal / 7) - count;
+    let feriados = ['06-08-2022', '02-11-2022', '25-12-2022'];
+    let resul_dias = dias_cal - Math.floor(dias_cal / 7);
     $("#dias").val(resul_dias);
     $("#dias_a").val(resul_dias);
 
@@ -308,6 +292,22 @@
     var valor = $("#saldo_dias").val();
     var letras = NumeroALetras(valor);
     $("#saldo_dias_l").val(letras);
+
+    var inicio = new Date($("#fecha_ini").val()); //Fecha inicial
+    var fin = new Date($("#fecha_fin").val()); //Fecha final
+    var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
+    var cuentaFinde = 0; //Número de Sábados y Domingos
+    var array = new Array(diffDays);
+
+    for (var i = 0; i < diffDays; i++) {
+      //0 => Domingo - 6 => Sábado
+      if (inicio.getDay() == 0 || inicio.getDay() == 6) {
+        cuentaFinde++;
+      }
+      inicio.setDate(inicio.getDate() + 1);
+    }
+    console.log(cuentaFinde);
   });
 
   function Unidades(num) {
@@ -359,29 +359,29 @@
           default:
             return "DIECI" + Unidades(unidad);
         }
-        case 2:
-          switch (unidad) {
-            case 0:
-              return "VEINTE";
-            default:
-              return "VEINTI" + Unidades(unidad);
-          }
-          case 3:
-            return DecenasY("TREINTA", unidad);
-          case 4:
-            return DecenasY("CUARENTA", unidad);
-          case 5:
-            return DecenasY("CINCUENTA", unidad);
-          case 6:
-            return DecenasY("SESENTA", unidad);
-          case 7:
-            return DecenasY("SETENTA", unidad);
-          case 8:
-            return DecenasY("OCHENTA", unidad);
-          case 9:
-            return DecenasY("NOVENTA", unidad);
+      case 2:
+        switch (unidad) {
           case 0:
-            return Unidades(unidad);
+            return "VEINTE";
+          default:
+            return "VEINTI" + Unidades(unidad);
+        }
+      case 3:
+        return DecenasY("TREINTA", unidad);
+      case 4:
+        return DecenasY("CUARENTA", unidad);
+      case 5:
+        return DecenasY("CINCUENTA", unidad);
+      case 6:
+        return DecenasY("SESENTA", unidad);
+      case 7:
+        return DecenasY("SETENTA", unidad);
+      case 8:
+        return DecenasY("OCHENTA", unidad);
+      case 9:
+        return DecenasY("NOVENTA", unidad);
+      case 0:
+        return Unidades(unidad);
     }
   } //Unidades()
 

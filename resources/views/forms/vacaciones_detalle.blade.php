@@ -194,7 +194,7 @@
       </label>
 
       <div class="col-md-1">
-        <input id="dias_tomados" name="dias_tomados" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ $dias_tomados[0]->suma }}" autocomplete="dias_tomados">
+        <input id="dias_tomados" name="dias_tomados" type="text" class="form-control @error('dias') is-invalid @enderror" value="@if ($dias_tomados[0]->suma != 0) {{ $dias_tomados[0]->suma }} @else 0 @endif" autocomplete="dias_tomados">
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
