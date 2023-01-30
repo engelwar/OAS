@@ -198,6 +198,8 @@ Route::prefix('reports')->group(function () {
 
   // Route::resource('kardex', 'Reports\KardexController');
   Route::resource('detalleventas', 'Reports\DetalleVentasController');
+
+  Route::resource('reproceso', 'Reports\ReporteReprocesoController');
 });
 
 Route::prefix('dev')->group(function () {

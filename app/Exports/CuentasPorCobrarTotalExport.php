@@ -42,6 +42,8 @@ class CuentasPorCobrarTotalExport implements FromArray, WithHeadings,ShouldAutoS
             'Contado',
             'Credito',
             'Usuario',
+            'DifDiasACuenta',
+            'DifDiasConsultado',
         ],
         ];
     }

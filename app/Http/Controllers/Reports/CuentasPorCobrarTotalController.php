@@ -80,6 +80,7 @@ class CuentasPorCobrarTotalController extends Controller
       $user = "AND cxcTrCcbr IN (" . implode(",", $request->options) . ")";
     }
     $fecha = date("d/m/Y", strtotime($request->ffin));
+    $fecha_cons = date("Y/m/d", strtotime($request->ffin));
     $query = "
       SELECT
       cxcTrCcto,
@@ -187,7 +188,9 @@ class CuentasPorCobrarTotalController extends Controller
         fechaAC,
         REPLACE(cast(ISNULL(cont,0) as decimal(10,2)),',', '.') AS cont,
         REPLACE(cast(ISNULL(cred,0) as decimal(10,2)),',', '.') AS cred,
-        adusrNomb
+        adusrNomb,
+        dif_dias_1,
+        dif_dias_2
         FROM (
           SELECT
           CONVERT(varchar,venta.vtvtaFtra,103) AS fechaNR,
@@ -206,7 +209,9 @@ class CuentasPorCobrarTotalController extends Controller
           END AS Estado,
           CONVERT(varchar,cobros.liqXCFtra,103) AS fechaAC,
           ISNULL(cobros.AcuentaF,0) AS 'ACuenta',
-          adusrNomb
+          adusrNomb,
+          DATEDIFF(DAY,venta.vtvtaFtra,cobros.liqXCFtra) AS dif_dias_1,
+          DATEDIFF(DAY,venta.vtvtaFtra,'" . $fecha_cons . "') AS dif_dias_2
           FROM cxcTr
           LEFT JOIN cptra ON cptraNtrI = cxcTrNtrI
           JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
@@ -215,6 +220,8 @@ class CuentasPorCobrarTotalController extends Controller
             SELECT *
             FROM vtVta
             LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+            WHERe vtvtaMdel = 0
+            AND vtvtaFtra <= '" . $fecha . "'
           )AS venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
           LEFT JOIN
           (
@@ -222,7 +229,6 @@ class CuentasPorCobrarTotalController extends Controller
             FROM liqdC
             JOIN liqXC ON liqdCNtra = liqXCNtra
             WHERE liqXCMdel = 0 
-            AND liqXCFtra <= '" . $fecha . "'
             --GROUP BY liqdCNtcc
           )AS cobros ON cobros.liqdCNtcc = cxcTrNtra
           WHERE cxcTrMdel = 0
