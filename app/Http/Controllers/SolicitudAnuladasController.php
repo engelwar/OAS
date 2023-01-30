@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Controller;
 use DB;
-use GuzzleHttp\RetryMiddleware;
 use Illuminate\Foundation\Auth\User;
 
 class SolicitudAnuladasController extends Controller
@@ -28,26 +27,6 @@ class SolicitudAnuladasController extends Controller
   {
     //
   }
-  public function ticker(Request $request)
-  {
-    return dd("desde ticker");
-   // $busca = $request->get('busca');
-   // $cot = SolicitudAnulacion::orderBy('id', 'DESC')
-   //   ->paginate(30);
-   // return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-    // if (Auth::user()->tienePermiso(44, 1)) {
-    //   if (Auth::user()->tienePermiso(44,4)) {
-    //   } else {
-    //     $busca = $request->get('busca');
-    //     $cot = SolicitudAnulacion::orderBy('id', 'DESC')
-    //       ->where('user_id','=',Auth::user()->id)
-    //       ->paginate(30);
-    //     return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-    //   }
-    // } else {
-    //   return dd("no tiene acceso al formulario");
-    // }
-  }
 
   /**
    * Show the form for creating a new resource.
@@ -56,22 +35,22 @@ class SolicitudAnuladasController extends Controller
    */
   public function create(Request $request)
   {
-    $busca = $request->get('busca');
-    $cot = SolicitudAnulacion::orderBy('id', 'DESC')
-      ->paginate(30);
-    return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-    // if (Auth::user()->tienePermiso(44, 1)) {
-    //   if (Auth::user()->tienePermiso(44,4)) {
-    //   } else {
-    //     $busca = $request->get('busca');
-    //     $cot = SolicitudAnulacion::orderBy('id', 'DESC')
-    //       ->where('user_id','=',Auth::user()->id)
-    //       ->paginate(30);
-    //     return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-    //   }
-    // } else {
-    //   return dd("no tiene acceso al formulario");
-    // }
+    if (Auth::user()->tienePermiso(44, 1)) {
+      if (Auth::user()->tienePermiso(44,4)) {
+        $busca = $request->get('busca');
+        $cot = SolicitudAnulacion::orderBy('id', 'DESC')
+          ->paginate(30);
+        return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
+      } else {
+        $busca = $request->get('busca');
+        $cot = SolicitudAnulacion::orderBy('id', 'DESC')
+          ->where('user_id','=',Auth::user()->id)
+          ->paginate(30);
+        return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
+      }
+    } else {
+      return dd("no tiene acceso al formulario");
+    }
   }
 
   /**
@@ -94,30 +73,16 @@ class SolicitudAnuladasController extends Controller
 
     return redirect()->route('solicitudanuladas.create')->with('success', 'El formulario se envio correctamente');
   }
-  public function inserdatos(Request $request)
-  {
-    $cotizacion = SolicitudAnulacion::create([
-      'fechaemision' => $request->fechaemision,
-      'factura_remision' => $request->factura_remision,
-      'cliente' => $request->cliente,
-      'importe' => $request->importe,
-      'motivo' => $request->motivo,
-      'user_id' => Auth::user()->id,
-      'estado' => $request->estado,
-    ]);
 
-    return redirect()->route('solicitudanuladas.create')->with('success', 'El formulario se envio correctamente');
-  }
   /**
    * Display the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show(Request $request)
+  public function show($id)
   {
-    return view("forms.ticket");
-return ("desde show");
+    //
   }
 
   /**
@@ -143,14 +108,6 @@ return ("desde show");
     //
   }
   public function estado(Request $request, $id)
-  {
-    $cot = SolicitudAnulacion::findOrFail($id);
-    $cot->estado = $request->estado;
-    $cot->save();
-    return redirect()->route('solicitudanuladas.create',)->with('success', 'El formulario se envio correctamente');
-  }
-  
-  public function estadoTicket(Request $request, $id)
   {
     $cot = SolicitudAnulacion::findOrFail($id);
     $cot->estado = $request->estado;
