@@ -3,6 +3,7 @@
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Routing\RouteRegistrar;
 
 /*
@@ -65,7 +66,9 @@ Route::prefix('ventas')->group(function () {
   Route::post('cotizacion/download/{id}', 'CotizacionController@download')->name('cotizacion.download');
 
   Route::resource('solicitudanuladas', 'SolicitudAnuladasController');
+  
   Route::get('solicitudanuladas/estado/{id}', 'SolicitudAnuladasController@estado')->name('solicitudanuladas.estado');
+  Route::get('solicitudanuladas/estadoTicket/{id}', 'SolicitudAnuladasController@estado')->name('solicitudanuladas.estadoTicket');
 
   Route::resource('planificacion', 'PlanificacionController');
   Route::post('planificacion/next/{id}', 'PlanificacionController@nextDay')->name('planificacion.nextDay');
@@ -106,6 +109,12 @@ Route::prefix('sistemas')->group(function () {
     Route::get('inventariosistemas/generar/pdf', 'Sistemas\InventarioSistemasController@pdf')->name('inventariosistemas.pdf');
     Route::get('inventariosistemas/generar/pdfqr', 'Sistemas\InventarioSistemasController@pdfqr')->name('inventariosistemas.pdf');
   });
+/*datos de solicitud */
+
+Route::prefix('solicitud')->group(function(){
+Route::any('solicitud', 'solicitudTicketController@index')->name('solicitud.index');;
+});
+
 });
 
 Route::resource('perfil', 'Configuracion\PerfilController');
@@ -313,6 +322,7 @@ Route::get('/CotizacionReporte/reportePDF', 'CotizacionReportController@show')->
 Route::resource('/resumenxmes', 'Reports\ResumenMesVentasController');
 
 Route::resource('/resumenxmescosto', 'Reports\ResumenMesCostosVentasController');
+
 
 //-------------------caminos de reprotte cotizacion------------------------------------------
 // Route::resource('/CotizacionReporte', 'CotizacionReportController')->name('*','CotizacionReporte');
