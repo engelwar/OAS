@@ -19,8 +19,8 @@ class IndexPermisosController extends Controller
 
     public function index()
     {
+      return view('index_permisos');
       if(Auth::user()->tienePermiso(5, 1)){
-        return view('index_permisos');
       }
     }
 

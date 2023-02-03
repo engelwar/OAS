@@ -19,8 +19,8 @@ class IndexVacacionesController extends Controller
 
     public function index()
     {
+      return view('index_vacaciones');
       if(Auth::user()->tienePermiso(5, 1)){
-        return view('index_vacaciones');
       }
     }
 

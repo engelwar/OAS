@@ -446,7 +446,7 @@
             </div>
           </div>
           <div class="page-wrapper chiller-theme toggled" id="app">
-            <main class="page-content @yield('static')">      
+            <main class="page-content @yield('static')">
               @yield('content')     
             </main>  
           </div>
