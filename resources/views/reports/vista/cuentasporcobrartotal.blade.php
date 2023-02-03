@@ -18,6 +18,11 @@
 
 
 <div class="container-fluid">
+  <div class=" row d-flex justify-content-center my-3">
+    <div class="d-flex align-items-center justify-content-center">
+      <h3 class="text-primary">REPORTE DE CUENTAS POR COBRAR TOTAL</h3>
+    </div>
+  </div>
   <div class="row justify-content-center mt-4">
     <div class="col-md-12">
       <table id="example" class="cell-border compact hover" style="width:100%;">
@@ -67,6 +72,7 @@
 @section('mis_scripts')
 <script>
   var json_data = {!!json_encode($movimientos) !!};
+  var fecha_consul = {!!json_encode($fecha) !!};
   jQuery.fn.dataTable.Api.register('sum()', function() {
     return this.flatten().reduce(function(a, b) {
       if (typeof a === 'string') {
@@ -243,7 +249,8 @@
         type: 'POST',
         dataType: 'json',
         data: {
-          id
+          id,
+          fecha_consul
         },
         paging: false,
         success: function(data) {
@@ -303,12 +310,10 @@
               extend: "excel",
               text: "Exportar en Excel"
             }],
-            "columnDefs": [
-              {
-                className: "dt-right",
-                "targets": [10, 11]
-              },
-            ],
+            "columnDefs": [{
+              className: "dt-right",
+              "targets": [10, 11]
+            }, ],
           });
           $('#myModal').fadeIn();
 

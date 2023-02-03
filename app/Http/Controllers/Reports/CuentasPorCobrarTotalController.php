@@ -45,7 +45,7 @@ class CuentasPorCobrarTotalController extends Controller
         (
             SELECT cxcTrCcbr
             FROM cxcTr
-            WHERE cxcTrCcbr IN (2,18,19,21,39,40,55,63,64)
+            --WHERE cxcTrCcbr IN (2,18,19,21,39,40,55,63,64)
             GROUP BY cxcTrCcbr
         ))
         ORDER BY adusrNomb";
@@ -109,6 +109,8 @@ class CuentasPorCobrarTotalController extends Controller
           SELECT *
         FROM vtVta
         LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+        WHERe vtvtaMdel = 0
+        AND vtvtaFtra <= '" . $fecha . "'
       )as venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
       LEFT JOIN
       (
@@ -116,7 +118,6 @@ class CuentasPorCobrarTotalController extends Controller
           FROM liqdC
           JOIN liqXC ON liqdCNtra = liqXCNtra
           WHERE liqXCMdel = 0 
-          AND liqXCFtra <= '" . $fecha . "'
       )as cobros ON cobros.liqdCNtcc = cxcTrNtra
       WHERE cxcTrMdel = 0
       " . $user . "
@@ -246,7 +247,7 @@ class CuentasPorCobrarTotalController extends Controller
       $export = new CuentasPorCobrarTotalExport($sql_excel, $fecha);
       return Excel::download($export, 'Cuentas Por Cobrar Total.xlsx');
     } elseif ($request->gen == "ver") {
-      return view('reports.vista.cuentasporcobrartotal', compact('movimientos', 'titulos'));
+      return view('reports.vista.cuentasporcobrartotal', compact('movimientos', 'titulos','fecha'));
     }
   }
 
