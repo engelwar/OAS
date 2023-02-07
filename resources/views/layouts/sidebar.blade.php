@@ -234,18 +234,7 @@ body{
             <span class="visually-hidden">unread messages</span>
         </div>
         
-       <div class="dropdown">
-        <div class="notify_item">
-          <div class="notify_img">
-            <img src="imagenes/imagenes_perfil/user.jpg" alt="profile_pic" style="width: 50px">
-          </div>
-          <div class="notify_info">
-            <p>Alex datos sdadasdsadsads <span>mesanje 1</span></p>
-            <span class="notify_time">A hace 2 años </span>
-
-          </div>
-        </div>
-       </div>
+      
         
         </span>
         @if($count=Auth::user()->unreadNotifications->count())
@@ -330,14 +319,3 @@ body{
         
 
   </nav>
-  @section('mis_scripts')
-  <script>
-
-		$(document).ready(function(){
-			$(".notification_icon .fa-bell").click(function(){
-				$(".dropdown").toggleClass("active");
-			})
-		});
-
-  </script>
-  @endsection
