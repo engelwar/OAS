@@ -9,6 +9,7 @@ use DB;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarTotalExport;
+use PhpParser\Node\Stmt\Foreach_;
 
 class CuentasPorCobrarTotalController extends Controller
 {
@@ -81,15 +82,8 @@ class CuentasPorCobrarTotalController extends Controller
     }
     $fecha = date("d/m/Y", strtotime($request->ffin));
     $fecha_cons = date("Y/m/d", strtotime($request->ffin));
-    $query = "
+    $query1 = "
       SELECT
-      cxcTrCcto,
-      LTRIM(RTRIM(cxcTrNcto)) as 'Cliente',
-      venta.imLvtFech,
-      venta.imLvtNrfc,
-      cobros.liqXCGlos AS 'Glosa',
-      isnull(imLvtRsoc,'-') as Rsocial,
-      isnull(imLvtNNit,'-') as Nit,
       cxcTrImpt,
       CASE
       WHEN cobros.liqXCFtra <= DATEADD(DAY,10,venta.vtvtaFtra) then 'cont'
@@ -97,9 +91,10 @@ class CuentasPorCobrarTotalController extends Controller
       END as Estado,
       CONVERT(date, cobros.liqXCFtra) as Fecha,
       ISNULL(cobros.AcuentaF,0) as 'ACuenta',
+      adusrCusr,
       adusrNomb,
       inlocNomb
-      INTO #cxc
+      INTO #cxc1
       FROM cxcTr
       LEFT JOIN cptra ON cptraNtrI = cxcTrNtrI
       LEFT JOIN inloc ON inlocCloc = cxcTrCloc
@@ -110,7 +105,7 @@ class CuentasPorCobrarTotalController extends Controller
         FROM vtVta
         LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
         WHERe vtvtaMdel = 0
-        AND vtvtaFtra <= '" . $fecha . "'
+        AND vtvtaFtra <= '03/02/2023'
       )as venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
       LEFT JOIN
       (
@@ -120,36 +115,28 @@ class CuentasPorCobrarTotalController extends Controller
           WHERE liqXCMdel = 0 
       )as cobros ON cobros.liqdCNtcc = cxcTrNtra
       WHERE cxcTrMdel = 0
-      " . $user . "
-      " . $cliente . "
       ORDER BY imlvtNvta
     ";
-    $insert = DB::connection('sqlsrv')->unprepared(DB::raw($query));
-    $movimientos = DB::connection('sqlsrv')
+    $insert1 = DB::connection('sqlsrv')->unprepared(DB::raw($query1));
+    $movimientos1 = DB::connection('sqlsrv')
       ->select(DB::raw(
         "SELECT
-        cxcTrCcto,
-        Cliente,
-        Rsocial,
-        Nit,
-        adusrNomb,
-        inlocNomb,
-        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0)) as decimal(10,2)),',', '.') AS importeCXC,
-        REPLACE(cast(SUM(ISNULL(cont,0)) as decimal(10,2)),',', '.') AS cont,
-        REPLACE(cast(SUM(ISNULL(cred,0)) as decimal(10,2)),',', '.') AS cred,
-        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) as decimal(10,2)),',', '.') AS saldo
+        adusrCusr AS id_usuario_1,
+        adusrNomb AS nomb_user_1,
+        inlocNomb AS local_1,
+        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0)) as decimal(10,2)),',', '.') AS importeCXC_1,
+        REPLACE(cast(SUM(ISNULL(cont,0)) as decimal(10,2)),',', '.') AS cont_1,
+        REPLACE(cast(SUM(ISNULL(cred,0)) as decimal(10,2)),',', '.') AS cred_1,
+        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) as decimal(10,2)),',', '.') AS saldo_1
         FROM (
             SELECT
-            cxcTrCcto,
-            Cliente,
             Estado,
             ACuenta,
+          adusrCusr,
             adusrNomb,
             inlocNomb,
-          cxcTrImpt,
-            Rsocial,
-            Nit
-            FROM #cxc
+            cxcTrImpt
+            FROM #cxc1
             --GROUP BY cxcTrCcto,Cliente,Estado,ACuenta,adusrNomb,inlocNomb,Rsocial,Nit
         ) AS sumcxc
         PIVOT
@@ -157,11 +144,159 @@ class CuentasPorCobrarTotalController extends Controller
             SUM(ACuenta)
             FOR Estado IN ([cred],[cont])
         ) AS pivotable
-        GROUP BY cxcTrCcto,Cliente,Rsocial,Nit,adusrNomb,inlocNomb
-        ORDER BY Cliente
+        --where adusrCusr = 46
+        GROUP BY adusrCusr,adusrNomb,inlocNomb
+        ORDER BY adusrCusr
         "
       ));
-    // dd($movimientos);
+    $query2 = "
+      SELECT
+      cxcTrCcto,
+      LTRIM(RTRIM(cxcTrNcto)) as 'Cliente',
+      --venta.imLvtFech,
+      --venta.imLvtNrfc,
+      --cobros.liqXCGlos AS 'Glosa',
+      --isnull(imLvtRsoc,'-') as Rsocial,
+      --isnull(imLvtNNit,'-') as Nit,
+      cxcTrImpt,
+      CASE
+      WHEN cobros.liqXCFtra <= DATEADD(DAY,10,venta.vtvtaFtra) then 'cont'
+      else 'cred'
+      END as Estado,
+      CONVERT(date, cobros.liqXCFtra) as Fecha,
+      ISNULL(cobros.AcuentaF,0) as 'ACuenta',
+      adusrCusr,
+      adusrNomb,
+      inlocNomb
+      INTO #cxc2
+      FROM cxcTr
+      LEFT JOIN cptra ON cptraNtrI = cxcTrNtrI
+      LEFT JOIN inloc ON inlocCloc = cxcTrCloc
+      JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cxcTrCcbr AND adusrMdel = 0
+      LEFT JOIN
+      (
+          SELECT *
+        FROM vtVta
+        LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+        WHERe vtvtaMdel = 0
+        AND vtvtaFtra <= '03/02/2023'
+      )as venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
+      LEFT JOIN
+      (
+          SELECT liqdCNtcc, liqdCAcmt as AcuentaF, liqXCFtra, liqXCGlos--,SUM(liqdCAcmt) as AcuentaF
+          FROM liqdC
+          JOIN liqXC ON liqdCNtra = liqXCNtra
+          WHERE liqXCMdel = 0 
+      )as cobros ON cobros.liqdCNtcc = cxcTrNtra
+      WHERE cxcTrMdel = 0
+      --AND cxcTrCcbr = 17
+      --AND inlocCloc = 3
+      --ORDER BY imlvtNvta
+    ";
+    $insert2 = DB::connection('sqlsrv')->unprepared(DB::raw($query2));
+    $movimientos2 = DB::connection('sqlsrv')
+      ->select(DB::raw(
+        "SELECT
+        cxcTrCcto AS id_cliente_2,
+        Cliente AS nomb_cliente_2,
+        adusrCusr AS id_usuario_2,
+        adusrNomb AS nomb_user_2,
+        inlocNomb AS local_2,
+        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0)) as decimal(10,2)),',', '.') AS importeCXC_2,
+        REPLACE(cast(SUM(ISNULL(cont,0)) as decimal(10,2)),',', '.') AS cont_2,
+        REPLACE(cast(SUM(ISNULL(cred,0)) as decimal(10,2)),',', '.') AS cred_2,
+        REPLACE(cast(SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) as decimal(10,2)),',', '.') AS saldo_2
+        FROM (
+            SELECT
+            cxcTrCcto,
+            Cliente,
+            Estado,
+            ACuenta,
+          adusrCusr,
+            adusrNomb,
+            inlocNomb,
+            cxcTrImpt
+            FROM #cxc2
+            --GROUP BY cxcTrCcto,Cliente,Estado,ACuenta,adusrNomb,inlocNomb,Rsocial,Nit
+        ) AS sumcxc
+        PIVOT
+        (
+            SUM(ACuenta)
+            FOR Estado IN ([cred],[cont])
+        ) AS pivotable
+        --WHERE adusrCusr = 46
+        GROUP BY cxcTrCcto,Cliente,adusrCusr,adusrNomb,inlocNomb
+        ORDER BY adusrCusr
+        "
+      ));
+    // dd($movimientos1);
+    // dd($movimientos2);
+    $prueba = [
+      [
+        'id_usuario_1' => 2, 'nomb_user_1' => 'RENZO DURAN BUTTELER', 'local_1' => 'CASA MATRIZ', 'importeCXC_1' => 2155233.03, 'cont_1' => 0.00, 'cred_1' => 1992547.94, 'saldo_1' => 162685.09, 'vista1' => [
+          [
+            'id_cliente_2' => 15,
+            'nomb_cliente_2' => 'AASANA',
+            'id_usuario_2' => 2,
+            'nomb_user_2' => 'RENZO DURAN BUTTELER',
+            'local_2' => 'CASA MATRIZ',
+            'importeCXC_2' => 795.31,
+            'cont_2' => 0.00,
+            'cred_2' => 795.31,
+            'saldo_2' => 0.00
+          ],
+          [
+            'id_cliente_2' => 23,
+            'nomb_cliente_2' => 'ADALID MORODIAS',
+            'id_usuario_2' => 2,
+            'nomb_user_2' => 'RENZO DURAN BUTTELER',
+            'local_2' => 'CASA MATRIZ',
+            'importeCXC_2' => 587.00,
+            'cont_2' => 0.00,
+            'cred_2' => 587.00,
+            'saldo_2' => 0.00
+          ]
+        ]
+      ],
+      [
+        'id_usuario_1' => 4, 'nomb_user_1' => 'RENZO DURAN BUTTELER', 'local_1' => 'CASA MATRIZ', 'importeCXC_1' => 2155233.03, 'cont_1' => 0.00, 'cred_1' => 1992547.94, 'saldo_1' => 162685.09, 'vista1' => [
+          [
+            'id_cliente_2' => 158,
+            'nomb_cliente_2' => 'AASANA',
+            'id_usuario_2' => 2,
+            'nomb_user_2' => 'RENZO DURAN BUTTELER',
+            'local_2' => 'CASA MATRIZ',
+            'importeCXC_2' => 795.31,
+            'cont_2' => 0.00,
+            'cred_2' => 795.31,
+            'saldo_2' => 0.00
+          ],
+          [
+            'id_cliente_2' => 231,
+            'nomb_cliente_2' => 'ADALID MORODIAS',
+            'id_usuario_2' => 2,
+            'nomb_user_2' => 'RENZO DURAN BUTTELER',
+            'local_2' => 'CASA MATRIZ',
+            'importeCXC_2' => 587.00,
+            'cont_2' => 0.00,
+            'cred_2' => 587.00,
+            'saldo_2' => 0.00
+          ],
+          [
+            'id_cliente_2' => 21,
+            'nomb_cliente_2' => 'ADALID MORODIAS',
+            'id_usuario_2' => 2,
+            'nomb_user_2' => 'RENZO DURAN BUTTELER',
+            'local_2' => 'CASA MATRIZ',
+            'importeCXC_2' => 587.00,
+            'cont_2' => 0.00,
+            'cred_2' => 587.00,
+            'saldo_2' => 0.00
+          ]
+        ]
+      ],
+    ];
+    // dd($prueba);
     $titulos =
       [
         ['name' => 'Cliente', 'data' => 'Cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
@@ -247,7 +382,7 @@ class CuentasPorCobrarTotalController extends Controller
       $export = new CuentasPorCobrarTotalExport($sql_excel, $fecha);
       return Excel::download($export, 'Cuentas Por Cobrar Total.xlsx');
     } elseif ($request->gen == "ver") {
-      return view('reports.vista.cuentasporcobrartotal', compact('movimientos', 'titulos','fecha'));
+      return view('reports.vista.cuentasporcobrartotal', compact('movimientos1', 'movimientos2', 'titulos', 'fecha', 'prueba'));
     }
   }
 
