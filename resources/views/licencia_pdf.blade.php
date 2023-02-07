@@ -13,6 +13,9 @@
   @elseif($LicenciaForm->estado == 'Rechazada')
   <h1 id="sello2">Rechazado</h1>
   @endif
+  @if ($LicenciaForm->estado ==null )
+  <h1 id="sello3">Sin Procesar</h1>
+  @endif
   <div class="containerA">
     <div class="container_header">
       <div class="header header1">
@@ -197,7 +200,7 @@
       <div class="form-group1A">
         <div class="item item1A">
           <label for="nombre" class="col-md-2 col-form-label text-md-right">
-            {{ __('AUTORIZA:') }}
+            {{ __('AUTORIZADO POR:') }}
           </label>
         </div>
         <div class="item item2A">

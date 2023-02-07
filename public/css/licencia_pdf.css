@@ -246,6 +246,43 @@ body{
 }
 
 #sello1{
+    position: absolute;
+    z-index: 500;
+    color: rgba(0, 128, 0, 0.397);
+    right: 14cm;
+    top: 4.5cm;
+    
+    font-size: 3em;
+    -webkit-transform: rotate(40deg); 
+    -moz-transform: rotate(30deg);    
+  
+  }
+  
+  #sello2{
+    position: absolute;
+    z-index: 500;
+    color: rgba(128, 0, 0, 0.397);
+    right: 14cm;
+    top: 4.5cm;
+    
+    font-size: 3em;
+    -webkit-transform: rotate(40deg); 
+    -moz-transform: rotate(30deg);    
+  
+  }
+#sello3{
+    position: absolute;
+    z-index: 500;
+    color: rgba(228, 231, 12, 0.753);
+    right: 14cm;
+    top: 4.5cm;
+    
+    font-size: 3em;
+    -webkit-transform: rotate(40deg); 
+    -moz-transform: rotate(30deg);    
+  }
+/**
+#sello1{
   position: absolute;
   z-index: 500;
   color: rgba(0, 128, 0, 0.397);
@@ -266,3 +303,4 @@ body{
   -webkit-transform: rotate(30deg); 
   -moz-transform: rotate(30deg);    
 }
+*/
