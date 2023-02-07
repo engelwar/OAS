@@ -81,6 +81,8 @@ class CuentasPorCobrarDetalleTotalController extends Controller
           SELECT *
           FROM vtVta
           LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+          WHERe vtvtaMdel = 0
+          AND vtvtaFtra <= '".$request->fecha."'
         )AS venta ON (imLvtNvta = cxcTrNtrI) AND imLvtMdel = 0
         LEFT JOIN
         (
@@ -88,11 +90,10 @@ class CuentasPorCobrarDetalleTotalController extends Controller
           FROM liqdC
           JOIN liqXC ON liqdCNtra = liqXCNtra
           WHERE liqXCMdel = 0 
-          AND liqXCFtra <= '09/01/2023'
           --GROUP BY liqdCNtcc
         )AS cobros ON cobros.liqdCNtcc = cxcTrNtra
         WHERE cxcTrMdel = 0
-        AND cptraNent LIKE '%".$request->id."%'
+        AND cxcTrNcto LIKE '%".$request->id."%'
       ) AS pivotdetalle
       PIVOT
       (
