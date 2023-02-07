@@ -57,7 +57,7 @@
         <table class="table table-hover table-primary">
           <thead>
             <TR>
-              <TH rowspan="2">Nombre del solicitante111111111111</TH>
+              <TH rowspan="2">Nombre del solicitante</TH>
               <TH rowspan="2">CI</TH>
               <TH colspan="2" class="text-center">INICIO</TH>
               <TH colspan="2" class="text-center">FINALIZACION</TH>

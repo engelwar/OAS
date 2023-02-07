@@ -135,7 +135,8 @@
       </div>
 
       <div class="col-md-4">
-        <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v_l') is-invalid @enderror" name="dias_v_l" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l">
+        <input id="dias_v_l" type="text" placeholder="Literal" class="form-control @error('dias_v_l') is-invalid @enderror d-none" name="dias_v_l" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l">
+        <input id="dias_v_l_a" type="text" placeholder="Literal" class="form-control @error('dias_v_l') is-invalid @enderror" value="{{ old('dias_v_l') }}" required autocomplete="dias_v_l" disabled>
         @error('dias_v_l')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -158,7 +159,8 @@
         @enderror
       </div>
       <div class="col-md-4">
-        <input id="dias_tomados_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_tomados" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_tomados_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror d-none" name="dias_tomados" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_tomados_l_a" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="dias" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -172,8 +174,7 @@
       </label>
 
       <div class="col-md-1">
-        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror d-none" name="dias" value="{{ old('dias') }}" required autocomplete="dias">
-        <input id="dias_a" type="text" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="dias" disabled>
+        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror" name="dias" value="{{ old('dias') }}" required autocomplete="dias">
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -181,7 +182,8 @@
         @enderror
       </div>
       <div class="col-md-4">
-        <input id="dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror d-none" name="dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="dias_l_a" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="dias" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -204,7 +206,8 @@
         @enderror
       </div>
       <div class="col-md-4">
-        <input id="saldo_dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" name="saldo_dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="saldo_dias_l" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror d-none" name="saldo_dias_l" value="{{ old('dias') }}" required autocomplete="dias">
+        <input id="saldo_dias_l_a" type="text" placeholder="Literal" class="form-control @error('dias') is-invalid @enderror" value="{{ old('dias') }}" required autocomplete="dias" disabled>
         @error('dias')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -225,89 +228,37 @@
 @section('mis_scripts')
 <script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
-  var diasEntreFechas = function(desde, hasta) {
-    var dia_actual = desde;
-    var fechas = [];
-    while (dia_actual.isSameOrBefore(hasta)) {
-      fechas.push(dia_actual.format('DD-MM-YYYY'));
-      dia_actual.add(1, 'days');
-    }
-    return fechas;
-  };
-  document.getElementById("fecha_ini").addEventListener("blur", function(e) {
-    var fecha_ini = moment($("#fecha_ini").val());
-    var fecha_fin = moment($("#fecha_fin").val());
-    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days"));
-    // console.log(dias_cal);
-    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
-    let feriados = ['06-08-2022', '02-11-2022', '25-12-2022'];
-    $("#dias").val(resul_dias);
-    $("#dias_a").val(resul_dias);
-  });
-  document.getElementById("fecha_fin").addEventListener("blur", function(e) {
-    var fecha_ini = moment($("#fecha_ini").val());
-    var fecha_fin = moment($("#fecha_fin").val());
-    let dias_cal = parseInt(fecha_fin.diff(fecha_ini, "days") + 1);
-    console.log(dias_cal, Math.floor(dias_cal / 7));
-    var fechas_dias = diasEntreFechas(fecha_ini, fecha_fin);
-    let feriados = ['06-08-2022', '02-11-2022', '25-12-2022'];
-    let resul_dias = dias_cal - Math.floor(dias_cal / 7);
-    $("#dias").val(resul_dias);
-    $("#dias_a").val(resul_dias);
-
+  document.getElementById("dias").addEventListener("keyup", function(e) {
     var letras = NumeroALetras(this.value);
-    $("#dias_v_l").val(letras);
     var val1 = $("#dias_v").val();
-    var val2 = $("#dias").val();
-    var val3 = $("#dias_tomados").val();
+    var val2 = $("#dias_tomados").val();
+    var val3 = $("#dias").val();
+    if (val1 == "") {
+      val1 = 0;
+    }
     if (val2 == "") {
       val2 = 0;
     }
     $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
     $("#saldo_dias_a").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
-
-    var letras = NumeroALetras(this.value);
-    $("#dias_l").val(letras);
-    var val1 = $("#dias_v").val();
-    var val2 = $("#dias").val();
-    var val3 = $("#dias_tomados").val();
-    if (val1 == "") {
-      val1 = 0;
-    }
-    $("#saldo_dias").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
-    $("#saldo_dias_a").val(parseInt(val1) - parseInt(val2) - parseInt(val3));
-
-    var valor = $("#dias_v").val();
-    var letras = NumeroALetras(valor);
-    $("#dias_v_l").val(letras);
-
-    var valor = $("#dias").val();
-    var letras = NumeroALetras(valor);
-    $("#dias_l").val(letras);
-
-    var valor = $("#dias_tomados").val();
-    var letras = NumeroALetras(valor);
-    $("#dias_tomados_l").val(letras);
-
-    var valor = $("#saldo_dias").val();
-    var letras = NumeroALetras(valor);
-    $("#saldo_dias_l").val(letras);
-
-    var inicio = new Date($("#fecha_ini").val()); //Fecha inicial
-    var fin = new Date($("#fecha_fin").val()); //Fecha final
-    var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
-    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
-    var cuentaFinde = 0; //Número de Sábados y Domingos
-    var array = new Array(diffDays);
-
-    for (var i = 0; i < diffDays; i++) {
-      //0 => Domingo - 6 => Sábado
-      if (inicio.getDay() == 0 || inicio.getDay() == 6) {
-        cuentaFinde++;
-      }
-      inicio.setDate(inicio.getDate() + 1);
-    }
-    console.log(cuentaFinde);
+  });
+  document.getElementById("dias").addEventListener("keyup", function(e) {
+    var valor1 = $("#dias_v").val();
+    var letras1 = NumeroALetras(valor1);
+    var valor2 = $("#dias").val();
+    var letras2 = NumeroALetras(valor2);
+    var valor3 = $("#dias_tomados").val();
+    var letras3 = NumeroALetras(valor3);
+    var valor4 = $("#saldo_dias").val();
+    var letras4 = NumeroALetras(valor4);
+    $("#dias_v_l").val(letras1);
+    $("#dias_l").val(letras2);
+    $("#dias_tomados_l").val(letras3);
+    $("#saldo_dias_l").val(letras4);
+    $("#dias_v_l_a").val(letras1);
+    $("#dias_l_a").val(letras2);
+    $("#dias_tomados_l_a").val(letras3);
+    $("#saldo_dias_l_a").val(letras4);
   });
 
   function Unidades(num) {
@@ -481,7 +432,7 @@
       letrasCentavos: "",
     };
 
-    if (data.enteros == 0 && data.enteros == NaN)
+    if (data.enteros == 0)
       return "CERO ";
     if (data.enteros < 0)
       return "EL VALOR NO PUEDE SER NEGATIVO";

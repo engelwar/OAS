@@ -174,6 +174,7 @@
         @enderror
       </div>
     </div>
+<<<<<<< HEAD
     <div class="form-group row d-flex">
       <label for="respaldo" class="col-md-2 col-form-label text-md-right">
         {{ __('Respaldo') }}
@@ -189,6 +190,8 @@
 
       </div>
     </div>
+=======
+>>>>>>> 98af2ad3c08af977b9d7ef46b271513d2025f2e6
     @if (Auth::user()->tienePermiso(18,2))
     <div class="d-flex justify-content-center mt-2" style="gap: 10px;">
       <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>

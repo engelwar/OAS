@@ -94,8 +94,6 @@ class LicenciaController extends Controller
       'dias' => $request->dias,
       'horas' => $request->horas,
       'motivo' => $request->motivo,
-      'respaldo' => $request->respaldo,
-
       'user_id' => Auth::user()->id,
     ]);
     return redirect()->route('permisos.index')->with('success', 'El formulario se envio correctamente');
