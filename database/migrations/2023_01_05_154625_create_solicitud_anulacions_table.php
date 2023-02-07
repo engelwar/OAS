@@ -21,7 +21,8 @@ class CreateSolicitudAnulacionsTable extends Migration
             $table->double('importe');
             $table->string('motivo');
             $table->integer('user_id');
-            $table->integer('estado');
+            $table->integer('estado')->NULL;
+            
             $table->timestamps();
         });
     }

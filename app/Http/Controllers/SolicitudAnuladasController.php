@@ -35,22 +35,26 @@ class SolicitudAnuladasController extends Controller
    */
   public function create(Request $request)
   {
-    if (Auth::user()->tienePermiso(44, 1)) {
-      if (Auth::user()->tienePermiso(44,4)) {
-        $busca = $request->get('busca');
+    // if (Auth::user()->tienePermiso(44, 1)) {
+    //   if (Auth::user()->tienePermiso(44,4)) {
+    //     $busca = $request->get('busca');
+    //     $cot = SolicitudAnulacion::orderBy('id', 'DESC')
+    //       ->paginate(30);
+    //     return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
+    //   } else {
+    //     $busca = $request->get('busca');
+    //     $cot = SolicitudAnulacion::orderBy('id', 'DESC')
+    //       ->where('user_id','=',Auth::user()->id)
+    //       ->paginate(30);
+    //     return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
+    //   }
+    // } else {
+    //   return dd("no tiene acceso al formulario");
+    // }
+    $busca = $request->get('busca');
         $cot = SolicitudAnulacion::orderBy('id', 'DESC')
           ->paginate(30);
         return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-      } else {
-        $busca = $request->get('busca');
-        $cot = SolicitudAnulacion::orderBy('id', 'DESC')
-          ->where('user_id','=',Auth::user()->id)
-          ->paginate(30);
-        return view("forms.SolicitudAnuladas", compact('cot', 'busca'));
-      }
-    } else {
-      return dd("no tiene acceso al formulario");
-    }
   }
 
   /**

@@ -1,3 +1,100 @@
+@section('mi_estilo')
+<style>
+    .Notiposition{
+      margin-left: -22px;
+    padding-right: 8px;
+    margin-top: -1px;
+    }
+    *{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+}
+
+body{
+	background: #ececec;
+}
+
+.wrapper{
+	
+}
+
+.notification_wrap{
+	width: 500px;
+	margin: 120px auto 0;
+}
+
+.notification_wrap .notification_icon{
+	position: relative;
+	width: 50px;
+	height: 50px;
+	font-size: 32px;
+	margin: 0 auto;
+	text-align: center;
+	color: #605dff;
+}
+
+.notification_wrap .notification_icon .fa-bell{
+	cursor: pointer;
+}
+
+.notification_wrap .dropdown{
+	width: 350px;
+	height: auto;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px rgba(0,0,0,0.125);
+	margin: 15px auto 0;
+	padding: 15px;
+	position: relative;
+	display: none;
+}
+
+.notification_wrap .dropdown .notify_item{
+	display: flex;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #dbdaff;
+}
+
+.notification_wrap .dropdown .notify_item:last-child{
+	border-bottom: 0px;
+}
+
+.notification_wrap .dropdown .notify_item .notify_img{
+	margin-right: 15px;
+}
+
+.notification_wrap .dropdown .notify_item .notify_info p{
+	margin-bottom: 5px;
+}
+
+.notification_wrap .dropdown .notify_item .notify_info p span{
+	color: #605dff;
+	margin-left: 5px;
+}
+
+.notification_wrap .dropdown .notify_item .notify_info .notify_time{
+	color: #c5c5e6;
+	font-size: 12px;
+}
+
+.notification_wrap .dropdown:before{
+	content: "";
+	position: absolute;
+	top: -30px;
+	left: 50%;
+	transform: translateX(-50%);
+	border: 15px solid;
+	border-color: transparent transparent #fff transparent;
+}
+
+.notification_wrap .dropdown.active{
+	display: block;
+}
+</style>
+@endsection
   <div id="control">
     <a id="show-sidebar" href="#">
       <i class="fas fa-bars"></i>
@@ -129,14 +226,35 @@
     @auth
     <div class="sidebar-footer">
       <!--NOTIFICAIONES-->
-      <a id="dropdownMenuLink" class="dropup" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell"></i>
+      <a id="dropdown" class="dropup" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="notification_icon">
+          <i class="fas fa-bell"></i>
+          <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger Notiposition">
+            0+
+            <span class="visually-hidden">unread messages</span>
+        </div>
+        
+       <div class="dropdown">
+        <div class="notify_item">
+          <div class="notify_img">
+            <img src="imagenes/imagenes_perfil/user.jpg" alt="profile_pic" style="width: 50px">
+          </div>
+          <div class="notify_info">
+            <p>Alex datos sdadasdsadsads <span>mesanje 1</span></p>
+            <span class="notify_time">A hace 2 años </span>
+
+          </div>
+        </div>
+       </div>
+        
+        </span>
         @if($count=Auth::user()->unreadNotifications->count())
         <span class="badge badge-pill badge-primary parpadea" id="contant">
           {{$count}}
         </span>
         @endif
       </a>
+
       <div class="dropdown-menu dropdown-menu-right justify-content-right" aria-labelledby="dropdownMenuLink">
         @if($count != 0)
         <div class="d-flex row">
@@ -205,4 +323,21 @@
           </form>
         </div>
         @endauth
+
+
+      
+
+        
+
   </nav>
+  @section('mis_scripts')
+  <script>
+
+		$(document).ready(function(){
+			$(".notification_icon .fa-bell").click(function(){
+				$(".dropdown").toggleClass("active");
+			})
+		});
+
+  </script>
+  @endsection
