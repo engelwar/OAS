@@ -163,20 +163,6 @@
         @enderror
       </div>
     </div>
-    <div class="form-group row d-flex">
-      <label for="respaldo" class="col-md-2 col-form-label text-md-right">
-        {{ __('Respaldo') }}
-      </label>
-
-      <div class="col-md-10">
-        <input id="respaldo" type="text" class="form-control @error('respaldo') is-invalid @enderror" name="respaldo" value="{{ old('respaldo') }}" required autocomplete="respaldo">
-        @error('respaldo')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-      </div>
-    </div>
     <div class="form-group row d-flex justify-content-center mt-5">
       <div class="col-md-10 d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">

@@ -173,20 +173,6 @@
         @enderror
       </div>
     </div>
-    <div class="form-group row d-flex">
-      <label for="respaldo" class="col-md-2 col-form-label text-md-right">
-        {{ __('Respaldo') }}
-      </label>
-
-      <div class="col-md-10">
-        <input id="respaldo" type="text" class="form-control @error('respaldo') is-invalid @enderror" name="respaldo" value="{{ $LicenciaForm->respaldo }}" required autocomplete="respaldo">
-        @error('respaldo')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-      </div>
-    </div>
     @if (Auth::user()->tienePermiso(18,2))
     <div class="d-flex justify-content-center mt-2" style="gap: 10px;">
       <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>

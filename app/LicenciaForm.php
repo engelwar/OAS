@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LicenciaForm extends Model
 {
   protected $fillable = [
-    'respaldo', 'motivo', 'hora_ini', 'hora_fin',
+    'motivo', 'hora_ini', 'hora_fin',
     'fecha_ini', 'fecha_fin', 'dias', 'horas', 'estado', 'detalle_estado', 'user_id'
 
   ];

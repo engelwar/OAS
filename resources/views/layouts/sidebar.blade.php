@@ -330,14 +330,4 @@ body{
         
 
   </nav>
-  @section('mis_scripts')
-  <script>
-
-		$(document).ready(function(){
-			$(".notification_icon .fa-bell").click(function(){
-				$(".dropdown").toggleClass("active");
-			})
-		});
-
-  </script>
-  @endsection
+ 
