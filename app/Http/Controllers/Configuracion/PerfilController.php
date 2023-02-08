@@ -150,6 +150,7 @@ class PerfilController extends Controller
   {
     $fecha_actual = new DateTime(date('Y-m-d'));
     $perfil = Perfil::find($id);
+    
     if($request->registrar_dias != null) {
       $vacacion = VacacionForm::create([
         'detalle_vacacion' => 'Llenado Por Funcionario',
@@ -166,6 +167,7 @@ class PerfilController extends Controller
         'user_id' => $perfil->user_id,
       ]);
     }
+    // dd($vacacion);
     $data = $request->validate([
       'nombre' => 'required|max:255',
       'paterno' => 'required',
