@@ -40,8 +40,8 @@ class ResumenMesVentasController extends Controller
   public function store(Request $request)
   {
     $segmento = [
-      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68, 69]],
-      ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28]],
+      ['name' => 'BALLIVIAN', 'abrv' => 'BALLIVIAN', 'users' => [22, 41, 49, 46,61, 68, 9, 65,80]],
+      ['name' => 'HANDAL', 'abrv' => 'HANDAL', 'users' => [26, 42, 50, 28,69]],
       ['name' => 'MARISCAL', 'abrv' => 'MARISCAL', 'users' => [38, 44, 51, 37, 67]],
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
       ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77,78]],
@@ -68,7 +68,7 @@ class ResumenMesVentasController extends Controller
       ['name' => 'REGIONAL1', 'abrv' => 'REGIONAL1', 'alm' => [57, 58]],
       ['name' => 'REGIONAL2', 'abrv' => 'REGIONAL2', 'alm' => [59, 60, 61]],
     ];
-    $general = [22, 41, 49, 46, 26, 42, 50, 28, 38, 44, 51, 37, 32, 43, 52, 29, 57, 16, 17, 18, 19, 55, 21, 40, 39, 62, 74, 20, 56, 3, 58, 4, 61, 63, 64, 67, 68, 69];
+    $general = [22, 41, 49, 46,61, 68, 9, 65, 26, 42, 50, 28,69, 38, 44, 51, 37, 67, 29,57,74,32,43,52,76,77,78,16, 17, 62, 56, 3, 58, 4,18, 19, 55, 21, 20,40, 39,63,64,80];
 
     // $fini = date("d/m/Y", strtotime($request->fini));
     // $ffin = date("d/m/Y", strtotime($request->ffin));
@@ -82,9 +82,13 @@ class ResumenMesVentasController extends Controller
     if (isset($request->options)) {
       foreach ($request->options as $key => $value) {
         $group_mes_sum[] = "CONVERT(varchar, CAST(ISNULL(SUM([" . $value . "1]),0) AS MONEY),1) AS [" . $value . "1],
-        CONVERT(varchar, CAST(ISNULL(SUM([" . $value . "2]),0) AS MONEY),1) AS [" . $value . "2],";
+        CONVERT(varchar, CAST(ISNULL(SUM([" . $value . "2]),0) AS MONEY),1) AS [" . $value . "2],
+        CONVERT(varchar, CAST(ISNULL(SUM([" . $value . "3]),0) AS MONEY),1) AS [" . $value . "3],
+        CONVERT(varchar, CAST(ISNULL(SUM([" . $value . "4]),0) AS MONEY),1) AS [" . $value . "4],";
         $group_mes[] = "CONVERT(varchar, CAST(ISNULL([" . $value . "1],0) AS MONEY),1) AS [" . $value . "1],
-        CONVERT(varchar, CAST(ISNULL([" . $value . "2],0) AS MONEY),1) AS [" . $value . "2],";
+        CONVERT(varchar, CAST(ISNULL([" . $value . "2],0) AS MONEY),1) AS [" . $value . "2],
+        CONVERT(varchar, CAST(ISNULL([" . $value . "3],0) AS MONEY),1) AS [" . $value . "3],
+        CONVERT(varchar, CAST(ISNULL([" . $value . "4],0) AS MONEY),1) AS [" . $value . "4],";
         if ($key == 0) {
           if ($value == 'Enero') {
             $group_sum_tot[] = "ISNULL([1],0)";
@@ -153,7 +157,9 @@ class ResumenMesVentasController extends Controller
       --CONVERT(varchar, CAST(ISNULL(SUM([Tot1]),0) AS MONEY),1) AS [Tot1],
       --CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
       ISNULL(SUM([Tot1]),0) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot3]),0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot4]),0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -177,8 +183,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -208,8 +215,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -221,18 +229,90 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+		    left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+		    and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCusr = usr.adusrCusr
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+		left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+		and imLvtNrfc is NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_general . "
     ";
     $total_general = DB::connection('sqlsrv')->select(DB::raw($query_general));
     $total = [];
     foreach ($segmento as $key) {
       $usr_total = "adusrCusr IN (" . implode(",", $key['users']) . ")";
-      $usr = "adusrCusr IN (" . implode(",", $key['users']) . ") AND adusrCusr NOT IN (22,49,68,26,50,69,38,51,67,32,52)";
+      $usr = "adusrCusr IN (" . implode(",", $key['users']) . ") AND adusrCusr NOT IN (22,49,68,26,50,69,38,51,67,32,52,76,77)";
       $sql_total = "
       SELECT 
       " . implode($group_mes_sum) . "
       ISNULL(SUM([Tot1]),0) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot3]),0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot4]),0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -256,8 +336,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -287,8 +368,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -300,15 +382,86 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+		    left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+		    and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCusr = usr.adusrCusr
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_total . "";
-      // dd($sql_total);
       $total[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total))];
       $sql_usr = "
       SELECT 
       adusrCusr, adusrNomb,
       " . implode($group_mes) . "
       ISNULL([Tot1],0) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL([Tot2],0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL([Tot2],0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL([Tot3],0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL([Tot4],0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -332,8 +485,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -363,8 +517,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -376,22 +531,93 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCusr = usr.adusrCusr
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr . "
       AND adusrCusr NOT IN (29,57,74)
       ORDER BY adusrNomb;
       ";
-      
-      // dd($sql_usr);
       $total_seg[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_usr))];
     }
-    // dd($total_seg[0]['BALLIVIAN']);
+    // dd($sql_usr);
+    // dd($total_seg);
     foreach ($almacen_reg as $key) {
       $alm = "inalmCalm IN (" . implode(",", $key['alm']) . ")";
       $sql_total_regional = "
       SELECT 
       " . implode($group_mes_sum) . "
       CONVERT(varchar, CAST(ISNULL(SUM([Tot1]),0) AS MONEY),1) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot3]),0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot4]),0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -415,8 +641,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -446,8 +673,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -459,6 +687,76 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCalm = almacen.inalmCalm
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCalm,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCalm = almacen.inalmCalm
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCalm,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCalm = almacen.inalmCalm
       WHERE " . $alm . "";
       $total_regional[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_regional))];
       $sql_regional = "
@@ -466,7 +764,9 @@ class ResumenMesVentasController extends Controller
       inalmCalm, inalmNomb,
       " . implode($group_mes) . "
       CONVERT(varchar, CAST(ISNULL([Tot1],0) AS MONEY),1) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL([Tot2],0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL([Tot2],0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL([Tot3],0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL([Tot4],0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -490,8 +790,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -521,8 +822,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -534,10 +836,79 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCalm = almacen.inalmCalm
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCalm,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCalm = almacen.inalmCalm
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCalm,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCalm, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCalm, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCalm = almacen.inalmCalm
       WHERE " . $alm . "
       ORDER BY inalmNomb;
       ";
-      // dd($sql_regional);
       $total_seg_regional[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_regional))];
     }
     foreach ($retail as $key) {
@@ -546,7 +917,9 @@ class ResumenMesVentasController extends Controller
       SELECT 
       " . implode($group_mes_sum) . "
       ISNULL(SUM([Tot1]),0) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot3]),0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot4]),0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -570,8 +943,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -601,8 +975,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -614,8 +989,78 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3] 
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCusr = usr.adusrCusr
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCusr = usr.adusrCusr
       WHERE " . $usr_retail . "";
-      // dd($sql_total_retail);
+      //dd($sql_total_retail);
       $total_retail[] = [$key['name'] => DB::connection('sqlsrv')->select(DB::raw($sql_total_retail))];
     }
 
@@ -623,7 +1068,9 @@ class ResumenMesVentasController extends Controller
       SELECT
       " . implode($group_mes_sum) . "
       ISNULL(SUM([Tot1]),0) AS [Tot1],
-      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2]
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot2]),0) AS MONEY),1) AS [Tot2],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot3]),0) AS MONEY),1) AS [Tot3],
+      CONVERT(varchar, CAST(ISNULL(SUM([Tot4]),0) AS MONEY),1) AS [Tot4]
       FROM
       (
         SELECT *
@@ -647,8 +1094,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [tot1]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2021
@@ -678,8 +1126,9 @@ class ResumenMesVentasController extends Controller
       " . implode($group_sum_tot) . " AS [Tot2]
       FROM
         (
-        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtaImpT - vtvtaDesT) AS total
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
         FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
         WHERE vtvtaMdel = 0
         AND vtvtaFtra IS NOT NULL
         AND YEAR(vtvtaFtra) = 2022
@@ -691,6 +1140,76 @@ class ResumenMesVentasController extends Controller
           FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
         ) AS PivoTable
       ) totalventa2 ON totalventa2.vtvtaCusr = usr.adusrCusr
+      --------- con factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero3],
+      ISNULL([2],0) AS [Febrero3],
+      ISNULL([3],0) AS [Marzo3],
+      ISNULL([4],0) AS [Abril3],
+      ISNULL([5],0) AS [Mayo3],
+      ISNULL([6],0) AS [Junio3],
+      ISNULL([7],0) AS [Julio3],
+      ISNULL([8],0) AS [Agosto3],
+      ISNULL([9],0) AS [Septiembre3],
+      ISNULL([10],0) AS [Octubre3],
+      ISNULL([11],0) AS [Noviembre3],
+      ISNULL([12],0) AS [Diciembre3],
+      " . implode($group_sum_tot) . " AS [Tot3]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NOT NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) conFactura ON conFactura.vtvtaCusr = usr.adusrCusr
+	  --------- SIN factura---
+	  LEFT JOIN 
+      (
+      SELECT vtvtaCusr,
+      ISNULL([1],0) AS [Enero4],
+      ISNULL([2],0) AS [Febrero4],
+      ISNULL([3],0) AS [Marzo4],
+      ISNULL([4],0) AS [Abril4],
+      ISNULL([5],0) AS [Mayo4],
+      ISNULL([6],0) AS [Junio4],
+      ISNULL([7],0) AS [Julio4],
+      ISNULL([8],0) AS [Agosto4],
+      ISNULL([9],0) AS [Septiembre4],
+      ISNULL([10],0) AS [Octubre4],
+      ISNULL([11],0) AS [Noviembre4],
+      ISNULL([12],0) AS [Diciembre4],
+      " . implode($group_sum_tot) . " AS [Tot4]
+      FROM
+        (
+        SELECT vtvtaCusr, MONTH(vtvtaFtra) [mes], SUM(vtvtdImpT - vtvtdDesT) AS total
+        FROM vtVta
+        JOIN vtVtd on vtvtdNtra = vtvtaNtra
+        left join imLvt on imlvtNvta = vtvtaNtra
+        WHERE vtvtaMdel = 0
+        AND vtvtaFtra IS NOT NULL
+        AND YEAR(vtvtaFtra) = 2022
+        and imLvtNrfc is NULL
+        GROUP BY vtvtaCusr, MONTH(vtvtaFtra)
+        ) AS venta
+        PIVOT
+        (
+          SUM(total)
+          FOR [mes] IN([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+        ) AS PivoTable
+      ) sinFactura ON sinFactura.vtvtaCusr = usr.adusrCusr
       WHERE adusrCusr IN (29,57,74)";
       //dd($sql_total_retail);
       $total_retail_calacoto = DB::connection('sqlsrv')->select(DB::raw($sql_total_retail_calacoto));
@@ -996,11 +1515,8 @@ class ResumenMesVentasController extends Controller
     $sumGeneral20 = $sumBall20 + $sumHandal20 + $sumMariscal20 + $sumCalacoto20 + $sumInstitucional20 + $sumMayoristas20 + $sumSC20;
     $sumGeneral21 = $sumBall21 + $sumHandal21 + $sumMariscal21 + $sumCalacoto21 + $sumInstitucional21 + $sumMayoristas21 + $sumSC21;
 
-    // dd(floatval($total_general[0]->Tot1),$sumGeneral21);
+    // dd($total_seg[4]);
 
-    // dd($total_general);
-
-    // dd($arrayball19['retail']);
     if ($request->gen == "export") {
       $export = new ResumenVentasExport();
       return Excel::download($export, 'Reporte de Stock Actual.xlsx');
