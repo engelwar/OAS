@@ -9,7 +9,6 @@
 
   /*movimiento de iconos */
   /*estilos para el menu*/
-<<<<<<< HEAD
   .tooltip{
     position: relative;
     display: inline-block;
@@ -24,14 +23,6 @@
 transform: scale(1.3);
 data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
 }
-=======
-  .grow:hover {
-    -webkit-transform: scale(1.3);
-    -ms-transform: scale(1.3);
-    transform: scale(1.3);
-  }
-
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
   body {
     background: #404040;
     color: #fff;
@@ -464,15 +455,10 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
   </section>
   <div class="envoltura">
     <div class="envolver row">
-<<<<<<< HEAD
       <div class="col-14 d-flex flex-wrap" style="gap: 15px;">
     
 
 <!---modelo nuevo--->
-=======
-      <div class="col-12 d-flex flex-wrap" style="gap: 15px;">
-        <!---modelo nuevo--->
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
         @foreach(App\Modulo::get() as $mod)
         @if (Auth::user()->tieneModulo($mod->id))
         <div class="px-2 pb-2" style="margin-top: 20px; border: 2px solid white">
@@ -557,7 +543,6 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
             </a>
             @endif
             @endforeach
-<<<<<<< HEAD
               
               <!----sub menu--->
               @foreach($mod->submodulos as $submod)
@@ -611,54 +596,13 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
 
               <!--sub menu end-->
 
-=======
-            <!----sub menu--->
-            @foreach($mod->submodulos as $submod)
-            @if(Auth::user()->tieneSubModulo($submod->id))
-            @foreach($submod->programs as $prog)
-            @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && $prog->sub_modulo_id)
-            @if ($submod->nombre=="Inventario")
-            <a href="{{route($prog->route)}}">
-              <div class="btn-big subMenu1"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-            </a>
-            @endif
-            @if ($submod->nombre=="Ventas")
-            <a href="{{route($prog->route)}}">
-              <div class="btn-big subMenu2"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-            </a>
-            @endif
-            @if ($submod->nombre=="Compras")
-            <a href="{{route($prog->route)}}">
-              <div class="btn-big subMenu3"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-            </a>
-            @endif
-            @if ($submod->nombre=="Toma de inventarios")
-            <a href="{{route($prog->route)}}">
-              <div class="btn-big subMenu4"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-            </a>
-            @endif
-            @if ($submod->nombre!="Inventario"&&$submod->nombre!="Ventas"&&$submod->nombre!="Compras"
-            &&$submod->nombre!="Toma de inventarios")
-            <a href="{{route($prog->route)}}">
-              <div class="btn-big subMenu5"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-            </a>
-            @endif
-            @endif
-            @endforeach
-            @endif
-            @endforeach
-            <!--sub menu end-->
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
           </div>
         </div>
         @endif
         @endforeach
       </div>
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
       <!--|
         <p class="descripcion">
          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam repellendus veniam, pariatur delectus ratione expedita quas possimus, labore error laboriosam placeat. Natus iste, velit expedita ea dicta quam iure quos.
@@ -694,7 +638,6 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
       <h1 class="inicio">Inicio</h1>
       <!--partes de menu  iconos y mas-->
       @foreach(App\Modulo::get() as $mod)
-<<<<<<< HEAD
         @if (Auth::user()->tieneModulo($mod->id))
 
 
@@ -830,15 +773,6 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
             </div>
           @endif
           @endforeach                                                
-=======
-      @if (Auth::user()->tieneModulo($mod->id))
-      @foreach($mod->programs as $prog)
-      @if(Auth::user()->authorizePermisos([$prog->nombre, 'Ver']) && !$prog->sub_modulo_id)
-      @if ($mod->nombre=="Configuracion")
-      <a href="{{route($prog->route)}}">
-        <div class="btn-big red"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
-      </a>
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
       @endif
       @if ($mod->nombre=="Contabilidad")
       <a href="{{route($prog->route)}}">
@@ -870,10 +804,10 @@ data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"
         <div class="btn-big stima"> <i class="{{$prog->icon}} fa-2x" style="color: #ccc"></i><span class="label bottom"> {{$prog->nombre}} </span> </div>
       </a>
       @endif
-      @endif
+
       @endforeach
-      @endif
-      @endforeach
+
+     
       <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>
       <div class="btn-big blue"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item2</span> </div>
       <div class="btn-big red"> <i class="fab fa-ethereum fa-2x"></i> <span class="label bottom">item1</span> </div>

@@ -45,7 +45,8 @@ $(document).ready(function()
             { data: 'stockMARIS', title: 'Maris'},
             { data: 'stockCALA', title: 'Calac'},
             { data: 'stockSanM', title: 'SanM'},
-            { data: 'stockSCZ', title: 'SCZ'},            
+            { data: 'stockSCZ', title: 'SCZ'},  
+            { data: 'stockARGen', title: 'AlmResGenerales'},           
             { data: 'fechaultventa', title: 'Fecha Ult. Venta'},
         ],   
         "columnDefs": [

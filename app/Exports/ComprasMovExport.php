@@ -45,6 +45,7 @@ class ComprasMovExport implements FromArray, WithHeadings
             'Calacoto',
             'SanMiguel',
             'Santa Cruz',
+            'AlmResGeneral',
             'Fecha Ult. Venta',
         ];
     }

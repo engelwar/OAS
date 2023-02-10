@@ -49,7 +49,9 @@ $(document).ready(function()
             { data: 'stockMARIS', title: 'Mariscal'},
             { data: 'stockCALA', title: 'Calacoto'},
             { data: 'stockSanM', title: 'SanMiguel'},
-            { data: 'stockSCZ', title: 'SCZ'},            
+            { data: 'stockSCZ', title: 'SCZ'},   
+            { data: 'stockARGen', title: 'AlmResGenerales'},   
+                     
             { data: 'fechaultventa', title: 'Fecha Ult. Venta'},
         ],
         "pageLength": 15,  

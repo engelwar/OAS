@@ -9,7 +9,7 @@
 </style>
 @endsection
 @section('content')
-@include('layouts.navbarInf')
+@include('layouts.sidebar', ['hide'=>'0'])
 <div class="container-fluid">
   <div class="row justify-content-center mt-4">
     <div class="col">
@@ -117,7 +117,7 @@
         });
       }
     });
-    // $(".page-wrapper").removeClass("toggled"); 
+    $(".page-wrapper").removeClass("toggled");
   });
 </script>
 @endsection

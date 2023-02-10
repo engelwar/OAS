@@ -118,13 +118,9 @@
             </li>
             @endif
             @endforeach
-<<<<<<< HEAD
         </ul>
         
 
-=======
-          </ul>
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
         </li>
         @endif
         @if ($mod->nombre=="Inventarios")
@@ -213,9 +209,5 @@
       </div>
     </div>
   </div>
-<<<<<<< HEAD
 </div>
 
-=======
-</div> -->
->>>>>>> 747d8a9205dd146f0448f3ab54a0fd20834d72af
