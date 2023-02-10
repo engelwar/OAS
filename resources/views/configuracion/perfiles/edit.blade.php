@@ -139,12 +139,11 @@
         <div class="mb-2 row d-flex">
           <label for="cargo" class="col-2 col-form-label">{{ __('Cargo') }}</label>
           <div class="col-md-4">
-            <input id="cargo" value="{{$perfil->cargo}}" type="text" class="form-control @error('cargo') is-invalid @enderror" name="cargo" value="{{ old('cargo') }}" autocomplete="cargo" autofocus>
-            @error('cargo')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <select name="cargo" id="cargo" class="form-control">
+              <option value="" disabled selected>Seleccione Cargo</option>
+              <option value="Jefe" @if($perfil->cargo == 'Jefe') selected @endif>Jefe</option>
+              <option value="Personal" @if($perfil->cargo == 'Personal') selected @endif>Personal</option>
+            </select>
           </div>
           <label for="corp_email" class="col-2 col-form-label">
             {{ __('Correo Coporativo') }}
@@ -197,9 +196,6 @@
             </span>
             @enderror
           </div>
-          
-          
-          
           <label for="dias_vacacion_
           tomadas" class="col-3 col-form-label">{{ __('Registrar Dias') }}</label>
           <div class="col-md-3">

@@ -173,6 +173,21 @@
         @enderror
       </div>
     </div>
+    <div class="form-group row">
+      <label for="autoriza" class="col-md-2 col-form-label text-md-right">
+        {{ __('Autoriza') }}
+      </label>
+      <div class="col-md-4">
+        <select name="jefe" id="jefe" class="form-control" required>
+          <option value="" disabled selected>Seleccione Inmediato Superior</option>
+          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
+          @if ($u->cargo == 'Jefe' && $u->area_id != 3)
+          <option value="{{$u->user_id}}" @if($u->user_id == $LicenciaForm->jefe_id) selected @endif>{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
+          @endif
+          @endforeach
+        </select>
+      </div>
+    </div>
     @if (Auth::user()->tienePermiso(18,2))
     <div class="d-flex justify-content-center mt-2" style="gap: 10px;">
       <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>

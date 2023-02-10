@@ -63,7 +63,6 @@
               <TH colspan="2" class="text-center">FINALIZACION</TH>
               <TH rowspan="2">DIAS</TH>
               <TH rowspan="2">MOTIVO</TH>
-              <TH rowspan="2">RESPALDO</TH>
               <TH rowspan="2" class="text-center">ESTADO</TH>
               <TH rowspan="2">OPCIONES</TH>
             </TR>
@@ -93,7 +92,6 @@
             <td>{{$fin_hora}}</td>
             <td>{{$f->dias}}</td>
             <td>{{$f->motivo}}</td>
-            <td>{{$f->respaldo}}</td>
             <td class="text-center p-2">
               @if ($f->estado == null)
               <a href="{{ route('licencia.estadoForm',$f->id) }}" class="btn btn-primary p-0 pr-2 pl-2" style="font-size: 1.4rem;"><i class="fas fa-eye"></i></a>

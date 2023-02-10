@@ -134,7 +134,7 @@ body{
 }
 
 .form-group1A .item2A{
-    width: 180%;
+    width: 140%;
     margin-right: 20em;
 }
 
@@ -146,12 +146,12 @@ body{
 }
 
 .form-group1A .item4A{
-    width: 80%;
+    width: 130%;
     position: relative;
     float:left;
 }
 .form-group1A .item5A{
-    width: 100%;
+    width: 90%;
     padding-top: 0.2cm;
     padding-left: 1cm;
 }

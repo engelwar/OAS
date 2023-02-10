@@ -9,12 +9,23 @@ class LicenciaForm extends Model
 {
   protected $fillable = [
     'motivo', 'hora_ini', 'hora_fin',
-    'fecha_ini', 'fecha_fin', 'dias', 'horas', 'estado', 'detalle_estado', 'user_id'
-
+    'fecha_ini', 'fecha_fin', 'dias', 'horas', 'estado', 'detalle_estado', 'user_id', 'jefe_id', 'admin_id'
   ];
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+  public function jefe()
+  {
+    return $this->belongsTo(User::class);
+  }
+  public function admin()
+  {
+    return $this->belongsTo(User::class);
+  }
+  public function area()
+  {
+    return $this->belongsTo(Area::class, 'area_id');
   }
   public function firmas()
   {

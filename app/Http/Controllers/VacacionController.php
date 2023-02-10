@@ -56,8 +56,8 @@ class VacacionController extends Controller
     $fecha_actual = new DateTime(date('Y-m-d'));
     $diff = $fecha_ingreso->diff($fecha_actual)->days;
     $dias_vacaciones = intval($diff / 366) * 15;
-    $query_tomados = 'SELECT ((SELECT SUM(dias) as suma FROM vacacion_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada") +
-    (SELECT SUM(dias) FROM licencia_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada")) as suma';
+    $query_tomados = 'SELECT ((SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM vacacion_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada") +
+    (SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM licencia_forms WHERE user_id = ' . Auth::user()->id . ' AND estado = "Aceptada")) as suma';
     $dias_tomados = DB::select($query_tomados);
     return view("forms.vacaciones", compact('dias_vacaciones', 'dias_tomados'));
   }
@@ -69,8 +69,8 @@ class VacacionController extends Controller
     $fecha_actual = new DateTime(date('Y-m-d'));
     $diff = $fecha_ingreso->diff($fecha_actual)->days;
     $dias_vacaciones = intval($diff / 366) * 15;
-    $query_tomados = 'SELECT ((SELECT SUM(dias) as suma FROM vacacion_forms WHERE user_id = ' . $VacacionForm->user_id . ' AND estado = "Aceptada") +
-    (SELECT SUM(dias) FROM licencia_forms WHERE user_id = ' .   $VacacionForm->user_id . ' AND estado = "Aceptada")) as suma';
+    $query_tomados = 'SELECT ((SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM vacacion_forms WHERE user_id = ' . $VacacionForm->user_id . ' AND estado = "Aceptada") +
+    (SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM licencia_forms WHERE user_id = ' .   $VacacionForm->user_id . ' AND estado = "Aceptada")) as suma';
     $dias_tomados = DB::select($query_tomados);
     return view('forms.vacaciones_detalle', compact('dias_vacaciones', 'dias_tomados'))->with('VacacionForm', $VacacionForm);
   }
@@ -99,6 +99,7 @@ class VacacionController extends Controller
     }
     $vacacion->estado = $request->get('estado');
     $vacacion->detalle_estado = $request->get('detalle_estado');
+    $vacacion->admin_id = Auth::user()->id;
     $vacacion->save();
 
     return redirect()->route('vacacion.index');
@@ -134,6 +135,7 @@ class VacacionController extends Controller
       'dias_l' => $request->dias_l,
       'saldo_dias' => $request->saldo_dias,
       'saldo_dias_l' => $request->saldo_dias_l,
+      'jefe_id' => $request->jefe,
 
       'user_id' => Auth::user()->id,
     ]);
@@ -242,9 +244,8 @@ class VacacionController extends Controller
   public function generatePDF($id)
   {
     $VacacionForm = VacacionForm::find($id);
-    $superior = Perfil::where('user_id', $VacacionForm->superior)->get();
-    $administrativo = Perfil::where('user_id', $VacacionForm->administrativo)->get();
-    $pdf = PDF::loadView('vacacion_pdf', compact('VacacionForm', 'superior', 'administrativo'));
+    // dd($VacacionForm->admin->perfiles->nombre);
+    $pdf = PDF::loadView('vacacion_pdf', compact('VacacionForm'));
     return $pdf->stream('prueba.pdf');
   }
 }

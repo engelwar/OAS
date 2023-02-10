@@ -201,7 +201,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="Ernesto Weinberg Jauregui" class="form-control @error('ci') is-invalid @enderror input">
+          <input id="ci" type="text" value="{{$LicenciaForm->jefe->perfiles->nombre}} {{$LicenciaForm->jefe->perfiles->paterno}} {{$LicenciaForm->jefe->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -214,7 +214,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="Administración" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$LicenciaForm->jefe->perfiles->cargo}} de {{$LicenciaForm->jefe->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -233,7 +233,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="Angela Ochoa Quispe" class="form-control @error('ci') is-invalid @enderror input">
+          <input id="ci" type="text" value="{{$LicenciaForm->admin->perfiles->nombre}} {{$LicenciaForm->admin->perfiles->paterno}} {{$LicenciaForm->admin->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -246,7 +246,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="Administracion" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$LicenciaForm->admin->perfiles->cargo}} de {{$LicenciaForm->admin->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

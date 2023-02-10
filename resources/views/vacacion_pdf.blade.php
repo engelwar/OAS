@@ -253,12 +253,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="Ernesto Weinberg Jauregui" class="form-control @error('ci') is-invalid @enderror input" name="ci">
-          @error('ci')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-          @enderror
+          <input id="ci" type="text" value="{{$VacacionForm->jefe->perfiles->nombre}} {{$VacacionForm->jefe->perfiles->paterno}} {{$VacacionForm->jefe->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
         </div>
         <div class="item item3A">
           <label for="cargo" class="">
@@ -266,14 +261,13 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="Administración" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$VacacionForm->jefe->perfiles->cargo}} de {{$VacacionForm->jefe->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
           @enderror
         </div>
-
         <div class="item item5A">
           _________________
         </div>
@@ -285,7 +279,7 @@
           </label>
         </div>
         <div class="item item2A">
-          <input id="ci" type="text" value="Angela Ochoa Quispe" class="form-control @error('ci') is-invalid @enderror input" name="ci">
+          <input id="ci" type="text" value="{{$VacacionForm->admin->perfiles->nombre}} {{$VacacionForm->admin->perfiles->paterno}} {{$VacacionForm->admin->perfiles->materno}}" class="form-control @error('ci') is-invalid @enderror input" name="ci">
           @error('ci')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -298,7 +292,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="Administración" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$VacacionForm->admin->perfiles->cargo}} de {{$VacacionForm->admin->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

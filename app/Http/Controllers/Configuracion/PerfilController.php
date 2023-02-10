@@ -123,16 +123,18 @@ class PerfilController extends Controller
    */
   public function edit($id)
   {
+    // dd(Perfil::find($id)->fecha_ingreso);
     $user = Auth::user();
     if ($user->authorizePermisos(['Usuarios', 'Ver'])) {
-      $fecha_ingreso = new DateTime(Perfil::find($id)['fecha_ingreso']);
+      $fecha_ingreso = new DateTime(Perfil::find($id)->fecha_ingreso);
       $fecha_actual = new DateTime(date('Y-m-d'));
       $diff = $fecha_ingreso->diff($fecha_actual)->days;
       $dias_vacaciones = intval($diff / 366) * 15;
-      $query_tomados = 'SELECT ((SELECT SUM(dias) as suma FROM vacacion_forms WHERE user_id = ' . Perfil::find($id)['user_id'] . ' AND estado = "Aceptada") +
-      (SELECT SUM(dias) FROM licencia_forms WHERE user_id = ' . Perfil::find($id)['user_id'] . ' AND estado = "Aceptada")) as suma';
+      $query_tomados = 'SELECT ((SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM vacacion_forms WHERE user_id = ' . Perfil::find($id)->user_id . ' AND estado = "Aceptada") +
+      (SELECT CASE WHEN SUM(dias) IS null THEN 0 ELSE SUM(dias) END FROM licencia_forms WHERE user_id = ' . Perfil::find($id)->user_id . ' AND estado = "Aceptada")) AS suma';
       $dias_tomados = DB::select($query_tomados);
       $perfil = Perfil::find($id);
+      // dd($query_tomados);
       return view('configuracion.perfiles.edit', compact('perfil', 'dias_tomados'));
     } else {
       return dd('largo de aqui');
@@ -150,8 +152,8 @@ class PerfilController extends Controller
   {
     $fecha_actual = new DateTime(date('Y-m-d'));
     $perfil = Perfil::find($id);
-    
     if($request->registrar_dias != null) {
+      dd($perfil->user_id);
       $vacacion = VacacionForm::create([
         'detalle_vacacion' => 'Llenado Por Funcionario',
         'fecha_ini' => $fecha_actual,

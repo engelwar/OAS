@@ -214,6 +214,21 @@
         </span>
         @enderror
       </div>
+      <div class="form-group row">
+      <label for="autoriza" class="col-md-2 col-form-label text-md-right">
+        {{ __('Autoriza') }}
+      </label>
+      <div class="col-md-4">
+        <select name="jefe" id="jefe" class="form-control" required>
+          <option value="" disabled selected>Seleccione Inmediato Superior</option>
+          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
+          @if ($u->cargo == 'Jefe' && $u->area_id != 3)
+          <option value="{{$u->user_id}}">{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
+          @endif
+          @endforeach
+        </select>
+      </div>
+    </div>
     </div>
     <div class="form-group row d-flex justify-content-center mt-2">
       <div class="col-md-10 d-flex justify-content-center">

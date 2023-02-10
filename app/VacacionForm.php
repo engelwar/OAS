@@ -7,12 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class VacacionForm extends Model
 {
   protected $fillable = [
-    'detalle_vacacion', 'fecha_ini', 'fecha_fin', 'fecha_ret', 'fecha_fin_aut', 'fecha_ret_aut', 'fecha_ini_aut', 'dias_v', 'dias_v_l',
-    'dias', 'dias_l', 'saldo_dias', 'saldo_dias_l', 'estado', 'detalle_estado', 'user_id'
+    'detalle_vacacion', 'fecha_ini', 'fecha_fin', 'fecha_ret', 'fecha_fin_aut', 'fecha_ret_aut', 'fecha_ini_aut', 'dias_v', 'dias_v_l','dias', 'dias_l', 'saldo_dias', 'saldo_dias_l', 'estado', 'detalle_estado', 'user_id', 'jefe_id', 'admin_id'
   ];
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+  public function jefe()
+  {
+    return $this->belongsTo(User::class);
+  }
+  public function admin()
+  {
+    return $this->belongsTo(User::class);
+  }
+  public function area()
+  {
+    return $this->belongsTo(Area::class, 'area_id');
   }
   public function firmas()
   {

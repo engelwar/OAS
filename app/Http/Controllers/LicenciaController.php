@@ -54,6 +54,7 @@ class LicenciaController extends Controller
     $licencia = LicenciaForm::find($id);
     $licencia->dias = $request->get('dias');
     $licencia->horas = $request->get('horas');
+    $licencia->admin_id = Auth::user()->id;
     $licencia->estado = $request->get('estado');
     $licencia->detalle_estado = $request->get('detalle_estado');
     $licencia->save();
@@ -95,6 +96,7 @@ class LicenciaController extends Controller
       'horas' => $request->horas,
       'motivo' => $request->motivo,
       'user_id' => Auth::user()->id,
+      'jefe_id' => $request->jefe,
     ]);
     return redirect()->route('permisos.index')->with('success', 'El formulario se envio correctamente');
   }
@@ -199,9 +201,8 @@ class LicenciaController extends Controller
   public function generatePDF($id)
   {
     $LicenciaForm = LicenciaForm::find($id);
-    $superior = Perfil::where('user_id', $LicenciaForm->superior)->get();
-    $administrativo = Perfil::where('user_id', $LicenciaForm->administrativo)->get();
-    $pdf = PDF::loadView('licencia_pdf', compact('LicenciaForm', 'superior', 'administrativo'));
+    // dd($LicenciaForm->jefe->perfiles->nombre);
+    $pdf = PDF::loadView('licencia_pdf', compact('LicenciaForm'));
     return $pdf->stream('prueba.pdf');
   }
 }

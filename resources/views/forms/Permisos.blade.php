@@ -163,6 +163,21 @@
         @enderror
       </div>
     </div>
+    <div class="form-group row">
+      <label for="autoriza" class="col-md-2 col-form-label text-md-right">
+        {{ __('Autoriza') }}
+      </label>
+      <div class="col-md-4">
+        <select name="jefe" id="jefe" class="form-control" required>
+          <option value="" disabled selected>Seleccione Inmediato Superior</option>
+          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
+          @if ($u->cargo == 'Jefe' && $u->area_id != 3)
+          <option value="{{$u->user_id}}">{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
+          @endif
+          @endforeach
+        </select>
+      </div>
+    </div>
     <div class="form-group row d-flex justify-content-center mt-5">
       <div class="col-md-10 d-flex justify-content-center">
         <button type="submit" class="btn btn-primary">
@@ -192,12 +207,12 @@
       $("#dias").val(0);
       $("#dias_a").val(0);
     }
-    var a1 = parseInt($("#hora_ini").val())  + Number(horas);
+    var a1 = parseInt($("#hora_ini").val()) + Number(horas);
     var a2 = $("#hora_ini").val();
-    if(a1 == 24) {
+    if (a1 == 24) {
       a1 = "00";
     }
-    if(a1 < 10){
+    if (a1 < 10) {
       a1 = "0" + a1;
     }
     $("#hora_fin").val(a1 + ":" + a2[3] + a2[4]);
@@ -215,12 +230,12 @@
       $("#dias").val(0);
       $("#dias_a").val(0);
     }
-    var a1 = parseInt($("#hora_ini").val())  + Number(horas);
+    var a1 = parseInt($("#hora_ini").val()) + Number(horas);
     var a2 = $("#hora_ini").val();
-    if(a1 == 24) {
+    if (a1 == 24) {
       a1 = "00";
     }
-    if(a1 < 10){
+    if (a1 < 10) {
       a1 = "0" + a1;
     }
     $("#hora_fin").val(a1 + ":" + a2[3] + a2[4]);
