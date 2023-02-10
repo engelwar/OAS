@@ -58,13 +58,14 @@
       </div>
     </div>
 
+      <input type="text" id="admin" value="{{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} "  hidden>
     <div class="form-group row">
       <label for="area" class="col-md-2 col-form-label text-md-right">
         {{ __('UNIDAD') }}
       </label>
 
       <div class="col-md-4">
-        <input id="area" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete=area">
+        <input id="area" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
         @error('area')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
