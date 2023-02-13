@@ -230,13 +230,14 @@ body{
         <div class="notification_icon">
           <i class="fas fa-bell"></i>
           <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger Notiposition">
-            0+
-            <span class="visually-hidden">unread messages</span>
+
+            {{$var}}
+            
+            <span class="visually-hidden">MENSAJE NO VISTO</span>
         </div>
-        
-      
-        
-        </span>
+       </span>
+
+      {{-- 
         @if($count=Auth::user()->unreadNotifications->count())
         <span class="badge badge-pill badge-primary parpadea" id="contant">
           {{$count}}
@@ -260,7 +261,7 @@ body{
           @foreach($auth=Auth::user()->unreadNotifications as $unreadNotification)
           <div class="d-flex row">
             <div class="d-flex col-9">
-              <a class="dropdown-item" href="{{route('notifications.redirect',[ $unreadNotification->data['url'], $unreadNotification->data['cotizacion_id'] ] )}}">
+              <a class="dropdown-item" href="{{route('notifications.redirect',[ $unreadNotification->data['url'], $unreadNotification->data['solicitud_id'] ] )}}">
                 {{$unreadNotification->data['text']}}
               </a>
             </div>
@@ -294,14 +295,14 @@ body{
               </div>
             </div>
           </div>
+        --}}
+        
+          
           <!--END NOTIFICACIONES-->
-          <!--a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a-->
+      
           <a href="#">
             <i class="fa fa-cog"></i>
-            <!--span class="badge-sonar"></span-->
+            <span class="badge-sonar"></span>
           </a>
 
           <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -313,13 +314,8 @@ body{
         </div>
         @endauth
 
-
       
 
         
 
   </nav>
-<<<<<<< HEAD
-=======
- 
->>>>>>> 98af2ad3c08af977b9d7ef46b271513d2025f2e6

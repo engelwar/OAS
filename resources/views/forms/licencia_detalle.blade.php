@@ -174,18 +174,48 @@
         @enderror
       </div>
     </div>
-    <div class="form-group row">
-      <label for="autoriza" class="col-md-2 col-form-label text-md-right">
-        {{ __('Autoriza') }}
+    <div class="form-group row d-flex">
+      <label for="respaldo" class="col-md-2 col-form-label text-md-right">
+        {{ __('Respaldo') }}
       </label>
+
+      <div class="col-md-10">
+        <input id="respaldo" type="text" class="form-control @error('respaldo') is-invalid @enderror" name="respaldo" value="{{ $LicenciaForm->respaldo }}" required autocomplete="respaldo">
+        @error('respaldo')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+
+      </div>
+    </div>
+    <div class="form-group row d-flex">
+      <label for="dias" class="col-md-2 col-form-label text-md-right">
+        {{ __('Jefe inmediato') }}
+      </label>
+
+      <div class="col-md-3">
+        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror d-none" name="dias" value="{{ $LicenciaForm->dias }}" required autocomplete="dias">
+        <input id="dias_a" type="text" class="form-control @error('dias_a') is-invalid @enderror" value="{{ $LicenciaForm->dias }}" required autocomplete="dias_a" disabled>
+        @error('dias')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+      </div>
+
+      <label for="horas" class="col-md-3 col-form-label text-md-right">
+        {{ __('Horas De Licencia') }}
+      </label>
+
       <div class="col-md-4">
-        <select name="jefe" id="jefe" class="form-control" required>
-          <option value="" disabled selected>Seleccione Inmediato Superior</option>
-          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
-          @if ($u->cargo == 'Jefe' && $u->area_id != 3)
-          <option value="{{$u->user_id}}" @if($u->user_id == $LicenciaForm->jefe_id) selected @endif>{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
-          @endif
-          @endforeach
+        <select id="horas" class="form-select" aria-label="Default select example" name="horas">
+          <option @if ($LicenciaForm->horas == 1) selected @endif value=1>Ernesto Weinberg Jauregui</option>
+          <option @if ($LicenciaForm->horas == 2) selected @endif value=2>Angela Ochoa</option>
+          <option @if ($LicenciaForm->horas == 3) selected @endif value=3>Magdy Villarroel </option>
+          <option @if ($LicenciaForm->horas == 4) selected @endif value=4>Denis Morales</option>
+          <option @if ($LicenciaForm->horas == 5) selected @endif value=4>Norka Fernandez</option>
+          <option @if ($LicenciaForm->horas == 6) selected @endif value=4>N</option>
         </select>
       </div>
     </div>

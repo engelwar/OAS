@@ -8,7 +8,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class Notificaciones extends Notification
+
+class OrderPlacedNotification extends Notification
 {
     use Queueable;
 
@@ -19,7 +20,7 @@ class Notificaciones extends Notification
      */
     public function __construct($dat)
     {
-        $this->dat = $dat;
+        $this->dat=$dato;
     }
 
     /**
@@ -56,10 +57,10 @@ class Notificaciones extends Notification
     public function toArray($notifiable)
     {
         return [
-            'text' =>$this->dat['text'],
+         
             'url' => $this->dat['url'],
             'user_id' => $this->dat['user_id'],
-            "cotizacion_id" => $this->dat['licencia_id'],
+            "licencia_id" => $this->dat['licencia_id'],
         ];
     }
 }

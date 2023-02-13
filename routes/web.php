@@ -80,7 +80,11 @@ Route::patch('notificaciones/read/{id}', 'NotificationsController@read');
 Route::put('notificaciones/read/{id}', 'NotificationsController@read');
 Route::post('notificaciones/deleteall', 'NotificationsController@deleteall');
 Route::get('notificaciones/{url}/{id}', 'NotificationsController@redirect')->name('notifications.redirect');
-
+//------------------------------
+Route::resource('/notificacionesini', 'NotificationController');
+Route::get('/notificacionini/show','NotificacionController@show')->name('notificacion.show');
+Route::patch('notificaciones/read/{id}', 'NotificationsController@read');
+//-----------------------------
 
 Route::resource('materialfaltante', 'MaterialFaltanteController');
 Route::match(['PUT', 'PATCH'], 'materialfaltante/estado/{id}', 'MaterialFaltanteController@estado')->name('materialfaltante.estado');
@@ -324,6 +328,8 @@ Route::get('/CotizacionReporte/reportePDF', 'CotizacionReportController@show')->
 Route::resource('/resumenxmes', 'Reports\ResumenMesVentasController');
 
 Route::resource('/resumenxmescosto', 'Reports\ResumenMesCostosVentasController');
+//*-----------------
+
 
 
 //-------------------caminos de reprotte cotizacion------------------------------------------
