@@ -65,7 +65,8 @@ class VacacionController extends Controller
   public function estadoForm($id)
   {
     $VacacionForm = VacacionForm::find($id);
-    $fecha_ingreso = new DateTime(Auth::user()->perfiles->fecha_ingreso);
+    // dd($VacacionForm->user->perfiles->nombre);
+    $fecha_ingreso = new DateTime($VacacionForm->user->perfiles->fecha_ingreso);
     $fecha_actual = new DateTime(date('Y-m-d'));
     $diff = $fecha_ingreso->diff($fecha_actual)->days;
     $dias_vacaciones = intval($diff / 366) * 15;

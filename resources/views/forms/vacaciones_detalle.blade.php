@@ -257,8 +257,8 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="autoriza" class="col-md-2 col-form-label text-md-right">
-        {{ __('Autoriza') }}
+      <label for="autoriza" class="col-md-3 col-form-label text-md-right ml-auto">
+        {{ __('AUTORIZA') }}
       </label>
       <div class="col-md-4">
         <select name="jefe" id="jefe" class="form-control" required>
@@ -313,7 +313,13 @@
     var valor3 = $("#dias_tomados").val();
     var letras3 = NumeroALetras(valor3);
     var valor4 = $("#saldo_dias").val();
-    var letras4 = NumeroALetras(valor4);
+    if (valor4 < 0) {
+      var letras4 = NumeroALetras(valor4*(-1));
+      $("#saldo_dias_l_a").val("MENOS "+letras4);
+    } else {
+      var letras4 = NumeroALetras(valor4);
+      $("#saldo_dias_l_a").val(letras4);
+    }
     $("#dias_v_l").val(letras1);
     $("#dias_l").val(letras2);
     $("#dias_tomados_l").val(letras3);
@@ -321,7 +327,6 @@
     $("#dias_v_l_a").val(letras1);
     $("#dias_l_a").val(letras2);
     $("#dias_tomados_l_a").val(letras3);
-    $("#saldo_dias_l_a").val(letras4);
   });
 
   function Unidades(num) {
@@ -497,8 +502,8 @@
 
     if (data.enteros == 0)
       return "CERO ";
-    if (data.enteros < 0)
-      return "EL VALOR NO PUEDE SER NEGATIVO";
+    // if (data.enteros < 0)
+    //   return "EL VALOR NO PUEDE SER NEGATIVO";
     if (data.enteros == 1)
       return Millones(data.enteros) + " DIA";
     else

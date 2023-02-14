@@ -249,8 +249,8 @@ body{
     position: absolute;
     z-index: 500;
     color: rgba(0, 128, 0, 0.397);
-    right: 14cm;
-    top: 4.5cm;
+    right: -0.3cm;
+    top: 1cm;
     
     font-size: 3em;
     -webkit-transform: rotate(40deg); 
@@ -262,8 +262,8 @@ body{
     position: absolute;
     z-index: 500;
     color: rgba(128, 0, 0, 0.397);
-    right: 14cm;
-    top: 4.5cm;
+    right: -0.3cm;
+    top: 1cm;
     
     font-size: 3em;
     -webkit-transform: rotate(40deg); 

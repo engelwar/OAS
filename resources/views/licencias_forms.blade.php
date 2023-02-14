@@ -109,7 +109,9 @@
             </td>
             <td>
               <div class="d-flex flex-row" style="gap: 4px;">
-                <a class="btn btn-info btn-xs" href="{{ route('licencia_pdf',$f->id,$f->user->id)}}" target="_blank"><span class="glyphicon glyphicon-pencil"><i class="fas fa-file-pdf"></i></span></a>
+              @if ($f->estado != null)
+              <a class="btn btn-info btn-xs" href="{{ route('licencia_pdf',$f->id,$f->user->id)}}" target="_blank"><span class="glyphicon glyphicon-pencil"><i class="fas fa-file-pdf"></i></span></a>
+              @endif
                 @if (Auth::user()->tienePermiso(18,3) && $f->estado == null)
                 <form action="{{ route ('licencia.destroy', $f->id) }}" method="POST" class="formEliminar">
                   @csrf

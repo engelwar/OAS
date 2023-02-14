@@ -202,7 +202,7 @@
     var horas = $("#horas").val();
     if (parseInt(horas) == 4) {
       $("#dias").val(0.5);
-      $("#dias_a").val(0.5);
+      $("#dias_a").val('Medio dia');
     } else {
       $("#dias").val(0);
       $("#dias_a").val(0);
@@ -225,7 +225,7 @@
     var horas = $("#horas").val();
     if (parseInt(horas) == 4) {
       $("#dias").val(0.5);
-      $("#dias_a").val(0.5);
+      $("#dias_a").val('Medio dia');
     } else {
       $("#dias").val(0);
       $("#dias_a").val(0);
