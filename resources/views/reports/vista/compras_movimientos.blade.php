@@ -51,7 +51,13 @@ $(document).ready(function()
             { data: 'stockSanM', title: 'SanMiguel'},
             { data: 'stockSCZ', title: 'SCZ'},   
             { data: 'stockARGen', title: 'AlmResGenerales'},   
-                     
+            { data: 'stockAlmMay1', title: 'AlmMayorista1'}, 
+            { data: 'stockAlmMay2', title: 'AlmMayorista2'},                      
+            { data: 'stockAlmMay3', title: 'AlmMayorista3'}, 
+            { data: 'stockAlmMay4', title: 'AlmMayorista4'}, 
+            { data: 'stockAlmMay5', title: 'AlmMayorista5'}, 
+            { data: 'stockAlmDistri1', title: 'AlmDistribuidor1'}, 
+          
             { data: 'fechaultventa', title: 'Fecha Ult. Venta'},
         ],
         "pageLength": 15,  

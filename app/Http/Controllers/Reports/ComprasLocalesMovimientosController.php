@@ -101,6 +101,12 @@ class ComprasLocalesMovimientosController extends Controller
         REPLACE(ISNULL(Calacoto,0),',', '.') as stockCALA,
         REPLACE(ISNULL(SanMiguel,0),',', '.') as stockSanM,
         REPLACE(ISNULL(SantaCruz,0),',', '.') as stockSCZ,   
+        REPLACE(ISNULL(AlmMay1,0),',', '.') as stockAlmMay1,
+		REPLACE(ISNULL(AlmMay2,0),',', '.') as stockAlmMay2,
+		REPLACE(ISNULL(AlmMay3,0),',', '.') as stockAlmMay3,
+		REPLACE(ISNULL(AlmMay4,0),',', '.') as stockAlmMay4,
+		REPLACE(ISNULL(AlmMay5,0),',', '.') as stockAlmMay5,
+		REPLACE(ISNULL(AlmDistribuidor1,0),',', '.') as stockAlmDistri1,
         REPLACE(ISNULL(AlmResGeneral,0),',', '.') as stockARGen,  
         CONVERT(varchar, ultv.intraFtra,103) as fechaultventa
         
@@ -229,6 +235,12 @@ class ComprasLocalesMovimientosController extends Controller
 			ISNULL([5],0)+ISNULL([29],0) as 'Calacoto',
             ISNULL([67],0)+ISNULL([68],0) as 'SanMiguel',
 			ISNULL([45],0) as 'SantaCruz',
+            ISNULL([9],0) as 'AlmMay1',	
+			ISNULL([48],0) as 'AlmMay2',
+			ISNULL([49],0) as 'AlmMay3',
+			ISNULL([50],0) as 'AlmMay4',
+			ISNULL([53],0) as 'AlmMay5',
+			ISNULL([27],0) as 'AlmDistribuidor1',
             ISNULL([73],0) as 'AlmResGeneral',	 
 			ISNULL([47],0)+ISNULL([40],0)+ISNULL([39],0)+ISNULL([46],0)+
 			ISNULL([43],0)+ISNULL([4],0)+ISNULL([13],0)+ISNULL([7],0)+
@@ -248,7 +260,7 @@ class ComprasLocalesMovimientosController extends Controller
 			(
 			  SUM(cant)
 			  for intraCalm IN ([4],[5],[6],[7],[10],[13],
-			  [29],[30],[39],[40],[43],[45],[46],[47],[67],[68],[73])
+			  [29],[30],[39],[40],[43],[45],[46],[47],[67],[68],[9],[48],[49],[50],[53],[27],[73])
 			) as ptv
 		) as stocks
 		ON stocks.intrdCpro = inpro.inproCpro	

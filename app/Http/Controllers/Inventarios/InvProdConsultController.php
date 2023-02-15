@@ -75,7 +75,7 @@ class InvProdConsultController extends Controller
             inumeAbre as um,
             inumeDesc  as um_desc,
             maconNomb as marca,
-            vtLidPrco as retail
+            CONVERT(VARCHAR, cast((vtLidPrco) as money),1) as retail
             FROM inpro
             LEFT JOIN inume ON inumeCume = inproCumb 
             LEFT JOIN macon ON inproMarc = CAST(MaconCcon as varchar)+ '|' + CAST(MaconItem as varchar)

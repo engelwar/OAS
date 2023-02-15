@@ -44,6 +44,12 @@ class ComprasLocMovExport implements FromArray, WithHeadings
             'SanMiguel',
             'Santa Cruz',
             'AlmResGeneral',
+            'AlmMay1',	
+			'AlmMay2',
+			'AlmMay3',
+			'AlmMay4',
+			'AlmMay5',
+			'AlmDistribuidor1',
             'Fecha Ult. Venta',
         ];
     }
