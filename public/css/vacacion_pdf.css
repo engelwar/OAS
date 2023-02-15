@@ -280,20 +280,16 @@ body{
   position: absolute;
   z-index: 500;
   color: rgba(0, 128, 0, 0.397);
-  right: -0.3cm;
-  top: 1cm;
-  font-size: 4em;
-  -webkit-transform: rotate(30deg); 
-  -moz-transform: rotate(30deg);    
+  left: 1cm;
+  top: 8.8cm;
+  font-size: 4em;  
 }
 
 #sello2{
   position: absolute;
   z-index: 500;
   color: rgba(128, 0, 0, 0.397);
-  right: -0.3cm;
-  top: 1.2cm;
-  font-size: 4em;
-  -webkit-transform: rotate(30deg); 
-  -moz-transform: rotate(30deg);    
+  left: 1cm;
+  top: 8.8cm;
+  font-size: 4em;    
 }

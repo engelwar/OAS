@@ -119,7 +119,7 @@ body{
     width: 90%;
     display: table;
     
-    left: -20px;
+    left: -0.8cm;
 }
 
 .form-group1A .item{
@@ -249,12 +249,10 @@ body{
     position: absolute;
     z-index: 500;
     color: rgba(0, 128, 0, 0.397);
-    right: -0.3cm;
-    top: 1cm;
+    left: 0.4cm;
+    top: 7.1cm;
     
-    font-size: 3em;
-    -webkit-transform: rotate(40deg); 
-    -moz-transform: rotate(30deg);    
+    font-size: 3em;   
   
   }
   
@@ -262,12 +260,10 @@ body{
     position: absolute;
     z-index: 500;
     color: rgba(128, 0, 0, 0.397);
-    right: -0.3cm;
-    top: 1cm;
+    left: 0.4cm;
+    top: 7.1cm;
     
-    font-size: 3em;
-    -webkit-transform: rotate(40deg); 
-    -moz-transform: rotate(30deg);    
+    font-size: 3em;   
   
   }
 #sello3{

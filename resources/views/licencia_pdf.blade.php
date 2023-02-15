@@ -61,6 +61,7 @@
           @enderror
         </div>
       </div>
+      <br>
       <div class="form-group1">
         <div class="item item1">
           <label for="cargo" class="">
@@ -197,10 +198,13 @@
           @enderror
         </div>
       </div>
+      <br>
+      <br>
+      <br>
       <div class="form-group1A">
         <div class="item item1A">
           <label for="nombre" class="col-md-2 col-form-label text-md-right">
-            {{ __('AUTORIZADO POR:') }}
+            {{ __('PRIMERA AUTORIZACION:') }}
           </label>
         </div>
         <div class="item item2A">
@@ -229,10 +233,11 @@
           ___________________________
         </div>
       </div>
+      <br>
       <div class="form-group1A">
         <div class="item item1A">
           <label for="nombre" class="col-md-2 col-form-label text-md-right">
-            {{ __('GERENTE ADMINISTRATIVO:') }}
+            {{ __('SEGUNDA AUTORIZACION:') }}
           </label>
         </div>
         <div class="item item2A">

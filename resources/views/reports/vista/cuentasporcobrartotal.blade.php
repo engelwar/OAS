@@ -104,19 +104,19 @@
          <tbody>`;
     // Recorrer facturas para agregar cada fila
     prueba.forEach(i => {
-      // prueba[i].vista1.forEach(f => {
-      //   tabla += `<tr>
-      //         <td>${f.id_cliente_2}</td>
-      //         <td>${f.nomb_cliente_2}</td>
-      //         <td>${f.id_usuario_2}</td>
-      //         <td>${f.nomb_user_2}</td>
-      //         <td>${f.local_2}</td>
-      //         <td>${f.importeCXC_2}</td>
-      //         <td>${f.cont_2}</td>
-      //         <td>${f.cred_2}</td>
-      //         <td>${f.saldo_2}</td>
-      //     </tr>`;
-      // });
+      prueba[0].vista1.forEach(f => {
+        tabla += `<tr>
+              <td>${f.id_cliente_2}</td>
+              <td>${f.nomb_cliente_2}</td>
+              <td>${f.id_usuario_2}</td>
+              <td>${f.nomb_user_2}</td>
+              <td>${f.local_2}</td>
+              <td>${f.importeCXC_2}</td>
+              <td>${f.cont_2}</td>
+              <td>${f.cred_2}</td>
+              <td>${f.saldo_2}</td>
+          </tr>`;
+      });
     });
     tabla += '</tbody></table>';
     return tabla;
