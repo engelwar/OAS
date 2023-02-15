@@ -170,11 +170,15 @@
       <div class="col-md-4">
         <select name="jefe" id="jefe" class="form-control" required>
           <option value="" disabled selected>Seleccione Inmediato Superior</option>
-          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
+          {{-- 
+            @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
           @if ($u->cargo == 'Jefe' && $u->area_id != 3)
           <option value="{{$u->user_id}}">{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
           @endif
           @endforeach
+            --}}
+            <option value="51">Denis Morales</option>
+          
         </select>
       </div>
     </div>

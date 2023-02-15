@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Notificacion;
 use Illuminate\Http\Request;
+use App\LicenciaForm;
 
-class NotificationsController extends Controller
+class NotificacionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,6 +19,7 @@ class NotificationsController extends Controller
     		'unreadNotifications'=> auth()->user()->unreadNotifications,
     		'readNotifications'=> auth()->user()->readNotifications
     	]);
+    
     }
 
     /**
@@ -38,53 +40,34 @@ class NotificationsController extends Controller
      */
     public function store(Request $request)
     {
-        $body ="Solic";
-        $this->validate($request,[
-
-            'recipient_id'=> 'required|exists:users,id',
-        ]);
-        //validacion
-        $message= Message::create([
-            'sender_id'=> auth()->id(),
-            'recipient_id'=> $request->recipient_id,
-            'body'=>$body,
-
-        ]);
-
-        $array=[
-        'link'=>route('message.show',$message->id),
-        'text'=>"Has recibido una Muestra de".$message->sender->name
-        ];
-        
-        $recipient = User::where('area', 'Contabilidad')->orWhere('area', 'Administracion')->get();
-        
-        foreach ($recipient as $key => $value) {
-            # code...
-        }
-        $recipient->notify(new Messaget($array));
-        
-        return $recipient;
+        return dd("datos");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Notificacion  $notificacion
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Notificacion $notificacion, LicenciaForm $LicenciaForm )
     {
-        //$message=Message::findOrFail($id);
-    	//return view('messages.show',compact('message'));
+        
+        $var =10;
+        $LicenciaForm2=LicenciaForm::all();
+
+        
+        return view('layouts.sidebar', compact('LicenciaForm2', 'var'));
+        return dd($LicenciaForm2);         
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Notificacion  $notificacion
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Notificacion $notificacion)
     {
         //
     }
@@ -93,10 +76,10 @@ class NotificationsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Notificacion  $notificacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Notificacion $notificacion)
     {
         //
     }
@@ -104,14 +87,13 @@ class NotificationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Notificacion  $notificacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Notificacion $notificacion)
     {
         //
     }
-
     public function read($id)
     {
         $notification = auth()->user()->notifications()->where('id', $id)->first();
