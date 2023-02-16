@@ -273,8 +273,8 @@
     </div>
     @if (Auth::user()->tienePermiso(18,2))
     <div class="d-flex justify-content-center mt-2" style="gap: 10px;">
-      <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
-      <button name="estado" type="submit" class="button btn btn-primary btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
+      <button name="estado" type="submit" class="button btn btn- btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
+      <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
     </div>
     @elseif (Auth::user()->rol != 'admin' && $VacacionForm->estado != null)
     @endif

@@ -137,9 +137,21 @@
           <label for="cargo" class="col-2 col-form-label">{{ __('Cargo') }}</label>
           <div class="col-md-4">
             <select name="cargo" id="cargo" class="form-control">
-              <option value="" disabled selected>Seleccione cargo</option>
+              <option value="" disabled selected>Seleccione Cargo</option>
               <option value="Jefe">Jefe</option>
               <option value="Personal">Personal</option>
+              <option value="Vendedor">Vendedor</option>
+              <option value="Preventista">Preventista</option>
+              <option value="Jefe de tienda">Jefe de tienda</option>
+              <option value="Jefe de ventas">Jefe de ventas</option>
+              <option value="Jefe de sistemas">Jefe de sistemas</option>
+              <option value="Gerente administrativo">Gerente administrativo</option>
+              <option value="Gerente comercial">Gerente comercial</option>
+              <option value="Encargado de logistica">Encargado de logistica</option>
+              <option value="Encargado de sistemas">Encargado de sistemas</option>
+              <option value="Vendedor institucional">Vendedor institucional</option>
+              <option value="Vendedor mayorista">Vendedor mayorista</option>
+              <option value="Distribuidor">Distribuidor</option>
             </select>
           </div>
           <label for="corp_email" class="col-2 col-form-label">

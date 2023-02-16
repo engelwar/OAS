@@ -97,13 +97,11 @@
               <a href="{{ route('licencia.estadoForm',$f->id) }}" class="btn btn-primary p-0 pr-2 pl-2" style="font-size: 1.4rem;"><i class="fas fa-eye"></i></a>
               @elseif ($f->estado == 'Aceptada')
               <div class="d-flex flex-column">
-                <i class="far fa-check-circle text-success" style="font-size: 2rem;"></i>
-                <a href="{{ route('licencia.estadoForm',$f->id) }}" class="">Ver Permiso</a>
+                <a href="{{ route('licencia.estadoForm',$f->id) }}" class=""><i class="far fa-check-circle text-success" style="font-size: 2rem;"></i></a>
               </div>
               @elseif ($f->estado == 'Rechazada')
               <div class="d-flex flex-column">
-                <i class="far fa-times-circle text-danger" style="font-size: 2rem;"></i>
-                <a href="{{ route('licencia.estadoForm',$f->id) }}" class="">Ver Permiso</a>
+                <a href="{{ route('licencia.estadoForm',$f->id) }}" class=""><i class="far fa-times-circle text-danger" style="font-size: 2rem;"></i></a>
               </div>
               @endif
             </td>

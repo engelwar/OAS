@@ -58,7 +58,7 @@
       </div>
     </div>
 
-      <input type="text" id="admin" value="{{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} "  hidden>
+    <input type="text" id="admin" value="{{auth()->user()->perfiles->nombre}} {{auth()->user()->perfiles->paterno}} " hidden>
     <div class="form-group row">
       <label for="area" class="col-md-2 col-form-label text-md-right">
         {{ __('UNIDAD') }}
@@ -175,39 +175,9 @@
       </div>
     </div>
     <div class="form-group row d-flex">
-      <label for="respaldo" class="col-md-2 col-form-label text-md-right">
-        {{ __('Respaldo') }}
-      </label>
-
-      <div class="col-md-10">
-        <input id="respaldo" type="text" class="form-control @error('respaldo') is-invalid @enderror" name="respaldo" value="{{ $LicenciaForm->respaldo }}" required autocomplete="respaldo">
-        @error('respaldo')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-
-      </div>
-    </div>
-    <div class="form-group row d-flex">
       <label for="dias" class="col-md-2 col-form-label text-md-right">
         {{ __('Jefe inmediato') }}
       </label>
-
-      <div class="col-md-3">
-        <input id="dias" type="text" class="form-control @error('dias') is-invalid @enderror d-none" name="dias" value="{{ $LicenciaForm->dias }}" required autocomplete="dias">
-        <input id="dias_a" type="text" class="form-control @error('dias_a') is-invalid @enderror" value="{{ $LicenciaForm->dias }}" required autocomplete="dias_a" disabled>
-        @error('dias')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-      </div>
-
-      <label for="horas" class="col-md-3 col-form-label text-md-right">
-        {{ __('Horas De Licencia') }}
-      </label>
-
       <div class="col-md-4">
         <select id="horas" class="form-select" aria-label="Default select example" name="horas">
           <option @if ($LicenciaForm->horas == 1) selected @endif value=1>Ernesto Weinberg Jauregui</option>
@@ -221,8 +191,8 @@
     </div>
     @if (Auth::user()->tienePermiso(18,2))
     <div class="d-flex justify-content-center mt-2" style="gap: 10px;">
-      <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
-      <button name="estado" type="submit" class="button btn btn-primary btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
+      <button name="estado" type="submit" class="button btn btn-success btn-xs" value="Aceptada"><i class="fas fa-check mr-2"></i>Aceptar</button>
+      <button name="estado" type="submit" class="button btn btn-danger btn-xs" value="Rechazada"><i class="fas fa-times mr-2"></i>Rechazar</button>
     </div>
     @elseif (Auth::user()->rol != 'admin' && $LicenciaForm->estado != null)
     <h4 class="text-bold text-danger text-center">{{$LicenciaForm->estado}}</h4>
@@ -255,12 +225,12 @@
       $("#dias").val(0);
       $("#dias_a").val(0);
     }
-    var a1 = parseInt($("#hora_ini").val())  + Number(horas);
+    var a1 = parseInt($("#hora_ini").val()) + Number(horas);
     var a2 = $("#hora_ini").val();
-    if(a1 == 24) {
+    if (a1 == 24) {
       a1 = "00";
     }
-    if(a1 < 10){
+    if (a1 < 10) {
       a1 = "0" + a1;
     }
     $("#hora_fin").val(a1 + ":" + a2[3] + a2[4]);
@@ -278,12 +248,12 @@
       $("#dias").val(0);
       $("#dias_a").val(0);
     }
-    var a1 = parseInt($("#hora_ini").val())  + Number(horas);
+    var a1 = parseInt($("#hora_ini").val()) + Number(horas);
     var a2 = $("#hora_ini").val();
-    if(a1 == 24) {
+    if (a1 == 24) {
       a1 = "00";
     }
-    if(a1 < 10){
+    if (a1 < 10) {
       a1 = "0" + a1;
     }
     $("#hora_fin").val(a1 + ":" + a2[3] + a2[4]);

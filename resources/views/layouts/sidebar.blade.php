@@ -231,7 +231,7 @@ body{
           <i class="fas fa-bell"></i>
           <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger Notiposition">
 
-            {{$var}}
+            
             
             <span class="visually-hidden">MENSAJE NO VISTO</span>
         </div>

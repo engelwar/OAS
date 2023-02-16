@@ -231,15 +231,27 @@ class CuentasPorCobrarTotalController extends Controller
       ));
     // dd($movimientos1);
     // dd($movimientos2);
+    foreach ($movimientos1 as $key => $value) {
+      // dd($value->id_usuario_1);
+      foreach ($movimientos2 as $i => $j) {
+        // dd($value->id_usuario_1 == $j->id_usuario_2);
+        if ($value->id_usuario_1 == $j->id_usuario_2) {
+          $test[$value->id_usuario_1] = ['nomb_user_1' => $value->nomb_user_1, 'nomb_cliente_2' => $j->nomb_cliente_2];
+        } else {
+          break;
+        }
+      }
+    }
+    dd($test);
     $test = [];
     foreach ($movimientos1 as $key => $value) {
       foreach ($movimientos2 as $i => $j) {
         if ($value->id_usuario_1 == $j->id_usuario_2) {
-          $test[] = [$j->nomb_cliente_2,$j->nomb_cliente_2];
+          $test[$value->id_usuario_1] = 'hola';
         }
       }
     }
-    // dd($test);
+    dd($test);
     $array = [];
     foreach ($movimientos1 as $key => $value) {
       $array[] = ['id_usuario_1' => $value->id_usuario_1, 'nomb_user_1' => $value->nomb_user_1, 'local_1' => $value->local_1, 'importeCXC_1' => $value->importeCXC_1, 'cont_1' => $value->cont_1, 'cred_1' => $value->cont_1, 'saldo_1' => $value->saldo_1];

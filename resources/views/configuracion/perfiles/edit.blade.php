@@ -142,39 +142,35 @@
             <select name="cargo" id="cargo" class="form-control">
               <option value="" disabled selected>Seleccione Cargo</option>
               <option value="Jefe" @if($perfil->cargo == 'Jefe')
-                             selected @endif>Jefe</option>
-                             
+                selected @endif>Jefe</option>
+
               <option value="Personal" @if($perfil->cargo == 'Personal') selected @endif>Personal</option>
 
 
-<option value="Vendedor" @if($perfil->cargo == 'Vendedor') selected @endif>Vendedor</option>
+              <option value="Vendedor" @if($perfil->cargo == 'Vendedor') selected @endif>Vendedor</option>
 
-<option value="Preventista" @if($perfil->cargo == 'Preventista') selected @endif>Preventista</option>
+              <option value="Preventista" @if($perfil->cargo == 'Preventista') selected @endif>Preventista</option>
 
-<option value="Jefe de tienda" @if($perfil->cargo == 'Jefe de tienda') selected @endif>Jefe de tienda</option>
+              <option value="Jefe de tienda" @if($perfil->cargo == 'Jefe de tienda') selected @endif>Jefe de tienda</option>
 
-<option value="Jefe de almacen" @if($perfil->cargo == 'Jefe de almacen') selected @endif>Jefe de tienda</option>
+              <option value="Jefe de ventas" @if($perfil->cargo == 'Jefe de ventas') selected @endif>Jefe de ventas</option>
 
-<option value="Jefe de ventas" @if($perfil->cargo == 'Jefe de ventas') selected @endif>Jefe de ventas</option>
+              <option value="Jefe de sistemas" @if($perfil->cargo == 'Jefe de sistemas') selected @endif>Jefe de sistemas</option>
 
-<option value="Jefe de sistemas" @if($perfil->cargo == 'Jefe de sistemas') selected @endif>Jefe de sistemas</option>
+              <option value="Gerente administrativo" @if($perfil->cargo == 'Gerente administrativo') selected @endif>Gerente administrativo</option>
 
-<option value="Gerente administrativo" @if($perfil->cargo == 'Gerente administrativo') selected @endif>Gerente administrativo</option>
+              <option value="Gerente comercial" @if($perfil->cargo == 'Gerente comercial') selected @endif>Gerente comercial</option>
 
-<option value="Gerente comercial" @if($perfil->cargo == 'Gerente comercial') selected @endif>Gerente comercial</option>
+              <option value="Encargado de logistica" @if($perfil->cargo == 'Encargado de logistica') selected @endif>Encargado de logistica</option>
 
-<option value="Encargado de logistica" @if($perfil->cargo == 'Encargado de logistica') selected @endif>Encargado de logistica</option>
+              <option value="Encargado de sistemas" @if($perfil->cargo == 'Encargado de sistemas') selected @endif>Encargado de sistemas</option>
 
-<option value="Encargado de sistemas" @if($perfil->cargo == 'Encargado de sistemas') selected @endif>Encargado de sistemas</option>        
+              <option value="Vendedor institucional" @if($perfil->cargo == 'Vendedor institucional') selected @endif>Vendedor institucional</option>
 
+              <option value="Vendedor mayorista" @if($perfil->cargo == 'Vendedor mayorista') selected @endif>Vendedor mayorista</option>
 
-
-<option value="Vendedor institucional" @if($perfil->cargo == 'Vendedor institucional') selected @endif>Vendedor institucional</option>
-
-<option value="Vendedor mayorista" @if($perfil->cargo == 'Vendedor mayorista') selected @endif>Vendedor mayorista</option>
-
-<option value="Distribuidor" @if($perfil->cargo == 'Distribuidor') selected @endif>Distribuidor</option>
-</select>
+              <option value="Distribuidor" @if($perfil->cargo == 'Distribuidor') selected @endif>Distribuidor</option>
+            </select>
           </div>
           <label for="corp_email" class="col-2 col-form-label">
             {{ __('Correo Coporativo') }}

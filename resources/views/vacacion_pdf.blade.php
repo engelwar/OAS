@@ -53,7 +53,7 @@
           </label>
         </div>
         <div class="item item4">
-          <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
+          <input id="cargo" type="text" value="{{$VacacionForm->user->perfiles->cargo}}" class="form-control @error('cargo') is-invalid @enderror input" name="cargo">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -261,7 +261,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$VacacionForm->jefe->perfiles->cargo}} de {{$VacacionForm->jefe->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$VacacionForm->jefe->perfiles->cargo}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -292,7 +292,7 @@
           </label>
         </div>
         <div class="item item4A">
-          <input id="cargo" type="text" value="{{$VacacionForm->admin->perfiles->cargo}} de {{$VacacionForm->admin->perfiles->area->nombre}}" class="form-control @error('cargo') is-invalid @enderror input">
+          <input id="cargo" type="text" value="{{$VacacionForm->admin->perfiles->cargo}}" class="form-control @error('cargo') is-invalid @enderror input">
           @error('sucursal')
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
