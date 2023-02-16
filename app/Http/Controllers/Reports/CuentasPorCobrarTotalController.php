@@ -235,106 +235,17 @@ class CuentasPorCobrarTotalController extends Controller
       // dd($value->id_usuario_1);
       foreach ($movimientos2 as $i => $j) {
         // dd($value->id_usuario_1 == $j->id_usuario_2);
-        if ($value->id_usuario_1 == $j->id_usuario_2) {
-          $test[$value->id_usuario_1] = ['nomb_user_1' => $value->nomb_user_1, 'nomb_cliente_2' => $j->nomb_cliente_2];
-        } else {
-          break;
+        if ($value->id_usuario_1 == $j->id_usuario_2 && $value->local_1 == $j->local_2) {
+          $test[$value->id_usuario_1.$value->local_1][] = ['nomb_cliente_2' => $j->nomb_cliente_2, 'importeCXC_2' => $j->importeCXC_2, 'importeCXC_2' => $j->importeCXC_2, 'cont_2' => $j->cont_2, 'cred_2' => $j->cred_2, 'saldo_2' => $j->saldo_2];
         }
       }
     }
-    dd($test);
-    $test = [];
-    foreach ($movimientos1 as $key => $value) {
-      foreach ($movimientos2 as $i => $j) {
-        if ($value->id_usuario_1 == $j->id_usuario_2) {
-          $test[$value->id_usuario_1] = 'hola';
-        }
-      }
-    }
-    dd($test);
+    // dd($test[3]);
     $array = [];
     foreach ($movimientos1 as $key => $value) {
-      $array[] = ['id_usuario_1' => $value->id_usuario_1, 'nomb_user_1' => $value->nomb_user_1, 'local_1' => $value->local_1, 'importeCXC_1' => $value->importeCXC_1, 'cont_1' => $value->cont_1, 'cred_1' => $value->cont_1, 'saldo_1' => $value->saldo_1];
+      $array[] = ['id_usuario_1' => $value->id_usuario_1, 'nomb_user_1' => $value->nomb_user_1, 'local_1' => $value->local_1, 'importeCXC_1' => $value->importeCXC_1, 'cont_1' => $value->cont_1, 'cred_1' => $value->cred_1, 'saldo_1' => $value->saldo_1, 'vista1' =>$test[$value->id_usuario_1.$value->local_1]];
     }
-    // dd($array);
-    $prueba = [
-      [
-        'id_usuario_1' => 2, 'nomb_user_1' => 'RENZO DURAN BUTTELER', 'local_1' => 'CASA MATRIZ', 'importeCXC_1' => 2155233.03, 'cont_1' => 0.00, 'cred_1' => 1992547.94, 'saldo_1' => 162685.09, 'vista1' => [
-          [
-            'id_cliente_2' => 15,
-            'nomb_cliente_2' => 'AASANA',
-            'id_usuario_2' => 2,
-            'nomb_user_2' => 'RENZO DURAN BUTTELER',
-            'local_2' => 'CASA MATRIZ',
-            'importeCXC_2' => 795.31,
-            'cont_2' => 0.00,
-            'cred_2' => 795.31,
-            'saldo_2' => 0.00
-          ],
-          [
-            'id_cliente_2' => 23,
-            'nomb_cliente_2' => 'ADALID MORODIAS',
-            'id_usuario_2' => 2,
-            'nomb_user_2' => 'RENZO DURAN BUTTELER',
-            'local_2' => 'CASA MATRIZ',
-            'importeCXC_2' => 587.00,
-            'cont_2' => 0.00,
-            'cred_2' => 587.00,
-            'saldo_2' => 0.00
-          ]
-        ]
-      ],
-      [
-        'id_usuario_1' => 4, 'nomb_user_1' => 'RENZO DURAN BUTTELER', 'local_1' => 'CASA MATRIZ', 'importeCXC_1' => 2155233.03, 'cont_1' => 0.00, 'cred_1' => 1992547.94, 'saldo_1' => 162685.09, 'vista1' => [
-          [
-            'id_cliente_2' => 158,
-            'nomb_cliente_2' => 'AASANA',
-            'id_usuario_2' => 2,
-            'nomb_user_2' => 'RENZO DURAN BUTTELER',
-            'local_2' => 'CASA MATRIZ',
-            'importeCXC_2' => 795.31,
-            'cont_2' => 0.00,
-            'cred_2' => 795.31,
-            'saldo_2' => 0.00
-          ],
-          [
-            'id_cliente_2' => 231,
-            'nomb_cliente_2' => 'ADALID MORODIAS',
-            'id_usuario_2' => 2,
-            'nomb_user_2' => 'RENZO DURAN BUTTELER',
-            'local_2' => 'CASA MATRIZ',
-            'importeCXC_2' => 587.00,
-            'cont_2' => 0.00,
-            'cred_2' => 587.00,
-            'saldo_2' => 0.00
-          ],
-          [
-            'id_cliente_2' => 21,
-            'nomb_cliente_2' => 'ADALID MORODIAS',
-            'id_usuario_2' => 2,
-            'nomb_user_2' => 'RENZO DURAN BUTTELER',
-            'local_2' => 'CASA MATRIZ',
-            'importeCXC_2' => 587.00,
-            'cont_2' => 0.00,
-            'cred_2' => 587.00,
-            'saldo_2' => 0.00
-          ]
-        ]
-      ],
-    ];
-    dd($prueba);
-    $titulos =
-      [
-        ['name' => 'Cliente', 'data' => 'Cliente', 'title' => 'Cliente', 'tip' => 'filtro'],
-        ['name' => 'Rsocial', 'data' => 'Rsocial', 'title' => 'RazonSocial', 'tip' => 'filtro'],
-        ['name' => 'Nit', 'data' => 'Nit', 'title' => 'NIT', 'tip' => 'filtro'],
-        ['name' => 'adusrNomb', 'data' => 'adusrNomb', 'title' => 'Usuario', 'tip' => 'filtro'],
-        ['name' => 'inlocNomb', 'data' => 'inlocNomb', 'title' => 'Local', 'tip' => 'filtro_select'],
-        [],
-        [],
-        [],
-        [],
-      ];
+    // dd($array[1]);
     if ($request->gen == "excel") {
       $query_excel = "
         SELECT
@@ -408,7 +319,7 @@ class CuentasPorCobrarTotalController extends Controller
       $export = new CuentasPorCobrarTotalExport($sql_excel, $fecha);
       return Excel::download($export, 'Cuentas Por Cobrar Total.xlsx');
     } elseif ($request->gen == "ver") {
-      return view('reports.vista.cuentasporcobrartotal', compact('movimientos1', 'movimientos2', 'titulos', 'fecha', 'prueba'));
+      return view('reports.vista.cuentasporcobrartotal', compact('array'));
     }
   }
 

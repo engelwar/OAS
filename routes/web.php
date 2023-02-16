@@ -204,6 +204,8 @@ Route::prefix('reports')->group(function () {
   Route::resource('detalleventas', 'Reports\DetalleVentasController');
 
   Route::resource('reproceso', 'Reports\ReporteReprocesoController');
+
+  Route::resource('reporteventas', 'Reports\ReporteVentasController');
 });
 
 Route::prefix('dev')->group(function () {
