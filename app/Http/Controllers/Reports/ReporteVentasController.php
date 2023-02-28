@@ -81,8 +81,7 @@ class ReporteVentasController extends Controller
     $fini = date("d/m/Y", strtotime($request->fini));
     $ffin = date("d/m/Y", strtotime($request->ffin));
 
-    $query =
-      "
+    $query_general = "
       SELECT
       vtvtaNtra,
       CONVERT(varchar,vtvtaFtra,103) AS fecha,
@@ -105,22 +104,82 @@ class ReporteVentasController extends Controller
       AND vtvtaFtra BETWEEN '".$fini."' AND '".$ffin."'
       ".$user."
       ".$cliente."
+      --AND vtvtaNtra IN (1010285317,1010285320)
       GROUP BY vtvtaNtra,vtvtaFtra,vtvtaNomC,imLvtRsoc,imLvtNNit,imLvtNrfc,adusrNomb,inalmNomb
       ORDER BY vtvtaFtra
       ";
-    $venta = DB::connection('sqlsrv')->select(DB::raw($query));
+    $venta_general = DB::connection('sqlsrv')->select(DB::raw($query_general));
+    $query_detalle = "
+      SELECT
+      vtvtdNtra,
+      CONVERT(varchar,vtvtaFtra,103) AS fecha,
+      maconNomb,
+      inproCpro,
+      inproNomb,
+      inumeAbre,
+      CONVERT(varchar, CAST((vtvtdImpT/vtvtdCant) as money), 1) AS ImpU,
+      vtvtdCant,
+      CONVERT(varchar, CAST(vtvtdImpT as money), 1) AS ImpT,
+      CONVERT(varchar, CAST(vtvtdDesT as money), 1) AS DesT,
+      CONVERT(VARCHAR, cast((vtvtdDesT * 100 / vtvtdImpT) as money),1) AS DesPor,
+      CONVERT(varchar, CAST((vtvtdImpT - vtvtdDesT) as money), 1) AS total,
+      vtvtaNomC,
+      imLvtRsoc,
+      imLvtNNit,
+      ISNULL(imLvtNrfc,'-') AS factura,
+      adusrNomb,
+      inalmNomb
+      FROM vtVta
+      LEFT JOIN vtVtd ON vtvtdNtra = vtvtaNtra
+      LEFT JOIN inpro ON inproCpro = vtvtdCpro
+      LEFT JOIN inume ON inumeCume = inproCumb
+      LEFT JOIN 
+      (
+          SELECT 
+          convert(varchar,maconCcon)+'|'+convert(varchar,maconItem) as maconMarc, 
+          maconNomb 
+          FROM macon 
+          WHERE maconCcon = 113
+      ) as marc
+      ON inproMarc = marc.maconMarc
+      LEFT JOIN inalm ON inalmCalm = vtvtaCalm
+      LEFT JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
+      LEFT JOIN imLvt ON imlvtNvta = vtvtaNtra
+      WHERE vtvtdMdel = 0
+      AND vtvtaFtra BETWEEN '".$fini."' AND '".$ffin."'
+      ".$user."
+      ".$cliente."
+      --AND vtvtdNtra IN (1010285317,1010285320)
+      ";
+    $venta_detalle = DB::connection('sqlsrv')->select(DB::raw($query_detalle));
+    // dd($venta_general);
+    // dd($venta_detalle);
+    $test = [];
+    foreach ($venta_general as $key => $value) {
+      foreach ($venta_detalle as $i => $j) {
+        if ($value->vtvtaNtra == $j->vtvtdNtra) {
+          $test[$value->vtvtaNtra][] = ['maconNomb' => $j->maconNomb, 'inproCpro' => $j->inproCpro, 'inproNomb' => $j->inproNomb, 'inumeAbre' => $j->inumeAbre, 'ImpU' => $j->ImpU, 'vtvtdCant' => $j->vtvtdCant, 'ImpT' => $j->ImpT, 'DesT' => $j->DesT, 'DesPor' => $j->DesPor, 'total' => $j->total];
+        }
+      }
+    }
+    // dd($test);
+    $array = [];
+    foreach ($venta_general as $key => $value) {
+      $array[] = ['vtvtaNtra' => $value->vtvtaNtra, 'fecha' => $value->fecha, 'ImpT' => $value->ImpT, 'DesT' => $value->DesT, 'DesPor' => $value->DesPor, 'total' => $value->total, 'vtvtaNomC' => $value->vtvtaNomC, 'imLvtRsoc' => $value->imLvtRsoc, 'imLvtNNit' => $value->imLvtNNit, 'factura' => $value->factura, 'adusrNomb' => $value->adusrNomb, 'inalmNomb' => $value->inalmNomb, 'vista1' => $test[$value->vtvtaNtra]];
+    }
+    // dd($array);
     if ($request->gen == "export") {
-      $pdf = \PDF::loadView('reports.pdf.reporteventas', compact('venta', 'fini', 'ffin'))
+      $pdf = \PDF::loadView('reports.pdf.reporteventas', compact('venta_detalle', 'fini', 'ffin'))
         ->setOrientation('landscape')
         ->setPaper('letter')
         ->setOption('footer-right', 'Pag [page] de [toPage]')
         ->setOption('footer-font-size', 8);
       return $pdf->inline('Reporte de Ventas entre: ' . $fini . ' - ' . $ffin . '.pdf');
     } elseif ($request->gen == "excel") {
-      $export = new ReporteVentasExport($venta, $fini, $ffin);
+      $export = new ReporteVentasExport($venta_detalle, $fini, $ffin);
       return Excel::download($export, 'Reporte de Ventas.xlsx');
     } else if ($request->gen == "ver") {
-      return view('reports.vista.reporteventas', compact('venta'));
+      return view('reports.vista.reporteventas', compact('array'));
     }
   }
 

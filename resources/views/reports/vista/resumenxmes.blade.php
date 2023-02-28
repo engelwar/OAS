@@ -3240,8 +3240,6 @@
           }
         },
         buttons: [{
-         
-            
           extend: "excel",
           text: 'Exportar a Excel',
           className: 'btn btn-outline-primary mb-4',

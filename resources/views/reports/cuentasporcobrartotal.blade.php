@@ -66,16 +66,37 @@
         <div class="row d-flex justify-content-center">
           <div class="col-12">
             <div class="mb-2 d-flex justify-content-center">
+              <div class="form-check pl-0">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Buscar entre:
+                </label>
+              </div>
+            </div>
+            <div class="mb-2 row d-flex justify-content-center">
+              <div class="col-sm-5">
+                <input id="fini" type="date" class="form-control form-control-sm" name="fini" value="{{date('Y-m-d')}}">
+              </div>
+              <div class="col-sm-1 text-center">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  y
+                </label>
+              </div>
+              <div class="col-sm-5">
+                <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value="{{date('Y-m-d')}}">
+              </div>
+            </div>
+            <div class="mb-2 d-flex justify-content-center">
               <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                 <label class="form-check-label" for="flexRadioDefault1">
                   Buscar al:
                 </label>
               </div>
             </div>
             <div class="mb-2 row d-flex justify-content-center">
-              <!-- <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm text-right">Al:</label> -->
               <div class="col-sm-6">
-                <input id="ffin" type="date" class="form-control form-control-sm " name="ffin" value="{{date('Y-m-d')}}">
+                <input id="fal" type="date" class="form-control form-control-sm " name="fal" value="{{date('Y-m-d')}}">
               </div>
             </div>
             <div class="mb-2 row d-flex justify-content-center">
@@ -99,7 +120,7 @@
                     <li class="divider"></li>
                     <li><a class="option-link multi-select-op" href="#">
                         <label>
-                          <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->adusrCusr}}'/>
+                          <input name='options[]' checked type="checkbox" class="option justone" value='{{$u->adusrCusr}}' />
                           {{$u->adusrNomb}}
                         </label>
                       </a></li>
@@ -118,9 +139,6 @@
         </div>
         <div class="mb-3 row">
           <div class="col-md-12 d-flex justify-content-center">
-            <!-- <button type="submit" class="btn btn-primary mx-2" name="gen" value="export">
-              PDF <i class="fas fa-file-pdf"></i>
-            </button> -->
             <button type="submit" class="btn btn-primary mx-2" name="gen" value="ver">
               Ver <i class="fas fa-bullseye"></i>
             </button>

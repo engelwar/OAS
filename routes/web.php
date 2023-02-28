@@ -49,13 +49,13 @@ Route::prefix('contabilidad')->group(function () {
   Route::resource('arqueocaja', 'ArqueoCajaController');
 });
 
-Route::prefix('rrhh')->group(function () {
-  Route::resource('licencia', 'Rh\LicenciaController');
-  Route::get('licencia/create/{cont}', 'Rh\LicenciaController@create')->name('licencia');
+// Route::prefix('rrhh')->group(function () {
+//   Route::resource('licencia', 'Rh\LicenciaController');
+//   Route::get('licencia/create/{cont}', 'Rh\LicenciaController@create')->name('licencia');
 
-  Route::resource('vacacion', 'Rh\VacacionController');
-  Route::get('vacacion_pdf/{id}', 'Rh\VacacionController@pdf')->name('vacacion.pdf');
-});
+//   Route::resource('vacacion', 'Rh\VacacionController');
+//   Route::get('vacacion_pdf/{id}', 'Rh\VacacionController@pdf')->name('vacacion.pdf');
+// });
 
 Route::prefix('ventas')->group(function () {
   Route::resource('cotizacion', 'CotizacionController');
@@ -206,6 +206,7 @@ Route::prefix('reports')->group(function () {
   Route::resource('reproceso', 'Reports\ReporteReprocesoController');
 
   Route::resource('reporteventas', 'Reports\ReporteVentasController');
+  Route::resource('reporteventasdetalle', 'Reports\ReporteVentasDetalleController');
 });
 
 Route::prefix('dev')->group(function () {
