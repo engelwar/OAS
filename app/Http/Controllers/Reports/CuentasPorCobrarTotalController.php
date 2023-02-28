@@ -168,6 +168,7 @@ class CuentasPorCobrarTotalController extends Controller
         ));
       $query2 = "
       SELECT
+      cxcTrNtra,
       cxcTrCcto,
       LTRIM(RTRIM(crentNomb)) AS 'Cliente',
       maprfDplz AS 'DiasPlazo',
@@ -220,6 +221,7 @@ class CuentasPorCobrarTotalController extends Controller
         ->select(DB::raw(
           "WITH source AS (
             SELECT
+			cxcTrNtra,
             cxcTrCcto,
             Cliente,
             DiasPlazo,
@@ -234,6 +236,7 @@ class CuentasPorCobrarTotalController extends Controller
             FROM #cxc2
           ), pivote1 AS (
             SELECT
+			cxcTrNtra,
             cxcTrCcto AS id_cliente_2,
             Cliente AS nomb_cliente_2,
             DiasPlazo,
@@ -241,12 +244,13 @@ class CuentasPorCobrarTotalController extends Controller
             adusrNomb AS nomb_user_2,
             inlocCloc AS id_local_2,
             inlocNomb AS local_2,
-            REPLACE(cast(cxcTrImpt as decimal(10,2)),',', '.') AS importeCXC_2,
-            REPLACE(cast(SUM(ISNULL(cont,0)) as decimal(10,2)),',', '.') AS cont_2,
-            REPLACE(cast(SUM(ISNULL(cred,0)) as decimal(10,2)),',', '.') AS cred_2,
-            REPLACE(cast(SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) as decimal(10,2)),',', '.') AS saldo_2
+            cxcTrImpt,
+            SUM(ISNULL(cont,0)) AS cont_2,
+            SUM(ISNULL(cred,0)) AS cred_2,
+            SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) AS saldo_2
             FROM (
               SELECT
+			  cxcTrNtra,
               cxcTrCcto,
               Cliente,
               DiasPlazo,
@@ -256,19 +260,18 @@ class CuentasPorCobrarTotalController extends Controller
               adusrNomb,
               inlocCloc,
               inlocNomb,
-			      ISNULL(cxcTrImpt,0) AS cxcTrImpt
-              --SUM(ISNULL(cxcTrImpt,0)) AS cxcTrImpt
+              ISNULL(cxcTrImpt,0) AS cxcTrImpt
               FROM source
-              --GROUP BY cxcTrCcto,Cliente,DiasPlazo,Estado,ACuenta,adusrCusr,adusrNomb,inlocCloc,inlocNomb
             ) AS sumcxc
             PIVOT
             (
               SUM(ACuenta)
               FOR Estado IN ([cred],[cont])
             ) AS pivotable
-            GROUP BY cxcTrCcto,Cliente,adusrCusr,adusrNomb,inlocNomb,inlocCloc,DiasPlazo,cxcTrImpt
+            GROUP BY cxcTrNtra,cxcTrCcto,Cliente,adusrCusr,adusrNomb,inlocNomb,inlocCloc,DiasPlazo,cxcTrImpt
           ), pivote2 AS (
             SELECT
+			cxcTrNtra,
             cxcTrCcto AS id_cliente_2,
             Cliente AS nomb_cliente_2,
             DiasPlazo,
@@ -277,11 +280,15 @@ class CuentasPorCobrarTotalController extends Controller
             inlocCloc AS id_local_2,
             inlocNomb AS local_2,
             REPLACE(cast(cxcTrImpt as decimal(10,2)),',', '.') AS importeCXC_2,
-            REPLACE(cast(SUM(ISNULL([VIGENTE],0)) as decimal(10,2)),',', '.') AS VIGENTE,
+            /*REPLACE(cast(SUM(ISNULL([VIGENTE],0)) as decimal(10,2)),',', '.') AS VIGENTE,
             REPLACE(cast(SUM(ISNULL([VENCIDO],0)) as decimal(10,2)),',', '.') AS VENCIDO,
-            REPLACE(cast(SUM(ISNULL([MORA],0)) as decimal(10,2)),',', '.') AS MORA
+            REPLACE(cast(SUM(ISNULL([MORA],0)) as decimal(10,2)),',', '.') AS MORA*/
+			SUM(ISNULL([VIGENTE],0)) AS VIGENTE,
+            SUM(ISNULL([VENCIDO],0)) AS VENCIDO,
+            SUM(ISNULL([MORA],0)) AS MORA
             FROM (
               SELECT
+			  cxcTrNtra,
               cxcTrCcto,
               Cliente,
               DiasPlazo,
@@ -300,7 +307,7 @@ class CuentasPorCobrarTotalController extends Controller
               SUM(saldo_estado)
               FOR estado2 IN ([VIGENTE],[VENCIDO],[MORA])
             ) AS pivotable
-            GROUP BY cxcTrCcto,Cliente,DiasPlazo,adusrCusr,adusrNomb,inlocNomb,inlocCloc,cxcTrImpt
+            GROUP BY cxcTrNtra,cxcTrCcto,Cliente,DiasPlazo,adusrCusr,adusrNomb,inlocNomb,inlocCloc,cxcTrImpt
           )
           SELECT
           p1.id_cliente_2 AS id_cliente_2,
@@ -310,15 +317,16 @@ class CuentasPorCobrarTotalController extends Controller
           p1.id_local_2 AS id_local_2,
           p1.local_2 AS local_2,
           p1.DiasPlazo AS DiasPlazo,
-          p1.importeCXC_2 AS importeCXC_2,
-          p1.cont_2 AS cont_2,
-          p1.cred_2 AS cred_2,
-          p1.saldo_2 AS saldo_2,
-          p2.VIGENTE AS vigente,
-          p2.VENCIDO AS vencido,
-          p2.MORA AS mora
+          REPLACE(cast(SUM(p1.cxcTrImpt) as decimal(10,2)),',', '.') AS importeCXC_2,
+          REPLACE(cast(SUM(ISNULL(p1.cont_2,0)) as decimal(10,2)),',', '.') AS cont_2,
+          REPLACE(cast(SUM(ISNULL(p1.cred_2,0)) as decimal(10,2)),',', '.') AS cred_2,
+          REPLACE(cast(SUM(ISNULL(p1.saldo_2,0)) as decimal(10,2)),',', '.') AS saldo_2,
+          REPLACE(cast(SUM(ISNULL(p2.VIGENTE,0)) as decimal(10,2)),',', '.') AS VIGENTE,
+          REPLACE(cast(SUM(ISNULL(p2.VENCIDO,0)) as decimal(10,2)),',', '.') AS VENCIDO,
+          REPLACE(cast(SUM(ISNULL(p2.MORA,0)) as decimal(10,2)),',', '.') AS MORA
           FROM pivote1 p1 FULL JOIN pivote2 p2
-          ON CONCAT(p1.id_cliente_2,p1.id_usuario_2,p1.id_local_2,p1.importeCXC_2) = CONCAT(p2.id_cliente_2,p2.id_usuario_2,p2.id_local_2,p2.importeCXC_2)
+          ON p1.cxcTrNtra = p2.cxcTrNtra
+          GROUP BY p1.id_cliente_2,p1.nomb_cliente_2,p1.id_usuario_2,p1.nomb_user_2,p1.id_local_2,p1.local_2,p1.DiasPlazo
         "
         ));
       $query3 = "
@@ -478,7 +486,7 @@ class CuentasPorCobrarTotalController extends Controller
         foreach ($movimientos2 as $i => $j) {
           // dd($value->id_usuario_1 == $j->id_usuario_2);
           if ($value->id_usuario_1 == $j->id_usuario_2 && $value->id_local_1 == $j->id_local_2) {
-            $test[$value->id_usuario_1 . $value->id_local_1][] = ['id_usuario_2' => $j->id_usuario_2, 'id_cliente_2' => $j->id_cliente_2, 'nomb_cliente_2' => $j->nomb_cliente_2, 'DiasPlazo' => $j->DiasPlazo, 'importeCXC_2' => $j->importeCXC_2, 'cont_2' => $j->cont_2, 'cred_2' => $j->cred_2, 'saldo_2' => $j->saldo_2, 'vigente' => $j->vigente, 'vencido' => $j->vencido, 'mora' => $j->mora, 'vista2' => $test2[$j->id_cliente_2 . $j->id_usuario_2 . $j->id_local_2]];
+            $test[$value->id_usuario_1 . $value->id_local_1][] = ['id_usuario_2' => $j->id_usuario_2, 'id_cliente_2' => $j->id_cliente_2, 'nomb_cliente_2' => $j->nomb_cliente_2, 'DiasPlazo' => $j->DiasPlazo, 'importeCXC_2' => $j->importeCXC_2, 'cont_2' => $j->cont_2, 'cred_2' => $j->cred_2, 'saldo_2' => $j->saldo_2, 'vigente' => $j->VIGENTE, 'vencido' => $j->VENCIDO, 'mora' => $j->MORA, 'vista2' => $test2[$j->id_cliente_2 . $j->id_usuario_2 . $j->id_local_2]];
           }
         }
       }
