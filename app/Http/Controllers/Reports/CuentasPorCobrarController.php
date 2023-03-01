@@ -196,12 +196,12 @@ class CuentasPorCobrarController extends Controller
         " . $estado2 . "
         ";
 
-        // dd($query);
+    // dd($query);
     $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
     $sum = DB::connection('sqlsrv')
       ->select(DB::raw(
-          $fil2 .
-            "SELECT 
+        $fil2 .
+          "SELECT 
         REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
         REPLACE(sumACuenta,',', '.') as sumACuenta, 
         REPLACE(sumSaldo,',', '.') as sumSaldo        
@@ -213,7 +213,7 @@ class CuentasPorCobrarController extends Controller
         FROM (" . $query . ") as cxc
         ) 
         as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        ));
+      ));
     $sum_estado = DB::connection('sqlsrv')
       ->select(DB::raw($fil2 . "SELECT 
         REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 
@@ -304,12 +304,12 @@ class CuentasPorCobrarController extends Controller
 
   public function cobranzas(Request $request)
   {
-    $user = "AND adusrCusr = ".$request->options."";
+    $user = "AND adusrCusr = " . $request->options . "";
     $fecha = date("d/m/Y", strtotime($request->ffin));
     $fil = "AND liqXCFtra <= '" . $fecha . "'";
     if ($request->estado == "Vigente") {
       $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= 30";
-    } 
+    }
     if ($request->estado == "Vencido") {
       $estado = "AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '" . date("d/m/Y") . "') > (30)";
     } elseif ($request->estado == "Mora") {
@@ -407,15 +407,15 @@ class CuentasPorCobrarController extends Controller
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0
         AND cobros.AcuentaF >= 1
         " . $user . "
-        ".$estado."
+        " . $estado . "
         ";
 
-        // dd($query);
+    // dd($query);
     $cxc = DB::connection('sqlsrv')->select(DB::raw($fil2 . $query));
     $sum = DB::connection('sqlsrv')
       ->select(DB::raw(
-          $fil2 .
-            "SELECT 
+        $fil2 .
+          "SELECT 
         REPLACE(sumImporteCXC,',', '.') as sumImporteCXC, 
         REPLACE(sumACuenta,',', '.') as sumACuenta, 
         REPLACE(sumSaldo,',', '.') as sumSaldo        
@@ -427,7 +427,7 @@ class CuentasPorCobrarController extends Controller
         FROM (" . $query . ") as cxc
         ) 
         as sum GROUP BY sumImporteCXC,sumACuenta,sumSaldo"
-        ));
+      ));
     $sum_estado = DB::connection('sqlsrv')
       ->select(DB::raw($fil2 . "SELECT 
         REPLACE(SUM(cast(ImporteCXC as decimal(10,2))),',', '.') as ImporteCXC, 

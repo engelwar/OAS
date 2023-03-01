@@ -126,10 +126,9 @@ class CuentasPorCobrarTotalController extends Controller
           WHERE liqXCMdel = 0 
       )as cobros ON cobros.liqdCNtcc = cxcTrNtra
       WHERE cxcTrMdel = 0
-      AND (cxcTrImpt - cxcTrAcmt) <> 0
+      AND (cxcTrImpt - cxcTrAcmt) >= 0.5
       " . $user . "
       " . $cliente . "
-      --AND cxcTrCcbr = 3
       ORDER BY imlvtNvta
     ";
       $insert1 = DB::connection('sqlsrv')->unprepared(DB::raw($query1));
@@ -212,7 +211,7 @@ class CuentasPorCobrarTotalController extends Controller
         WHERE liqXCMdel = 0 
       )as cobros ON cobros.liqdCNtcc = cxcTrNtra
       WHERE cxcTrMdel = 0
-      AND (cxcTrImpt - cxcTrAcmt) <> 0
+      AND (cxcTrImpt - cxcTrAcmt) >= 0.5
       " . $user . "
       " . $cliente . "
     ";
@@ -220,37 +219,37 @@ class CuentasPorCobrarTotalController extends Controller
       $movimientos2 = DB::connection('sqlsrv')
         ->select(DB::raw(
           "WITH source AS (
-            SELECT
-			cxcTrNtra,
-            cxcTrCcto,
-            Cliente,
-            DiasPlazo,
-            Estado,
-            ACuenta,
-            adusrCusr,
-            adusrNomb,
-            inlocCloc,
-            inlocNomb,
-            cxcTrImpt,
-            estado2
-            FROM #cxc2
+          SELECT
+          cxcTrNtra,
+          cxcTrCcto,
+          Cliente,
+          DiasPlazo,
+          Estado,
+          ACuenta,
+          adusrCusr,
+          adusrNomb,
+          inlocCloc,
+          inlocNomb,
+          cxcTrImpt,
+          estado2
+          FROM #cxc2
           ), pivote1 AS (
-            SELECT
-			cxcTrNtra,
-            cxcTrCcto AS id_cliente_2,
-            Cliente AS nomb_cliente_2,
-            DiasPlazo,
-            adusrCusr AS id_usuario_2,
-            adusrNomb AS nomb_user_2,
-            inlocCloc AS id_local_2,
-            inlocNomb AS local_2,
-            cxcTrImpt,
-            SUM(ISNULL(cont,0)) AS cont_2,
-            SUM(ISNULL(cred,0)) AS cred_2,
-            SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) AS saldo_2
-            FROM (
+          SELECT
+          cxcTrNtra,
+          cxcTrCcto AS id_cliente_2,
+          Cliente AS nomb_cliente_2,
+          DiasPlazo,
+          adusrCusr AS id_usuario_2,
+          adusrNomb AS nomb_user_2,
+          inlocCloc AS id_local_2,
+          inlocNomb AS local_2,
+          cxcTrImpt,
+          SUM(ISNULL(cont,0)) AS cont_2,
+          SUM(ISNULL(cred,0)) AS cred_2,
+          SUM(ISNULL(cxcTrImpt,0) - ISNULL(cont,0) - ISNULL(cred,0)) AS saldo_2
+          FROM (
               SELECT
-			  cxcTrNtra,
+            cxcTrNtra,
               cxcTrCcto,
               Cliente,
               DiasPlazo,
@@ -262,52 +261,53 @@ class CuentasPorCobrarTotalController extends Controller
               inlocNomb,
               ISNULL(cxcTrImpt,0) AS cxcTrImpt
               FROM source
-            ) AS sumcxc
-            PIVOT
-            (
+          ) AS sumcxc
+          PIVOT
+          (
               SUM(ACuenta)
               FOR Estado IN ([cred],[cont])
-            ) AS pivotable
-            GROUP BY cxcTrNtra,cxcTrCcto,Cliente,adusrCusr,adusrNomb,inlocNomb,inlocCloc,DiasPlazo,cxcTrImpt
+          ) AS pivotable
+          GROUP BY cxcTrNtra,cxcTrCcto,Cliente,adusrCusr,adusrNomb,inlocNomb,inlocCloc,DiasPlazo,cxcTrImpt
           ), pivote2 AS (
-            SELECT
-			cxcTrNtra,
-            cxcTrCcto AS id_cliente_2,
-            Cliente AS nomb_cliente_2,
-            DiasPlazo,
-            adusrCusr AS id_usuario_2,
-            adusrNomb AS nomb_user_2,
-            inlocCloc AS id_local_2,
-            inlocNomb AS local_2,
-            REPLACE(cast(cxcTrImpt as decimal(10,2)),',', '.') AS importeCXC_2,
-            /*REPLACE(cast(SUM(ISNULL([VIGENTE],0)) as decimal(10,2)),',', '.') AS VIGENTE,
-            REPLACE(cast(SUM(ISNULL([VENCIDO],0)) as decimal(10,2)),',', '.') AS VENCIDO,
-            REPLACE(cast(SUM(ISNULL([MORA],0)) as decimal(10,2)),',', '.') AS MORA*/
-			SUM(ISNULL([VIGENTE],0)) AS VIGENTE,
-            SUM(ISNULL([VENCIDO],0)) AS VENCIDO,
-            SUM(ISNULL([MORA],0)) AS MORA
-            FROM (
+          SELECT
+          cxcTrNtra,
+          cxcTrCcto AS id_cliente_2,
+          Cliente AS nomb_cliente_2,
+          DiasPlazo,
+          adusrCusr AS id_usuario_2,
+          adusrNomb AS nomb_user_2,
+          inlocCloc AS id_local_2,
+          inlocNomb AS local_2,
+          REPLACE(cast(cxcTrImpt as decimal(10,2)),',', '.') AS importeCXC_2,
+          /*REPLACE(cast(SUM(ISNULL([VIGENTE],0)) as decimal(10,2)),',', '.') AS VIGENTE,
+          REPLACE(cast(SUM(ISNULL([VENCIDO],0)) as decimal(10,2)),',', '.') AS VENCIDO,
+          REPLACE(cast(SUM(ISNULL([MORA],0)) as decimal(10,2)),',', '.') AS MORA*/
+          SUM(ISNULL([VIGENTE],0)) AS VIGENTE,
+          SUM(ISNULL([VENCIDO],0)) AS VENCIDO,
+          SUM(ISNULL([MORA],0)) AS MORA
+          FROM (
               SELECT
-			  cxcTrNtra,
+              cxcTrNtra,
               cxcTrCcto,
               Cliente,
               DiasPlazo,
-              ACuenta,
+              --ACuenta,
               adusrCusr,
               adusrNomb,
               inlocCloc,
               inlocNomb,
               ISNULL(cxcTrImpt,0) AS cxcTrImpt,
-              cxcTrImpt - ACuenta AS saldo_estado,
+              cxcTrImpt - sum(ACuenta) AS saldo_estado,
               estado2
               FROM source
-            ) AS sumcxc
-            PIVOT
-            (
+            GROUP BY cxcTrNtra,cxcTrCcto,Cliente,DiasPlazo,adusrCusr,adusrNomb,inlocCloc,inlocNomb,cxcTrImpt,estado2
+          ) AS sumcxc
+          PIVOT
+          (
               SUM(saldo_estado)
               FOR estado2 IN ([VIGENTE],[VENCIDO],[MORA])
-            ) AS pivotable
-            GROUP BY cxcTrNtra,cxcTrCcto,Cliente,DiasPlazo,adusrCusr,adusrNomb,inlocNomb,inlocCloc,cxcTrImpt
+          ) AS pivotable
+          GROUP BY cxcTrNtra,cxcTrCcto,Cliente,DiasPlazo,adusrCusr,adusrNomb,inlocNomb,inlocCloc,cxcTrImpt
           )
           SELECT
           p1.id_cliente_2 AS id_cliente_2,
@@ -405,7 +405,7 @@ class CuentasPorCobrarTotalController extends Controller
         --GROUP BY liqdCNtcc
         )AS cobros ON cobros.liqdCNtcc = cxcTrNtra
         WHERE cxcTrMdel = 0
-        AND (cxcTrImpt - cxcTrAcmt) <> 0
+        AND (cxcTrImpt - cxcTrAcmt) >= 0.5
         " . $user . "
         " . $cliente . "
       ) AS pivotdetalle
