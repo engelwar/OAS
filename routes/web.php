@@ -207,6 +207,7 @@ Route::prefix('reports')->group(function () {
 
   Route::resource('reporteventas', 'Reports\ReporteVentasController');
   Route::resource('reporteventasdetalle', 'Reports\ReporteVentasDetalleController');
+  Route::post('reporteventasdetallevista1', 'Reports\ReporteVentasDetalleController@vista1');
 });
 
 Route::prefix('dev')->group(function () {

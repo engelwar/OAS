@@ -26,41 +26,45 @@
 @endsection
 @section('mis_scripts')
 <script>
-  var json_data = {!!json_encode($array)!!};
+  var json_data = {!!json_encode($venta_general)!!};
   function format(d) {
     // Inicializar HTML
-    console.log(d.vista1);
+    console.log(d);
     let tabla = `<table cellpadding="5" cellspacing="0" style="font-size: 14px; margin-left: 90px;">
-           <thead>
-           <tr>
-              <th>Categoria</strong></th>
-              <th>Codigo</th>
-              <th>Descripcion</th>
-              <th>U.M.</th>
-              <th>ImpUnitario</th>
-              <th>Cantidad</th>
-              <th>Importe</th>
-              <th>Descuento</th>
-              <th>Descuento%</th>
-              <th>ImporteTotal</th>
-           </tr>
-           </thead>
-           <tbody>`;
-    d.vista1.forEach(element => {
-      tabla += `<tr>
-              <td>${element.maconNomb}</td>
-              <td>${element.inproCpro}</td>
-              <td>${element.inproNomb}</td>
-              <td>${element.inumeAbre}</td>
-              <td class="dt-right">${element.ImpU}</td>
-              <td class="dt-right">${element.vtvtdCant}</td>
-              <td class="dt-right">${element.ImpT}</td>
-              <td class="dt-right">${element.DesT}</td>
-              <td class="dt-right">${element.DesPor}</td>
-              <td class="dt-right">${element.total}</td>
-          </tr>`;
+    <thead>
+    <tr>
+      <th>Categoria</strong></th>
+      <th>Codigo</th>
+      <th>Descripcion</th>
+      <th>U.M.</th>
+      <th>ImpUnitario</th>
+      <th>Cantidad</th>
+      <th>Importe</th>
+      <th>Descuento</th>
+      <th>Descuento%</th>
+      <th>ImporteTotal</th>
+    </tr>
+    </thead>`;
+    tabla += '</table>';
+    $.ajax({
+      url:"",
+      type: 'POST',
+      dataType: 'json',
+      data: {
+
+      },
+      paging: false,
+      success: function(data) {
+        $('#example').DataTable({
+          data: data,
+          columns: [
+            {
+              data: 'codigo'
+            },
+          ],
+        });
+      }
     });
-    tabla += '</tbody></table>';
     return tabla;
   }
   $(document).ready(function() {

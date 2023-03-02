@@ -25,7 +25,7 @@
               <img class="card-img-top" src="{{ asset('imagenes/forms/2.jpg') }}" alt="img">
             </div>
             <div class="card-body px-2 py-2">
-              <p class="mb-0 " style="overflow: hidden;">Formularios de Vacaciones Enviados</p>
+              <p class="mb-0 " style="overflow: hidden;">Formularios de Vacaciones Enviadas</p>
             </div>
           </div>
         </a>

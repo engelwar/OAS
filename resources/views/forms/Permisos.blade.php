@@ -101,7 +101,7 @@
         {{ __('Hora De Salida') }}
       </label>
       <div class="col-md-3">
-        <input id="hora_ini" type="time" class="form-control form-control @error('hora_ini') is-invalid @enderror" name="hora_ini" value="{{ old('hora_ini') }}" required autocomplete="hora_ini">
+        <input step=”any” id="hora_ini" type="time" class="form-control form-control @error('hora_ini') is-invalid @enderror" name="hora_ini" value="{{ old('hora_ini') }}" required autocomplete="hora_ini">
         @error('hora_ini')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -170,14 +170,14 @@
       <div class="col-md-4">
         <select name="jefe" id="jefe" class="form-control" required>
           <option value="" disabled selected>Seleccione Inmediato Superior</option>
-          {{-- 
+          
             @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
-          @if ($u->cargo == 'Jefe' && $u->area_id != 3)
+          @if (strpos($u->cargo,'JEFE') == 0 && $u->area_id != 3)
           <option value="{{$u->user_id}}">{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
           @endif
           @endforeach
-            --}}
-            <option value="51">Denis Morales</option>
+            
+            <!-- <option value="51">Denis Morales</option> -->
           
         </select>
       </div>

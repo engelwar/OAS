@@ -65,7 +65,7 @@
       </label>
 
       <div class="col-md-4">
-        <input id="area" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" value="{{ old('area') }}" required autocomplete="area">
+        <input id="area" type="text" value="{{$LicenciaForm->user->perfiles->unidad->nombre}}" class="form-control @error('area') is-invalid @enderror" name="unidad_trabajo" required autocomplete="area">
         @error('area')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
         {{ __('Hora De Salida') }}
       </label>
       <div class="col-md-3">
-        <input id="hora_ini" type="time" class="form-control form-control @error('hora_ini') is-invalid @enderror" name="hora_ini" value="{{ $ini_hora }}" required autocomplete="hora_ini">
+        <input step=”any” id="hora_ini" type="time" class="form-control form-control @error('hora_ini') is-invalid @enderror" name="hora_ini" value="{{ $ini_hora }}" required autocomplete="hora_ini">
         @error('hora_ini')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -176,16 +176,16 @@
     </div>
     <div class="form-group row d-flex">
       <label for="dias" class="col-md-2 col-form-label text-md-right">
-        {{ __('Jefe inmediato') }}
+        {{ __('Jefe Inmediato') }}
       </label>
       <div class="col-md-4">
         <select id="horas" class="form-select" aria-label="Default select example" name="horas">
-          <option @if ($LicenciaForm->horas == 1) selected @endif value=1>Ernesto Weinberg Jauregui</option>
-          <option @if ($LicenciaForm->horas == 2) selected @endif value=2>Angela Ochoa</option>
-          <option @if ($LicenciaForm->horas == 3) selected @endif value=3>Magdy Villarroel </option>
-          <option @if ($LicenciaForm->horas == 4) selected @endif value=4>Denis Morales</option>
-          <option @if ($LicenciaForm->horas == 5) selected @endif value=4>Norka Fernandez</option>
-          <option @if ($LicenciaForm->horas == 6) selected @endif value=4>N</option>
+          <option value="" disabled selected>Seleccione Inmediato Superior</option>
+          @foreach(App\Perfil::orderBy('nombre')->get(); as $u)
+          @if (strpos($u->cargo,'JEFE') == 0 && $u->area_id != 3)
+          <option value="{{$u->user_id}}" @if($u->user_id == $LicenciaForm->jefe_id) selected @endif>{{$u->nombre}} {{$u->paterno}} {{$u->materno}}</option>
+          @endif
+          @endforeach
         </select>
       </div>
     </div>
