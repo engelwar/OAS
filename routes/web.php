@@ -316,6 +316,9 @@ Route::get('ReguistroPC/pc/1','RegistroPCController@store')->name('ReguistroPC.s
 //Route::resource('/resumenventaspormes','ResumenxmesController');// hecho por rem
 //Route::resource('/pruebaxmes','PruebaController');// hecho por rem
 
+//resumen total ventas
+Route::resource('resumentotalventasdetallado', 'ResumenDetalladoVentasController');
+Route::get('resumentotalventasdetallado/resumen/1' ,'ResumenDetalladoVentasController@store')->name('restotvendetallado.store');
 
 
 //Route::get('/', 'CuentasXCController@index')->name('iniCxc');  

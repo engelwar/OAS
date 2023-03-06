@@ -90,9 +90,9 @@ class ResumenVentasTotalController extends Controller
             --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
             ELSE adusrNomb             
             END as Tip,
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+          --  vtvtaTotT as 'tot', 
+          imp,
+			dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -100,10 +100,16 @@ class ResumenVentasTotalController extends Controller
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
             WHERE 
             cptraMdel = 0 AND cptraTtra = 21
             --AND adusrCusr NOT IN (9,65,63,64)--NO VENDEN
@@ -112,7 +118,9 @@ class ResumenVentasTotalController extends Controller
         WHERE (fec BETWEEN @fini AND @ffin)
         GROUP BY loc, tip, mon
         ORDER BY loc, tip, mon";
-        $resum = DB::connection('sqlsrv')->select(DB::raw($vari . $query));    
+        $resum = DB::connection('sqlsrv')->select(DB::raw($vari . $query));   
+        
+
         /////////////////////////////administrativos
         $admin="SELECT 
         loc as 'Local', 
@@ -144,9 +152,9 @@ class ResumenVentasTotalController extends Controller
             --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
             ELSE adusrNomb             
             END as Tip,
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+           -- vtvtaTotT as 'tot', 
+           imp,
+			dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -154,10 +162,16 @@ class ResumenVentasTotalController extends Controller
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
             WHERE 
           (cptraMdel = 0 AND cptraTtra = 21) and
           adusrCusr  IN ( 9,65)
@@ -193,9 +207,9 @@ class ResumenVentasTotalController extends Controller
             cptraFtra as 'Fec', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+           -- vtvtaTotT as 'tot', 
+            imp,
+			dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -203,11 +217,17 @@ class ResumenVentasTotalController extends Controller
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+            WHERE 
            (cptraMdel = 0 AND cptraTtra = 21) and 
            (adusrCusr=65 or adusrCusr=9)
            
@@ -237,18 +257,20 @@ FROM
     cptraFtra as 'Fec', 
     adusrNomb as 'Usr',
     inlocNomb as 'Loc',
-    vtvtaCalm as 'alma',
+    --vtvtaCalm as 'alma',
     CASE         
    
-    WHEN vtvtaCalm IN (61) THEN 'CAJERO 1'
-    WHEN vtvtaCalm IN (80) THEN 'CAJERO 2'   
+    WHEN adusrCusr IN (61) THEN 'CAJERO 1'
+    WHEN adusrCusr IN (80) THEN 'CAJERO 2'   
 
     --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
     ELSE adusrNomb             
     END as Tip,
-    vtvtaTotT as 'tot', 
-    vtvtaImpT	as 'imp',
-vtvtaDesT  as 'dest',
+  --  vtvtaTotT as 'tot', 
+   -- vtvtaImpT	as 'imp',
+--vtvtaDesT  as 'dest',
+imp,
+dest,
     admonAbrv as 'mon', 
     cptraCajS as 'efe', 
     cptraBanS as 'ban', 
@@ -256,11 +278,16 @@ vtvtaDesT  as 'dest',
     cptraTarS as 'tar', 
     cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
     FROM cptra
-    JOIN vtVta ON vtvtaNtra = cptraNtrI
-    JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-    JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-    
-    join inloc ON inlocCloc = vtvtaCloc
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
     WHERE 
  (cptraMdel = 0 AND cptraTtra = 21) AND
      
@@ -290,12 +317,14 @@ ORDER BY loc, tip, mon";
             (
                 SELECT 
                 cptraFtra as 'Fec',
-                vtvtaCalm as 'alma', 
+               -- vtvtaCalm as 'alma', 
                 adusrNomb as 'Usr',
                 inlocNomb as 'Loc',
-                vtvtaTotT as 'tot', 
-                vtvtaImpT	as 'imp',
-                vtvtaDesT  as 'dest',
+             --   vtvtaTotT as 'tot', 
+            --    vtvtaImpT	as 'imp',
+            --    vtvtaDesT  as 'dest',
+            imp,
+            dest,
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -303,10 +332,16 @@ ORDER BY loc, tip, mon";
                 cptraTarS as 'tar', 
                 cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
                 FROM cptra
-                JOIN vtVta ON vtvtaNtra = cptraNtrI
-                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-                join inloc ON inlocCloc = vtvtaCloc
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
                 WHERE 
                
                cptraMdel = 0 AND cptraTtra = 21  and
@@ -344,18 +379,20 @@ ORDER BY loc, tip, mon";
                 cptraFtra as 'Fec', 
                 adusrNomb as 'Usr',
                 inlocNomb as 'Loc',
-                vtvtaCalm as 'alma',
+              --  vtvtaCalm as 'alma',
                 CASE         
                
-                WHEN vtvtaCalm IN (58) THEN 'POTOSI'
-                WHEN vtvtaCalm IN (57) THEN 'SUCRE'   
+                WHEN adusrCusr IN (58) THEN 'POTOSI'
+                WHEN adusrCusr IN (57) THEN 'SUCRE'   
 
                 --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
                 ELSE adusrNomb             
                 END as Tip,
-                vtvtaTotT as 'tot', 
-                vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+              --  vtvtaTotT as 'tot', 
+              --  vtvtaImpT	as 'imp',
+		--	vtvtaDesT  as 'dest',
+        imp,
+        dest,
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -363,15 +400,20 @@ ORDER BY loc, tip, mon";
                 cptraTarS as 'tar', 
                 cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
                 FROM cptra
-                JOIN vtVta ON vtvtaNtra = cptraNtrI
-                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-                
-                join inloc ON inlocCloc = vtvtaCloc
-                WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
              (cptraMdel = 0 AND cptraTtra = 21) AND
                  
-              (vtvtaCalm = 58 OR vtvtaCalm = 57 ) 
+              (adusrCusr = 58 OR adusrCusr = 57 ) 
             --	or  adusrCusr = 4
            
              --   or  adusrCusr = 3
@@ -399,12 +441,14 @@ ORDER BY loc, tip, mon";
         (
             SELECT 
             cptraFtra as 'Fec',
-            vtvtaCalm as 'alma', 
+           -- vtvtaCalm as 'alma', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+           -- vtvtaTotT as 'tot', 
+           -- vtvtaImpT	as 'imp',
+			--vtvtaDesT  as 'dest',
+            imp,
+            dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -412,14 +456,20 @@ ORDER BY loc, tip, mon";
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
            
            cptraMdel = 0 AND cptraTtra = 21  and
-            (vtvtaCalm=58 or vtvtaCalm=57) 
+            (adusrCusr=58 or adusrCusr=57) 
          
         ) as venta
         WHERE (fec BETWEEN @fini AND @ffin)
@@ -449,20 +499,22 @@ ORDER BY loc, tip, mon";
                 cptraFtra as 'Fec', 
                 adusrNomb as 'Usr',
                 inlocNomb as 'Loc',
-                vtvtaCalm as 'alma',
+             --   vtvtaCalm as 'alma',
                 CASE         
                
-                WHEN vtvtaCalm IN (59) THEN 'TARIJA'
-                WHEN vtvtaCalm IN (60) THEN 'ORURO' 
-                WHEN vtvtaCalm IN (61) THEN 'COCHABAMBA'
+                WHEN adusrCusr IN (59) THEN 'TARIJA'
+                WHEN adusrCusr IN (60) THEN 'ORURO' 
+                WHEN adusrCusr IN (61) THEN 'COCHABAMBA'
                   
 
                 --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
                 ELSE adusrNomb             
                 END as Tip,
-                vtvtaTotT as 'tot', 
-                vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+               -- vtvtaTotT as 'tot', 
+               -- vtvtaImpT	as 'imp',
+			-- vtvtaDesT  as 'dest',
+            imp,
+            dest,
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -470,15 +522,20 @@ ORDER BY loc, tip, mon";
                 cptraTarS as 'tar', 
                 cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
                 FROM cptra
-                JOIN vtVta ON vtvtaNtra = cptraNtrI
-                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-                
-                join inloc ON inlocCloc = vtvtaCloc
-                WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
              (cptraMdel = 0 AND cptraTtra = 21) AND
                  
-              (vtvtaCalm = 59 OR vtvtaCalm = 60 OR vtvtaCalm = 61) 
+              (adusrCusr = 59 OR adusrCusr = 60 OR adusrCusr = 61) 
             --	or  adusrCusr = 4
            
              --   or  adusrCusr = 3
@@ -506,12 +563,14 @@ ORDER BY loc, tip, mon";
         (
             SELECT 
             cptraFtra as 'Fec',
-            vtvtaCalm as 'alma', 
+           -- vtvtaCalm as 'alma', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+          imp,
+          dest,
+           -- vtvtaTotT as 'tot', 
+           -- vtvtaImpT	as 'imp',
+		--	vtvtaDesT  as 'dest',
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -519,13 +578,19 @@ ORDER BY loc, tip, mon";
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
             (cptraMdel = 0 AND cptraTtra = 21)and 
-            (vtvtaCalm = 59 OR vtvtaCalm = 60 OR vtvtaCalm = 61) 
+            (adusrCusr = 59 OR adusrCusr = 60 OR adusrCusr = 61) 
            
 
         ) as venta
@@ -554,19 +619,21 @@ ORDER BY loc, tip, mon";
                 cptraFtra as 'Fec', 
                 adusrNomb as 'Usr',
                 inlocNomb as 'Loc',
-                vtvtaCalm as 'alma',
+               -- vtvtaCalm as 'alma',
                 CASE         
                
-                WHEN vtvtaCalm IN (76,77) THEN 'RETAIL SAN MIGUEL'
+                WHEN adusrCusr IN (76,77) THEN 'RETAIL SAN MIGUEL'
                 
                   
 
                 --WHEN adusrCusr IN (46,29,39,40,16,39,18,19,20,21,55,28,17,37,57,58,62,63) THEN adusrNomb  
                 ELSE adusrNomb             
                 END as Tip,
-                vtvtaTotT as 'tot', 
-                vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+              --  vtvtaTotT as 'tot', 
+              --  vtvtaImpT	as 'imp',
+			--vtvtaDesT  as 'dest',
+            imp,
+            dest,
                 admonAbrv as 'mon', 
                 cptraCajS as 'efe', 
                 cptraBanS as 'ban', 
@@ -574,26 +641,31 @@ ORDER BY loc, tip, mon";
                 cptraTarS as 'tar', 
                 cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
                 FROM cptra
-                JOIN vtVta ON vtvtaNtra = cptraNtrI
-                JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-                JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-                
-                join inloc ON inlocCloc = vtvtaCloc
-                WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
              (cptraMdel = 0 AND cptraTtra = 21) AND
                  
-              (vtvtaCalm = 67) 
-            --	or  adusrCusr = 4
-           
-             --   or  adusrCusr = 3
+              (adusrCusr = 67) 
+       
             
             ) as venta
             WHERE (fec BETWEEN @fini AND @ffin)
             GROUP BY loc, tip, mon
             ORDER BY loc, tip, mon";
             
-            $sanMiguel  = DB::connection('sqlsrv')->select(DB::raw($vari . $sanMi));   
 
+            
+            $sanMiguel  = DB::connection('sqlsrv')->select(DB::raw($vari . $sanMi));   
+              
 
             $totalSanMi=
         "SELECT 
@@ -610,12 +682,14 @@ ORDER BY loc, tip, mon";
         (
             SELECT 
             cptraFtra as 'Fec',
-            vtvtaCalm as 'alma', 
+          --  vtvtaCalm as 'alma', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+          --  vtvtaTotT as 'tot', 
+          --  vtvtdImpT	as 'imp',
+		--	vtvtdDesT  as 'dest',
+        imp,
+        dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -623,13 +697,19 @@ ORDER BY loc, tip, mon";
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE 
-            (cptraMdel = 0 AND cptraTtra = 21)and 
-            (vtvtaCalm = 67) 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
+            (cptraMdel = 0 AND cptraTtra = 21)
+            and  (adusrCusr = 67) 
            
 
         ) as venta
@@ -660,9 +740,11 @@ ORDER BY loc, tip, mon";
             cptraFtra as 'Fec', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+           -- vtvtaTotT as 'tot', 
+           -- vtvtdImpT	as 'imp',
+			--vtvtdDesT  as 'dest',
+            imp,
+            dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -670,11 +752,17 @@ ORDER BY loc, tip, mon";
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
             cptraMdel = 0 AND cptraTtra = 21
            AND adusrCusr NOT IN (9,65,61,80)--NO VENDEN
         ) as venta
@@ -698,9 +786,11 @@ ORDER BY loc, tip, mon";
             cptraFtra as 'Fec', 
             adusrNomb as 'Usr',
             inlocNomb as 'Loc',
-            vtvtaTotT as 'tot', 
-            vtvtaImpT	as 'imp',
-			vtvtaDesT  as 'dest',
+          --  vtvtaTotT as 'tot', 
+          --  vtvtdImpT	as 'imp',
+		--	vtvtdDesT  as 'dest',
+        imp,
+        dest,
             admonAbrv as 'mon', 
             cptraCajS as 'efe', 
             cptraBanS as 'ban', 
@@ -708,11 +798,17 @@ ORDER BY loc, tip, mon";
             cptraTarS as 'tar', 
             cptraMcnS as 'Mot', cptraCheS+cptraCmpS+cptraOpPd as 'Otr'
             FROM cptra
-            JOIN vtVta ON vtvtaNtra = cptraNtrI
-            JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = vtvtaCusr
-            JOIN bd_admOlimpia.dbo.admon ON admonCmon = vtvtaMtra 
-            join inloc ON inlocCloc = vtvtaCloc
-            WHERE 
+           --JOIN vtVtd ON vtvtdNtra = cptraNtrI
+			JOIN (
+				SELECT vtvtdNtra, SUM(vtvtdImpT) AS 'imp', SUM(vtvtdDesT) AS 'dest'
+				FROM vtVtd
+				where vtvtdMdel =0
+				GROUP BY vtvtdNtra
+			) as venta ON venta.vtvtdNtra = cptraNtrI
+              JOIN bd_admOlimpia.dbo.adusr ON adusrCusr = cptraCusr
+            JOIN bd_admOlimpia.dbo.admon ON admonCmon = cptraMtra
+            join inloc ON inlocCloc = cptraCloc
+    WHERE 
             cptraMdel = 0 AND cptraTtra = 21 
           --  AND adusrCusr NOT IN (2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,47,54,56)--NO VENDEN
             --and adusrCusr NOT IN (2, 5,6,7,8,10,11,12,13,14,15,47,54,56)
