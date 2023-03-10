@@ -93,7 +93,61 @@ body{
                 @endforeach
                 </thead>
                 <thead>
-                       
+         
+
+
+                    @foreach($casaMatrizArray as $f => $g)                                   
+                    <thead>
+                        <tr>
+                            <td style = "border-style:none; padding-top:35px" colspan=9><h4>CASA MATRIZ</h4></td>
+                        </tr>
+                        <tr class="texttable-bordered derecha">
+                            <th></th>
+                            <th>Total</th>
+                            <th>Moneda</th>
+                            <th>Efectivo</th>
+                            <th>Banco</th>
+                            <th>CXC</th>
+                            <th>Tarjeta</th>
+                            <th>MotCont</th>
+                            <th>Otros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($g)
+                            @foreach($g as $h => $i)
+                                <tr class="text-right table-bordered derecha">
+                                    <td style="text-align:left" class="bold">{{$i->Tipo}}</td>
+                                    <td class="bold">{{$i->Total}}</td>
+                                    <td class="bold">{{$i->Moneda}}</td>
+                                    <td class="bold">{{$i->Efectivo}}</td>
+                                    <td class="bold">{{$i->Banco}}</td>
+                                    <td class="bold">{{$i->CXC}}</td>
+                                    <td class="bold">{{$i->Tarjeta}}</td>
+                                    <td class="bold">{{$i->MotCont}}</td>
+                                    <td class="bold">{{$i->Otros}}</td>
+                                </tr>
+                            @endforeach
+                        @endif  
+                        @foreach($totalCasaMatriz[$f] as $h => $i)
+                            <tr class="text-right table-bordered font-weight-bold derecha" style = "background:#e6ecff;border-top:1.1px solid #000">
+                                <td style="text-align:left" class="bold">TOTAL CASA MATRIZ</td>
+                                <td class="bold">{{$i->Total}}</td>
+                                <td class="bold">{{$i->Moneda}}</td>
+                                <td class="bold">{{$i->Efectivo}}</td>
+                                <td class="bold">{{$i->Banco}}</td>
+                                <td class="bold">{{$i->CXC}}</td>
+                                <td class="bold">{{$i->Tarjeta}}</td>
+                                <td class="bold">{{$i->MotCont}}</td>
+                                <td class="bold">{{$i->Otros}}</td>
+                            </tr> 
+                        @endforeach
+                    </tbody>
+                @endforeach
+                </thead>
+
+
+
                     @foreach($feriaArray as $f => $g)                                   
                     <thead>
                         <tr>
