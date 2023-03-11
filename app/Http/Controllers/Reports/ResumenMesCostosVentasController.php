@@ -46,7 +46,7 @@ class ResumenMesCostosVentasController extends Controller
       ['name' => 'CALACOTO', 'abrv' => 'CALACOTO', 'users' => [29,57,74,32,43,52]],
       ['name' => 'SAN MIGUEL', 'abrv' => 'SAN MIGUEL', 'users' => [76,77,78]],
       ['name' => 'INSTITUCIONALES', 'abrv' => 'INSTITUCIONALES', 'users' => [16, 17, 62, 56, 3, 58, 4]],
-      ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20]],
+      ['name' => 'MAYORISTAS', 'abrv' => 'MAYORISTAS', 'users' => [18, 19, 55, 21, 20,63]],
       ['name' => 'SANTA CRUZ', 'abrv' => 'SANTA CRUZ', 'users' => [40, 39]],
     ];
     $retail = [
@@ -186,7 +186,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -220,7 +220,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -254,7 +254,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -288,7 +288,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -322,7 +322,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -377,7 +377,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -411,7 +411,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -445,7 +445,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -479,7 +479,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -513,7 +513,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -563,7 +563,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -597,7 +597,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -631,7 +631,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -665,7 +665,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -699,7 +699,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -756,7 +756,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -791,7 +791,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -826,7 +826,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -861,7 +861,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -896,7 +896,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -946,7 +946,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -981,7 +981,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1016,7 +1016,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1051,7 +1051,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1086,7 +1086,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY vtvtaCalm, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1140,7 +1140,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1174,7 +1174,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1208,7 +1208,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1242,7 +1242,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1276,7 +1276,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1326,7 +1326,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1360,7 +1360,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.10.10.10.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1394,7 +1394,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.20.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1428,7 +1428,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '4.10.10.50.01'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
@@ -1462,7 +1462,7 @@ class ResumenMesCostosVentasController extends Controller
         AND cntrdNcta = '5.20.20.35.02'
         AND cntrdMdel = 0
         AND CAST (cntrdFtra AS DATE) IS NOT NULL
-        AND YEAR(CAST (cntrdFtra AS DATE)) = 2022
+        AND YEAR(CAST (cntrdFtra AS DATE)) = 2023
         GROUP BY cntraCusr, MONTH(cntrdFtra)
         ) AS venta
         PIVOT
