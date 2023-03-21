@@ -75,13 +75,25 @@
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Generador especifico</h5>
-                      <p class="card-text">Genera segun un rago de fecha pero se puede escojer los clientes</p>
-                      <form method="GET" target="_blank" action="{{ route('GeneradorCartas.store') }}">
+                      <p class="card-text">Genera según un rango de fecha, pero se puede escoger los clientes y también puede escoger por estado</p>
+                      <form method="GET" target="_blank" action="{{ route('GeneradorCartas.store') }}" id="basic-form">
 
                       <input id="fini" type="date" class="form-control form-control-sm " name="fini" value ="{{date('Y-m-d')}}">
+                      <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Estado:</label>
+                        <select class="form-select" id="inputGroupSelect01"  name="estado2" required>
+                          <option value="">Sin seleccionar</option>
+                          <option value="1" >Vigente</option>
+                          <option value="2">Vencido</option>
+                          <option value="3">Mora</option>
+                        </select>
+                      </div>
                       <input id="ffin" style="visibility: hidden" type="date" class="form-control form-control-sm " name="ffin" value ="{{date('Y-m-d')}}">
+                     
                       <div class="mb-2 row d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary mx-1" name="genVer" value="ver">
+                     
+                     
+                        <button type="submit" class="btn btn-primary mx-1" name="genVer" value="ver">
                         Ver clientes  <i class="fas fa-bullseye"></i>
                       </button>
                     </form>
@@ -102,28 +114,20 @@
 @section('mis_scripts')
 
     <script>
+
+
+$(document).ready(function() {
+  $("#basic-form").validate();
+});
+
+
+
+
         const d = new Date();
         let text = d.toLocaleDateString();
        
     document.getElementById("fechaX").innerHTML = text;
     </script>
 
-    <script>
-        //////////////PARA OBTENER EL ID  y mostrar la ventana //////////////////////////
-function obtenerIdFAC(id){
-  idx="#"+id;
-  $(idx).click(function(){
-    
-  $("#exampleModalFAC").modal("show");
-});
-var fila;
-$(document).on("click",".btnHTFAC", function(){
-  fila=$(this).closest("tr");
-  ids=parseInt(fila.find('td:eq(4)').text());
-  $("#nameFAC").val(id);
-}); 
-
-  
-}
-    </script>
+ 
 @endsection

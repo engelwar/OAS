@@ -109,7 +109,7 @@ class ComprasMovimientosController extends Controller
 		REPLACE(ISNULL(AlmDistribuidor1,0),',', '.') as stockAlmDistri1,
         REPLACE(ISNULL(AlmResGeneral,0),',', '.') as stockARGen,      
         CONVERT(varchar, ultv.intraFtra,103) as fechaultventa
-        
+       
         FROM intra as cym  
         --DETALLE DE MOV
         JOIN intrd ON intraNtra = intrdNtra AND intrdMdel = 0
@@ -293,7 +293,7 @@ class ComprasMovimientosController extends Controller
         ON pvp.vtLidCpro = inpro.inproCpro
         ".$filtro."
         ORDER BY inpro.inproCpro";
-        
+      //  return dd($query);
         $test = DB::connection('sqlsrv')->select(DB::raw($filter.$query));
         if($request->gen =="export")
         {

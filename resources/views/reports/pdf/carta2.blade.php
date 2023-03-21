@@ -31,7 +31,7 @@ img.redimension {
 margin: 35px;
 margin-bottom: 10px;
 width: 500px;
-padding-top: -100px;
+padding-top: -10px;
 padding: 0;
 border-width: 0; 
 
@@ -42,7 +42,7 @@ margin: 45px;
 margin-bottom: 2px;
 padding: 0;
 border-width: 0;
-padding-top: 10px;
+padding-top: -20px;
 }
 #margenBottom  {
         font-family: Arial;
@@ -86,20 +86,23 @@ padding-left: 170px;
     padding-top: 70px;
     padding-right: 50px;
 }
+.im333{
+    margin-top: 10em;
+}  
     </style>
 </head>
 <body>
 
-        
+      
     
     
-   
-<div id="margen">
+
+<div id="margen" style="margin-top: ">
     <span class="letra" style="font-size: 0.4cm">La Paz {{$fechaH}}</span> 
     <br>      
     <span class="letra" style="font-size: 0.3cm">LYPO /ADM /COB /0{{$conta}} - 2023</span>
     
-        <p class="letra" style="font-size: 0.4cm;padding-top: 1.50cm;padding-bottom: 0.1cm;line-height: 140%"
+        <p class="letra" style="font-size: 0.4cm;padding-top: 1.20cm;padding-bottom: 0.1cm;line-height: 140%"
         
         >{{$option}} <br>
         {{$clienteC}}<br>

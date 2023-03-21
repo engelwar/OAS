@@ -32,6 +32,15 @@
    
        <div class="row pt-1 border-primary" style="margin-top:2px; border-top: solid;">
          <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h3>GENERADOR DE ESTADOS CXC</h3></div>
+         @if ($estadoX=="1")
+         <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h4>Tipo de estado: Vigente </h4></div>
+         @endif
+         @if ($estadoX=="2")
+         <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h4>Tipo de estado:  Vencido</h4></div>
+         @endif
+         @if ($estadoX=="3")
+         <div class="col-12 d-flex justify-content-center" style="padding-top: 10px"><h4>Tipo de estado: Mora </h4></div>
+         @endif
        </div>
       
     <div class="contenido">
@@ -64,6 +73,7 @@
                     <input type="text" id="{{$key}}" value="{{$fechaC}}" name="fechaC" style="visibility: hidden;width: 5px">
                     <input type="text" id="{{$key}}" value="{{$fechaH}}" name="fechaH" style="visibility: hidden;width: 5px">
                     <input type="number" id="{{$key}}" value="1" name="conta" style="visibility: hidden;width: 5px">
+                    <input type="text" id="{{$key}}" value="{{$estadoX}}" name="estadoCarta" style="visibility: hidden;width: 5px">
                     <div class="container">
                         <div class="row">
                           <div class="col">

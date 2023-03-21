@@ -100,6 +100,10 @@ public function contador(Request $request){
         
 
 
+
+
+
+
        $cc=explode("&nbsp;",$request->cli);
      
         if($request->verC =="verC")
@@ -156,6 +160,19 @@ public function contador(Request $request){
             $option=$request->radio;
             $clienteC=$cc[0];
                   /////////contenido de tabla////////////
+                  if($request->estadoCarta=="1"){
+                    $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= 30";
+                  }
+                  if($request->estadoCarta=="2"){
+                    $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)";
+                  }
+                  if($request->estadoCarta=="3"){
+                   $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) ";   
+                  } 
+         
+                  
+
+
      $query="
      DECLARE @fechaA DATE    
      SELECT @fechaA = '".$fecha."'
@@ -246,9 +263,11 @@ public function contador(Request $request){
   ON cobros.liqdCNtcc = cxcTrNtra      
   WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
   AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-  AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
-
-  
+  AND ".$estadoY."  
+  --AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+  --and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+--  AND DATEDIFF(DAY, cxcTrFtra, ''".$fecha."')) <= 30   
+ 
   and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
 -- and cxcTrNcto ='ANA CLAVIJO'        
 and cxcTrNcto like '$clienteC%'   
@@ -258,7 +277,6 @@ AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HA
 order by Cliente
 ";
               
-               
                   $cxcCarta=DB::connection('sqlsrv')->select(DB::raw($query));
                
              //totales----------------------
@@ -332,7 +350,10 @@ order by Cliente
         ON cobros.liqdCNtcc = cxcTrNtra      
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
         AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+        AND ".$estadoY."  
+      --  AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+      --  and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+       -- AND DATEDIFF(DAY, cxcTrFtra, ''".$fecha."')) <= 30   
       
         and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
        and cxcTrNcto like '$clienteC%'
@@ -412,8 +433,10 @@ order by Cliente
            ON cobros.liqdCNtcc = cxcTrNtra      
            WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
            AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-           AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
-         
+           AND ".$estadoY."  
+       --    AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+      --    and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+          -- AND DATEDIFF(DAY, cxcTrFtra, ''".$fecha."')) <= 30   
            and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
           and cxcTrNcto like '$clienteC%'
          AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
@@ -483,11 +506,25 @@ order by Cliente
     public function store(Request $request)
     {
 
-    //return dd($request);
         $fecha = date("d/m/Y", strtotime($request->ffin));
         $fechaCarta   = date("d/m/Y", strtotime($request->fini));
         $array=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        $estadoX=$request->estado2;
+        $estadoY="";
+        if($request->estado2=="1"){
+          $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= 30";
+        }
+        if($request->estado2=="2"){
+          $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)";
+        }
+        if($request->estado2=="3"){
+         $estadoY="DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) ";   
+        } 
+       
       
+        
+       
+
        // fecha de hoy 
         $day=date("d", strtotime($request->ffin));
         $mes=date("m", strtotime($request->ffin));
@@ -513,7 +550,7 @@ order by Cliente
         $fechaC=$dayC.' de '.$mesC.' de '.$añoC;
 
 
-
+       
     //////////////nombre de tabla///////////////////////
      $queryNameCxc =" 
      DECLARE @fechaA DATE    
@@ -573,15 +610,18 @@ order by Cliente
      )as cobros    
      ON cobros.liqdCNtcc = cxcTrNtra      
      WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
-     AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-     AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+     AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)
+ AND ".$estadoY."   
+    -- AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+     --and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+    -- AND DATEDIFF(DAY, cxcTrFtra, ''".$fecha."')) <= 30   
      --AND DATEDIFF(DAY, cxcTrFtra, '".$fechaCarta."') <= (30 + 15) 
      and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
      AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
 ,'CAJERO CALACOTO .','CAJERO LIBRO BALLIVIAN','CAJERO LIBRO HANDAL','CAJERO LIBRO CALACOTO','CAJERO LIBRO MARISCAL','CAJERO LIBRO HANDAL','CAJERO BALLIVIAN .','CAJERO 2 MARISCAL .','CAJERO 2 HANDAL .')
     
      ";
-     
+
      $nameCxc=DB::connection('sqlsrv')->select(DB::raw($queryNameCxc));
      
      $ciclo=sizeof($nameCxc);
@@ -681,8 +721,12 @@ order by Cliente
   ON cobros.liqdCNtcc = cxcTrNtra      
   WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
   AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-  AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
-  --AND DATEDIFF(DAY, cxcTrFtra, '".$fechaCarta."') <= (30 + 15) 
+  AND ".$estadoY."
+  --AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+ --and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+ -- AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= 30   
+
+ -- AND DATEDIFF(DAY, cxcTrFtra, '".$fechaCarta."') <= (30 + 15) 
   and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
 -- and cxcTrNcto ='ANA CLAVIJO'        
 --and cxcTrNcto ='$value->Cliente'   
@@ -758,8 +802,10 @@ order by Cliente
         ON cobros.liqdCNtcc = cxcTrNtra      
         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
         AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
-
+        AND ".$estadoY."
+        -- AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+     --  and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+    --AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')) <= 30    
         and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
       -- and cxcTrNcto ='$value->Cliente'
       AND cxcTrNcto NOT IN ('CAJERO 2 BALLIVIAN . ','CAJERO 2 CALACOTO .','CAJERO 2 HANDAL .','CAJERO 2 MARISCAL .','CAJERO BALLIVIAN .'
@@ -898,10 +944,16 @@ $cadenaDL1=[];
                         )as cobros    
                         ON cobros.liqdCNtcc = cxcTrNtra      
                         WHERE (cxcTrImpt - cxcTrAcmt) <> 0 AND cxcTrMdel = 0      
-                        AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58)   
-                        AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
-                
+                        AND cxcTrCcbr IN (29,6,57,28,76,42,40,62,39,55,18,20,16,17,46,37,48,21,9,4,65,74,63,64,2,3,19,47,58) 
+                        ----------------  
+                  AND ".$estadoY."
+                     
+                        --AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') <= (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30)  
+                       
+                        --and DATEDIFF(DAY, cxcTrFtra, '".$fecha."') > (30 + 15) AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')>(30) 
+                     -- AND DATEDIFF(DAY, cxcTrFtra, '".$fecha."')) <= 30   
                         and  cast((ISNULL(cxcTrImpt,0)-ISNULL(cobros.AcuentaF,0)) as decimal(10,2))<>0
+                    
                         -- and cxcTrNcto ='ANA CLAVIJO'
                         ";
                             
@@ -909,7 +961,7 @@ $cadenaDL1=[];
                      //  return dd($nameCxc2);
 
      
-                        return view('carta.admin', compact('nameCxc2','fechaC','fechaH','fecha','fechaCarta'));
+                        return view('carta.admin', compact('nameCxc2','fechaC','fechaH','fecha','fechaCarta','estadoX'));
                       }
 
                       
